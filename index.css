@@ -2,6 +2,10 @@ html, body {
     height: 100%;
 }
 
+.nav {
+    cursor: pointer;
+}
+
 .navbar {
     border-radius: 0px;
     box-shadow: 0 0 3px 3px rgba(100, 100, 100, 0.49);
@@ -9,7 +13,9 @@ html, body {
     -webkit-box-shadow: 0 0 3px 3px rgba(100, 100, 100, 0.49);
 }
 
+
 .nav-items {
+    display: inline-flex;
     margin-top: 5px;
     height: 100%;
     vertical-align: middle;
@@ -20,6 +26,10 @@ html, body {
     margin: 0 auto;
     vertical-align: middle;
 }
+
+.hello {
+    margin: 0;
+    padding: 10px 15px;}
 
 body {
     background-color: #E4EBF0;
@@ -36,6 +46,12 @@ body {
     margin: 40px auto 60px auto;
 	width: 40%;
     padding-bottom: 40px;
+}
+
+.form-block {
+    padding-top: 40px;
+    margin: 0 auto;
+    width: 80%;
 }
 
 .push {

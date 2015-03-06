@@ -5,17 +5,20 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">-->
-<!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">-->
-<link rel="stylesheet" type="text/css" href="vendor/bootstrap/dist/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="normalize.css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+<!--<link rel="stylesheet" type="text/css" href="vendor/bootstrap/dist/css/bootstrap.min.css">-->
+<link rel="stylesheet" type="text/css" href="vendor/bootstrap/dist/css/bootstrap-datepicker.min.css">
+<link rel="stylesheet" type="text/css" href="vendor/pickadate/lib/compressed/themes/classic.css">
+<link rel="stylesheet" type="text/css" href="vendor/pickadate/lib/compressed/themes/classic.date.css">
 <link rel="stylesheet" type="text/css" href="normalize.css">
 <link rel="stylesheet" type="text/css" href="index.css">
 
-<script type="text/javascript" src="vendor/angularjs/angular.js"></script>
-<script type="text/javascript" src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
-<script type="text/javascript" src="vendor/angular-storage/dist/angular-storage.js"></script>
-<script type="text/javascript" src="vendor/angular-jwt/dist/angular-jwt.js"></script>
+<!-- Core dependencies -->
+<script type="text/javascript" src="vendor/angularjs/angular.min.js"></script>
+<script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
+<!-- End Core Dep. -->
+
 <script type="text/javascript" src="controllers/app.js"></script>
 <script type="text/javascript" src="controllers/home.js"></script>
 <script type="text/javascript" src="controllers/login.js"></script>
@@ -30,6 +33,7 @@
                 <a class="title-logo navbar-brand" href="#">Milestones Form</a>
             </div>
             <div class="nav-items pull-right">
+                <h5 ng-show="isLoggedIn" class="text-muted hello">Hello {{ currentUser.username }}</h5>
                 <ul class="nav nav-pills">
                     <li role="presentation"><a href="#/">Home</a></li>
                     <li ng-show="!isLoggedIn" role="presentation"><a href="#/login">Login</a></li>
@@ -48,5 +52,26 @@
         <p class="text-center text-muted credit">DCIC: Created at the Maayan Lab at Mount Sinai</p>
     </div>
 </div>
+
+<script type="text/javascript" src="vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script type="text/javascript" src="vendor/angular-route/angular-route.min.js"></script>
+<script type="text/javascript" src="vendor/angular-storage/dist/angular-storage.min.js"></script>
+<script type="text/javascript" src="vendor/angular-jwt/dist/angular-jwt.min.js"></script>
+
+<!-- Dependencies for Angular-Schema-Form -->
+<script src="vendor/pickadate/lib/legacy.js"></script>
+<script src="vendor/pickadate/lib/picker.js"></script>
+<script src="vendor/pickadate/lib/picker.date.js"></script>
+<script src="vendor/pickadate/lib/picker.time.js"></script>
+<script src="vendor/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="vendor/angular-translate/angular-translate.min.js"></script>
+<script src='vendor/angular-ui-select/dist/select.js'></script>
+<script src="vendor/tv4/tv4.js"></script>
+<script src="vendor/objectpath/lib/ObjectPath.js"></script>
+<script src="vendor/angular-schema-form/dist/schema-form.min.js"></script>
+<script src="vendor/angular-schema-form/dist/bootstrap-decorator.min.js"></script>
+<!-- End of ASF Dependencies -->
+
+
 </body>
 </html>

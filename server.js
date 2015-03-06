@@ -4,10 +4,13 @@ var express         = require('express'),
     cors            = require('cors'),
     flash           = require('connect-flash'),
 
+//    formsAngular    = require('forms-angular'),
+
     morgan          = require('morgan'),
     cookieParser    = require('cookie-parser'),
     bodyParser      = require('body-parser'),
     session         = require('express-session');
+
 
 var app = express();
 var port = process.env.PORT || 3001;
@@ -17,6 +20,7 @@ var configDB = require('./config/database');
 mongoose.connect(configDB.url);
 
 require('./config/passport')(passport); // pass passport for configuration
+
 
 app.use(cors());
 
@@ -31,7 +35,10 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-require('./app/routes.js')(app, passport);
+require('./routes.js')(app, passport);
+
+// var DataFormHandler = new (formsAngular)(app, { urlPrefix: '/api/' });
+// DataFormHandler.newResource(require('./app/models'));
 
 app.listen(port);
 console.log('Everything\'s going down on port ' + port);

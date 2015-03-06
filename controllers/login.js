@@ -27,6 +27,7 @@ angular.module( 'milestonesLanding.login', [
         }, function(error) {
             // Error: authentication failed
             store.set('message', 'Authentication failed.');
+            console.log(error);
         });
     };
 

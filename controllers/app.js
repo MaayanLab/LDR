@@ -42,6 +42,7 @@ angular.module( 'milestonesLanding', [
                 alert('You must be authorized to access this page. Please log in.');
                 $state.go('login');
             } else {
+                $rootScope.currentUser = store.get('currentUser');
                 $rootScope.isLoggedIn = true;
             }
         }

@@ -1,8 +1,9 @@
 angular.module( 'milestonesLanding.form', [
     'ui.router',
-    'angular-storage'
+    'angular-storage',
+    'schemaForm'
 ])
-.config(function($stateProvider) {
+.config(function($stateProvider, schemaFormDecoratorsProvider) {
     $stateProvider.state('form', {
         url: '/form',
         controller: 'FormCtrl',
@@ -11,8 +12,60 @@ angular.module( 'milestonesLanding.form', [
             requiresLogin: true
         }
     });
+    schemaFormDecoratorsProvider.addMapping(
+        'bootstrapDecorator',
+        'datepicker',
+        'directives/decorators/bootstrap/datepicker/datepicker.html'
+    );
 })
-.controller('FormCtrl', function FormController ($scope, $http, $state) {
+.factory('User', function($http, store) {
+    var currentUser = store.get('currentUser');
+    console.log('CURRENT USER');
+    console.log(currentUser);
+    return {
+        getSchema: function() {
+            return $http({
+                url: 'http://localhost:3001/api/schema',
+                method: 'GET',
+                data: currentUser
+            });
+        }
+    };
+})
+.controller('FormCtrl', function FormController ($scope, $http, store, $state, User) {
+
+    $scope.center = store.get('currentUser').institution;
+    $scope.assaySchema = {
+        "type": "object",
+        "title": "AssaySchema",
+        "properties": {
+            "assay":  {
+                "title": "Assay",
+                "type": "string",
+                "validationMessage": "Please enter in assay title"
+            },
+            "assay-info":  {
+                "title": "Assay Information",
+                "type": "string",
+                "validationMessage": "Please enter in assay information"
+            },
+        },
+        "required": ["assay", "assay-info"]
+    };
+    $scope.assayForm = [
+        "assay",
+        {
+            "key": "assay-info",
+            "type": "textarea",
+            "placeholder": "Make enter additional information about the assay"
+        },
+        {
+            "type": "submit",
+            "title": "OK"
+        }
+    ];
+
+    $scope.assayModel = {};
 
     var username = null;
     var data = null;
@@ -21,6 +74,7 @@ angular.module( 'milestonesLanding.form', [
         username: username,
         data: data
     };
+
 
     $scope.postToUser = function() {
         $http({
