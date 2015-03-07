@@ -1,31 +1,43 @@
 <!-- TODO -->
 <div ng-controller="FormCreateCtrl">
-    <div class="form-block animate-show" ng-show="currentForm === 'assay'">
-        <h4 class="text-center">Please enter assay and description:</h4>
-        <form sf-schema="dataSchema" sf-form="dataForm" sf-model="dataModel" ng-submit="submit('assay')"></form>
+    <div class="form-block">
+        <h4 class="form-create-input">Center: {{user.institution}}</h4>
+        <h4>Please enter assay and description:</h4>
+        <ui-select class="form-create-input" multiple ng-model="form.assays" theme="select2" ng-disabled="disabled">
+        <ui-select-match placeholder="Select assays...">{{$item.name}} &lt;{{$item.info}}&gt;</ui-select-match>
+        <ui-select-choices repeat="assay in assays | propsFilter: {name: $select.search, info: $select.search}">
+        <div ng-bind-html="assay.name | highlight: $select.search"></div>
+        <small>
+            <strong>info:</strong> <span ng-bind-html="''+assay.info | highlight: $select.search"></span>
+        </small>
+        </ui-select-choices>
+        </ui-select>
+
+        <h4>Cell lines</h4>
+        <ui-select class="form-create-input" multiple ng-model="form.cellLines" theme="select2" ng-disabled="disabled">
+        <ui-select-match placeholder="Select cell lines...">{{$item.name}} &lt;{{$item.class}}&gt;</ui-select-match>
+        <ui-select-choices repeat="line in cellLines | propsFilter: {name: $select.search, class: $select.search}">
+        <div ng-bind-html="line.name | highlight: $select.search"></div>
+        <small>
+            <strong>class:</strong> <span ng-bind-html="''+line.class | highlight: $select.search"></span>
+        </small>
+        </ui-select-choices>
+        </ui-select>
+        
+        <h4>Perturbagens</h4>
+        <ui-select class="form-create-input" multiple ng-model="form.perturbagens" theme="select2" ng-disabled="disabled">
+        <ui-select-match placeholder="Select perturbagens...">{{$item.name}} &lt;{{$item.type}}&gt;</ui-select-match>
+        <ui-select-choices repeat="pert in perturbagens | propsFilter: {name: $select.search, class: $select.search}">
+        <div ng-bind-html="pert.name | highlight: $select.search"></div>
+        <small>
+            <strong>type:</strong> <span ng-bind-html="''+pert.type | highlight: $select.search"></span>
+        </small>
+        </ui-select-choices>
+        </ui-select>
+        
+        <div class="post-button text-center">
+            <button type="submit" class="btn btn-default text-center">Post</button>
+        </div>
     </div>
-
-    <div class="form-block animate-show" ng-show="currentForm === 'cell lines'">
-        <h4 class="text-center"></h4>
-        <form sf-schema="assaySchema" sf-form="assayForm" sf-model="assayModel" ng-submit="submit('assay')"></form>
-    </div>
-
-    <h3>Multiple select</h3>
-    <ui-select multiple ng-model="form.selectedLines" theme="select2" ng-disabled="disabled" style="width: 800px;">
-    <ui-select-match placeholder="Select cell lines...">{{$item.name}} &lt;{{$item.name}}&gt;</ui-select-match>
-    <ui-select-choices repeat="line in cellLines | propsFilter: {name: $select.search, class: $select.search}">
-    <div ng-bind-html="person.name | highlight: $select.search"></div>
-    <small>
-        <strong>name:</strong> {{line.name}}
-        <strong>class:</strong> <span ng-bind-html="''+line.class | highlight: $select.search"></span>
-    </small>
-    </ui-select-choices>
-    </ui-select>
-    <p>Selected: {{form.selectedLines}}</p>
-
-    <div class="post-button text-center" ng-show="allowPost">
-        <button type="submit" class="btn btn-default text-center">Post</button>
-    </div>
-
 </div>
 

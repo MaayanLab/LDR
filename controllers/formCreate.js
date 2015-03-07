@@ -98,10 +98,9 @@ angular.module( 'milestonesLanding.formCreate', [
     });
 
     $scope.form = {};
-    $scope.form.selectedLines = [];
-
-    $scope.allowPost = false;
-    $scope.currentForm = 'assay';
+    $scope.form.assays = [];
+    $scope.form.cellLines = [];
+    $scope.form.perturbagens = [];
 
     $scope.user = store.get('currentUser');
 

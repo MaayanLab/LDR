@@ -58,7 +58,15 @@ body {
 .form-block {
     padding-top: 40px;
     margin: 0 auto;
-    width: 80%;
+    width: 60%;
+}
+
+.form-create-input {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.post-button {
 }
 
 /* UI SELECT */
