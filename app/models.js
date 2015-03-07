@@ -4,7 +4,6 @@ var mongoose    = require('mongoose'),
     bcrypt      = require('bcrypt-nodejs');
 
 var Schema = mongoose.Schema;
-
 // Schemas
 
 var releaseDateSchema = new Schema({
@@ -13,7 +12,7 @@ var releaseDateSchema = new Schema({
 });
 
 var perturbagenSchema = new Schema({
-    name: String,
+    name: { type: String, required: true, index: { unique: true } },
     type: String
 });
 
@@ -24,7 +23,7 @@ var countTypeSchema = new Schema({
 
 var cellLineSchema = new Schema({
     'control-or-disease': String,
-    name: String,
+    name: { type: String, required: true, index: { unique: true } },
     type: String,
     class: String,
     tissue: String
@@ -51,11 +50,18 @@ var readoutSchema = new Schema({
     datatype: String
 });
 
+var assaySchema = new Schema({
+    _id: Schema.Types.ObjectId,
+    name: { type: String, required: true, index: { unique: true } },
+    info: String,
+});
+
+
 var dataSchema = new Schema({
     _id: Schema.Types.ObjectId,
     dateModified: Date,
     center: { type: String, required: true },
-    assay: String,
+    assay: { type: String, required: true },
     'assay-info': String,
     'readout-count': Number,
     'release-dates': [ releaseDateSchema ],
@@ -80,7 +86,7 @@ var dataSchema = new Schema({
 });
 
 var userSchema = new Schema({
-    _id: Number,
+    _id: Schema.Types.ObjectId,
     username: { type: String, required: true, index: { unique: true } },
     password: { type: String, required: true },
     institution: { type: String, required: true },
@@ -96,41 +102,87 @@ userSchema.methods.validPassword = function(password) {
 };
 
 // Models
-var userModel = mongoose.model('User', userSchema);
-var dataModel = mongoose.model('Data', dataSchema);
-
-var Data;
-var modelName = 'Data';
-
-try {
-  Data = mongoose.model(modelName);
-} catch(e) {
-  Data = mongoose.model(modelName, dataSchema);
-}
-
 var User;
-modelName = 'User';
+var Assay;
+var CellLine;
+var Perturbagen;
+var Data;
+
+var modelName = 'User';
+var schema = userSchema;
+var collectionName = 'users';
 
 try {
   User = mongoose.model(modelName);
 } catch(e) {
-  User = mongoose.model(modelName, userSchema);
+  User = mongoose.model(modelName, schema, collectionName);
 }
 
+modelName = 'Assay';
+schema = assaySchema;
+collectionName = 'assays';
+
+try {
+  Assay = mongoose.model(modelName);
+} catch(e) {
+  Assay = mongoose.model(modelName, schema, collectionName);
+}
+
+modelName = 'CellLine';
+schema = cellLineSchema;
+collectionName = 'cellLines';
+
+try {
+  CellLine = mongoose.model(modelName);
+} catch(e) {
+  CellLine = mongoose.model(modelName, schema, collectionName);
+}
+
+modelName = 'Perturbagen';
+schema = perturbagenSchema;
+collectionName = 'perturbagens';
+
+try {
+  Perturbagen = mongoose.model(modelName);
+} catch(e) {
+  Perturbagen = mongoose.model(modelName, schema, collectionName);
+}
+
+modelName = 'Data';
+schema = dataSchema;
+collectionName = 'data';
+
+try {
+  Data = mongoose.model(modelName);
+} catch(e) {
+  Data = mongoose.model(modelName, schema, collectionName);
+}
 
 module.exports = {
     User: User,
+    Assay: Assay,
+    CellLine: CellLine,
+    Perturbagen: Perturbagen, 
     Data: Data
 };
 
+
 /*
+// USE TO REMOVE USERS
+//User.remove({ username: {$exists: true}}, function (err, events) {
+//    console.log('Users db cleared');
+//});
+
 // USE TO RE-ENTER USERS
-User.remove({ username: {$exists: true}}, function (err, events) {
-    console.log('Users db cleared');
-});
+
+var id = mongoose.Types.ObjectId();
+
+var genId = function() {
+    return mongoose.Types.ObjectId();
+};
 
 var admin = User.create({
-    _id: '1',
+    _id: genId(),
     username: 'admin',
     password: bcrypt.hashSync('maaya0', bcrypt.genSaltSync(8)),
     institution: 'All',
@@ -138,7 +190,7 @@ var admin = User.create({
 });
 
 var hmsUser = User.create({
-    _id: '2',
+    _id: genId(),
     username: 'hmssorger',
     password: bcrypt.hashSync('harvardS24', bcrypt.genSaltSync(8)),
     institution: 'HMS-Sorger',
@@ -146,7 +198,7 @@ var hmsUser = User.create({
 });
 
 var broadGUser = User.create({
-    _id: '3',
+    _id: genId(),
     username: 'broadgolub',
     password: bcrypt.hashSync('broadG42', bcrypt.genSaltSync(8)),
     institution: 'Broad-Golub',
@@ -154,7 +206,7 @@ var broadGUser = User.create({
 });
 
 var broadJUser = User.create({
-    _id: '4',
+    _id: genId(),
     username: 'broadjaffe',
     password: bcrypt.hashSync('broadJ32', bcrypt.genSaltSync(8)),
     institution: 'Broad-Jaffe',
@@ -162,7 +214,7 @@ var broadJUser = User.create({
 });
 
 var ismmsUser = User.create({
-    _id: '5',
+    _id: genId(),
     username: 'ismmsiyengar',
     password: bcrypt.hashSync('ismmsI21', bcrypt.genSaltSync(8)),
     institution: 'ISMMS-Iyengar',
@@ -170,7 +222,7 @@ var ismmsUser = User.create({
 });
 
 var uciUser = User.create({
-    _id: '6',
+    _id: genId(),
     username: 'ucirvinethompson',
     password: bcrypt.hashSync('ucirvineT12', bcrypt.genSaltSync(8)),
     institution: 'UCIrive-Thompson',

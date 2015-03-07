@@ -25,14 +25,14 @@ angular.module( 'milestonesLanding.forms', [
     return {
         getSchema: function() {
             return $http({
-                url: 'http://localhost:3001/api/schema',
+                url: 'http://localhost:3001/api/data/schema',
                 method: 'GET',
                 data: currentUser
             });
         }
     };
 })
-.controller('FormCtrl', function FormController ($scope, $http, store, $state, User) {
+.controller('FormsCtrl', function FormsController ($scope, $http, store, $state, User) {
     
    
 });

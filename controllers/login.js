@@ -23,7 +23,7 @@ angular.module( 'milestonesLanding.login', [
             store.set('jwt', result.data.id_token);
             console.log(store.get('jwt'));
             console.log(result);
-            $state.go('form');
+            $state.go('forms');
         }, function(error) {
             // Error: authentication failed
             store.set('message', 'Authentication failed.');

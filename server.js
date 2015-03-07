@@ -21,7 +21,6 @@ mongoose.connect(configDB.url);
 
 require('./config/passport')(passport); // pass passport for configuration
 
-
 app.use(cors());
 
 app.use(morgan('dev')); // log every request to the console

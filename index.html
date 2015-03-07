@@ -5,49 +5,67 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-<!--<link rel="stylesheet" type="text/css" href="vendor/bootstrap/dist/css/bootstrap.min.css">-->
+<!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">-->
+<!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">-->
+<link rel="stylesheet" type="text/css" href="vendor/bootstrap/dist/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="vendor/bootstrap/dist/css/bootstrap-datepicker.min.css">
 <link rel="stylesheet" type="text/css" href="vendor/pickadate/lib/compressed/themes/classic.css">
 <link rel="stylesheet" type="text/css" href="vendor/pickadate/lib/compressed/themes/classic.date.css">
+<link rel="stylesheet" type="text/css" href="vendor/angular-ui-select/dist/select.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
 <link rel="stylesheet" type="text/css" href="normalize.css">
 <link rel="stylesheet" type="text/css" href="index.css">
 
 <!-- Core dependencies -->
-<script type="text/javascript" src="vendor/angularjs/angular.min.js"></script>
+<script type="text/javascript" src="vendor/angularjs/angular.js"></script>
 <script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="vendor/bootstrap/dist/js/bootstrap.js"></script>
 <!-- End Core Dep. -->
 
 <script type="text/javascript" src="controllers/app.js"></script>
 <script type="text/javascript" src="controllers/home.js"></script>
 <script type="text/javascript" src="controllers/login.js"></script>
-<script type="text/javascript" src="controllers/form.js"></script>
+<script type="text/javascript" src="controllers/forms.js"></script>
+<script type="text/javascript" src="controllers/formCreate.js"></script>
 
 </head>
 <body>
 <div class="wrap">
-    <div class="navbar navbar-default">
-        <div class="title-bar">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="title-logo navbar-brand" href="#">Milestones Form</a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Milestones Landing</a>
             </div>
-            <div class="nav-items pull-right">
-                <h5 ng-show="isLoggedIn" class="text-muted hello">Hello {{ currentUser.username }}</h5>
-                <ul class="nav nav-pills">
-                    <li role="presentation"><a href="#/">Home</a></li>
-                    <li ng-show="!isLoggedIn" role="presentation"><a href="#/login">Login</a></li>
-                    
-                    <li ng-show="isLoggedIn" role="presentation"><a ng-click="logout()">Logout</a></li>
-                    <!-- <li role="presentation"><a href="#/signup">Signup</a></li> -->
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><h5 ng-show="isLoggedIn" class="text-muted hello">Hello {{ currentUser.username }}</h5>
+</li>
+                    <li ng-show="!isLoggedIn"><a href="#/login">Login</a></li>
+                    <li ng-show="isLoggedIn"><a ng-click="logout()">Logout</a></li>
+                    <li class="dropdown">
+                    <a ng-show="isLoggedIn" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Forms <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#/forms">Forms Home</a></li>
+                        <li><a href="#/forms/create">Create New Form</a></li>
+                    </ul>
+                    </li>
                 </ul>
-            </div>
-        </div>
-    </div>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
     <div class="container" ui-view></div>
 </div>
 <div class="push"></div>
-<div class="footer">
+<div class="footer navbar-inverse">
     <div class="container">
         <p class="text-center text-muted credit">DCIC: Created at the Maayan Lab at Mount Sinai</p>
     </div>
@@ -59,17 +77,18 @@
 <script type="text/javascript" src="vendor/angular-jwt/dist/angular-jwt.min.js"></script>
 
 <!-- Dependencies for Angular-Schema-Form -->
+<script type="text/javascript" src="vendor/angular-sanitize/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="vendor/tv4/tv4.js"></script>
+<script type="text/javascript" src="vendor/objectpath/lib/ObjectPath.js"></script>
+<script type="text/javascript" src="vendor/angular-schema-form/dist/schema-form.min.js"></script>
+<script type="text/javascript" src="vendor/angular-schema-form-ui-select/src/schema-form-uiselect.js"></script>
+<script type="text/javascript" src="vendor/angular-schema-form/dist/bootstrap-decorator.min.js"></script>
 <script src="vendor/pickadate/lib/legacy.js"></script>
 <script src="vendor/pickadate/lib/picker.js"></script>
 <script src="vendor/pickadate/lib/picker.date.js"></script>
 <script src="vendor/pickadate/lib/picker.time.js"></script>
-<script src="vendor/angular-sanitize/angular-sanitize.min.js"></script>
 <script src="vendor/angular-translate/angular-translate.min.js"></script>
 <script src='vendor/angular-ui-select/dist/select.js'></script>
-<script src="vendor/tv4/tv4.js"></script>
-<script src="vendor/objectpath/lib/ObjectPath.js"></script>
-<script src="vendor/angular-schema-form/dist/schema-form.min.js"></script>
-<script src="vendor/angular-schema-form/dist/bootstrap-decorator.min.js"></script>
 <!-- End of ASF Dependencies -->
 
 

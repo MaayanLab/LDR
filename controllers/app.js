@@ -1,7 +1,8 @@
 angular.module( 'milestonesLanding', [
     'milestonesLanding.home',
     'milestonesLanding.login',
-    'milestonesLanding.form',
+    'milestonesLanding.forms',
+    'milestonesLanding.formCreate',
     'ui.router',
     'angular-storage',
     'angular-jwt'

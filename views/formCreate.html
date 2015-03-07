@@ -1,0 +1,31 @@
+<!-- TODO -->
+<div ng-controller="FormCreateCtrl">
+    <div class="form-block animate-show" ng-show="currentForm === 'assay'">
+        <h4 class="text-center">Please enter assay and description:</h4>
+        <form sf-schema="dataSchema" sf-form="dataForm" sf-model="dataModel" ng-submit="submit('assay')"></form>
+    </div>
+
+    <div class="form-block animate-show" ng-show="currentForm === 'cell lines'">
+        <h4 class="text-center"></h4>
+        <form sf-schema="assaySchema" sf-form="assayForm" sf-model="assayModel" ng-submit="submit('assay')"></form>
+    </div>
+
+    <h3>Multiple select</h3>
+    <ui-select multiple ng-model="form.selectedLines" theme="select2" ng-disabled="disabled" style="width: 800px;">
+    <ui-select-match placeholder="Select cell lines...">{{$item.name}} &lt;{{$item.name}}&gt;</ui-select-match>
+    <ui-select-choices repeat="line in cellLines | propsFilter: {name: $select.search, class: $select.search}">
+    <div ng-bind-html="person.name | highlight: $select.search"></div>
+    <small>
+        <strong>name:</strong> {{line.name}}
+        <strong>class:</strong> <span ng-bind-html="''+line.class | highlight: $select.search"></span>
+    </small>
+    </ui-select-choices>
+    </ui-select>
+    <p>Selected: {{form.selectedLines}}</p>
+
+    <div class="post-button text-center" ng-show="allowPost">
+        <button type="submit" class="btn btn-default text-center">Post</button>
+    </div>
+
+</div>
+
