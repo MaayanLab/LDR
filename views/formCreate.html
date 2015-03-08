@@ -1,10 +1,11 @@
 <!-- TODO -->
 <div ng-controller="FormCreateCtrl">
     <div class="form-block">
-        <h4 class="form-create-input">Center: {{user.institution}}</h4>
-        <h4>Please enter assay and description:</h4>
+        <h4 class="form-title form-create-input">Center: {{user.institution}}</h4>
+        <h4 class="form-title">Assay and description:</h4>
         <ui-select class="form-create-input" multiple ng-model="form.assays" theme="select2" ng-disabled="disabled">
         <ui-select-match placeholder="Select assays...">{{$item.name}} &lt;{{$item.info}}&gt;</ui-select-match>
+        <a class="form-missing" href="#/forms/data/add">Not listed?</a>
         <ui-select-choices repeat="assay in assays | propsFilter: {name: $select.search, info: $select.search}">
         <div ng-bind-html="assay.name | highlight: $select.search"></div>
         <small>
@@ -13,9 +14,11 @@
         </ui-select-choices>
         </ui-select>
 
-        <h4>Cell lines</h4>
+        <h4 class="form-title">Cell lines</h4>
+        <h4 class="form-count">count: {{form.cellLines.length}}</h4>
         <ui-select class="form-create-input" multiple ng-model="form.cellLines" theme="select2" ng-disabled="disabled">
         <ui-select-match placeholder="Select cell lines...">{{$item.name}} &lt;{{$item.class}}&gt;</ui-select-match>
+        <a class="form-missing" href="#/forms/data/add">Not listed?</a>
         <ui-select-choices repeat="line in cellLines | propsFilter: {name: $select.search, class: $select.search}">
         <div ng-bind-html="line.name | highlight: $select.search"></div>
         <small>
@@ -23,18 +26,21 @@
         </small>
         </ui-select-choices>
         </ui-select>
-        
-        <h4>Perturbagens</h4>
-        <ui-select class="form-create-input" multiple ng-model="form.perturbagens" theme="select2" ng-disabled="disabled">
-        <ui-select-match placeholder="Select perturbagens...">{{$item.name}} &lt;{{$item.type}}&gt;</ui-select-match>
-        <ui-select-choices repeat="pert in perturbagens | propsFilter: {name: $select.search, class: $select.search}">
-        <div ng-bind-html="pert.name | highlight: $select.search"></div>
-        <small>
-            <strong>type:</strong> <span ng-bind-html="''+pert.type | highlight: $select.search"></span>
-        </small>
-        </ui-select-choices>
-        </ui-select>
-        
+
+        <h4 class="form-title">Perturbagens</h4>
+        <h4 class="form-count">count: {{form.perturbagens.length}}</h4>
+        <div class="form-input">
+            <ui-select class="form-create-input" multiple ng-model="form.perturbagens" theme="select2" ng-disabled="disabled">
+            <ui-select-match placeholder="Select perturbagens...">{{$item.name}} &lt;{{$item.type}}&gt;</ui-select-match>
+            <ui-select-choices repeat="pert in perturbagens | propsFilter: {name: $select.search, class: $select.search}">
+            <div ng-bind-html="pert.name | highlight: $select.search"></div>
+            <small>
+                <strong>type:</strong> <span ng-bind-html="''+pert.type | highlight: $select.search"></span>
+            </small>
+            </ui-select-choices>
+            </ui-select>
+            <a class="form-missing" href="#/forms/data/add">Not listed?</a>
+        </div>
         <div class="post-button text-center">
             <button type="submit" class="btn btn-default text-center">Post</button>
         </div>

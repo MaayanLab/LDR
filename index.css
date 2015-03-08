@@ -58,12 +58,25 @@ body {
 .form-block {
     padding-top: 40px;
     margin: 0 auto;
-    width: 60%;
+    width: 50%;
 }
 
 .form-create-input {
     margin-bottom: 20px;
     width: 100%;
+}
+
+.form-title {
+    margin-top: 40px;
+	float: left;
+}
+
+.form-count {
+    margin-top: 40px;
+	float: right;
+}
+.form-missing {
+	float: right;
 }
 
 .post-button {
