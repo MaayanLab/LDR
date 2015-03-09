@@ -53,6 +53,8 @@ angular.module( 'milestonesLanding', [
 
 }).controller('milestonesLandingCtrl', function milestonesLandingCtrl ($scope, $rootScope, $http, $state, store, jwtHelper) {
 
+    $scope.pageTitle = 'Milestones Landing';
+
     $scope.$on('$routeChangeSuccess', function(e, nextRoute) {
         if (nextRoute.$$route && angular.isDefined(nextRoute.$$route.pageTitle)) {
             $scope.pageTitle = nextRoute.$$route.pageTitle + ' | Milestones Landing' ;

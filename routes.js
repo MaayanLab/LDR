@@ -13,7 +13,6 @@ module.exports = function(app, passport) {
     // fng.newResource(Models.Data);
 
     app.get('/api/data/schema', function(req, res) {
-        console.log(req);
         res.status(200).send(Models.Data.schema);
     });
 
@@ -33,7 +32,6 @@ module.exports = function(app, passport) {
                 console.log(err);
                 return done(err);
             }
-            console.log(assays);
             res.status(200).send(assays);
         });            
     });
@@ -58,17 +56,25 @@ module.exports = function(app, passport) {
         });            
     });
 
-/*
-    app.get('/api/data', function(req, res) {
-        Models.Data.find({'': { '$exists': true }}, function(err, users) {
+    app.get('/api/readouts', function(req, res) {
+        Models.Readout.find({'name': { '$exists': true }}, function(err, readouts) {
             if (err) {
                 console.log(err);
                 return done(err);
             }
-            res.status(200).send(users);
+            res.status(200).send(readouts);
         });            
     });
-*/
+
+    app.get('/api/releaseDates', function(req, res) {
+        Models.ReleaseDate.find({'name': { '$exists': true }}, function(err, rDates) {
+            if (err) {
+                console.log(err);
+                return done(err);
+            }
+            res.status(200).send(rDates);
+        });            
+    });
 
     app.get('/logout', function(req, res) {
         req.logout();
@@ -87,8 +93,24 @@ module.exports = function(app, passport) {
 
     });
 
-    app.post('/api/data/create', function(req, res) {
+    app.post('/api/data/user', function(req, res) {
+        console.log(req.body);
+        Models.Data.find({ userId: req.body._id }, function(err, userData) {
+            if (err) {
+                console.log(err);
+                return done(err);
+            }
+            res.status(200).send(userData);
+        });
+    });
+
+    app.post('/api/data/add', function(req, res) {
         console.log('Posting');
+        var inputData = req.body;
+        inputData._id = Models.genId();
+        var saveData = Models.Data.create(inputData);
+        console.log(saveData);
+        res.status(201).send(saveData);
     });
 
     

@@ -2,9 +2,11 @@ angular.module( 'milestonesLanding.formCreate', [
     'ui.router',
     'angular-storage',
     'ui.select',
-    'ngSanitize'
+    'ngSanitize',
+    'ui.bootstrap',
+    'ngLodash'
 ])
-.config(function($stateProvider, schemaFormDecoratorsProvider) {
+.config(function($stateProvider) {
     $stateProvider.state('formCreate', {
         url: '/forms/create',
         controller: 'FormCreateCtrl',
@@ -13,13 +15,7 @@ angular.module( 'milestonesLanding.formCreate', [
             requiresLogin: true
         }
     });
-    schemaFormDecoratorsProvider.addMapping(
-        'bootstrapDecorator',
-        'datepicker',
-        'directives/decorators/bootstrap/datepicker/datepicker.html'
-    );
-})
-.factory('User', function ($http, store) {
+}).factory('User', function ($http, store) {
     var currentUser = store.get('currentUser');
     console.log('CURRENT USER');
     console.log(currentUser);
@@ -49,6 +45,12 @@ angular.module( 'milestonesLanding.formCreate', [
         getPerturbagens: function() {
             return $http({
                 url: 'http://localhost:3001/api/perturbagens',
+                method: 'GET',
+            });
+        },
+        getReadouts: function() {
+            return $http({
+                url: 'http://localhost:3001/api/readouts',
                 method: 'GET',
             });
         }
@@ -82,9 +84,13 @@ angular.module( 'milestonesLanding.formCreate', [
 
         return out;
     };
-}).controller('FormCreateCtrl', function FormCreateController ($scope, $http, store, $state, User, Data) {
+}).controller('FormCreateCtrl', function FormCreateController ($scope, $http, store, $state, lodash, User, Data) {
 
+    var emptyDict = {};
 
+    $scope.user = store.get('currentUser');
+
+    // API calls for selections
     Data.getAssays().success(function(assays) {
         $scope.assays = assays;
     });
@@ -97,26 +103,132 @@ angular.module( 'milestonesLanding.formCreate', [
         $scope.perturbagens = perturbagens;
     });
 
+    Data.getReadouts().success(function(readouts) {
+        $scope.readouts = readouts;
+    });
+
+    // Init for posting data
     $scope.form = {};
-    $scope.form.assays = [];
+    $scope.form.userId = $scope.user._id;
+    $scope.form.status = 'awaiting approval';
+    $scope.form.dateModified = new Date();
+    $scope.form.center = $scope.user.institution;
+    $scope.form.assay = {};
     $scope.form.cellLines = [];
     $scope.form.perturbagens = [];
+    $scope.form.readouts = [];
+    $scope.form.releaseDates = {};
 
-    $scope.user = store.get('currentUser');
+    // Date picker
+    $scope.clear = function () {
+        $scope.form.releaseDates.levelOne = null;
+        $scope.form.releaseDates.levelTwo = null;
+        $scope.form.releaseDates.levelThree = null;
+        $scope.form.releaseDates.levelFour = null;
 
-    $scope.dataModel = {};
+    };
+
+    $scope.clear();
+
+    // Disable weekend selection
+    $scope.disabledDate = function(date, mode) {
+        return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+    };
+
+    $scope.minDate = new Date();
+
+    $scope.lvlOneOpen = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.lvlOneOpened = true;
+    };
+
+    $scope.lvlTwoOpen = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.lvlTwoOpened = true;
+    };
+
+    $scope.lvlThreeOpen = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.lvlThreeOpened = true;
+    };
+
+    $scope.lvlFourOpen = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.lvlFourOpened = true;
+    };
+
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
+    };
+
+    $scope.format = 'MM/dd/yyyy';
+
+    // End date picker
 
     var data = {};
 
-    $scope.submit = function(form) {
-        if (form === 'assay') {
-            data.assay = $scope.assayModel.assay;
-            data['assay-info'] = $scope.assayModel['assay-info'];
-            $scope.allowPost = true;
+    $scope.reset = function(inpForm) {
+        if (inpForm) {
+            inpForm.$setPristine();
+            inpForm.$setUntouched();
         }
+
+        $scope.form = {};
+        $scope.form.userId = $scope.user._id;
+        $scope.form.status = 'awaiting approval';
+        $scope.form.dateModified = new Date();
+        $scope.form.center = $scope.user.institution;
+        $scope.form.assay = {};
+        $scope.form.cellLines = [];
+        $scope.form.perturbagens = [];
+        $scope.form.readouts = [];
+        $scope.form.releaseDates = {};
     };
 
-    $scope.postData = {
+    var post = function() {
+        var outputForm = {};
+        lodash.transform($scope.form, function(res, value, key) {
+            if (value)
+                outputForm[key] = value;
+        });
+
+        outputForm.readoutCount = $scope.form.readouts.length;
+        outputForm.cellLineCount = $scope.form.cellLines.length;
+        outputForm.perturbagenCount = $scope.form.perturbagens.length;
+        console.log(outputForm);
+
+        $http({
+            url: 'http://localhost:3001/api/data/add',
+            method: 'POST',
+            data: outputForm
+        }).then(function(response) {
+            console.log(response);
+        }, function(error) {
+            console.log(error);
+            alert(error.data);
+        });
+    };
+
+    $scope.postMove = function() {
+        post();
+        $state.go('forms');
+    };
+    $scope.postAddAnother = function() {
+        post();
+        alert('Post successful');
+        $state.go('formCreate');
+    };
+
+    $scope.post = {
         user: $scope.user,
         data: data
     };
@@ -124,7 +236,7 @@ angular.module( 'milestonesLanding.formCreate', [
 
     $scope.postToUser = function() {
         $http({
-            url: 'http://localhost:3001/data/create',
+            url: 'http://localhost:3001/api/data/add',
             method: 'POST',
             data: $scope.postData
         }).then(function(response) {

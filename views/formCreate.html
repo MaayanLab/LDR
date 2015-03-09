@@ -1,11 +1,11 @@
 <!-- TODO -->
 <div ng-controller="FormCreateCtrl">
-    <div class="form-block">
+    <form name="dataForm" class="form-block">
         <h4 class="form-title form-create-input">Center: {{user.institution}}</h4>
-        <h4 class="form-title">Assay and description:</h4>
-        <ui-select class="form-create-input" multiple ng-model="form.assays" theme="select2" ng-disabled="disabled">
-        <ui-select-match placeholder="Select assays...">{{$item.name}} &lt;{{$item.info}}&gt;</ui-select-match>
-        <a class="form-missing" href="#/forms/data/add">Not listed?</a>
+
+        <h4 class="form-title">Assay</h4>
+        <ui-select class="form-create-input" ng-model="form.assay" theme="select2" ng-disabled="disabled">
+        <ui-select-match placeholder="Select assay...">{{$select.selected.name}}</ui-select-match>
         <ui-select-choices repeat="assay in assays | propsFilter: {name: $select.search, info: $select.search}">
         <div ng-bind-html="assay.name | highlight: $select.search"></div>
         <small>
@@ -18,7 +18,6 @@
         <h4 class="form-count">count: {{form.cellLines.length}}</h4>
         <ui-select class="form-create-input" multiple ng-model="form.cellLines" theme="select2" ng-disabled="disabled">
         <ui-select-match placeholder="Select cell lines...">{{$item.name}} &lt;{{$item.class}}&gt;</ui-select-match>
-        <a class="form-missing" href="#/forms/data/add">Not listed?</a>
         <ui-select-choices repeat="line in cellLines | propsFilter: {name: $select.search, class: $select.search}">
         <div ng-bind-html="line.name | highlight: $select.search"></div>
         <small>
@@ -29,21 +28,81 @@
 
         <h4 class="form-title">Perturbagens</h4>
         <h4 class="form-count">count: {{form.perturbagens.length}}</h4>
-        <div class="form-input">
-            <ui-select class="form-create-input" multiple ng-model="form.perturbagens" theme="select2" ng-disabled="disabled">
-            <ui-select-match placeholder="Select perturbagens...">{{$item.name}} &lt;{{$item.type}}&gt;</ui-select-match>
-            <ui-select-choices repeat="pert in perturbagens | propsFilter: {name: $select.search, class: $select.search}">
-            <div ng-bind-html="pert.name | highlight: $select.search"></div>
-            <small>
-                <strong>type:</strong> <span ng-bind-html="''+pert.type | highlight: $select.search"></span>
-            </small>
-            </ui-select-choices>
-            </ui-select>
-            <a class="form-missing" href="#/forms/data/add">Not listed?</a>
+        <ui-select class="form-create-input" multiple ng-model="form.perturbagens" theme="select2" ng-disabled="disabled">
+        <ui-select-match placeholder="Select perturbagens...">{{$item.name}} &lt;{{$item.type}}&gt;</ui-select-match>
+        <ui-select-choices repeat="pert in perturbagens | propsFilter: {name: $select.search, type: $select.search}">
+        <div ng-bind-html="pert.name | highlight: $select.search"></div>
+        <small>
+            <strong>type:</strong> <span ng-bind-html="''+pert.type | highlight: $select.search"></span>
+        </small>
+        </ui-select-choices>
+        </ui-select>
+
+        <h4 class="form-title">Readouts</h4>
+        <h4 class="form-count">count: {{form.readouts.length}}</h4>
+        <ui-select class="form-create-input" multiple ng-model="form.readouts" theme="select2" ng-disabled="disabled">
+        <ui-select-match placeholder="Select readouts...">{{$item.name}} &lt;{{$item.datatype}}&gt;</ui-select-match>
+        <ui-select-choices repeat="rout in readouts | propsFilter: {name: $select.search, datatype: $select.search}">
+        <div ng-bind-html="rout.name | highlight: $select.search"></div>
+        <small>
+            <strong>type:</strong> <span ng-bind-html="''+rout.datatype | highlight: $select.search"></span>
+        </small>
+        </ui-select-choices>
+        </ui-select>
+
+        <h4 class="form-title">Level 1</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <p class="input-group">
+                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="form.releaseDates.levelOne" is-open="lvlOneOpened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabledDate(date, mode)" close-text="Close" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="lvlOneOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+                </p>
+            </div>
         </div>
+
+        <h4 class="form-title">Level 2</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <p class="input-group">
+                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="form.releaseDates.levelTwo" is-open="lvlTwoOpened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabledDate(date, mode)" close-text="Close" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="lvlTwoOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+                </p>
+            </div>
+        </div>
+
+        <h4 class="form-title">Level 3</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <p class="input-group">
+                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="form.releaseDates.levelThree" is-open="lvlThreeOpened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabledDate(date, mode)" close-text="Close" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="lvlThreeOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+                </p>
+            </div>
+        </div>
+
+        <h4 class="form-title">Level 4</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <p class="input-group">
+                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="form.releaseDates.levelFour" is-open="lvlFourOpened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabledDate(date, mode)" close-text="Close" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="lvlFourOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+                </p>
+            </div>
+        </div>
+
         <div class="post-button text-center">
-            <button type="submit" class="btn btn-default text-center">Post</button>
+            <button type="submit" ng-click="reset()" class="btn btn-default text-center">Reset</button>
+            <button type="submit" ng-click="postAddAnother()" class="btn btn-default text-center">Post and Add Another</button>
+            <button type="submit" ng-click="postMove()" class="btn btn-default text-center">Post and Go Home</button>
         </div>
-    </div>
+    </form>
 </div>
 

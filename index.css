@@ -1,5 +1,28 @@
+@media
+    only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (   min--moz-device-pixel-ratio: 2),
+    only screen and (     -o-min-device-pixel-ratio: 2/1),
+    only screen and (        min-device-pixel-ratio: 2),
+    only screen and (                min-resolution: 192dpi),
+    only screen and (                min-resolution: 2dppx) { 
+  
+      /* Retina-specific stuff here */
+
+}
+
 html, body {
     height: 100%;
+}
+
+body {
+    background-color: #222;
+}
+
+.wrap {
+    background-color: #E4EBF0;
+    min-height: 100%;
+    height: auto !important;
+    margin: 0 auto -60px;
 }
 
 .nav {
@@ -34,15 +57,6 @@ html, body {
     cursor: default;
 }
 
-body {
-    background-color: #E4EBF0;
-}
-
-.wrap {
-    min-height: 100%;
-    height: auto !important;
-    margin: 0 auto -60px;
-}
 
 .login {
     background-color: #E4EBF0;
@@ -62,17 +76,21 @@ body {
 }
 
 .form-create-input {
-    margin-bottom: 20px;
+    cursor: default;
     width: 100%;
 }
 
+p.input-group {
+	margin: 14px 0;
+}
+
 .form-title {
-    margin-top: 40px;
+    margin-top: 20px;
 	float: left;
 }
 
 .form-count {
-    margin-top: 40px;
+    margin-top: 20px;
 	float: right;
 }
 .form-missing {
@@ -80,6 +98,7 @@ body {
 }
 
 .post-button {
+    margin-top: 40px;
 }
 
 /* UI SELECT */
@@ -94,6 +113,7 @@ body {
 
 .push {
     height: 100px;
+    background-color: #E4EBF0;
 }
 
 .footer {

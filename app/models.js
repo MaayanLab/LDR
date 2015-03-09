@@ -7,13 +7,16 @@ var Schema = mongoose.Schema;
 // Schemas
 
 var releaseDateSchema = new Schema({
-    date: Date,
-    'release-level': Number
+    levelOne: { type: Date, required: true },
+    levelTwo: Date,
+    levelThree: Date,
+    levelFour: Date
 });
 
 var perturbagenSchema = new Schema({
+    _id: Schema.Types.ObjectId,
     name: { type: String, required: true, index: { unique: true } },
-    type: String
+    type: { type: String, required: true }
 });
 
 var countTypeSchema = new Schema({
@@ -22,9 +25,10 @@ var countTypeSchema = new Schema({
 });
 
 var cellLineSchema = new Schema({
-    'control-or-disease': String,
+    _id: Schema.Types.ObjectId,
+    controlOrDisease: String,
     name: { type: String, required: true, index: { unique: true } },
-    type: String,
+    type: { type: String, required: true },
     class: String,
     tissue: String
 });
@@ -36,61 +40,70 @@ var cellLineMetaSchema = new Schema({
 
 var mapSchema = new Schema({
     perturbagen: String,
-    'cell-line': String
+    cellLine: String
 });
 
 var instanceMetaSchema = new Schema({
     reps: Number,
-    'tech-reps': Number,
+    techReps: Number,
     map: [ mapSchema ]
 });
 
 var readoutSchema = new Schema({
-    name: String,
-    datatype: String
+    _id: Schema.Types.ObjectId,
+    name: { type: String, required: true, index: { unique: true } },
+    datatype: { type: String, required: true }
 });
 
 var assaySchema = new Schema({
     _id: Schema.Types.ObjectId,
     name: { type: String, required: true, index: { unique: true } },
-    info: String,
+    info: { type: String, required: true }
 });
 
 
 var dataSchema = new Schema({
     _id: Schema.Types.ObjectId,
+    userId: Schema.Types.ObjectId,
+    status: String,
     dateModified: Date,
     center: { type: String, required: true },
-    assay: { type: String, required: true },
-    'assay-info': String,
-    'readout-count': Number,
-    'release-dates': [ releaseDateSchema ],
+    assay: {
+        name: { type: String, required: true },
+        info: String
+    },
+    readoutCount: Number,
+    releaseDates: {
+        levelOne: Date,
+        levelTwo: Date,
+        levelThree: Date,
+        levelFour: Date
+    },
     perturbagens: [ perturbagenSchema ],
-    'perturbagens-meta': {
+    perturbagensMeta: {
         pair: Boolean,
         dose: [ String ],
-        'dose-count': Number,
+        doseCount: Number,
         time: [ String ],
-        'time-unit': String,
-        'time-points': Number,
-        'count-type': [ countTypeSchema ]
+        timeUnit: String,
+        timePoints: Number,
+        countType: [ countTypeSchema ]
     },
-    'cell-lines': [ cellLineSchema ],
-    'cell-lines-meta': [ cellLineMetaSchema ],
-    'instance-meta': {
+    cellLines: [ cellLineSchema ],
+    cellLinesMeta: [ cellLineMetaSchema ],
+    instanceMeta: {
         reps: Number,
-        'tech-reps': Number,
+        techReps: Number,
         map: [ mapSchema ]
     },
-    'readouts': [ readoutSchema ]
+    readouts: [ readoutSchema ]
 });
 
 var userSchema = new Schema({
     _id: Schema.Types.ObjectId,
     username: { type: String, required: true, index: { unique: true } },
     password: { type: String, required: true },
-    institution: { type: String, required: true },
-    data: [ dataSchema ]
+    institution: { type: String, required: true }
 });
 
 userSchema.methods.generateHash = function(password) {
@@ -106,6 +119,8 @@ var User;
 var Assay;
 var CellLine;
 var Perturbagen;
+var Readout;
+var ReleaseDate;
 var Data;
 
 var modelName = 'User';
@@ -148,6 +163,26 @@ try {
   Perturbagen = mongoose.model(modelName, schema, collectionName);
 }
 
+modelName = 'Readout';
+schema = readoutSchema;
+collectionName = 'readouts';
+
+try {
+  Readout = mongoose.model(modelName);
+} catch(e) {
+  Readout = mongoose.model(modelName, schema, collectionName);
+}
+
+modelName = 'ReleaseDate';
+schema = releaseDateSchema;
+collectionName = 'releaseDates';
+
+try {
+  ReleaseDate = mongoose.model(modelName);
+} catch(e) {
+  ReleaseDate = mongoose.model(modelName, schema, collectionName);
+}
+
 modelName = 'Data';
 schema = dataSchema;
 collectionName = 'data';
@@ -158,35 +193,38 @@ try {
   Data = mongoose.model(modelName, schema, collectionName);
 }
 
+var genId = function() {
+    return mongoose.Types.ObjectId();
+};
+
 module.exports = {
+    genId: genId,
     User: User,
     Assay: Assay,
     CellLine: CellLine,
     Perturbagen: Perturbagen, 
+    Readout: Readout,
+    ReleaseDate: ReleaseDate,
     Data: Data
 };
 
 
 /*
 // USE TO REMOVE USERS
-//User.remove({ username: {$exists: true}}, function (err, events) {
-//    console.log('Users db cleared');
-//});
+User.remove({ username: {$exists: true}}, function (err, events) {
+    console.log('Users db cleared');
+});
 
 // USE TO RE-ENTER USERS
 
 var id = mongoose.Types.ObjectId();
 
-var genId = function() {
-    return mongoose.Types.ObjectId();
-};
 
 var admin = User.create({
     _id: genId(),
     username: 'admin',
     password: bcrypt.hashSync('maaya0', bcrypt.genSaltSync(8)),
     institution: 'All',
-    data: []
 });
 
 var hmsUser = User.create({
@@ -194,7 +232,6 @@ var hmsUser = User.create({
     username: 'hmssorger',
     password: bcrypt.hashSync('harvardS24', bcrypt.genSaltSync(8)),
     institution: 'HMS-Sorger',
-    data: []
 });
 
 var broadGUser = User.create({
@@ -202,7 +239,6 @@ var broadGUser = User.create({
     username: 'broadgolub',
     password: bcrypt.hashSync('broadG42', bcrypt.genSaltSync(8)),
     institution: 'Broad-Golub',
-    data: []
 });
 
 var broadJUser = User.create({
@@ -210,7 +246,6 @@ var broadJUser = User.create({
     username: 'broadjaffe',
     password: bcrypt.hashSync('broadJ32', bcrypt.genSaltSync(8)),
     institution: 'Broad-Jaffe',
-    data: []
 });
 
 var ismmsUser = User.create({
@@ -218,7 +253,6 @@ var ismmsUser = User.create({
     username: 'ismmsiyengar',
     password: bcrypt.hashSync('ismmsI21', bcrypt.genSaltSync(8)),
     institution: 'ISMMS-Iyengar',
-    data: []
 });
 
 var uciUser = User.create({
@@ -226,7 +260,6 @@ var uciUser = User.create({
     username: 'ucirvinethompson',
     password: bcrypt.hashSync('ucirvineT12', bcrypt.genSaltSync(8)),
     institution: 'UCIrive-Thompson',
-    data: []
 });
 
 console.log('Users re-entered');

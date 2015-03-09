@@ -1,9 +1,8 @@
 angular.module( 'milestonesLanding.forms', [
     'ui.router',
     'angular-storage',
-    'schemaForm'
 ])
-.config(function($stateProvider, schemaFormDecoratorsProvider) {
+.config(function($stateProvider) {
     $stateProvider.state('forms', {
         url: '/forms',
         controller: 'FormsCtrl',
@@ -12,27 +11,23 @@ angular.module( 'milestonesLanding.forms', [
             requiresLogin: true
         }
     });
-    schemaFormDecoratorsProvider.addMapping(
-        'bootstrapDecorator',
-        'datepicker',
-        'directives/decorators/bootstrap/datepicker/datepicker.html'
-    );
-})
-.factory('User', function($http, store) {
-    var currentUser = store.get('currentUser');
-    console.log('CURRENT USER');
-    console.log(currentUser);
+}).factory('UserData', function($http) {
     return {
-        getSchema: function() {
+        getData: function(user) {
             return $http({
-                url: 'http://localhost:3001/api/data/schema',
-                method: 'GET',
-                data: currentUser
+                url: 'http://localhost:3001/api/data/user',
+                method: 'POST',
+                data: user
             });
         }
     };
 })
-.controller('FormsCtrl', function FormsController ($scope, $http, store, $state, User) {
-    
-   
+.controller('FormsCtrl', function FormsController ($scope, $http, store, $state, UserData) {
+    var currentUser = store.get('currentUser');
+    console.log(currentUser);
+    $scope.forms = [];
+    UserData.getData(currentUser).success(function(data) {
+        $scope.forms = data;
+        debugger;
+    });
 });
