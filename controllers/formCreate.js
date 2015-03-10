@@ -53,6 +53,34 @@ angular.module( 'milestonesLanding.formCreate', [
                 url: 'http://localhost:3001/api/readouts',
                 method: 'GET',
             });
+        },
+        postAssay: function(assay) {
+            return $http({
+                url: 'http://localhost:3001/api/assays',
+                method: 'POST',
+                data: assay
+            });
+        },
+        postCellLine: function(cellLine) {
+            return $http({
+                url: 'http://localhost:3001/api/cellLines',
+                method: 'POST',
+                data: cellLine
+            });
+        },
+        postPerturbagen: function(pert) {
+            return $http({
+                url: 'http://localhost:3001/api/perturbagens',
+                method: 'POST',
+                data: pert
+            });
+        },
+        postReadout: function(readout) {
+            return $http({
+                url: 'http://localhost:3001/api/readouts',
+                method: 'POST',
+                data: readout
+            });
         }
     };
 }).filter('propsFilter', function() {
@@ -84,7 +112,7 @@ angular.module( 'milestonesLanding.formCreate', [
 
         return out;
     };
-}).controller('FormCreateCtrl', function FormCreateController ($scope, $http, store, $state, lodash, User, Data) {
+}).controller('FormCreateCtrl', function FormCreateController ($scope, $http, store, $state, $modal, lodash, User, Data) {
 
     var emptyDict = {};
 
@@ -194,6 +222,47 @@ angular.module( 'milestonesLanding.formCreate', [
         $scope.form.releaseDates = {};
     };
 
+    $scope.addNew = function(inpType) {
+
+        var modalInstance = $modal.open({
+            templateUrl: 'views/formModal.html',
+            controller: 'FormModalCtrl',
+            resolve: {
+                datatype: function() {
+                    return inpType;
+                }
+            }
+        });
+
+        modalInstance.result.then(function(result){
+            if(inpType === 'Assay') {
+                Data.postAssay(result);
+                Data.getAssays().success(function(assays) {
+                    $scope.assays = assays;
+                }
+                                        );
+            }
+            if(inpType === 'Cell Line') {
+                Data.postAssay(result);
+                Data.getCellLines().success(function(cellLines) {
+                    $scope.cellLines = cellLines;
+                });
+            }
+            if(inpType === 'Perturbagen') {
+                Data.postAssay(result);
+                Data.getPerturbagens().success(function(perturbagens) {
+                    $scope.perturbagens = perturbagens;
+                });
+            }
+            if(inpType === 'Readout') {
+                Data.postAssay(result);
+                Data.getReadouts().success(function(readouts) {
+                    $scope.readouts = readouts;
+                });
+            }
+        });
+    };
+
     var post = function() {
         var outputForm = {};
         lodash.transform($scope.form, function(res, value, key) {
@@ -226,23 +295,5 @@ angular.module( 'milestonesLanding.formCreate', [
         post();
         alert('Post successful');
         $state.go('formCreate');
-    };
-
-    $scope.post = {
-        user: $scope.user,
-        data: data
-    };
-
-
-    $scope.postToUser = function() {
-        $http({
-            url: 'http://localhost:3001/api/data/add',
-            method: 'POST',
-            data: $scope.postData
-        }).then(function(response) {
-            console.log(response);
-        }, function(error) {
-            alert(error.data);
-        });
-    };
+    }; 
 });

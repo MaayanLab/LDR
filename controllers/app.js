@@ -4,6 +4,7 @@ angular.module( 'milestonesLanding', [
     'milestonesLanding.forms',
     'milestonesLanding.formCreate',
     'ui.router',
+    'ui.bootstrap',
     'angular-storage',
     'angular-jwt'
 ])

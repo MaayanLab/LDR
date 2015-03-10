@@ -26,8 +26,8 @@ angular.module( 'milestonesLanding.forms', [
     var currentUser = store.get('currentUser');
     console.log(currentUser);
     $scope.forms = [];
+
     UserData.getData(currentUser).success(function(data) {
         $scope.forms = data;
-        debugger;
     });
 });

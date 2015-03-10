@@ -36,6 +36,16 @@ module.exports = function(app, passport) {
         });            
     });
 
+    app.post('/api/assays', function(req, res) {
+        console.log('Posting To Assays');
+        console.log(req.body);
+        var assayData = req.body;
+        assayData._id = Models.genId();
+        var saveData = Models.Assay.create(assayData);
+        console.log(saveData);
+        res.status(201).send(saveData);
+    });
+
     app.get('/api/cellLines', function(req, res) {
         Models.CellLine.find({'name': { '$exists': true }}, function(err, lines) {
             if (err) {
@@ -44,6 +54,15 @@ module.exports = function(app, passport) {
             }
             res.status(200).send(lines);
         });            
+    });
+
+    app.post('/api/cellLines', function(req, res) {
+        console.log('Posting To Cell Lines');
+        var inputData = req.body;
+        inputData._id = Models.genId();
+        var saveData = Models.CellLine.create(inputData);
+        console.log(saveData);
+        res.status(201).send(saveData);
     });
 
     app.get('/api/perturbagens', function(req, res) {
@@ -56,6 +75,15 @@ module.exports = function(app, passport) {
         });            
     });
 
+    app.post('/api/perturbagens', function(req, res) {
+        console.log('Posting To Perturbagens');
+        var inputData = req.body;
+        inputData._id = Models.genId();
+        var saveData = Models.Perturbagen.create(inputData);
+        console.log(saveData);
+        res.status(201).send(saveData);
+    });
+
     app.get('/api/readouts', function(req, res) {
         Models.Readout.find({'name': { '$exists': true }}, function(err, readouts) {
             if (err) {
@@ -64,6 +92,15 @@ module.exports = function(app, passport) {
             }
             res.status(200).send(readouts);
         });            
+    });
+
+    app.post('/api/readouts', function(req, res) {
+        console.log('Posting');
+        var inputData = req.body;
+        inputData._id = Models.genId();
+        var saveData = Models.Readout.create(inputData);
+        console.log(saveData);
+        res.status(201).send(saveData);
     });
 
     app.get('/api/releaseDates', function(req, res) {
@@ -105,7 +142,7 @@ module.exports = function(app, passport) {
     });
 
     app.post('/api/data/add', function(req, res) {
-        console.log('Posting');
+        console.log('Posting To Data');
         var inputData = req.body;
         inputData._id = Models.genId();
         var saveData = Models.Data.create(inputData);

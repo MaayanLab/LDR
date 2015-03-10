@@ -1,0 +1,61 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{datatype}}</h3>
+</div>
+<div class="modal-body">
+    <form ng-model="modalForm" class="modal-form-input" ng-show="datatype === 'Assay'">
+        <div class="form-group">
+            <label class="control-label">Name</label>
+            <input type="text" class="form-control" ng-model="modalForm.name" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Information</label>
+            <input type="text" class="form-control" ng-model="modalForm.info" />
+        </div>
+    </form>
+
+    <form ng-model="modalForm" class="modal-form-input" ng-show="datatype === 'Cell Line'">
+        <div class="form-group">
+            <label class="control-label">Name</label>
+            <input type="text" class="form-control" ng-model="modalForm.name" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Type (Cell line or Cancer line)</label>
+            <input type="text" class="form-control" ng-model="modalForm.type" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Class (Normal or iPSC-differentiated)</label>
+            <input type="text" class="form-control" ng-model="modalForm.class" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Tissue</label>
+            <input type="text" class="form-control" ng-model="modalForm.tissue" />
+        </div>
+    </form>
+
+    <form ng-model="modalForm" class="modal-form-input" ng-show="datatype === 'Perturbagen'">
+        <div class="form-group">
+            <label class="control-label">Name</label>
+            <input type="text" class="form-control" ng-model="modalForm.name" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Type</label>
+            <input type="text" class="form-control" ng-model="modalForm.type" />
+        </div>
+    </form>
+
+    <form ng-model="modalForm" class="modal-form-input" ng-show="datatype === 'Readout'">
+        <div class="form-group">
+            <label class="control-label">Name</label>
+            <input type="text" class="form-control" ng-model="modalForm.name" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Datatype</label>
+            <input type="text" class="form-control" ng-model="modalForm.datatype" />
+        </div>
+    </form>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="add()">Add</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
