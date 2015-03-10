@@ -12,6 +12,10 @@ module.exports = function(app, passport) {
     // var fng = new formsAngular(app, { urlPrefix: '/forms/' });
     // fng.newResource(Models.Data);
 
+    app.get('/MilestonesLanding', function(req, res) {
+        res.sendfile('./public/index.html'); // load our public/index.html file
+    });
+
     app.get('/MilestonesLanding/*', function(req, res) {
         res.sendfile('./public/index.html'); // load our public/index.html file
     });
