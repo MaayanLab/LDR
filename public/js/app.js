@@ -8,8 +8,9 @@ angular.module( 'milestonesLanding', [
     'angular-storage',
     'angular-jwt'
 ])
-.config(function milestonesLandingConfig($urlRouterProvider, jwtInterceptorProvider, $httpProvider) {
-    $urlRouterProvider.otherwise('/MilestonesLanding');
+.config(function milestonesLandingConfig($urlRouterProvider, jwtInterceptorProvider, $httpProvider, $locationProvider) {
+    $locationProvider.html5Mode(true);
+    $urlRouterProvider.otherwise('/MilestonesLanding/');
 
     jwtInterceptorProvider.tokenGetter = function(store) {
         return store.get('jwt');
@@ -53,6 +54,7 @@ angular.module( 'milestonesLanding', [
 
 
 }).controller('milestonesLandingCtrl', function milestonesLandingCtrl ($scope, $rootScope, $http, $state, store, jwtHelper) {
+    $scope.baseUrl = 
 
     $scope.pageTitle = 'Milestones Landing';
 

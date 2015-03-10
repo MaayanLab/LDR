@@ -9,6 +9,7 @@ var express         = require('express'),
     morgan          = require('morgan'),
     cookieParser    = require('cookie-parser'),
     bodyParser      = require('body-parser'),
+    compress        = require('compression'),
     session         = require('express-session');
 
 
@@ -36,8 +37,12 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 require('./routes.js')(app, passport);
 
-// var DataFormHandler = new (formsAngular)(app, { urlPrefix: '/api/' });
-// DataFormHandler.newResource(require('./app/models'));
+var oneDay = 86400000;
+
+app.use(compress());
+
+console.log(__dirname);
+app.use(express.static(__dirname + '/public', { maxAge: oneDay }));
 
 app.listen(port);
 console.log('Everything\'s going down on port ' + port);
