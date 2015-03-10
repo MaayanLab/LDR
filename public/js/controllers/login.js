@@ -4,7 +4,7 @@ angular.module( 'milestonesLanding.login', [
 ])
 .config(function($stateProvider) {
     $stateProvider.state('login', {
-        url: '/MilestonesLanding/login',
+        url: '/login',
         controller: 'LoginCtrl',
         templateUrl: 'views/login.html'
     });

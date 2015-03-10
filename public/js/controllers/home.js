@@ -4,7 +4,7 @@ angular.module( 'milestonesLanding.home', [
 ])
 .config(function($stateProvider) {
     $stateProvider.state('home', {
-        url: '/MilestonesLanding/',
+        url: '/',
         controller: 'HomeCtrl',
         templateUrl: 'views/home.html'
     });
