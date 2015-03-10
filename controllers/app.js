@@ -9,7 +9,7 @@ angular.module( 'milestonesLanding', [
     'angular-jwt'
 ])
 .config(function milestonesLandingConfig($urlRouterProvider, jwtInterceptorProvider, $httpProvider) {
-    $urlRouterProvider.otherwise('/MilestonesLanding');
+    $urlRouterProvider.otherwise('/MilestonesLanding/');
 
     jwtInterceptorProvider.tokenGetter = function(store) {
         return store.get('jwt');
