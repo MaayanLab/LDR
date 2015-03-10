@@ -10,7 +10,7 @@ angular.module( 'milestonesLanding', [
 ])
 .config(function milestonesLandingConfig($urlRouterProvider, jwtInterceptorProvider, $httpProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
-    $urlRouterProvider.otherwise('/MilestonesLanding/');
+    $urlRouterProvider.otherwise('/');
 
     jwtInterceptorProvider.tokenGetter = function(store) {
         return store.get('jwt');
