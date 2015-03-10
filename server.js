@@ -44,7 +44,7 @@ var oneDay = 86400000;
 
 app.use(compress());
 
-console.log(__dirname);
+console.log(path);
 app.use('/',express.static(path.join(__dirname, 'public')));
 app.listen(port);
 console.log('Everything\'s going down on port ' + port);
