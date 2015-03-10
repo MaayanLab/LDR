@@ -16,8 +16,12 @@ module.exports = function(app, passport) {
         res.sendfile('./public/index.html'); // load our public/index.html file
     });
 
+    app.get('/MilestonesLanding/', function(req, res) {
+        res.redirect('/MilestonesLanding'); // load our public/index.html file
+    });
+
     app.get('/MilestonesLanding/*', function(req, res) {
-        res.sendfile('./public/index.html'); // load our public/index.html file
+        res.redirect('/MilestonesLanding'); // load our public/index.html file
     });
 
     app.get('/api/data/schema', function(req, res) {

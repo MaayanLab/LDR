@@ -7,6 +7,7 @@ var express         = require('express'),
 //    formsAngular    = require('forms-angular'),
 
     morgan          = require('morgan'),
+    path            = require('path'),
     cookieParser    = require('cookie-parser'),
     bodyParser      = require('body-parser'),
     compress        = require('compression'),
@@ -42,7 +43,6 @@ var oneDay = 86400000;
 app.use(compress());
 
 console.log(__dirname);
-app.use(express.static(__dirname + '/public', { maxAge: oneDay }));
-
+app.use('/',express.static(path.join(__dirname, 'public')));
 app.listen(port);
 console.log('Everything\'s going down on port ' + port);
