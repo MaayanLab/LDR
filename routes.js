@@ -12,10 +12,6 @@ module.exports = function(app, passport) {
     // var fng = new formsAngular(app, { urlPrefix: '/forms/' });
     // fng.newResource(Models.Data);
 
-    app.get('/', function(req, res) {
-        res.sendfile('./public/index.html'); // load our public/index.html file
-    });
-
     app.get('/api/data/schema', function(req, res) {
         res.status(200).send(Models.Data.schema);
     });
