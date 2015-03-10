@@ -9,7 +9,7 @@ angular.module( 'milestonesLanding', [
     'angular-jwt'
 ])
 .config(function milestonesLandingConfig($urlRouterProvider, jwtInterceptorProvider, $httpProvider) {
-    $urlRouterProvider.otherwise('/MilestonesLanding/');
+    $urlRouterProvider.otherwise('/MilestonesLanding');
 
     jwtInterceptorProvider.tokenGetter = function(store) {
         return store.get('jwt');
@@ -25,7 +25,7 @@ angular.module( 'milestonesLanding', [
             },
             responseError: function(response) {
                 if (response.status === 401)
-                    $location.url('/login');
+                    $location.url('/MilestonesLanding/login');
                 return $q.reject(response);
             }
         };
