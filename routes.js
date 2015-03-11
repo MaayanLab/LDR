@@ -112,7 +112,7 @@ module.exports = function(app, passport) {
         res.status(200).send('User successfully logged out');
     });
 
-    app.post('/api/login', passport.authenticate('local-login'), function(req, res) {
+    app.post('/login', passport.authenticate('local-login'), function(req, res) {
         console.log(Models.User);
         token = createToken(req.user); 
         var userBlob = {
