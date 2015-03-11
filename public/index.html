@@ -2,7 +2,15 @@
 <html ng-app="milestonesLanding" ng-controller="milestonesLandingCtrl">
 <head>
 <title ng-bind="pageTitle"></title>
-<base href="http://loretta:3001/">
+<script>
+if(document.location.hostname === 'localhost' || document.location.hostname === 'loretta') {
+    baseUrl = '/';
+} else {
+    baseUrl = '/MilestonesLanding/';
+}
+
+document.write('<base href="'+baseUrl+'">');
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
