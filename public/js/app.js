@@ -69,7 +69,7 @@ angular.module( 'milestonesLanding', [
     $scope.logout = function() {
         $rootScope.message = 'Logged out.';
         $http({
-            url: base + 'logout',
+            url: base + 'api/logout',
             method: 'GET',
         }).then(function(result) {
             // No Error

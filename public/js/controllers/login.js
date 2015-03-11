@@ -14,7 +14,7 @@ angular.module( 'milestonesLanding.login', [
     $scope.user = {};
     $scope.login = function() {
         $http({
-            url: base + 'login',
+            url: base + 'api/login',
             method: 'POST',
             data: $scope.user
         }).then(function(result) {
