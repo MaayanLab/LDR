@@ -7,8 +7,8 @@ angular.module( 'milestonesLanding.formCreate', [
     'ngLodash'
 ])
 .config(function($stateProvider) {
-    $stateProvider.state('formCreate', {
-        url: '/forms/create',
+    $stateProvider.state('forms.create', {
+        url: '/create',
         controller: 'FormCreateCtrl',
         templateUrl: 'views/formCreate.html',
         data: {

@@ -49,7 +49,12 @@ angular.module( 'milestonesLanding', [
                 $rootScope.currentUser = store.get('currentUser');
                 $rootScope.isLoggedIn = true;
             }
-        }
+        } else if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
+                $rootScope.isLoggedIn = false;
+            } else {
+                $rootScope.currentUser = store.get('currentUser');
+                $rootScope.isLoggedIn = true;
+            }
     });
 }).controller('milestonesLandingCtrl', function milestonesLandingCtrl ($scope, $rootScope, $http, $state, store, jwtHelper) {
 

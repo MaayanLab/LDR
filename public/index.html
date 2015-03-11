@@ -47,7 +47,7 @@ document.getElementsByTagName("head")[0].appendChild(newBase);
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" ng-href="{{rootUrl}}">Milestones Landing</a>
+                <a class="navbar-brand" ui-sref="home">Milestones Landing</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -58,11 +58,11 @@ document.getElementsByTagName("head")[0].appendChild(newBase);
                     <li class="dropdown" ng-show="isLoggedIn">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Forms <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a ng-href="{{rootUrl}}forms">My Forms</a></li>
-                        <li><a ng-href="{{rootUrl}}forms/create">Add New</a></li>
+                        <li><a ui-sref="forms">My Forms</a></li>
+                        <li><a ui-sref="forms.create">Add New</a></li>
                     </ul>
                     </li>
-                    <li ng-show="!isLoggedIn"><a ng-href="{{rootUrl}}login">Login</a></li>
+                    <li ng-show="!isLoggedIn"><a ui-sref="login">Login</a></li>
                     <li ng-show="isLoggedIn"><a ng-click="logout()">Logout</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->

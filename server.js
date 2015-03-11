@@ -38,9 +38,21 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
+app.use(compress());
+
+var publicDir = __dirname + '/public';
+console.log(publicDir);
+
+app.use('/js', express.static(path.join(publicDir + '/js')));
+app.use('/css', express.static(path.join(publicDir + '/css')));
+app.use('/views', express.static(path.join(publicDir + '/views')));
+app.use('/vendor', express.static(path.join(publicDir + '/vendor')));
+
 require('./routes.js')(app, passport);
 
-app.use(compress());
+app.get('/*', function(req, res) {
+    res.sendfile(publicDir + '/index.html');
+  });
 
 app.listen(port);
 console.log('Everything\'s going down on port ' + port);

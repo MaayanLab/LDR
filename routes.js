@@ -144,8 +144,6 @@ module.exports = function(app, passport) {
         res.status(201).send(saveData);
     });
 
-    
-
 };
 
 function createToken(user) {
