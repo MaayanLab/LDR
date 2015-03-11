@@ -30,7 +30,7 @@ angular.module( 'milestonesLanding.formCreate', [
     return {
         getAssays: function() {
             return $http({
-                url: base + '/api/assays',
+                url: base + 'api/assays',
                 method: 'GET',
             });
         },
