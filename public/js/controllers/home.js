@@ -11,4 +11,6 @@ angular.module( 'milestonesLanding.home', [
 })
 .controller('HomeCtrl', function HomeController($scope, $http) {
 
+    console.log(baseUrl);
+
 });
