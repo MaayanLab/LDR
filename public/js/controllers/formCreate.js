@@ -17,8 +17,6 @@ angular.module( 'milestonesLanding.formCreate', [
     });
 }).factory('User', function ($http, store) {
     var currentUser = store.get('currentUser');
-    console.log('CURRENT USER');
-    console.log(currentUser);
     return {
         getSchema: function() {
             return $http({
@@ -279,9 +277,7 @@ angular.module( 'milestonesLanding.formCreate', [
             method: 'POST',
             data: outputForm
         }).then(function(response) {
-            console.log(response);
         }, function(error) {
-            console.log(error);
             alert(error.data);
         });
     };
