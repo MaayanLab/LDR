@@ -78,7 +78,7 @@ module.exports = function(app, passport) {
         res.status(201).send(saveData);
     });
 
-    app.get('api/readouts', function(req, res) {
+    app.get('/readouts', function(req, res) {
         Models.Readout.find({'name': { '$exists': true }}, function(err, readouts) {
             if (err) {
                 console.log(err);
