@@ -3,13 +3,8 @@
 <head>
 <title ng-bind="pageTitle"></title>
 <script>
-if(document.location.hostname === 'localhost' || document.location.hostname === 'loretta') {
-    baseUrl = '/';
-} else {
-    baseUrl = '/MilestonesLanding/';
-}
-
-document.write('<base href="'+baseUrl+'">');
+var base = '/';
+document.write('<base href="'+base+'">');
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -45,7 +40,7 @@ document.write('<base href="'+baseUrl+'">');
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">Milestones Landing</a>
+                <a class="navbar-brand" ng-href="{{rootUrl}}">Milestones Landing</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -56,11 +51,11 @@ document.write('<base href="'+baseUrl+'">');
                     <li class="dropdown" ng-show="isLoggedIn">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Forms <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="/forms">My Forms</a></li>
-                        <li><a href="/forms/create">Add New</a></li>
+                        <li><a ng-href="{rootUrl}}forms">My Forms</a></li>
+                        <li><a ng-href="{{rootUrl}}forms/create">Add New</a></li>
                     </ul>
                     </li>
-                    <li ng-show="!isLoggedIn"><a href="/login">Login</a></li>
+                    <li ng-show="!isLoggedIn"><a ng-href="{{rootUrl}}login">Login</a></li>
                     <li ng-show="isLoggedIn"><a ng-click="logout()">Logout</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->

@@ -8,7 +8,7 @@ angular.module( 'milestonesLanding.formCreate', [
 ])
 .config(function($stateProvider) {
     $stateProvider.state('formCreate', {
-        url: baseUrl + 'forms/create',
+        url: '/forms/create',
         controller: 'FormCreateCtrl',
         templateUrl: 'views/formCreate.html',
         data: {

@@ -35,6 +35,7 @@ angular.module( 'milestonesLanding', [
 })
 .run(function($rootScope, $state, store, jwtHelper) {
     "use strict";
+
     $rootScope.message = '';
 
     $rootScope.$on('$stateChangeStart', function(e, to) {
@@ -54,7 +55,8 @@ angular.module( 'milestonesLanding', [
 
 
 }).controller('milestonesLandingCtrl', function milestonesLandingCtrl ($scope, $rootScope, $http, $state, store, jwtHelper) {
-    $scope.baseUrl = 
+
+    $scope.rootUrl = base;
 
     $scope.pageTitle = 'Milestones Landing';
 

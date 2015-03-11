@@ -4,13 +4,12 @@ angular.module( 'milestonesLanding.home', [
 ])
 .config(function($stateProvider) {
     $stateProvider.state('home', {
-        url: baseUrl,
+        url: '/',
         controller: 'HomeCtrl',
         templateUrl: 'views/home.html'
     });
 })
 .controller('HomeCtrl', function HomeController($scope, $http) {
 
-    console.log(baseUrl);
 
 });

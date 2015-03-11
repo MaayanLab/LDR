@@ -4,7 +4,7 @@ angular.module( 'milestonesLanding.forms', [
 ])
 .config(function($stateProvider) {
     $stateProvider.state('forms', {
-        url: baseUrl + 'forms',
+        url: '/forms',
         controller: 'FormsCtrl',
         templateUrl: 'views/forms.html',
         data: {
