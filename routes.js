@@ -6,11 +6,11 @@ var jwt             = require('jsonwebtoken'),
 
 module.exports = function(app, passport) {
 
-    app.get('/api/data/schema', function(req, res) {
+    app.get('/data/schema', function(req, res) {
         res.status(200).send(Models.Data.schema);
     });
 
-    app.get('/api/users', function(req, res) {
+    app.get('/users', function(req, res) {
         Models.User.find({'username': { '$exists': true }}, function(err, users) {
             if (err) {
                 console.log(err);
@@ -20,7 +20,7 @@ module.exports = function(app, passport) {
         });            
     });
 
-    app.get('/api/assays', function(req, res) {
+    app.get('/assays', function(req, res) {
         Models.Assay.find({'name': { '$exists': true }}, function(err, assays) {
             if (err) {
                 console.log(err);
@@ -30,7 +30,7 @@ module.exports = function(app, passport) {
         });            
     });
 
-    app.post('/api/assays', function(req, res) {
+    app.post('/assays', function(req, res) {
         console.log('Posting To Assays');
         console.log(req.body);
         var assayData = req.body;
@@ -40,7 +40,7 @@ module.exports = function(app, passport) {
         res.status(201).send(saveData);
     });
 
-    app.get('/api/cellLines', function(req, res) {
+    app.get('/cellLines', function(req, res) {
         Models.CellLine.find({'name': { '$exists': true }}, function(err, lines) {
             if (err) {
                 console.log(err);
@@ -50,7 +50,7 @@ module.exports = function(app, passport) {
         });            
     });
 
-    app.post('/api/cellLines', function(req, res) {
+    app.post('/cellLines', function(req, res) {
         console.log('Posting To Cell Lines');
         var inputData = req.body;
         inputData._id = Models.genId();
@@ -59,7 +59,7 @@ module.exports = function(app, passport) {
         res.status(201).send(saveData);
     });
 
-    app.get('/api/perturbagens', function(req, res) {
+    app.get('/perturbagens', function(req, res) {
         Models.Perturbagen.find({'name': { '$exists': true }}, function(err, perts) {
             if (err) {
                 console.log(err);
@@ -69,7 +69,7 @@ module.exports = function(app, passport) {
         });            
     });
 
-    app.post('/api/perturbagens', function(req, res) {
+    app.post('/perturbagens', function(req, res) {
         console.log('Posting To Perturbagens');
         var inputData = req.body;
         inputData._id = Models.genId();
@@ -88,7 +88,7 @@ module.exports = function(app, passport) {
         });            
     });
 
-    app.post('/api/readouts', function(req, res) {
+    app.post('/readouts', function(req, res) {
         console.log('Posting');
         var inputData = req.body;
         inputData._id = Models.genId();
@@ -97,7 +97,7 @@ module.exports = function(app, passport) {
         res.status(201).send(saveData);
     });
 
-    app.get('/api/releaseDates', function(req, res) {
+    app.get('/releaseDates', function(req, res) {
         Models.ReleaseDate.find({'name': { '$exists': true }}, function(err, rDates) {
             if (err) {
                 console.log(err);
@@ -107,12 +107,12 @@ module.exports = function(app, passport) {
         });            
     });
 
-    app.get('/api/logout', function(req, res) {
+    app.get('/logout', function(req, res) {
         req.logout();
         res.status(200).send('User successfully logged out');
     });
 
-    app.post('/api/login', passport.authenticate('local-login'), function(req, res) {
+    app.post('/login', passport.authenticate('local-login'), function(req, res) {
         console.log(Models.User);
         token = createToken(req.user); 
         var userBlob = {
@@ -124,7 +124,7 @@ module.exports = function(app, passport) {
 
     });
 
-    app.post('/api/data/user', function(req, res) {
+    app.post('/data/user', function(req, res) {
         console.log(req.body);
         Models.Data.find({ userId: req.body._id }, function(err, userData) {
             if (err) {
@@ -135,7 +135,7 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post('/api/data/add', function(req, res) {
+    app.post('/data/add', function(req, res) {
         console.log('Posting To Data');
         var inputData = req.body;
         inputData._id = Models.genId();
