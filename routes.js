@@ -1,7 +1,7 @@
 var jwt             = require('jsonwebtoken'),
-    Models          = require('./api/app/api/models'),
-    config          = require('./api/config/api/database'),
-    baseUrl          = require('./api/config/api/baseUrl').baseUrl,
+    Models          = require('./app/models'),
+    config          = require('./config/database'),
+    baseUrl          = require('./config/baseUrl').baseUrl,
     _               = require('lodash');
 
 module.exports = function(app, passport) {
@@ -112,7 +112,7 @@ module.exports = function(app, passport) {
         res.status(200).send('User successfully logged out');
     });
 
-    app.post('/login', passport.authenticate('local-login'), function(req, res) {
+    app.post('/api/login', passport.authenticate('local-login'), function(req, res) {
         console.log(Models.User);
         token = createToken(req.user); 
         var userBlob = {
