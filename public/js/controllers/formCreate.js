@@ -273,7 +273,6 @@ angular.module( 'milestonesLanding.formCreate', [
         outputForm.readoutCount = $scope.form.readouts.length;
         outputForm.cellLineCount = $scope.form.cellLines.length;
         outputForm.perturbagenCount = $scope.form.perturbagens.length;
-        console.log(outputForm);
 
         $http({
             url: base + 'api/data/add',

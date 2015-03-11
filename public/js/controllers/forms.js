@@ -24,7 +24,6 @@ angular.module( 'milestonesLanding.forms', [
 })
 .controller('FormsCtrl', function FormsController ($scope, $http, store, $state, UserData) {
     var currentUser = store.get('currentUser');
-    console.log(currentUser);
     $scope.forms = [];
 
     UserData.getData(currentUser).success(function(data) {

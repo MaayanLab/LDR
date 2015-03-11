@@ -21,14 +21,11 @@ angular.module( 'milestonesLanding.login', [
             // No error: authentication OK
             store.set('currentUser', result.data.user);
             store.set('jwt', result.data.id_token);
-            console.log(store.get('jwt'));
-            console.log(result);
             $state.go('forms');
         }, function(error) {
             // Error: authentication failed
             store.set('message', 'Authentication failed.');
             alert('Login was unsuccessful. Please try again.');
-            console.log(error);
         });
     };
 
