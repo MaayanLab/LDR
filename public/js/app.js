@@ -51,9 +51,6 @@ angular.module( 'milestonesLanding', [
             }
         }
     });
-
-
-
 }).controller('milestonesLandingCtrl', function milestonesLandingCtrl ($scope, $rootScope, $http, $state, store, jwtHelper) {
 
     $scope.base = base;
