@@ -1,4 +1,4 @@
 module.exports = {
-    'url': 'mongodb://localhost:27017/Milestones',
+    'url': 'mongodb://mmcdermott:kroyweN@localhost:27017/Milestones',
     'secret': 'maayanLABBALnayaam'
 };

@@ -10,7 +10,7 @@ angular.module( 'milestonesLanding', [
 ])
 .config(function milestonesLandingConfig($urlRouterProvider, jwtInterceptorProvider, $httpProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise(base);
 
     jwtInterceptorProvider.tokenGetter = function(store) {
         return store.get('jwt');
@@ -26,7 +26,7 @@ angular.module( 'milestonesLanding', [
             },
             responseError: function(response) {
                 if (response.status === 401)
-                    $location.url('/MilestonesLanding/login');
+                    $location.url(base + 'login');
                 return $q.reject(response);
             }
         };
@@ -56,7 +56,7 @@ angular.module( 'milestonesLanding', [
 
 }).controller('milestonesLandingCtrl', function milestonesLandingCtrl ($scope, $rootScope, $http, $state, store, jwtHelper) {
 
-    $scope.rootUrl = base;
+    $scope.base = base;
 
     $scope.pageTitle = 'Milestones Landing';
 
@@ -69,7 +69,7 @@ angular.module( 'milestonesLanding', [
     $scope.logout = function() {
         $rootScope.message = 'Logged out.';
         $http({
-            url:'http://localhost:3001/logout',
+            url: base + 'logout',
             method: 'GET',
         }).then(function(result) {
             // No Error

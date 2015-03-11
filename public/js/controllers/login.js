@@ -14,7 +14,7 @@ angular.module( 'milestonesLanding.login', [
     $scope.user = {};
     $scope.login = function() {
         $http({
-            url:'http://localhost:3001/login',
+            url: base + 'login',
             method: 'POST',
             data: $scope.user
         }).then(function(result) {
@@ -27,6 +27,7 @@ angular.module( 'milestonesLanding.login', [
         }, function(error) {
             // Error: authentication failed
             store.set('message', 'Authentication failed.');
+            alert('Login was unsuccessful. Please try again.');
             console.log(error);
         });
     };

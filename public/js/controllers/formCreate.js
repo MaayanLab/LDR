@@ -22,7 +22,7 @@ angular.module( 'milestonesLanding.formCreate', [
     return {
         getSchema: function() {
             return $http({
-                url: 'http://localhost:3001/api/schema',
+                url: base + 'api/schema',
                 method: 'GET',
                 data: currentUser
             });
@@ -32,52 +32,52 @@ angular.module( 'milestonesLanding.formCreate', [
     return {
         getAssays: function() {
             return $http({
-                url: 'http://localhost:3001/api/assays',
+                url: base + '/api/assays',
                 method: 'GET',
             });
         },
         getCellLines: function() {
             return $http({
-                url: 'http://localhost:3001/api/cellLines',
+                url: base + 'api/cellLines',
                 method: 'GET',
             });
         },
         getPerturbagens: function() {
             return $http({
-                url: 'http://localhost:3001/api/perturbagens',
+                url: base + 'api/perturbagens',
                 method: 'GET',
             });
         },
         getReadouts: function() {
             return $http({
-                url: 'http://localhost:3001/api/readouts',
+                url: base + 'api/readouts',
                 method: 'GET',
             });
         },
         postAssay: function(assay) {
             return $http({
-                url: 'http://localhost:3001/api/assays',
+                url: base + 'api/assays',
                 method: 'POST',
                 data: assay
             });
         },
         postCellLine: function(cellLine) {
             return $http({
-                url: 'http://localhost:3001/api/cellLines',
+                url: base + 'api/cellLines',
                 method: 'POST',
                 data: cellLine
             });
         },
         postPerturbagen: function(pert) {
             return $http({
-                url: 'http://localhost:3001/api/perturbagens',
+                url: base + 'api/perturbagens',
                 method: 'POST',
                 data: pert
             });
         },
         postReadout: function(readout) {
             return $http({
-                url: 'http://localhost:3001/api/readouts',
+                url: base + 'api/readouts',
                 method: 'POST',
                 data: readout
             });
@@ -276,7 +276,7 @@ angular.module( 'milestonesLanding.formCreate', [
         console.log(outputForm);
 
         $http({
-            url: 'http://localhost:3001/api/data/add',
+            url: base + 'api/data/add',
             method: 'POST',
             data: outputForm
         }).then(function(response) {

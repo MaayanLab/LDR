@@ -15,7 +15,7 @@ angular.module( 'milestonesLanding.forms', [
     return {
         getData: function(user) {
             return $http({
-                url: 'http://localhost:3001/api/data/user',
+                url: base + 'api/data/user',
                 method: 'POST',
                 data: user
             });

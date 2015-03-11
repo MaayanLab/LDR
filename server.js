@@ -40,8 +40,6 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 require('./routes.js')(app, passport);
 
-var oneDay = 86400000;
-
 app.use(compress());
 
 app.listen(port);
