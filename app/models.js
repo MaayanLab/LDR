@@ -204,16 +204,13 @@ module.exports = {
     Data: Data
 };
 
-
+/*
 // USE TO REMOVE USERS
 User.remove({ username: {$exists: true}}, function (err, events) {
     console.log('Users db cleared');
 });
 
 // USE TO RE-ENTER USERS
-
-var id = mongoose.Types.ObjectId();
-
 
 var admin = User.create({
     _id: shortId.generate(),
@@ -265,4 +262,4 @@ var ohsuUser = User.create({
 });
 
 console.log('Users re-entered');
-
+*/
