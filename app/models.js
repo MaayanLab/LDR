@@ -1,6 +1,7 @@
 'use strict()';
 
 var mongoose    = require('mongoose'),
+    shortId     = require('shortid'),
     bcrypt      = require('bcrypt-nodejs');
 
 var Schema = mongoose.Schema;
@@ -14,7 +15,7 @@ var releaseDateSchema = new Schema({
 });
 
 var perturbagenSchema = new Schema({
-    _id: Schema.Types.ObjectId,
+    _id: { type: String, unique: true, default: shortId.generate },
     name: { type: String, required: true, index: { unique: true } },
     type: { type: String, required: true }
 });
@@ -25,7 +26,7 @@ var countTypeSchema = new Schema({
 });
 
 var cellLineSchema = new Schema({
-    _id: Schema.Types.ObjectId,
+    _id: { type: String, unique: true, default: shortId.generate },
     controlOrDisease: String,
     name: { type: String, required: true, index: { unique: true } },
     type: { type: String, required: true },
@@ -50,21 +51,21 @@ var instanceMetaSchema = new Schema({
 });
 
 var readoutSchema = new Schema({
-    _id: Schema.Types.ObjectId,
+    _id: { type: String, unique: true, default: shortId.generate },
     name: { type: String, required: true, index: { unique: true } },
-    datatype: { type: String, required: true }
+    datatype: String
 });
 
 var assaySchema = new Schema({
-    _id: Schema.Types.ObjectId,
+    _id: { type: String, unique: true, default: shortId.generate },
     name: { type: String, required: true, index: { unique: true } },
     info: { type: String, required: true }
 });
 
 
 var dataSchema = new Schema({
-    _id: Schema.Types.ObjectId,
-    userId: Schema.Types.ObjectId,
+    _id: { type: String, unique: true, default: shortId.generate },
+    userId: String,
     status: String,
     dateModified: Date,
     center: { type: String, required: true },
@@ -100,7 +101,7 @@ var dataSchema = new Schema({
 });
 
 var userSchema = new Schema({
-    _id: Schema.Types.ObjectId,
+    _id: { type: String, unique: true, default: shortId.generate },
     username: { type: String, required: true, index: { unique: true } },
     password: { type: String, required: true },
     institution: { type: String, required: true }
@@ -193,12 +194,7 @@ try {
   Data = mongoose.model(modelName, schema, collectionName);
 }
 
-var genId = function() {
-    return mongoose.Types.ObjectId();
-};
-
 module.exports = {
-    genId: genId,
     User: User,
     Assay: Assay,
     CellLine: CellLine,
@@ -207,7 +203,6 @@ module.exports = {
     ReleaseDate: ReleaseDate,
     Data: Data
 };
-
 
 /*
 // USE TO REMOVE USERS
@@ -221,46 +216,54 @@ var id = mongoose.Types.ObjectId();
 
 
 var admin = User.create({
-    _id: genId(),
+    _id: shortId.generate(),
     username: 'admin',
     password: bcrypt.hashSync('maaya0', bcrypt.genSaltSync(8)),
     institution: 'All',
 });
 
 var hmsUser = User.create({
-    _id: genId(),
+    _id: shortId.generate(),
     username: 'hmssorger',
     password: bcrypt.hashSync('harvardS24', bcrypt.genSaltSync(8)),
     institution: 'HMS-Sorger',
 });
 
 var broadGUser = User.create({
-    _id: genId(),
+    _id: shortId.generate(),
     username: 'broadgolub',
     password: bcrypt.hashSync('broadG42', bcrypt.genSaltSync(8)),
     institution: 'Broad-Golub',
 });
 
 var broadJUser = User.create({
-    _id: genId(),
+    _id: shortId.generate(),
     username: 'broadjaffe',
     password: bcrypt.hashSync('broadJ32', bcrypt.genSaltSync(8)),
     institution: 'Broad-Jaffe',
 });
 
 var ismmsUser = User.create({
-    _id: genId(),
+    _id: shortId.generate(),
     username: 'ismmsiyengar',
     password: bcrypt.hashSync('ismmsI21', bcrypt.genSaltSync(8)),
     institution: 'ISMMS-Iyengar',
 });
+*/
+var neuroLincsUser = User.create({
+    _id: shortId.generate(),
+    username: 'neurolincs',
+    password: bcrypt.hashSync('neuroL12', bcrypt.genSaltSync(8)),
+    institution: 'NeuroLINCS',
+});
 
-var uciUser = User.create({
-    _id: genId(),
-    username: 'ucirvinethompson',
-    password: bcrypt.hashSync('ucirvineT12', bcrypt.genSaltSync(8)),
-    institution: 'UCIrive-Thompson',
+var ohsuUser = User.create({
+    _id: shortId.generate(),
+    username: 'ohsu',
+    password: bcrypt.hashSync('ohsu36', bcrypt.genSaltSync(8)),
+    institution: 'OHSU',
 });
 
 console.log('Users re-entered');
-*/
+
+

@@ -2,6 +2,7 @@ angular.module( 'milestonesLanding', [
     'milestonesLanding.home',
     'milestonesLanding.login',
     'milestonesLanding.forms',
+    'milestonesLanding.admin',
     'milestonesLanding.formCreate',
     'ui.router',
     'ui.bootstrap',
@@ -39,22 +40,57 @@ angular.module( 'milestonesLanding', [
     $rootScope.message = '';
 
     $rootScope.$on('$stateChangeStart', function(e, to) {
-        if (to.data && to.data.requiresLogin) {
-            if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
-                $rootScope.isLoggedIn = false;
-                e.preventDefault();
-                alert('You must be authorized to access this page. Please log in.');
-                $state.go('login');
-            } else {
-                $rootScope.currentUser = store.get('currentUser');
-                $rootScope.isLoggedIn = true;
+        $rootScope.currentUser = store.get('currentUser');
+        if (to.data) {
+            if (to.data.requiresAdmin) {
+                if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
+                    $rootScope.isLoggedIn = false;
+                    $rootScope.isLoggedInAdmin = false;
+                    e.preventDefault();
+                    alert('You must be the authorized to access this page. Please log in.');
+                    $state.go('login');
+                }
+                if ($rootScope.currentUser.username !== 'admin') {
+                    $rootScope.currentUser = store.get('currentUser');
+                    $rootScope.isLoggedIn = true;
+                    $rootScope.isLoggedInAdmin = false;
+                    e.preventDefault();
+                    alert('You must be the authorized to access this page.');
+                    $state.go('home');
+                }
+            }
+            if (to.data.requiresLogin) {
+                if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
+                    $rootScope.isLoggedIn = false;
+                    $rootScope.isLoggedInAdmin = false;
+                    e.preventDefault();
+                    alert('You must be authorized to access this page. Please log in.');
+                    $state.go('login');
+                } else {
+                    if ($rootScope.currentUser.username === 'admin') {
+                        $rootScope.currentUser = store.get('currentUser');
+                        $rootScope.isLoggedIn = true;
+                        $rootScope.isLoggedInAdmin = true;
+                    }
+                    else {
+                        $rootScope.currentUser = store.get('currentUser');
+                        $rootScope.isLoggedIn = true;
+                        $rootScope.isLoggedInAdmin = false;
+                    }
+                }
             }
         } else if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
-                $rootScope.isLoggedIn = false;
-            } else {
-                $rootScope.currentUser = store.get('currentUser');
+            $rootScope.isLoggedIn = false;
+        } else {
+            if ($rootScope.currentUser.username === 'admin') {
                 $rootScope.isLoggedIn = true;
+                $rootScope.isLoggedInAdmin = true;
             }
+            else {
+                $rootScope.isLoggedIn = true;
+                $rootScope.isLoggedInAdmin = false;
+            }
+        }
     });
 }).controller('milestonesLandingCtrl', function milestonesLandingCtrl ($scope, $rootScope, $http, $state, store, jwtHelper) {
 
@@ -67,7 +103,7 @@ angular.module( 'milestonesLanding', [
             $scope.pageTitle = nextRoute.$$route.pageTitle + ' | Milestones Landing' ;
         }
     });
- 
+
     $scope.logout = function() {
         $rootScope.message = 'Logged out.';
         $http({
@@ -77,6 +113,7 @@ angular.module( 'milestonesLanding', [
             // No Error
             $rootScope.message = result;
             $rootScope.isLoggedIn = false;
+            $rootScope.isLoggedInAdmin = false;
             store.remove('jwt');
             alert('Successfully logged out');
             $state.go('home');

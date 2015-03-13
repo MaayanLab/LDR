@@ -1,6 +1,39 @@
-<!-- TODO -->
 <div ng-controller="FormsCtrl">
-    <h3 class="text-center">FORMS HOMEPAGE: Will be a list of their forms and status of processing</h3>
-    <a ui-sref="formsCreate">Insert more data</a>
-    <p ng-repeat="form in forms">{{ form }}</p>
+    <h3 class="text-center">{{currentUser.institution}}'s Data Releases</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Dataset ID</th>
+                <th>Status</th>
+                <th>Assay</th>
+                <th>Readout Count</th>
+                <!--<th></th>-->
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="form in forms" class="form-table-data">
+                <td class="col-md-2" id="id">{{form._id}}</td>
+                <td class="col-md-2" id="status">{{form.status}}</td>
+                <td class="col-md-6" id="assay-name">{{form.assay.name}}</td>
+                <td class="col-md-2" id="readout-count">{{form.readoutCount}}</td>
+                <!--<td><button type="button" class="btn btn-default" ng-click="editForm(form)">Edit Form</button></td>-->
+                <td>
+                    <div class="btn-group">
+                        <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
+                            Action
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!--<li><a ng-click="editForm(form)">Edit</a></li>-->
+                            <li><a ng-click="deleteForm(form)">Delete</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-if="forms.length === 0">
+                <td colspan="5" class="col-md-12">There are no releases to display. Please <a ui-sref="formsCreate">add data here</a>.</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
