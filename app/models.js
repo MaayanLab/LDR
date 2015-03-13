@@ -204,7 +204,7 @@ module.exports = {
     Data: Data
 };
 
-/*
+
 // USE TO REMOVE USERS
 User.remove({ username: {$exists: true}}, function (err, events) {
     console.log('Users db cleared');
@@ -219,7 +219,7 @@ var admin = User.create({
     _id: shortId.generate(),
     username: 'admin',
     password: bcrypt.hashSync('maaya0', bcrypt.genSaltSync(8)),
-    institution: 'All',
+    institution: 'NIH',
 });
 
 var hmsUser = User.create({
@@ -249,7 +249,7 @@ var ismmsUser = User.create({
     password: bcrypt.hashSync('ismmsI21', bcrypt.genSaltSync(8)),
     institution: 'ISMMS-Iyengar',
 });
-*/
+
 var neuroLincsUser = User.create({
     _id: shortId.generate(),
     username: 'neurolincs',
@@ -265,5 +265,4 @@ var ohsuUser = User.create({
 });
 
 console.log('Users re-entered');
-
 

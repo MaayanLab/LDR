@@ -36,7 +36,9 @@ angular.module( 'milestonesLanding.admin', [
         $scope.allForms = forms;
     });
 
-    $scope.approveForm = 
+    $scope.approveForm = function(form) {
+       //TODO: Create put request in factory and update status of given form with something like "approved"
+    }
 
     $scope.deleteForm = function(form) {
         if (confirm('Are you sure you would like to delete this entry?')) {
