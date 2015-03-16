@@ -17,7 +17,6 @@
                 <td class="col-md-2" id="status">{{form.status}}</td>
                 <td class="col-md-6" id="assay-name">{{form.assay.name}}</td>
                 <td class="col-md-2" id="readout-count">{{form.readoutCount}}</td>
-                <!--<td><button type="button" class="btn btn-default" ng-click="editForm(form)">Edit Form</button></td>-->
                 <td>
                     <div class="btn-group">
                         <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
@@ -25,7 +24,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <!--<li><a ng-click="editForm(form)">Edit</a></li>-->
+                            <li><a ng-click="editForm(form)">Edit</a></li>
                             <li><a ng-click="deleteForm(form)">Delete</a></li>
                         </ul>
                     </div>

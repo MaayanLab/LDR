@@ -11,7 +11,7 @@ angular.module( 'milestonesLanding.forms', [
             requiresLogin: true
         }
     });
-}).factory('FormData', function($http) {
+}).factory('FormGets', function($http) {
     return {
         getUserForms: function(userId) {
             return $http({
@@ -19,33 +19,44 @@ angular.module( 'milestonesLanding.forms', [
                 method: 'GET'
             });
         },
-        deleteForm: function(userId,formId) {
+        getAllForms: function() {
             return $http({
-                url: base + 'api/data/remove?userId=' + userId + '&formId=' + formId,
-                method: 'DELETE'
+                url: base + 'api/data',
+                method: 'GET'
             });
         }
     };
-})
-.controller('FormsCtrl', function FormsController ($scope, $http, store, $state, FormData) {
+}).factory('FormUpdates', function($http) {
+    return {
+        updateForm: function(form) {
+            return $http({
+                url: base + 'api/data/update',
+                method: 'PUT',
+                data: form
+            });
+        }
+    };
+}).controller('FormsCtrl', function FormsController ($scope, $http, store, $state, FormGets, DataGets, DataPosts, DataDeletes) {
     var currentUser = store.get('currentUser');
     $scope.currentUser = currentUser;
     $scope.forms = [];
 
-    FormData.getUserForms(currentUser._id).success(function(data) {
+    FormGets.getUserForms(currentUser._id).success(function(data) {
         $scope.forms = data;
     });
 
     $scope.editForm = function(form) {
         // TODO: Route to editing of form here
+        store.set('formToEdit', form);
+        $state.go('formsCreate');
     };
 
     $scope.deleteForm = function(form) {
         if (confirm('Are you sure you would like to delete this entry?')) {
-            FormData.deleteForm(currentUser._id,form._id).success(function(data) {
+            DataDeletes.deleteForm(form._id).success(function(data) {
                 console.log(data);
             });
-            FormData.getUserForms(currentUser._id).success(function(data) {
+            FormGets.getUserForms(currentUser._id).success(function(data) {
                 $scope.forms = data;
             });
         }

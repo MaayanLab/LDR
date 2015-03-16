@@ -12,33 +12,25 @@ angular.module( 'milestonesLanding.admin', [
             requiresAdmin: true
         }
     });
-}).factory('AdminFactory', function($http) {
-    return {
-        getAllForms: function() {
-            return $http({
-                url: base + 'api/data',
-                method: 'GET'
-            });
-        },
-        deleteForm: function(formId) {
-            return $http({
-                url: base + 'api/data/remove?formId=' + formId,
-                method: 'DELETE'
-            });
-        }
-    };
-})
-.controller('AdminCtrl', function AdminController ($scope, $http, store, $state, FormData, AdminFactory) {
+}).controller('AdminCtrl', function AdminController ($scope, $http, store, $state, FormGets, FormUpdates, DataGets, DataPosts, DataDeletes) {
     var currentUser = store.get('currentUser');
     $scope.allForms = [];
 
-    AdminFactory.getAllForms().success(function(forms) {
+    FormGets.getAllForms().success(function(forms) {
         $scope.allForms = forms;
     });
 
     $scope.approveForm = function(form) {
-       //TODO: Create put request in factory and update status of given form with something like "approved"
-    }
+        //TODO: Create put request in factory and update status of given form with something like "approved"
+        form.status = 'approved';
+        FormUpdates.updateForm(form).success(function(err, result) {
+            if (err)
+                console.log(err);
+        });
+        FormGets.getAllForms().success(function(forms) {
+            $scope.allForms = forms;
+        });
+    };
 
     $scope.deleteForm = function(form) {
         if (confirm('Are you sure you would like to delete this entry?')) {
@@ -51,4 +43,28 @@ angular.module( 'milestonesLanding.admin', [
         }
     };
 
+    $scope.removeAssay = function(assay) {
+        DataDeletes.deleteAssay(assay._id).success(function(data) {
+            console.log(data);
+        });
+    };
+
+
+    $scope.removeCellLine = function(cLine) {
+        DataDeletes.deleteCellLine(cLine._id).success(function(data) {
+            console.log(data);
+        });
+    };
+
+    $scope.removePerturbagen = function(pert) {
+        DataDeletes.deletePerturbagen(pert._id).success(function(data) {
+            console.log(data);
+        });
+    };
+
+    $scope.removeReadout = function(rOut) {
+        AdminFactory.deleteReadout(rOut._id).success(function(data) {
+            console.log(data);
+        });
+    };
 });

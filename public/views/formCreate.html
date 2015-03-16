@@ -1,6 +1,5 @@
 <div ng-controller="FormCreateCtrl">
     <div class="form-info-block">
-        <p>Hello World</p>
         <p>Information missing from the input lists? Click the '+' sign next to the respective inputs to add your own data.</p>
     </div>
     <form name="dataForm" class="form-block">
@@ -63,10 +62,21 @@
             </ui-select-choices>
             </ui-select>
             <a id="add-new-btn" class="glyphicon glyphicon-plus" ng-click="addNew('Readout')"></a>
+        </div> 
+
+        <h4 class="form-title">Relevant Disease</h4>
+        <div class="form-input">
+            <ui-select class="form-select" ng-model="form.disease" theme="select2" ng-disabled="disabled">
+            <ui-select-match placeholder="Select relevant disease...">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="disease in diseases | propsFilter: {name: $select.search, info: $select.search}">
+            <div ng-bind-html="disease.name | highlight: $select.search"></div>
+            </ui-select-choices>
+            </ui-select>
+            <a id="add-new-btn" class="glyphicon glyphicon-plus" ng-click="addNew('Disease')"></a>
         </div>
 
         <div class="form-date">
-        <h4 class="form-title">Level 1</h4>
+            <h4 class="form-title">Level 1</h4>
             <p class="input-group">
             <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="form.releaseDates.levelOne" is-open="lvlOneOpened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabledDate(date, mode)" close-text="Close" />
             <span class="input-group-btn">
@@ -76,7 +86,7 @@
         </div>
 
         <div class="form-date">
-        <h4 class="form-title">Level 2</h4>
+            <h4 class="form-title">Level 2</h4>
             <p class="input-group">
             <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="form.releaseDates.levelTwo" is-open="lvlTwoOpened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabledDate(date, mode)" close-text="Close" />
             <span class="input-group-btn">
@@ -86,7 +96,7 @@
         </div>
 
         <div class="form-date">
-        <h4 class="form-title">Level 3</h4>
+            <h4 class="form-title">Level 3</h4>
             <p class="input-group">
             <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="form.releaseDates.levelThree" is-open="lvlThreeOpened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabledDate(date, mode)" close-text="Close" />
             <span class="input-group-btn">
@@ -96,7 +106,7 @@
         </div>
 
         <div class="form-date">
-        <h4 class="form-title">Level 4</h4>
+            <h4 class="form-title">Level 4</h4>
             <p class="input-group">
             <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="form.releaseDates.levelFour" is-open="lvlFourOpened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabledDate(date, mode)" close-text="Close" />
             <span class="input-group-btn">

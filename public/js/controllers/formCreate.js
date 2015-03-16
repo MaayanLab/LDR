@@ -15,18 +15,7 @@ angular.module( 'milestonesLanding.formCreate', [
             requiresLogin: true
         }
     });
-}).factory('User', function ($http, store) {
-    var currentUser = store.get('currentUser');
-    return {
-        getSchema: function() {
-            return $http({
-                url: base + 'api/schema',
-                method: 'GET',
-                data: currentUser
-            });
-        }
-    };
-}).factory('Data', function ($http, store) {
+}).factory('DataGets', function($http) {
     return {
         getAssays: function() {
             return $http({
@@ -52,6 +41,15 @@ angular.module( 'milestonesLanding.formCreate', [
                 method: 'GET',
             });
         },
+        getDiseases: function() {
+            return $http({
+                url: base + 'api/diseases',
+                method: 'GET',
+            });
+        }
+    };
+}).factory('DataPosts', function($http) {
+    return {
         postAssay: function(assay) {
             return $http({
                 url: base + 'api/assays',
@@ -79,7 +77,48 @@ angular.module( 'milestonesLanding.formCreate', [
                 method: 'POST',
                 data: readout
             });
+        },
+        postForm: function(data) {
+            return $http({
+                url: base + 'api/data/add',
+                method: 'POST',
+                data: data
+            });
         }
+    };
+}).factory('DataDeletes', function($http) {
+    return {
+        deleteAssay: function(assayId) {
+            return $http({
+                url: base + 'api/assays/remove?id=' + assayId,
+                method: 'DELETE'
+            });
+        },
+        deleteCellLine: function(cLineId) {
+            return $http({
+                url: base + 'api/cellLines/remove?id=' + cLineId,
+                method: 'DELETE'
+            });
+        },
+        deletePerturbagen: function(pertId) {
+            return $http({
+                url: base + 'api/perturbagens/remove?id=' + pertId,
+                method: 'DELETE'
+            });
+        },
+        deleteReadout: function(rOutId) {
+            return $http({
+                url: base + 'api/readouts/remove?id=' + rOutId,
+                method: 'DELETE'
+            });
+        },
+        deleteForm: function(formId) {
+            return $http({
+                url: base + 'api/data/remove?formId=' + formId,
+                method: 'DELETE'
+            });
+        }
+
     };
 }).filter('propsFilter', function() {
     return function(items, props) {
@@ -110,30 +149,34 @@ angular.module( 'milestonesLanding.formCreate', [
 
         return out;
     };
-}).controller('FormCreateCtrl', function FormCreateController ($scope, $http, store, $state, $modal, lodash, User, Data) {
-
+}).controller('FormCreateCtrl', function FormCreateController ($scope, $http, store, $state, $modal, lodash, FormUpdates, DataGets, DataPosts) {
     var emptyDict = {};
 
     $scope.user = store.get('currentUser');
 
     // API calls for selections
-    Data.getAssays().success(function(assays) {
+    DataGets.getAssays().success(function(assays) {
         $scope.assays = assays;
     });
 
-    Data.getCellLines().success(function(cellLines) {
+    DataGets.getCellLines().success(function(cellLines) {
         $scope.cellLines = cellLines;
     });
 
-    Data.getPerturbagens().success(function(perturbagens) {
+    DataGets.getPerturbagens().success(function(perturbagens) {
         $scope.perturbagens = perturbagens;
     });
 
-    Data.getReadouts().success(function(readouts) {
+    DataGets.getReadouts().success(function(readouts) {
         $scope.readouts = readouts;
     });
 
-    // Init for posting data
+    // Get request is too slow. After fixing, will replace large array at bottom of controller
+    //DataGets.getDiseases().success(function(diseases) {
+    //    $scope.diseases = diseases;
+    //});
+
+    // Init if not editing
     $scope.form = {};
     $scope.form.userId = $scope.user._id;
     $scope.form.status = 'awaiting approval';
@@ -144,6 +187,7 @@ angular.module( 'milestonesLanding.formCreate', [
     $scope.form.perturbagens = [];
     $scope.form.readouts = [];
     $scope.form.releaseDates = {};
+    $scope.form.disease = {};
 
     // Date picker
     $scope.clear = function () {
@@ -153,8 +197,6 @@ angular.module( 'milestonesLanding.formCreate', [
         $scope.form.releaseDates.levelFour = null;
 
     };
-
-    $scope.clear();
 
     // Disable weekend selection
     $scope.disabledDate = function(date, mode) {
@@ -218,6 +260,7 @@ angular.module( 'milestonesLanding.formCreate', [
         $scope.form.perturbagens = [];
         $scope.form.readouts = [];
         $scope.form.releaseDates = {};
+        $scope.form.disease = {};
     };
 
     $scope.addNew = function(inpType) {
@@ -234,33 +277,50 @@ angular.module( 'milestonesLanding.formCreate', [
 
         modalInstance.result.then(function(result){
             if(inpType === 'Assay') {
-                Data.postAssay(result);
-                Data.getAssays().success(function(assays) {
+                DataPosts.postAssay(result);
+                DataGets.getAssays().success(function(assays) {
                     $scope.assays = assays;
                 }
-                                        );
+                                            );
             }
             if(inpType === 'Cell Line') {
-                Data.postAssay(result);
-                Data.getCellLines().success(function(cellLines) {
+                DataPosts.postAssay(result);
+                DataGets.getCellLines().success(function(cellLines) {
                     $scope.cellLines = cellLines;
                 });
             }
             if(inpType === 'Perturbagen') {
-                Data.postAssay(result);
-                Data.getPerturbagens().success(function(perturbagens) {
+                DataPosts.postAssay(result);
+                DataGets.getPerturbagens().success(function(perturbagens) {
                     $scope.perturbagens = perturbagens;
                 });
             }
             if(inpType === 'Readout') {
-                Data.postAssay(result);
-                Data.getReadouts().success(function(readouts) {
+                DataPosts.postAssay(result);
+                DataGets.getReadouts().success(function(readouts) {
                     $scope.readouts = readouts;
                 });
+            }
+            if(inpType === 'Disease') {
+                DataPosts.postDisease(result);
+                DataGets.getDiseases().success(function(assays) {
+                    $scope.diseases = diseases;
+                }
+                                              );
             }
         });
     };
 
+    $scope.updateForm = function() {
+        $scope.form.status = 'awaiting approval';
+        $scope.form.dateModified = new Date();
+        FormUpdates.updateForm($scope.form).success(function(err, result) {
+            if (err)
+                console.log(err);
+        });
+    };
+
+    // TODO: Fix. Should strip keys with empty values and post
     var post = function() {
         var outputForm = {};
         lodash.transform($scope.form, function(res, value, key) {
@@ -271,14 +331,10 @@ angular.module( 'milestonesLanding.formCreate', [
         outputForm.readoutCount = $scope.form.readouts.length;
         outputForm.cellLineCount = $scope.form.cellLines.length;
         outputForm.perturbagenCount = $scope.form.perturbagens.length;
+        outputForm.institution = $scope.user.institution;
 
-        $http({
-            url: base + 'api/data/add',
-            method: 'POST',
-            data: outputForm
-        }).then(function(response) {
-        }, function(error) {
-            alert(error.data);
+        DataPosts.postForm(outputForm).success(function(result) {
+            console.log('Form posted.');
         });
     };
 
@@ -289,6 +345,42 @@ angular.module( 'milestonesLanding.formCreate', [
     $scope.postAddAnother = function() {
         post();
         alert('Post successful');
-        $state.go('formCreate');
+        $scope.reset();
+        // TODO: Add scroll to top
     }; 
+
+    $scope.diseases = [
+        {
+        name: "aagenaes syndrome",
+        info: ""
+    },
+    {
+        name: "aarskog syndrome",
+        info: ""
+    },
+    {
+        name: "aase smith syndrome",
+        info: ""
+    },
+    {
+        name: "abcd syndrome",
+        info: ""
+    },
+    {
+        name: "abderhalden kaufmann lignac syndrome",
+        info: ""
+    },
+    {
+        name: "abdominal aortic aneurysm",
+        info: ""
+    },
+    {
+        name: "abdominal chemodectomas with cutaneous angiolipomas",
+        info: ""
+    },
+    {
+        name: "abdominal cystic lymphangioma",
+        info: ""
+    }
+    ];
 });
