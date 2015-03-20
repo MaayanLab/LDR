@@ -1,9 +1,9 @@
 var jwt             = require('jsonwebtoken'),
-shortId         = require('shortid'),
-Models          = require('./app/models'),
-config          = require('./config/database'),
-baseUrl         = require('./config/baseUrl').baseUrl,
-_               = require('lodash');
+    shortId         = require('shortid'),
+    Models          = require('./app/models'),
+    config          = require('./config/database'),
+    baseUrl         = require('./config/baseUrl').baseUrl,
+    _               = require('lodash');
 
 module.exports = function(app, passport) {
 
@@ -28,13 +28,11 @@ module.exports = function(app, passport) {
     });
 
     app.post('/login', passport.authenticate('local-login'), function(req, res) {
-        console.log(Models.User);
         token = createToken(req.user); 
         var userBlob = {
             user: req.user,
             id_token: token
         };
-        console.log(userBlob);
         res.status(201).send(userBlob);
 
     });
@@ -42,22 +40,33 @@ module.exports = function(app, passport) {
 
     // ASSAYS GET, POST, DELETE
     app.get('/api/assays', function(req, res) {
-        Models.Assay.find({'_id': { '$exists': true }}, function(err, assays) {
+        // params are blank, id, or centerId
+        console.log(req.query);
+        var query;
+        if (req.query.id) {
+            query = { '_id': req.query.id};
+        }
+        else if (req.query.centerId) {
+            query = { 'centerId': req.query.centerId };
+        }
+        else {
+            query = { '_id': { '$exists': true }};
+        }
+        findQuery = Models.Assay.find(query).lean();
+        findQuery.exec(function(err, assays) {
             if (err) {
                 console.log(err);
-                return done(err);
+                res.status(404).send(err);
             }
             res.status(200).send(assays);
-        });            
+        });        
     });
 
     app.post('/api/assays', function(req, res) {
         console.log('Posting To Assays');
-        console.log(req.body);
         var assayData = req.body;
         assayData._id = shortId.generate();
         var saveData = Models.Assay.create(assayData);
-        console.log(saveData);
         res.status(201).send(saveData);
     });
 
@@ -65,7 +74,7 @@ module.exports = function(app, passport) {
         Models.Assay.find({ '_id': req.query.id }).remove(function(err, result) {
             if (err) {
                 console.log(err);
-                res.status(404).send('Could not delete assay with id: ' + req.query.id);
+                res.status(404).send('Could not delete assay with id: ' + req.query.id + ' Error: ' + err);
             }
             res.status(200).send('Assay with id ' + req.query.id + ' deleted.');
         });
@@ -74,12 +83,25 @@ module.exports = function(app, passport) {
 
     // CELL LINES GET, POST, DELETE
     app.get('/api/cellLines', function(req, res) {
-        Models.CellLine.find({'_id': { '$exists': true }}, function(err, lines) {
+        // params are blank, id, or centerId
+        console.log(req.query);
+        var query;
+        if (req.query.id) {
+            query = { '_id': req.query.id};
+        }
+        else if (req.query.centerId) {
+            query = { 'centerId': req.query.centerId };
+        }
+        else {
+            query = { '_id': { '$exists': true }};
+        }
+        findQuery = Models.CellLine.find(query).lean();
+        findQuery.exec(function(err, cellLines) {
             if (err) {
                 console.log(err);
-                res.status(404).send('Could not retrieve assays');
+                res.status(404).send(err);
             }
-            res.status(200).send(lines);
+            res.status(200).send(cellLines);
         });            
     });
 
@@ -88,7 +110,6 @@ module.exports = function(app, passport) {
         var inputData = req.body;
         inputData._id = shortId.generate();
         var saveData = Models.CellLine.create(inputData);
-        console.log(saveData);
         res.status(201).send(saveData);
     });
 
@@ -96,7 +117,7 @@ module.exports = function(app, passport) {
         Models.CellLine.find({ '_id': req.query.id }).remove(function(err, result) {
             if (err) {
                 console.log(err);
-                res.status(404).send('Could not delete assay with id: ' + req.query.id);
+                res.status(404).send('Could not delete assay with id: ' + req.query.id + ' Error: ' + err);
             }
             res.status(200).send('Assay with id ' + req.query.id + ' deleted.');
         });
@@ -105,12 +126,25 @@ module.exports = function(app, passport) {
 
     // PERTURBAGENS GET, POST, DELETE
     app.get('/api/perturbagens', function(req, res) {
-        Models.Perturbagen.find({'_id': { '$exists': true }}, function(err, perts) {
+        // params are blank, id, or centerId
+        console.log(req.query);
+        var query;
+        if (req.query.id) {
+            query = { '_id': req.query.id};
+        }
+        else if (req.query.centerId) {
+            query = { 'centerId': req.query.centerId };
+        }
+        else {
+            query = { '_id': { '$exists': true }};
+        }
+        findQuery = Models.Perturbagen.find(query).lean();
+        findQuery.exec(function(err, perturbagens) {
             if (err) {
                 console.log(err);
-                return done(err);
+                res.status(404).send(err);
             }
-            res.status(200).send(perts);
+            res.status(200).send(perturbagens);
         });            
     });
 
@@ -119,7 +153,6 @@ module.exports = function(app, passport) {
         var inputData = req.body;
         inputData._id = shortId.generate();
         var saveData = Models.Perturbagen.create(inputData);
-        console.log(saveData);
         res.status(201).send(saveData);
     });
 
@@ -127,7 +160,7 @@ module.exports = function(app, passport) {
         Models.Perturbagen.find({ '_id': req.query.id }).remove(function(err, result) {
             if (err) {
                 console.log(err);
-                res.status(404).send('Could not delete assay with id: ' + req.query.id);
+                res.status(404).send('Could not delete assay with id: ' + req.query.id + ' Error: ' + err);
             }
             res.status(200).send('Assay with id ' + req.query.id + ' deleted.');
         });
@@ -136,10 +169,23 @@ module.exports = function(app, passport) {
 
     // READOUTS GET, POST, DELETE
     app.get('/api/readouts', function(req, res) {
-        Models.Readout.find({'_id': { '$exists': true }}, function(err, readouts) {
+        // params are blank, id, or centerId
+        console.log(req.query);
+        var query;
+        if (req.query.id) {
+            query = { '_id': req.query.id};
+        }
+        else if (req.query.centerId) {
+            query = { 'centerId': req.query.centerId };
+        }
+        else {
+            query = { '_id': { '$exists': true }};
+        }
+        findQuery = Models.Readout.find(query).lean();
+        findQuery.exec(function(err, readouts) {
             if (err) {
                 console.log(err);
-                return done(err);
+                res.status(404).send(err);
             }
             res.status(200).send(readouts);
         });            
@@ -150,7 +196,6 @@ module.exports = function(app, passport) {
         var inputData = req.body;
         inputData._id = shortId.generate();
         var saveData = Models.Readout.create(inputData);
-        console.log(saveData);
         res.status(201).send(saveData);
     });
 
@@ -158,51 +203,40 @@ module.exports = function(app, passport) {
         Models.Readout.find({ '_id': req.query.id }).remove(function(err, result) {
             if (err) {
                 console.log(err);
-                res.status(404).send('Could not delete assay with id: ' + req.query.id);
+                res.status(404).send('Could not delete assay with id: ' + req.query.id + ' Error: ' + err);
             }
             res.status(200).send('Assay with id ' + req.query.id + ' deleted.');
         });
 
-    });
-
-    // RELEASE DATES GET, (POST, DELETE)
-    app.get('/api/releaseDates', function(req, res) {
-        Models.ReleaseDate.find({'_id': { '$exists': true }}, function(err, rDates) {
-            if (err) {
-                console.log(err);
-                return done(err);
-            }
-            res.status(200).send(rDates);
-        });            
-    });
-
+    }); 
 
     // FORM/DATASET GET, POST, UPDATE, DELETE
     // url is /api/data?userId=ABCD&formId=EFGH
+    // TODO: Change to cleaner version used in other GETs with just one Find query
     app.get('/api/data', function(req, res) {
         if (req.query.userId && req.query.formId) {
             Models.Data.find({ _id: req.query.formId, userId: req.query.userId }, function(err, userForm) {
                 if (err) {
                     console.log(err);
-                    res.status(404).send('Form with given formId and userId could not be found.');
+                    res.status(404).send('Form with given formId and userId could not be found.' + ' Error: ' + err);
                 }
                 res.status(200).send(userForm);
             });
         }
-        else if (req.query.userId && !req.query.formId) {
+        else if (req.query.userId) {
             Models.Data.find({ userId: req.query.userId }, function(err, userData) {
                 if (err) {
                     console.log(err);
-                    res.status(404).send('Form with given userId could not be found.');
+                    res.status(404).send('Form with given userId could not be found.' + ' Error: ' + err);
                 }
                 res.status(200).send(userData);
             });
         }
-        else if (!req.query.userId && req.query.formId) {
+        else if (req.query.formId) {
             Models.Data.find({ _id: req.query.formId }, function(err, formData) {
                 if (err) {
                     console.log(err);
-                    res.status(404).send('Form with given userId could not be found.');
+                    res.status(404).send('Form with given userId could not be found.' + ' Error: ' + err);
                 }
                 res.status(200).send(userData);
             });
@@ -219,17 +253,16 @@ module.exports = function(app, passport) {
     });
 
     // TODO: Change after making assay and cell line acronyms
-    app.post('/api/data/add', function(req, res) {
+    app.post('/api/data', function(req, res) {
         console.log('Posting To Data');
         var inputData = req.body;
         if (inputData.cellLines.length > 1) {
-            inputData._id = 'LINCS-' + inputData.institution + '-MTPL-' + shortId.generate();
+            inputData._id = 'LINCS-' + inputData.center + '-MTPL-' + shortId.generate();
         } else if (inputData.cellLines.length === 1) {
-            inputData._id = 'LINCS-' + inputData.institution + inputData.cellLines[0].name + shortId.generate();
+            inputData._id = 'LINCS-' + inputData.center + '-' + inputData.cellLines[0].name + '-' + shortId.generate();
         } else {    
-            inputData._id = 'LINCS-' + inputData.institution + '-NONE-' + shortId.generate();
+            inputData._id = 'LINCS-' + inputData.center + '-NONE-' + shortId.generate();
         }
-        console.log(inputData);
 
         var form = new Models.Data(inputData);
         form.save(function(err) {
@@ -239,24 +272,22 @@ module.exports = function(app, passport) {
     });
 
     // UPDATE
-    app.put('/api/data/update', function(req, res) {
-        console.log(req.body._id);
-        Models.Data.update({ _id: req.body._id }, req.body, function(err, result) {
+    app.put('/api/data', function(req, res) {
+        console.log(req.query._id);
+        Models.Data.update({ _id: req.query._id }, req.body, function(err, result) {
             if (err)
-                res.status(404).send('Form with id ' + req.body.id + ' could not be updated');
+                res.status(404).send('Form with id ' + req.query.id + ' could not be updated');
             // TODO: Check that 200 and 404 are the correct status codes for put
             res.status(200).send(result);
         });
     });
 
-    app.delete('/api/data/remove', function(req, res) {
-        console.log(req.query.userId);
-        console.log(req.query.formId);
+    app.delete('/api/data', function(req, res) {
         if (req.query.userId && req.query.formId) {
             Models.Data.find({ _id: req.query.formId, userId: req.query.userId }).remove(function(err, result) {
                 if (err) {
                     console.log(err);
-                    res.status(404).send('There was an error deleting the form with id ' + req.query.formId);
+                    res.status(404).send('There was an error deleting the form with id ' + req.query.formId + ' Error: ' + err);
                 }
                 res.status(200).send('DELETE: userId: ' + req.query.userId + ', formId: ' + req.query.formId);
             });
@@ -266,7 +297,7 @@ module.exports = function(app, passport) {
             Models.Data.find({ _id: req.query.formId }).remove(function(err, result) {
                 if (err) {
                     console.log(err);
-                    res.status(404).send('There was an error deleting the form with id ' + req.query.formId);
+                    res.status(404).send('There was an error deleting the form with id ' + req.query.formId + ' Error: ' + err);
                 }
                 res.status(200).send('The form with id ' + req.query.formId + ' was deleted');
             });
@@ -277,6 +308,6 @@ module.exports = function(app, passport) {
 };
 
 function createToken(user) {
-    return jwt.sign(_.omit(user, 'password'), config.secret, { expiresInMinutes: 60 *5 });
+    return jwt.sign(_.omit(user, 'password'), config.secret, { expiresInMinutes: 60 * 5 });
 }
 

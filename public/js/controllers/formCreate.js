@@ -15,111 +15,6 @@ angular.module( 'milestonesLanding.formCreate', [
             requiresLogin: true
         }
     });
-}).factory('DataGets', function($http) {
-    return {
-        getAssays: function() {
-            return $http({
-                url: base + 'api/assays',
-                method: 'GET',
-            });
-        },
-        getCellLines: function() {
-            return $http({
-                url: base + 'api/cellLines',
-                method: 'GET',
-            });
-        },
-        getPerturbagens: function() {
-            return $http({
-                url: base + 'api/perturbagens',
-                method: 'GET',
-            });
-        },
-        getReadouts: function() {
-            return $http({
-                url: base + 'api/readouts',
-                method: 'GET',
-            });
-        },
-        getDiseases: function() {
-            return $http({
-                url: base + 'api/diseases',
-                method: 'GET',
-            });
-        }
-    };
-}).factory('DataPosts', function($http) {
-    return {
-        postAssay: function(assay) {
-            return $http({
-                url: base + 'api/assays',
-                method: 'POST',
-                data: assay
-            });
-        },
-        postCellLine: function(cellLine) {
-            return $http({
-                url: base + 'api/cellLines',
-                method: 'POST',
-                data: cellLine
-            });
-        },
-        postPerturbagen: function(pert) {
-            return $http({
-                url: base + 'api/perturbagens',
-                method: 'POST',
-                data: pert
-            });
-        },
-        postReadout: function(readout) {
-            return $http({
-                url: base + 'api/readouts',
-                method: 'POST',
-                data: readout
-            });
-        },
-        postForm: function(data) {
-            return $http({
-                url: base + 'api/data/add',
-                method: 'POST',
-                data: data
-            });
-        }
-    };
-}).factory('DataDeletes', function($http) {
-    return {
-        deleteAssay: function(assayId) {
-            return $http({
-                url: base + 'api/assays/remove?id=' + assayId,
-                method: 'DELETE'
-            });
-        },
-        deleteCellLine: function(cLineId) {
-            return $http({
-                url: base + 'api/cellLines/remove?id=' + cLineId,
-                method: 'DELETE'
-            });
-        },
-        deletePerturbagen: function(pertId) {
-            return $http({
-                url: base + 'api/perturbagens/remove?id=' + pertId,
-                method: 'DELETE'
-            });
-        },
-        deleteReadout: function(rOutId) {
-            return $http({
-                url: base + 'api/readouts/remove?id=' + rOutId,
-                method: 'DELETE'
-            });
-        },
-        deleteForm: function(formId) {
-            return $http({
-                url: base + 'api/data/remove?formId=' + formId,
-                method: 'DELETE'
-            });
-        }
-
-    };
 }).filter('propsFilter', function() {
     return function(items, props) {
         var out = [];
@@ -149,25 +44,25 @@ angular.module( 'milestonesLanding.formCreate', [
 
         return out;
     };
-}).controller('FormCreateCtrl', function FormCreateController ($scope, $http, store, $state, $modal, lodash, FormUpdates, DataGets, DataPosts) {
+}).controller('FormCreateCtrl', function FormCreateController ($scope, $http, store, $state, $modal, lodash, FormUpdates, FormPosts, DataGets, DataPosts) {
     var emptyDict = {};
 
     $scope.user = store.get('currentUser');
 
     // API calls for selections
-    DataGets.getAssays().success(function(assays) {
+    DataGets.getAssays({ centerId: $scope.user.center._id }).success(function(assays) {
         $scope.assays = assays;
     });
 
-    DataGets.getCellLines().success(function(cellLines) {
+    DataGets.getCellLines({ centerId: $scope.user.center._id }).success(function(cellLines) {
         $scope.cellLines = cellLines;
     });
 
-    DataGets.getPerturbagens().success(function(perturbagens) {
+    DataGets.getPerturbagens({ centerId: $scope.user.center._id }).success(function(perturbagens) {
         $scope.perturbagens = perturbagens;
     });
 
-    DataGets.getReadouts().success(function(readouts) {
+    DataGets.getReadouts({ centerId: $scope.user.center._id }).success(function(readouts) {
         $scope.readouts = readouts;
     });
 
@@ -179,9 +74,7 @@ angular.module( 'milestonesLanding.formCreate', [
     // Init if not editing
     $scope.form = {};
     $scope.form.userId = $scope.user._id;
-    $scope.form.status = 'awaiting approval';
-    $scope.form.dateModified = new Date();
-    $scope.form.center = $scope.user.institution;
+    $scope.form.center = $scope.user.center.name;
     $scope.form.assay = {};
     $scope.form.cellLines = [];
     $scope.form.perturbagens = [];
@@ -254,13 +147,20 @@ angular.module( 'milestonesLanding.formCreate', [
         $scope.form.userId = $scope.user._id;
         $scope.form.status = 'awaiting approval';
         $scope.form.dateModified = new Date();
-        $scope.form.center = $scope.user.institution;
+        $scope.form.center = $scope.user.center.name;
         $scope.form.assay = {};
         $scope.form.cellLines = [];
         $scope.form.perturbagens = [];
         $scope.form.readouts = [];
         $scope.form.releaseDates = {};
         $scope.form.disease = {};
+    };
+
+    $scope.clearSelection = function(selection) {
+        if (selection === 'Assay')
+            $scope.form.assay = {};
+        else if (selection === 'Disease')
+            $scope.form.disease = {};
     };
 
     $scope.addNew = function(inpType) {
@@ -278,35 +178,33 @@ angular.module( 'milestonesLanding.formCreate', [
         modalInstance.result.then(function(result){
             if(inpType === 'Assay') {
                 DataPosts.postAssay(result);
-                DataGets.getAssays().success(function(assays) {
+                DataGets.getAssays({ userId: $scope.user._id, centerId: $scope.user.center._id }).success(function(assays) {
                     $scope.assays = assays;
-                }
-                                            );
+                });
             }
             if(inpType === 'Cell Line') {
                 DataPosts.postAssay(result);
-                DataGets.getCellLines().success(function(cellLines) {
+                DataGets.getCellLines({ userId: $scope.user._id, centerId: $scope.user.center._id }).success(function(cellLines) {
                     $scope.cellLines = cellLines;
                 });
             }
             if(inpType === 'Perturbagen') {
                 DataPosts.postAssay(result);
-                DataGets.getPerturbagens().success(function(perturbagens) {
+                DataGets.getPerturbagens({ userId: $scope.user._id, centerId: $scope.user.center._id }).success(function(perturbagens) {
                     $scope.perturbagens = perturbagens;
                 });
             }
             if(inpType === 'Readout') {
                 DataPosts.postAssay(result);
-                DataGets.getReadouts().success(function(readouts) {
+                DataGets.getReadouts({ userId: $scope.user._id, centerId: $scope.user.center._id }).success(function(readouts) {
                     $scope.readouts = readouts;
                 });
             }
             if(inpType === 'Disease') {
                 DataPosts.postDisease(result);
-                DataGets.getDiseases().success(function(assays) {
+                DataGets.getDiseases({ userId: $scope.user._id, centerId: $scope.user.center._id }).success(function(diseases) {
                     $scope.diseases = diseases;
-                }
-                                              );
+                });
             }
         });
     };
@@ -331,9 +229,15 @@ angular.module( 'milestonesLanding.formCreate', [
         outputForm.readoutCount = $scope.form.readouts.length;
         outputForm.cellLineCount = $scope.form.cellLines.length;
         outputForm.perturbagenCount = $scope.form.perturbagens.length;
-        outputForm.institution = $scope.user.institution;
+        outputForm.postedByUser = $scope.user.username;
+        outputForm.center = $scope.user.center.name;
+        outputForm.status = 'awaiting approval';
+        outputForm.dateModified = new Date();
 
-        DataPosts.postForm(outputForm).success(function(result) {
+
+        console.log(outputForm.center);
+
+        FormPosts.postForm(outputForm).success(function(result) {
             console.log('Form posted.');
         });
     };

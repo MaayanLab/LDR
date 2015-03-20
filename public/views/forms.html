@@ -1,5 +1,5 @@
 <div ng-controller="FormsCtrl">
-    <h3 class="text-center">{{currentUser.institution}}'s Data Releases</h3>
+    <h3 class="text-center">{{user.center.name}}'s Data Releases</h3>
     <table class="table">
         <thead>
             <tr>
@@ -7,6 +7,7 @@
                 <th>Status</th>
                 <th>Assay</th>
                 <th>Readout Count</th>
+                <th>Level 1 Release Date</th>
                 <!--<th></th>-->
                 <th></th>
             </tr>
@@ -15,8 +16,9 @@
             <tr ng-repeat="form in forms" class="form-table-data">
                 <td class="col-md-2" id="id">{{form._id}}</td>
                 <td class="col-md-2" id="status">{{form.status}}</td>
-                <td class="col-md-6" id="assay-name">{{form.assay.name}}</td>
+                <td class="col-md-4" id="assay-name">{{form.assay.name}}</td>
                 <td class="col-md-2" id="readout-count">{{form.readoutCount}}</td>
+                <td class="col-md-2" id="release-date">{{form.releaseDates.levelOne | date:'MM-dd-yyyy'}}</td>
                 <td>
                     <div class="btn-group">
                         <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">

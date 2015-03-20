@@ -1,9 +1,9 @@
 angular.module( 'milestonesLanding', [
     'milestonesLanding.home',
-    'milestonesLanding.login',
     'milestonesLanding.forms',
     'milestonesLanding.admin',
     'milestonesLanding.formCreate',
+    'milestonesLanding.formData',
     'ui.router',
     'ui.bootstrap',
     'angular-storage',
@@ -27,7 +27,7 @@ angular.module( 'milestonesLanding', [
             },
             responseError: function(response) {
                 if (response.status === 401)
-                    $location.url(base + 'login');
+                    $location.url(base);
                 return $q.reject(response);
             }
         };
@@ -48,7 +48,7 @@ angular.module( 'milestonesLanding', [
                     $rootScope.isLoggedInAdmin = false;
                     e.preventDefault();
                     alert('You must be the authorized to access this page. Please log in.');
-                    $state.go('login');
+                    $state.go('home');
                 }
                 if ($rootScope.currentUser.username !== 'admin') {
                     $rootScope.currentUser = store.get('currentUser');
@@ -65,7 +65,7 @@ angular.module( 'milestonesLanding', [
                     $rootScope.isLoggedInAdmin = false;
                     e.preventDefault();
                     alert('You must be authorized to access this page. Please log in.');
-                    $state.go('login');
+                    $state.go('home');
                 } else {
                     if ($rootScope.currentUser.username === 'admin') {
                         $rootScope.currentUser = store.get('currentUser');
@@ -103,6 +103,25 @@ angular.module( 'milestonesLanding', [
             $scope.pageTitle = nextRoute.$$route.pageTitle + ' | Milestones Landing' ;
         }
     });
+
+    $scope.user = {};
+
+    $scope.login = function() {
+        $http({
+            url: base + 'login',
+            method: 'POST',
+            data: $scope.user
+        }).then(function(result) {
+            // No error: authentication OK
+            store.set('currentUser', result.data.user);
+            store.set('jwt', result.data.id_token);
+            $state.go('forms');
+        }, function(error) {
+            // Error: authentication failed
+            store.set('message', 'Authentication failed.');
+            alert('Login was unsuccessful. Please try again.');
+        });
+    };
 
     $scope.logout = function() {
         $rootScope.message = 'Logged out.';

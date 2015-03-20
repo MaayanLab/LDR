@@ -32,6 +32,17 @@ angular.module( 'milestonesLanding.admin', [
         });
     };
 
+    $scope.returnForm = function(form) {
+        form.status = 'needs re-edit';
+        FormUpdates.updateForm(form).success(function(err, result) {
+            if (err)
+                console.log(err);
+        });
+        FormGets.getAllForms().success(function(forms) {
+            $scope.allForms = forms;
+        });
+    };
+
     $scope.deleteForm = function(form) {
         if (confirm('Are you sure you would like to delete this entry?')) {
             AdminFactory.deleteForm(form._id).success(function(data) {

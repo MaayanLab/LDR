@@ -26,22 +26,41 @@ angular.module( 'milestonesLanding.forms', [
             });
         }
     };
+}).factory('FormDeletes', function($http) {
+    return {
+     deleteForm: function(formId) {
+            return $http({
+                url: base + 'api/data?formId=' + formId,
+                method: 'DELETE'
+            });
+        }
+    };
 }).factory('FormUpdates', function($http) {
     return {
         updateForm: function(form) {
             return $http({
-                url: base + 'api/data/update',
+                url: base + 'api/data?formId=' + form._id,
                 method: 'PUT',
                 data: form
             });
         }
     };
-}).controller('FormsCtrl', function FormsController ($scope, $http, store, $state, FormGets, DataGets, DataPosts, DataDeletes) {
+}).factory('FormPosts', function($http) {
+    return {
+        postForm: function(inputForm) {
+            return $http({
+                url: base + 'api/data',
+                method: 'POST',
+                data: inputForm
+            });
+        }
+    };
+}).controller('FormsCtrl', function FormsController ($scope, $http, store, $state, FormGets, DataGets, DataPosts, FormDeletes) {
     var currentUser = store.get('currentUser');
-    $scope.currentUser = currentUser;
+    $scope.user = currentUser;
     $scope.forms = [];
 
-    FormGets.getUserForms(currentUser._id).success(function(data) {
+    FormGets.getUserForms($scope.user._id).success(function(data) {
         $scope.forms = data;
     });
 
@@ -53,12 +72,12 @@ angular.module( 'milestonesLanding.forms', [
 
     $scope.deleteForm = function(form) {
         if (confirm('Are you sure you would like to delete this entry?')) {
-            DataDeletes.deleteForm(form._id).success(function(data) {
+            FormDeletes.deleteForm(form._id).success(function(data) {
                 console.log(data);
-            });
-            FormGets.getUserForms(currentUser._id).success(function(data) {
-                $scope.forms = data;
-            });
+            }); 
         }
+        FormGets.getUserForms($scope.user._id).success(function(data) {
+                $scope.forms = data;
+        });
     };
 });

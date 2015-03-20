@@ -1,9 +1,13 @@
 <div ng-controller="FormCreateCtrl">
     <div class="form-info-block">
         <p>Information missing from the input lists? Click the '+' sign next to the respective inputs to add your own data.</p>
+        <br>
+        <br>
+        <br>
+        <p>{{form | json}}</p>
     </div>
     <form name="dataForm" class="form-block">
-        <h4 class="form-center">Center: {{user.institution}}</h4>
+        <h4 class="form-center">Center: {{form.center}}</h4>
 
         <h4 class="form-title">Assay</h4>
         <div class="form-input">
@@ -16,6 +20,7 @@
             </small>
             </ui-select-choices>
             </ui-select>
+            <a ng-if="form.assay.name !== undefined" id="clear-btn" class="glyphicon glyphicon-remove-circle" ng-click="clearSelection('Assay')"></a>
             <a id="add-new-btn" class="glyphicon glyphicon-plus" ng-click="addNew('Assay')"></a>
         </div>
 
@@ -72,6 +77,7 @@
             <div ng-bind-html="disease.name | highlight: $select.search"></div>
             </ui-select-choices>
             </ui-select>
+            <a ng-if="form.disease.name !== undefined" id="clear-btn" class="glyphicon glyphicon-remove-circle" ng-click="clearSelection('Disease')"></a>
             <a id="add-new-btn" class="glyphicon glyphicon-plus" ng-click="addNew('Disease')"></a>
         </div>
 
