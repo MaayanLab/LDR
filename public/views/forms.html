@@ -1,5 +1,5 @@
 <div ng-controller="FormsCtrl">
-    <h3 class="text-center">{{user.center.name}}'s Data Releases</h3>
+    <h3 class="text-center">Data Releases</h3>
     <table class="table">
         <thead>
             <tr>
@@ -33,7 +33,7 @@
                 </td>
             </tr>
             <tr ng-if="forms.length === 0">
-                <td colspan="5" class="col-md-12">There are no releases to display. Please <a ui-sref="formsCreate">add data here</a>.</td>
+                <td colspan="5" class="col-md-12">There are no releases to display. Please <a ui-sref="formCreate">add data here</a>.</td>
             </tr>
         </tbody>
     </table>

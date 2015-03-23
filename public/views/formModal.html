@@ -1,5 +1,7 @@
 <div class="modal-header">
-    <h3 class="modal-title">{{datatype}}</h3>
+    <h3 ng-show="editData" class="modal-title">Edit {{datatype}}<button class="btn btn-danger pull-right" ng-click="delete()">Delete</button></h3>
+    <h3 ng-show="!editData" class="modal-title">New {{datatype}}</h3>
+    
 </div>
 <div class="modal-body">
     <form ng-model="modalForm" class="modal-form-input" ng-show="datatype === 'Assay'">
@@ -67,6 +69,7 @@
 
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="add()">Add</button>
+    <button ng-show="!editData" class="btn btn-primary" ng-click="close()">Add</button>
+    <button ng-show="editData" class="btn btn-primary" ng-click="close()">Update</button>
     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 </div>

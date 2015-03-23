@@ -4,6 +4,7 @@ angular.module( 'milestonesLanding', [
     'milestonesLanding.admin',
     'milestonesLanding.formCreate',
     'milestonesLanding.formData',
+    'milestonesLanding.formBatch',
     'ui.router',
     'ui.bootstrap',
     'angular-storage',

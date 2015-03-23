@@ -19,8 +19,10 @@ document.getElementsByTagName("head")[0].appendChild(newBase);
 <link rel="stylesheet" type="text/css" href="vendor/bootstrap/dist/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="vendor/pickadate/lib/compressed/themes/classic.css">
 <link rel="stylesheet" type="text/css" href="vendor/pickadate/lib/compressed/themes/classic.date.css">
+<link rel="stylesheet" type="text/css" href="vendor/ng-prettyjson/dist/ng-prettyjson.min.css">
 <link rel="stylesheet" type="text/css" href="vendor/angular-ui-select/dist/select.css">
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+<!--<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">-->
+
 <link rel="stylesheet" type="text/css" href="css/select2.css">
 <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="css/normalize.css">
@@ -42,6 +44,7 @@ document.getElementsByTagName("head")[0].appendChild(newBase);
 <script type="text/javascript" src="js/controllers/formModal.js"></script>
 <script type="text/javascript" src="js/controllers/formCreate.js"></script>
 <script type="text/javascript" src="js/controllers/formData.js"></script>
+<script type="text/javascript" src="js/controllers/formBatch.js"></script>
 
 </head>
 <body class="ng-cloak">
@@ -63,19 +66,18 @@ document.getElementsByTagName("head")[0].appendChild(newBase);
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Data Releases <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a ui-sref="forms">Data Releases Home</a></li>
-                            <li><a ui-sref="formsCreate">Add New</a></li>
-                            <li><a ui-sref="formsCreateBatch">Add Batch</a></li>
+                            <li><a ui-sref="formCreate">Add New</a></li>
+                            <li><a ui-sref="formBatch">Add Batch</a></li>
                         </ul>
                         </li> 
                         <li ng-show="isLoggedIn"><a ui-sref="formData">Data</a></li>
-                        <!--<li ng-show="!isLoggedIn"><a ui-sref="login">Login</a></li>-->
                         <li ng-show="isLoggedIn"><a ng-click="logout()">Logout</a></li>
                         <li ng-show="!isLoggedIn">
                             <form class="navbar-form navbar-right" role="search">
                                 <div class="form-group">
                                     <input type="text" class="form-control" ng-model="user.username" id="username" placeholder="Username">
                                 </div>
-                                <div class="form-group">
+                                <div id="password-group" class="form-group">
                                     <input type="password" class="form-control" id="password" ng-model="user.password" placeholder="Password">
                                 </div>
                                 <button type="submit" class="btn btn-default pull-right" ng-click="login()">Login</button>
@@ -103,6 +105,9 @@ document.getElementsByTagName("head")[0].appendChild(newBase);
 <script type="text/javascript" src='vendor/angular-bootstrap/ui-bootstrap.js'></script>
 <script type="text/javascript" src='vendor/angular-bootstrap/ui-bootstrap-tpls.js'></script>
 <script type="text/javascript" src='vendor/ng-lodash/build/ng-lodash.min.js'></script>
+<script type="text/javascript" src='vendor/ng-prettyjson/dist/ng-prettyjson.min.js'></script>
+<script type="text/javascript" src="vendor/ace-builds/src-min-noconflict/ace.js"></script>
+<script type="text/javascript" src="vendor/angular-ui-ace/ui-ace.js"></script>
 
 </body>
 </html>

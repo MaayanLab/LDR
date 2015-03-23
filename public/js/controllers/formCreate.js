@@ -7,7 +7,7 @@ angular.module( 'milestonesLanding.formCreate', [
     'ngLodash'
 ])
 .config(function($stateProvider) {
-    $stateProvider.state('formsCreate', {
+    $stateProvider.state('formCreate', {
         url: '/forms/create',
         controller: 'FormCreateCtrl',
         templateUrl: 'views/formCreate.html',
@@ -169,40 +169,44 @@ angular.module( 'milestonesLanding.formCreate', [
             templateUrl: 'views/formModal.html',
             controller: 'FormModalCtrl',
             resolve: {
-                datatype: function() {
-                    return inpType;
+                data: function() {
+                    return {
+                        inpType: inpType
+                    };
                 }
             }
         });
 
         modalInstance.result.then(function(result){
+            result.userId = $scope.user._id;
+            result.centerId = $scope.user.center._id;
             if(inpType === 'Assay') {
                 DataPosts.postAssay(result);
-                DataGets.getAssays({ userId: $scope.user._id, centerId: $scope.user.center._id }).success(function(assays) {
+                DataGets.getAssays({ centerId: $scope.user.center._id }).success(function(assays) {
                     $scope.assays = assays;
                 });
             }
             if(inpType === 'Cell Line') {
                 DataPosts.postAssay(result);
-                DataGets.getCellLines({ userId: $scope.user._id, centerId: $scope.user.center._id }).success(function(cellLines) {
+                DataGets.getCellLines({ centerId: $scope.user.center._id }).success(function(cellLines) {
                     $scope.cellLines = cellLines;
                 });
             }
             if(inpType === 'Perturbagen') {
                 DataPosts.postAssay(result);
-                DataGets.getPerturbagens({ userId: $scope.user._id, centerId: $scope.user.center._id }).success(function(perturbagens) {
+                DataGets.getPerturbagens({ centerId: $scope.user.center._id }).success(function(perturbagens) {
                     $scope.perturbagens = perturbagens;
                 });
             }
             if(inpType === 'Readout') {
                 DataPosts.postAssay(result);
-                DataGets.getReadouts({ userId: $scope.user._id, centerId: $scope.user.center._id }).success(function(readouts) {
+                DataGets.getReadouts({ centerId: $scope.user.center._id }).success(function(readouts) {
                     $scope.readouts = readouts;
                 });
             }
             if(inpType === 'Disease') {
                 DataPosts.postDisease(result);
-                DataGets.getDiseases({ userId: $scope.user._id, centerId: $scope.user.center._id }).success(function(diseases) {
+                DataGets.getDiseases({ centerId: $scope.user.center._id }).success(function(diseases) {
                     $scope.diseases = diseases;
                 });
             }

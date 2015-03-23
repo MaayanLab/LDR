@@ -8,7 +8,7 @@ var jwt             = require('jsonwebtoken'),
 module.exports = function(app, passport) {
 
     app.get('/api/data/schema', function(req, res) {
-        res.status(200).send(Models.Data.schema);
+        res.send(Models.Data.schema.tree);
     });
 
     // USERS
@@ -41,7 +41,6 @@ module.exports = function(app, passport) {
     // ASSAYS GET, POST, DELETE
     app.get('/api/assays', function(req, res) {
         // params are blank, id, or centerId
-        console.log(req.query);
         var query;
         if (req.query.id) {
             query = { '_id': req.query.id};
@@ -66,8 +65,28 @@ module.exports = function(app, passport) {
         console.log('Posting To Assays');
         var assayData = req.body;
         assayData._id = shortId.generate();
-        var saveData = Models.Assay.create(assayData);
-        res.status(201).send(saveData);
+        Models.Assay.create(assayData, function(err,result) {
+            if (err)
+                console.log(err);
+            res.status(201).send(result);
+        });
+    });
+
+    app.put('/api/assays/update', function(req, res) {
+        console.log('Updating assay with id ' + req.query.id);
+        if (req.query.id) {
+            var query = { '_id': req.query.id};
+            Models.Assay.update(query, req.body, function(err,result) {
+                if (err) {
+                    console.log(err);
+                    res.status(404).send(err);
+                }
+                res.status(200).send(result);
+            });
+        }
+        else {
+            res.status(404).send('Assay id wasn\'t given, or the URL query was invalid');
+        }
     });
 
     app.delete('/api/assays/remove', function(req, res) {
@@ -84,7 +103,6 @@ module.exports = function(app, passport) {
     // CELL LINES GET, POST, DELETE
     app.get('/api/cellLines', function(req, res) {
         // params are blank, id, or centerId
-        console.log(req.query);
         var query;
         if (req.query.id) {
             query = { '_id': req.query.id};
@@ -113,6 +131,23 @@ module.exports = function(app, passport) {
         res.status(201).send(saveData);
     });
 
+    app.put('/api/cellLines/update', function(req, res) {
+        console.log('Updating cell line with id ' + req.query.id);
+        if (req.query.id) {
+            var query = { '_id': req.query.id};
+            Models.CellLine.update(query, req.body, function(err,result) {
+                if (err) {
+                    console.log(err);
+                    res.status(404).send(err);
+                }
+                res.status(200).send(result);
+            });
+        }
+        else {
+            res.status(404).send('Cell line id wasn\'t given, or the URL query was invalid');
+        }
+    });
+
     app.delete('/api/cellLines/remove', function(req, res) {
         Models.CellLine.find({ '_id': req.query.id }).remove(function(err, result) {
             if (err) {
@@ -127,7 +162,6 @@ module.exports = function(app, passport) {
     // PERTURBAGENS GET, POST, DELETE
     app.get('/api/perturbagens', function(req, res) {
         // params are blank, id, or centerId
-        console.log(req.query);
         var query;
         if (req.query.id) {
             query = { '_id': req.query.id};
@@ -156,6 +190,23 @@ module.exports = function(app, passport) {
         res.status(201).send(saveData);
     });
 
+    app.put('/api/perturbagens/update', function(req, res) {
+        console.log('Updating perturbagen with id ' + req.query.id);
+        if (req.query.id) {
+            var query = { '_id': req.query.id};
+            Models.Perturbagen.update(query, req.body, function(err,result) {
+                if (err) {
+                    console.log(err);
+                    res.status(404).send(err);
+                }
+                res.status(200).send(result);
+            });
+        }
+        else {
+            res.status(404).send('Perturbagen id wasn\'t given, or the URL query was invalid');
+        }
+    });
+
     app.delete('/api/perturbagens/remove', function(req, res) {
         Models.Perturbagen.find({ '_id': req.query.id }).remove(function(err, result) {
             if (err) {
@@ -170,7 +221,6 @@ module.exports = function(app, passport) {
     // READOUTS GET, POST, DELETE
     app.get('/api/readouts', function(req, res) {
         // params are blank, id, or centerId
-        console.log(req.query);
         var query;
         if (req.query.id) {
             query = { '_id': req.query.id};
@@ -197,6 +247,24 @@ module.exports = function(app, passport) {
         inputData._id = shortId.generate();
         var saveData = Models.Readout.create(inputData);
         res.status(201).send(saveData);
+    });
+
+    app.put('/api/readouts/update', function(req, res) {
+        // params are blank, id, or centerId
+        console.log('Updating readout with id ' + req.query.id);
+        if (req.query.id) {
+            var query = { '_id': req.query.id};
+            Models.Readout.update(query, req.body, function(err,result) {
+                if (err) {
+                    console.log(err);
+                    res.status(404).send(err);
+                }
+                res.status(200).send(result);
+            });
+        }
+        else {
+            res.status(404).send('Readout id wasn\'t given, or the URL query was invalid');
+        }
     });
 
     app.delete('/api/readouts/remove', function(req, res) {
@@ -273,7 +341,6 @@ module.exports = function(app, passport) {
 
     // UPDATE
     app.put('/api/data', function(req, res) {
-        console.log(req.query._id);
         Models.Data.update({ _id: req.query._id }, req.body, function(err, result) {
             if (err)
                 res.status(404).send('Form with id ' + req.query.id + ' could not be updated');

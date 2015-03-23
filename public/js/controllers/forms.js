@@ -28,7 +28,7 @@ angular.module( 'milestonesLanding.forms', [
     };
 }).factory('FormDeletes', function($http) {
     return {
-     deleteForm: function(formId) {
+        deleteForm: function(formId) {
             return $http({
                 url: base + 'api/data?formId=' + formId,
                 method: 'DELETE'
@@ -75,9 +75,10 @@ angular.module( 'milestonesLanding.forms', [
             FormDeletes.deleteForm(form._id).success(function(data) {
                 console.log(data);
             }); 
-        }
-        FormGets.getUserForms($scope.user._id).success(function(data) {
+
+            FormGets.getUserForms($scope.user._id).success(function(data) {
                 $scope.forms = data;
-        });
+            });
+        }
     };
 });

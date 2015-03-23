@@ -1,0 +1,13 @@
+<div ng-controller="FormBatchCtrl">
+    <div class="form-example-schema">
+        <h4 class="text-center">Please make sure each data release is in this format...</h4>
+        <pre class='json' json='schemaOut' pretty-json />    
+    </div>
+    <div class="form-batch-input">
+        <h4 class="text-center">...and enter it below:</h4>
+        <section id="ace">
+            <div ui-ace="aceBatch" ng-model="aceModel"></div>
+        </section>
+        <button id="post-batch-btn" type="submit" class="btn btn-default pull-right" ng-click="postBatch()">Submit</button>
+    </div>
+</div>
