@@ -15,7 +15,7 @@
                 <td class="col-md-4">{{assay.name}}</td>
                 <td class="col-md-6">{{assay.info}}</td>
             </tr>
-            <tr>
+            <tr ng-if="assays.length !== 0">
                 <td class="col-md-2"><a class="pointer" ng-click="addNew('Assay')">Add new assay</a></td>
                 <td></td>
                 <td></td>
@@ -47,7 +47,7 @@
                 <td class="col-md-2">{{line.class}}</td>
                 <td class="col-md-2">{{line.tissue}}</td>
             </tr>
-            <tr>
+            <tr ng-if="cellLines.length !== 0">
                 <td class="col-md-2"><a class="pointer" ng-click="addNew('Cell Line')">Add new cell line</a></td>
                 <td></td>
                 <td></td>
@@ -78,7 +78,7 @@
                 <td class="col-md-4">{{pert.name}}</td>
                 <td class="col-md-6">{{pert.type}}</td>
             </tr>
-            <tr>
+            <tr ng-if="perturbagens.length !== 0">
                 <td class="col-md-2"><a class="pointer" ng-click="addNew('Perturbagen')">Add new perturbagen</a></td>
                 <td></td>
                 <td></td>
@@ -106,7 +106,7 @@
                 <td class="col-md-4">{{rOut.name}}</td>
                 <td class="col-md-6">{{rOut.datatype}}</td>
             </tr>
-            <tr>
+            <tr ng-if="readouts.length !== 0">
                 <td class="col-md-2"><a class="pointer" ng-click="addNew('Readout')">Add new readout</a></td>
                 <td></td>
                 <td></td>
