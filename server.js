@@ -52,6 +52,10 @@ app.get('/js', function(req, res, next) {
     res.setHeader('Content-Type', 'application/javascript');
 });
 
+app.get('*.png', function(req, res, next) {
+    res.setHeader('Content-Type', 'image/png');
+});
+
 require('./routes.js')(app, passport);
 
 app.get('/*', function(req, res) {
