@@ -1,9 +1,11 @@
 {
   "name": "angular-schema-form-ui-select",
   "main": [
+    "ui-sortable.js",
+    "angular-underscore.js",
     "bootstrap-ui-select.min.js"
   ],
-  "version": "0.1.0",
+  "version": "0.1.1",
   "authors": [
     "Cheng Zhu<cheng@aqmin.com>",
     "Steve Hu <stevehu@gmail.com>"
@@ -40,14 +42,14 @@
     "angular-mocks": ">= 1.2"
   },
   "homepage": "https://github.com/networknt/angular-schema-form-ui-select",
-  "_release": "0.1.0",
+  "_release": "0.1.1",
   "_resolution": {
     "type": "version",
-    "tag": "0.1.0",
-    "commit": "18cb76e92db8472daffa88ec2ece3305b60b5356"
+    "tag": "0.1.1",
+    "commit": "826e49e9f5e5c82f9ef8a57edfd608b14fa98743"
   },
   "_source": "git://github.com/networknt/angular-schema-form-ui-select.git",
-  "_target": "~0.1.0",
+  "_target": "~0.1.1",
   "_originalSource": "angular-schema-form-ui-select",
   "_direct": true
 }

@@ -1,6 +1,8 @@
 {
   "name": "angular-schema-form-ui-select",
   "main": [
+    "ui-sortable.js",
+    "angular-underscore.js",
     "bootstrap-ui-select.min.js"
   ],
   "version": "0.1.0",
