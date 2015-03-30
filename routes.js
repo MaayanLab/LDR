@@ -40,19 +40,21 @@ module.exports = function(app, passport) {
 
     // ASSAYS GET, POST, DELETE
     app.get('/api/assays', function(req, res) {
-        // params are blank, id, or centerId
+        // params are blank, id, or center
         var query;
         if (req.query.id) {
             query = { '_id': req.query.id};
         }
         else if (req.query.centerId) {
-            query = { 'centerId': req.query.centerId };
+            query = { 'center': req.query.centerId };
         }
         else {
             query = { '_id': { '$exists': true }};
         }
-        findQuery = Models.Assay.find(query).lean();
-        findQuery.exec(function(err, assays) {
+        Models.Assay
+        .find(query)
+        .populate('center')
+        .exec(function(err, assays) {
             if (err) {
                 console.log(err);
                 res.status(404).send(err);
@@ -64,7 +66,7 @@ module.exports = function(app, passport) {
     app.post('/api/assays', function(req, res) {
         console.log('Posting To Assays');
         var assayData = req.body;
-        assayData._id = shortId.generate();
+        assayData._id = Models.genId();
         Models.Assay.create(assayData, function(err,result) {
             if (err)
                 console.log(err);
@@ -102,19 +104,21 @@ module.exports = function(app, passport) {
 
     // CELL LINES GET, POST, DELETE
     app.get('/api/cellLines', function(req, res) {
-        // params are blank, id, or centerId
+        // params are blank, id, or center
         var query;
         if (req.query.id) {
             query = { '_id': req.query.id};
         }
         else if (req.query.centerId) {
-            query = { 'centerId': req.query.centerId };
+            query = { 'center': req.query.centerId };
         }
         else {
             query = { '_id': { '$exists': true }};
         }
-        findQuery = Models.CellLine.find(query).lean();
-        findQuery.exec(function(err, cellLines) {
+        Models.CellLine
+        .find(query)
+        .populate('center')
+        .exec(function(err, cellLines) {
             if (err) {
                 console.log(err);
                 res.status(404).send(err);
@@ -126,7 +130,7 @@ module.exports = function(app, passport) {
     app.post('/api/cellLines', function(req, res) {
         console.log('Posting To Cell Lines');
         var inputData = req.body;
-        inputData._id = shortId.generate();
+        inputData._id = Models.genId();
         var saveData = Models.CellLine.create(inputData);
         res.status(201).send(saveData);
     });
@@ -161,19 +165,21 @@ module.exports = function(app, passport) {
 
     // PERTURBAGENS GET, POST, DELETE
     app.get('/api/perturbagens', function(req, res) {
-        // params are blank, id, or centerId
+        // params are blank, id, or center
         var query;
         if (req.query.id) {
             query = { '_id': req.query.id};
         }
         else if (req.query.centerId) {
-            query = { 'centerId': req.query.centerId };
+            query = { 'center': req.query.centerId };
         }
         else {
             query = { '_id': { '$exists': true }};
         }
-        findQuery = Models.Perturbagen.find(query).lean();
-        findQuery.exec(function(err, perturbagens) {
+        Models.Perturbagen
+        .find(query)
+        .populate('center')
+        .exec(function(err, perturbagens) {
             if (err) {
                 console.log(err);
                 res.status(404).send(err);
@@ -185,7 +191,7 @@ module.exports = function(app, passport) {
     app.post('/api/perturbagens', function(req, res) {
         console.log('Posting To Perturbagens');
         var inputData = req.body;
-        inputData._id = shortId.generate();
+        inputData._id = Models.genId();
         var saveData = Models.Perturbagen.create(inputData);
         res.status(201).send(saveData);
     });
@@ -220,19 +226,21 @@ module.exports = function(app, passport) {
 
     // READOUTS GET, POST, DELETE
     app.get('/api/readouts', function(req, res) {
-        // params are blank, id, or centerId
+        // params are blank, id, or center
         var query;
         if (req.query.id) {
             query = { '_id': req.query.id};
         }
         else if (req.query.centerId) {
-            query = { 'centerId': req.query.centerId };
+            query = { 'center': req.query.centerId };
         }
         else {
             query = { '_id': { '$exists': true }};
         }
-        findQuery = Models.Readout.find(query).lean();
-        findQuery.exec(function(err, readouts) {
+        Models.Readout
+        .find(query)
+        .populate('center')
+        .exec(function(err, readouts) {
             if (err) {
                 console.log(err);
                 res.status(404).send(err);
@@ -244,13 +252,13 @@ module.exports = function(app, passport) {
     app.post('/api/readouts', function(req, res) {
         console.log('Posting');
         var inputData = req.body;
-        inputData._id = shortId.generate();
+        inputData._id = Models.genId();
         var saveData = Models.Readout.create(inputData);
         res.status(201).send(saveData);
     });
 
     app.put('/api/readouts/update', function(req, res) {
-        // params are blank, id, or centerId
+        // params are blank, id, or center
         console.log('Updating readout with id ' + req.query.id);
         if (req.query.id) {
             var query = { '_id': req.query.id};
@@ -283,7 +291,7 @@ module.exports = function(app, passport) {
     // TODO: Change to cleaner version used in other GETs with just one Find query
     app.get('/api/data', function(req, res) {
         if (req.query.userId && req.query.formId) {
-            Models.Data.find({ _id: req.query.formId, userId: req.query.userId }, function(err, userForm) {
+            Models.Data.find({ _id: req.query.formId, user: req.query.userId }, function(err, userForm) {
                 if (err) {
                     console.log(err);
                     res.status(404).send('Form with given formId and userId could not be found.' + ' Error: ' + err);
@@ -292,7 +300,7 @@ module.exports = function(app, passport) {
             });
         }
         else if (req.query.userId) {
-            Models.Data.find({ userId: req.query.userId }, function(err, userData) {
+            Models.Data.find({ user: req.query.userId }, function(err, userData) {
                 if (err) {
                     console.log(err);
                     res.status(404).send('Form with given userId could not be found.' + ' Error: ' + err);
@@ -325,11 +333,11 @@ module.exports = function(app, passport) {
         console.log('Posting To Data');
         var inputData = req.body;
         if (inputData.cellLines.length > 1) {
-            inputData._id = 'LINCS-' + inputData.center + '-MTPL-' + shortId.generate();
+            inputData._id = 'LINCS-' + '-MTPL-' + shortId.generate();
         } else if (inputData.cellLines.length === 1) {
-            inputData._id = 'LINCS-' + inputData.center + '-' + inputData.cellLines[0].name + '-' + shortId.generate();
+            inputData._id = 'LINCS-' + inputData.centerName + '-' + inputData.cellLines[0].name + '-' + shortId.generate();
         } else {    
-            inputData._id = 'LINCS-' + inputData.center + '-NONE-' + shortId.generate();
+            inputData._id = 'LINCS-' + inputData.centerName + '-NONE-' + shortId.generate();
         }
 
         var form = new Models.Data(inputData);

@@ -19,7 +19,10 @@ module.exports = function(passport) {
         passwordField: 'password',
         passReqToCallback: true
     }, function(req, username, password, done) {
-        Models.User.findOne({ 'username': username }, function(err, user) {
+        Models.User
+        .findOne({ 'username': username })
+        .populate('center')
+        .exec(function(err, user) {
             if (err) {
                 console.log(err);
                 return done(err);

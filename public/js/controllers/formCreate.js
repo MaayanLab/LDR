@@ -73,8 +73,9 @@ angular.module( 'milestonesLanding.formCreate', [
 
     // Init if not editing
     $scope.form = {};
-    $scope.form.userId = $scope.user._id;
-    $scope.form.center = $scope.user.center.name;
+    $scope.form.user = $scope.user._id;
+    $scope.form.center = $scope.user.center._id;
+    $scope.form.centerName = $scope.user.center.name;
     $scope.form.assay = {};
     $scope.form.cellLines = [];
     $scope.form.perturbagens = [];
@@ -144,7 +145,7 @@ angular.module( 'milestonesLanding.formCreate', [
         }
 
         $scope.form = {};
-        $scope.form.userId = $scope.user._id;
+        $scope.form.user = $scope.user._id;
         $scope.form.status = 'awaiting approval';
         $scope.form.dateModified = new Date();
         $scope.form.center = $scope.user.center.name;
@@ -178,8 +179,8 @@ angular.module( 'milestonesLanding.formCreate', [
         });
 
         modalInstance.result.then(function(result){
-            result.userId = $scope.user._id;
-            result.centerId = $scope.user.center._id;
+            result.user = $scope.user._id;
+            result.center = $scope.user.center._id;
             if(inpType === 'Assay') {
                 DataPosts.postAssay(result);
                 DataGets.getAssays({ centerId: $scope.user.center._id }).success(function(assays) {
@@ -233,8 +234,6 @@ angular.module( 'milestonesLanding.formCreate', [
         outputForm.readoutCount = $scope.form.readouts.length;
         outputForm.cellLineCount = $scope.form.cellLines.length;
         outputForm.perturbagenCount = $scope.form.perturbagens.length;
-        outputForm.postedByUser = $scope.user.username;
-        outputForm.center = $scope.user.center.name;
         outputForm.status = 'awaiting approval';
         outputForm.dateModified = new Date();
 

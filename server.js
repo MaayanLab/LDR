@@ -52,7 +52,7 @@ app.get('/js', function(req, res, next) {
     res.setHeader('Content-Type', 'application/javascript');
 });
 
-app.get('*.png', function(req, res, next) {
+app.get('/*.png', function(req, res, next) {
     res.setHeader('Content-Type', 'image/png');
 });
 

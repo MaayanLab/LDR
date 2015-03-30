@@ -4,20 +4,17 @@
         <table class="table table-hover meta-data-table">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Name</th>
                     <th>Info</th>
                 </tr>
             </thead>
             <tbody>
             <tr ng-repeat="assay in assays" ng-click="selectData('Assay', assay)">
-                <td class="col-md-2">{{assay._id}}</td>
                 <td class="col-md-4">{{assay.name}}</td>
-                <td class="col-md-6">{{assay.info}}</td>
+                <td class="col-md-8">{{assay.info}}</td>
             </tr>
             <tr ng-if="assays.length !== 0">
                 <td class="col-md-2"><a class="pointer" ng-click="addNew('Assay')">Add new assay</a></td>
-                <td></td>
                 <td></td>
             </tr>
             <tr ng-if="assays.length === 0">
@@ -32,7 +29,6 @@
         <table class="table table-hover meta-data-table">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Name</th>
                     <th>Type</th>
                     <th>Class</th>
@@ -41,16 +37,13 @@
             </thead>
             <tbody>
             <tr ng-repeat="line in cellLines" ng-click="selectData('Cell Line', line)">
-                <td class="col-md-2">{{line._id}}</td>
                 <td class="col-md-4">{{line.name}}</td>
                 <td class="col-md-2">{{line.type}}</td>
-                <td class="col-md-2">{{line.class}}</td>
-                <td class="col-md-2">{{line.tissue}}</td>
+                <td class="col-md-3">{{line.class}}</td>
+                <td class="col-md-3">{{line.tissue}}</td>
             </tr>
             <tr ng-if="cellLines.length !== 0">
                 <td class="col-md-2"><a class="pointer" ng-click="addNew('Cell Line')">Add new cell line</a></td>
-                <td></td>
-                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -67,20 +60,17 @@
         <table class="table table-hover meta-data-table">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Name</th>
                     <th>Type</th>
                 </tr>
             </thead>
             <tbody>
             <tr ng-repeat="pert in perturbagens" ng-click="selectData('Perturbagen', pert)">
-                <td class="col-md-2">{{pert._id}}</td>
                 <td class="col-md-4">{{pert.name}}</td>
-                <td class="col-md-6">{{pert.type}}</td>
+                <td class="col-md-8">{{pert.type}}</td>
             </tr>
             <tr ng-if="perturbagens.length !== 0">
                 <td class="col-md-2"><a class="pointer" ng-click="addNew('Perturbagen')">Add new perturbagen</a></td>
-                <td></td>
                 <td></td>
             </tr>
             <tr ng-if="perturbagens.length === 0">
@@ -95,20 +85,17 @@
         <table class="table table-hover meta-data-table">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Name</th>
                     <th>Datatype</th>
                 </tr>
             </thead>
             <tbody>
             <tr ng-repeat="rOut in readouts" ng-click="selectData('Readout', rOut)">
-                <td class="col-md-2">{{rOut._id}}</td>
                 <td class="col-md-4">{{rOut.name}}</td>
-                <td class="col-md-6">{{rOut.datatype}}</td>
+                <td class="col-md-8">{{rOut.datatype}}</td>
             </tr>
             <tr ng-if="readouts.length !== 0">
                 <td class="col-md-2"><a class="pointer" ng-click="addNew('Readout')">Add new readout</a></td>
-                <td></td>
                 <td></td>
             </tr>
             <tr ng-if="readouts.length === 0">
