@@ -25,11 +25,12 @@ body {
 }
 
 .navbar {
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #084c8d;
     border-radius: 0px;
     background-color: #6682b5;
     min-height: 44px;
     padding: 29px 15px 0px 15px;
+    border-radius: 0;
 }
 
 .navbar-nav>li>a, .select2-results .select2-highlighted {
@@ -58,7 +59,6 @@ body {
     vertical-align: middle;
 }
 
-
 .title-bar {
     margin: 0 auto;
     vertical-align: middle;
@@ -69,6 +69,7 @@ body {
     padding: 15px 15px;
     line-height: 1.42857143;
     cursor: default;
+    color: #d5d5e5;
 }
 
 .ml-title {
@@ -357,7 +358,7 @@ h4.meta-header {
 
 .footer {
     height: 60px;
-    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
     border-radius: 0px;
     background: -webkit-gradient(linear,left top,left bottom,color-stop(0,#fafafa),color-stop(1,#f5f5f5));
 }

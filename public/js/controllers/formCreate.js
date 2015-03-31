@@ -160,6 +160,12 @@ angular.module( 'milestonesLanding.formCreate', [
     $scope.clearSelection = function(selection) {
         if (selection === 'Assay')
             $scope.form.assay = {};
+        else if (selection === 'CellLine')
+            $scope.form.cellLines = [];
+        else if (selection === 'Perturbagen')
+            $scope.form.perturbagens = [];
+        else if (selection === 'Readout')
+            $scope.form.readouts = [];
         else if (selection === 'Disease')
             $scope.form.disease = {};
     };

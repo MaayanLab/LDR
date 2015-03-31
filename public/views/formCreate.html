@@ -2,7 +2,7 @@
     <div class="form-info-block">
         <p>Add Milestones meta-data to your center's list by filling out the form on the left. <strong>Required fields are marked with an asterisk.</strong> For security reasons, you are not allowed to change the center name. If this is incorrect, please <a href="mailto:michael.mcdermott@mssm.edu?Subject=[Milestones Forms Improvment]">contact Michael McDermott</a>.<p>
         <p>Upon clicking the entry fields, you'll notice that there is an autocomplete available for each one. These entries were taken directly from your center's submitted data at the beginning of 2015.</p>
-        <p>Although not shown, there is additional meta-data recorded for each entry. You can see the list of all entries with all of their respective meta-data by visiting the <a ui-sref="formData">Form Data</a> page also found at the top right of the page. <strong>We recommend that you check here before submitting any forms.</strong> Also note that you must be logged in to visit the Form Data page.</p>
+        <p>Although not shown, there is additional meta-data recorded for each entry. You can see the list of all entries with all of their respective meta-data by visiting the <a ui-sref="formData">Form Data</a> page also found at the top right of the page. <strong>We recommend that you check all meta-data at the Form Data page before submitting any forms.</strong> Also note that you must be logged in to view your meta-data</p>
         <p>If there is an entry missing from the input list, you may also click the <a style="text-decoration: none;" id="add-new-btn-paragraph" class="glyphicon glyphicon-plus"></a> button to add an entry without leaving the page. If entered correctly, your addition should immediately appear in the list of autocomplete items.</p>
     </div>
     <form name="dataForm" class="form-block">
@@ -35,6 +35,7 @@
             </small>
             </ui-select-choices>
             </ui-select>
+            <a ng-if="form.cellLines.length !== 0" id="clear-btn" class="glyphicon glyphicon-remove-circle" ng-click="clearSelection('CellLine')"></a>
             <a id="add-new-btn" class="glyphicon glyphicon-plus" ng-click="addNew('Cell Line')"></a>
         </div>
 
@@ -50,6 +51,7 @@
             </small>
             </ui-select-choices>
             </ui-select>
+            <a ng-if="form.perturbagens.length !== 0" id="clear-btn" class="glyphicon glyphicon-remove-circle" ng-click="clearSelection('Perturbagen')"></a>
             <a id="add-new-btn" class="glyphicon glyphicon-plus" ng-click="addNew('Perturbagen')"></a>
         </div>
 
@@ -65,6 +67,7 @@
             </small>
             </ui-select-choices>
             </ui-select>
+            <a ng-if="form.readouts.length !== 0" id="clear-btn" class="glyphicon glyphicon-remove-circle" ng-click="clearSelection('Readout')"></a>
             <a id="add-new-btn" class="glyphicon glyphicon-plus" ng-click="addNew('Readout')"></a>
         </div> 
 
