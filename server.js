@@ -13,9 +13,8 @@ var express         = require('express'),
     compress        = require('compression'),
     session         = require('express-session');
 
-
 var app = express();
-var port = process.env.PORT || 3001;
+var port = 3001;
 
 var configDB = require('./config/database');
 
@@ -33,11 +32,14 @@ app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // required for passport
-app.use(session({ secret: configDB.secret })); // session secret
+app.use(session({
+    secret: configDB.secret,
+    resave: true,
+    saveUninitialized: true
+}));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
-
 app.use(compress());
 
 var publicDir = __dirname + '/public';
@@ -55,8 +57,14 @@ app.get('/js', function(req, res, next) {
 require('./routes.js')(app, passport);
 
 app.get('/*', function(req, res) {
-    res.sendfile(publicDir + '/index.html');
+    res.sendFile(publicDir + '/index.html');
   });
+
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    res.send(401, 'Token invalid. You must be logged in to proceed.');
+  }
+});
 
 app.listen(port);
 console.log('Everything\'s going down on port ' + port);

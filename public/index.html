@@ -3,11 +3,13 @@
 <head>
 <title ng-bind="pageTitle"></title>
 <script type="text/javascript">
-if (document.location.hostname === 'localhost' || document.location.hostname === 'loretta') {
-    var base = '/';
-} else {
-    var base = '/MilestonesLanding/';
-}
+var base = '/';
+
+//if (document.location.hostname === 'localhost' || document.location.hostname === 'loretta') {
+//    var base = '/';
+//} else {
+//    var base = '/MilestonesLanding/';
+//}
 var newBase = document.createElement("base");
 newBase.setAttribute("href", base);
 document.getElementsByTagName("head")[0].appendChild(newBase);
@@ -20,6 +22,7 @@ document.getElementsByTagName("head")[0].appendChild(newBase);
 <link rel="stylesheet" type="text/css" href="vendor/pickadate/lib/compressed/themes/classic.css">
 <link rel="stylesheet" type="text/css" href="vendor/pickadate/lib/compressed/themes/classic.date.css">
 <link rel="stylesheet" type="text/css" href="vendor/ng-prettyjson/dist/ng-prettyjson.min.css">
+<link rel="stylesheet" type="text/css" href="vendor/ng-tags-input/ng-tags-input.min.css">
 <link rel="stylesheet" type="text/css" href="vendor/angular-ui-select/dist/select.css">
 <!--<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">-->
 
@@ -54,7 +57,7 @@ document.getElementsByTagName("head")[0].appendChild(newBase);
             <div class="ml-navbar">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <a class="navbar-brand ml-title" ui-sref="home">Milestones Landing</a>
+                    <a class="ml-title" ui-sref="home">Milestones Landing</a>
                     <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
@@ -114,6 +117,8 @@ document.getElementsByTagName("head")[0].appendChild(newBase);
 <script type="text/javascript" src='vendor/ng-prettyjson/dist/ng-prettyjson.min.js'></script>
 <script type="text/javascript" src="vendor/ace-builds/src-min-noconflict/ace.js"></script>
 <script type="text/javascript" src="vendor/angular-ui-ace/ui-ace.js"></script>
+<script type="text/javascript" src="vendor/angular-ui-utils/ui-utils.min.js"></script>
+<script type="text/javascript" src="vendor/ng-tags-input/ng-tags-input.min.js"></script>
 
 </body>
 </html>

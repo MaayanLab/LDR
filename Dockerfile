@@ -9,12 +9,12 @@ WORKDIR /home
 COPY *.js* ./
 COPY app ./app
 COPY config ./config
-COPY app ./node_modules
+#COPY app ./node_modules
 COPY public ./public
 
 RUN npm install
 
-#RUN yes 1 | bower install --allow-root
+RUN bower install --allow-root
 
 EXPOSE 3001
 

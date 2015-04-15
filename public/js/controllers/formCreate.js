@@ -41,47 +41,35 @@ angular.module( 'milestonesLanding.formCreate', [
             // Let the output be the input untouched
             out = items;
         }
-
         return out;
     };
-}).controller('FormCreateCtrl', function FormCreateController ($scope, $http, store, $state, $modal, lodash, FormUpdates, FormPosts, DataGets, DataPosts) {
+}).controller('FormCreateCtrl', function FormCreateController ($scope, $http, $location, $anchorScroll,
+                                                               store, $state,$modal, lodash, FormUpdates,
+                                                               FormPosts, DataGets, DataPosts) {
     var emptyDict = {};
 
     $scope.user = store.get('currentUser');
 
-    // API calls for selections
-    DataGets.getAssays({ centerId: $scope.user.center._id }).success(function(assays) {
-        $scope.assays = assays;
-    });
-
-    DataGets.getCellLines({ centerId: $scope.user.center._id }).success(function(cellLines) {
-        $scope.cellLines = cellLines;
-    });
-
-    DataGets.getPerturbagens({ centerId: $scope.user.center._id }).success(function(perturbagens) {
-        $scope.perturbagens = perturbagens;
-    });
-
-    DataGets.getReadouts({ centerId: $scope.user.center._id }).success(function(readouts) {
-        $scope.readouts = readouts;
-    });
+    var getAllMetaData = function(centerId) {
+        // API calls for data
+        DataGets.getAssays({ centerId: centerId }).success(function(assays) {
+            $scope.assays = assays;
+        });
+        DataGets.getCellLines({ centerId: centerId }).success(function(cellLines) {
+            $scope.cellLines = cellLines;
+        });
+        DataGets.getPerturbagens({ centerId: centerId }).success(function(perturbagens) {
+            $scope.perturbagens = perturbagens;
+        });
+        DataGets.getReadouts({ centerId: centerId }).success(function(readouts) {
+            $scope.readouts = readouts;
+        });
+    };
 
     // Get request is too slow. After fixing, will replace large array at bottom of controller
     //DataGets.getDiseases().success(function(diseases) {
     //    $scope.diseases = diseases;
     //});
-
-    // Init if not editing
-    $scope.form = {};
-    $scope.form.user = $scope.user._id;
-    $scope.form.center = $scope.user.center._id;
-    $scope.form.centerName = $scope.user.center.name;
-    $scope.form.assay = {};
-    $scope.form.cellLines = [];
-    $scope.form.perturbagens = [];
-    $scope.form.readouts = [];
-    $scope.form.releaseDates = {};
-    $scope.form.disease = {};
 
     // Date picker
     $scope.clear = function () {
@@ -136,19 +124,20 @@ angular.module( 'milestonesLanding.formCreate', [
 
     // End date picker
 
-    var data = {};
-
     $scope.reset = function(inpForm) {
         if (inpForm) {
             inpForm.$setPristine();
             inpForm.$setUntouched();
         }
 
+        $scope.addAnother = false;
+        $scope.showValidation = false;
+
         $scope.form = {};
         $scope.form.user = $scope.user._id;
         $scope.form.status = 'awaiting approval';
         $scope.form.dateModified = new Date();
-        $scope.form.center = $scope.user.center.name;
+        $scope.form.center = $scope.user.center;
         $scope.form.assay = {};
         $scope.form.cellLines = [];
         $scope.form.perturbagens = [];
@@ -171,7 +160,6 @@ angular.module( 'milestonesLanding.formCreate', [
     };
 
     $scope.addNew = function(inpType) {
-
         var modalInstance = $modal.open({
             templateUrl: 'views/formModal.html',
             controller: 'FormModalCtrl',
@@ -183,40 +171,26 @@ angular.module( 'milestonesLanding.formCreate', [
                 }
             }
         });
-
         modalInstance.result.then(function(result){
             result.user = $scope.user._id;
             result.center = $scope.user.center._id;
             if(inpType === 'Assay') {
                 DataPosts.postAssay(result);
-                DataGets.getAssays({ centerId: $scope.user.center._id }).success(function(assays) {
-                    $scope.assays = assays;
-                });
             }
             if(inpType === 'Cell Line') {
                 DataPosts.postAssay(result);
-                DataGets.getCellLines({ centerId: $scope.user.center._id }).success(function(cellLines) {
-                    $scope.cellLines = cellLines;
-                });
             }
             if(inpType === 'Perturbagen') {
                 DataPosts.postAssay(result);
-                DataGets.getPerturbagens({ centerId: $scope.user.center._id }).success(function(perturbagens) {
-                    $scope.perturbagens = perturbagens;
-                });
             }
             if(inpType === 'Readout') {
                 DataPosts.postAssay(result);
-                DataGets.getReadouts({ centerId: $scope.user.center._id }).success(function(readouts) {
-                    $scope.readouts = readouts;
-                });
             }
             if(inpType === 'Disease') {
                 DataPosts.postDisease(result);
-                DataGets.getDiseases({ centerId: $scope.user.center._id }).success(function(diseases) {
-                    $scope.diseases = diseases;
-                });
             }
+        }, function() {
+            getAllMetaData($scope.user.center._id);
         });
     };
 
@@ -230,37 +204,57 @@ angular.module( 'milestonesLanding.formCreate', [
     };
 
     // TODO: Fix. Should strip keys with empty values and post
-    var post = function() {
+    $scope.post = function() {
+        $scope.showValidation = true;
         var outputForm = {};
         lodash.transform($scope.form, function(res, value, key) {
             if (value)
                 outputForm[key] = value;
         });
 
-        outputForm.readoutCount = $scope.form.readouts.length;
         outputForm.cellLineCount = $scope.form.cellLines.length;
         outputForm.perturbagenCount = $scope.form.perturbagens.length;
+        outputForm.readoutCount = $scope.form.readouts.length;
         outputForm.status = 'awaiting approval';
         outputForm.dateModified = new Date();
 
+        outputForm.assay = $scope.form.assay._id;
+        outputForm.cellLines = [];
+        for (var i=0;i<outputForm.cellLineCount;i++) {
+            outputForm.cellLines.push($scope.form.cellLines[i]._id);
+        }
+        outputForm.perturbagens = [];
+        for (var j=0;j<outputForm.perturbagenCount;j++) {
+            outputForm.perturbagens.push($scope.form.perturbagens[j]._id);
+        }
+        outputForm.readouts = [];
+        for (var k=0;k<outputForm.readoutCount;k++) {
+            outputForm.readouts.push($scope.form.readouts[k]._id);
+        }
 
-        console.log(outputForm.center);
-
-        FormPosts.postForm(outputForm).success(function(result) {
+        FormPosts
+        .postForm(outputForm)
+        .error(function(err) {
+            console.log(err);
+        })
+        .success(function(result) {
             console.log('Form posted.');
+            console.log(outputForm);
         });
-    };
+        if ($scope.addAnother) {
+            alert('Post successful');
 
-    $scope.postMove = function() {
-        post();
-        $state.go('forms');
+            // Clear form
+            $scope.reset();
+
+            // Scroll to top (center)
+            $location.hash('formCenter');
+            $anchorScroll();
+        }
+        else {
+            $state.go('forms');
+        }
     };
-    $scope.postAddAnother = function() {
-        post();
-        alert('Post successful');
-        $scope.reset();
-        // TODO: Add scroll to top
-    }; 
 
     $scope.diseases = [
         {
@@ -296,4 +290,9 @@ angular.module( 'milestonesLanding.formCreate', [
         info: ""
     }
     ];
+
+    // Init form. Will be changed to inside a conditional when editing is implemented
+    $scope.reset();
+    getAllMetaData($scope.user.center._id);
+
 });

@@ -30,7 +30,7 @@ angular.module( 'milestonesLanding.forms', [
     return {
         deleteForm: function(formId) {
             return $http({
-                url: base + 'api/data?formId=' + formId,
+                url: base + 'api/secure/data?formId=' + formId,
                 method: 'DELETE'
             });
         }
@@ -39,7 +39,7 @@ angular.module( 'milestonesLanding.forms', [
     return {
         updateForm: function(form) {
             return $http({
-                url: base + 'api/data?formId=' + form._id,
+                url: base + 'api/secure/data?formId=' + form._id,
                 method: 'PUT',
                 data: form
             });
@@ -49,7 +49,7 @@ angular.module( 'milestonesLanding.forms', [
     return {
         postForm: function(inputForm) {
             return $http({
-                url: base + 'api/data',
+                url: base + 'api/secure/data',
                 method: 'POST',
                 data: inputForm
             });
@@ -74,7 +74,7 @@ angular.module( 'milestonesLanding.forms', [
         if (confirm('Are you sure you would like to delete this entry?')) {
             FormDeletes.deleteForm(form._id).success(function(data) {
                 console.log(data);
-            }); 
+            });
 
             FormGets.getUserForms($scope.user._id).success(function(data) {
                 $scope.forms = data;

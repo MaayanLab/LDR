@@ -149,10 +149,7 @@ var dataSchema = new Schema({
     centerName: String, // Used for creation of IDs and for Qiaonan's Milestones Page
     status: String,
     dateModified: Date,
-    assay: {
-        name: { type: String, required: true },
-        info: String
-    },
+    assay: { type: Schema.ObjectId, ref: 'Assay' },
     readoutCount: Number,
     releaseDates: {
         levelOne: Date,

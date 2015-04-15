@@ -4,52 +4,56 @@ html, body {
     -webkit-font-smoothing: antialiased;
 }
 
-a {	
-    color: #6682b5;
+a {
+    color: #286090;
 }
 
 body {
-    background-color: white;
+    background-color: #fff;
 }
 
 .wrap {
-    background-color: white;
+    background-color: #fff;
     min-height: 100%;
     height: auto !important;
     margin: 0 auto -60px;
 }
 
-
 .pointer, .nav, .dropdown-menu>li>a {
     cursor: pointer;
 }
 
+.btn-danger {
+	background-color: #B82C28;
+    border-color: #67201E
+}
+
 .navbar {
-    border-bottom: 1px solid #084c8d;
+    border-bottom: 1px solid #204d74;
     border-radius: 0px;
-    background-color: #6682b5;
+    background-color: #286090;
     min-height: 44px;
     padding: 29px 15px 0px 15px;
     border-radius: 0;
 }
 
 .navbar-nav>li>a, .select2-results .select2-highlighted {
-    background-color: #6682b5;
-    color: rgba(255,255,255,0.8);
+    color: #fff;
+    background-color: #286090;
 }
 
 .navbar-nav>li>a:hover {
-    background-color: #6682b5;
-    color: rgba(255,255,255,0.8);
+    color: #fff;
+    background-color: #286090;
 }
 
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
-    background-color: #6682b5;
-    border-color: #337ab7;
+    background-color: #286090;
+    border-color: #204d74;
 }
 
 .nav>li>a:focus, .nav>li>a:hover {
-    background-color: #6682b5;
+    background-color: #286090;
 }
 
 .nav-items {
@@ -73,14 +77,17 @@ body {
 }
 
 .ml-title {
-	/* color: #6B7678; */
-    color: rgba(255,255,255,0.8);
-    padding: 0px 15px;
+    color: #fff;
+    padding: 0;
+    float: left;
+    height: 50px;
+    font-size: 20px;
+    line-height: 22px;
 }
 
-.ml-title:hover {
-	/* color: #6B7678; */
-    color: rgba(255,255,255,0.8);
+.ml-title:hover, .ml-title:focus {
+    color: #fff;
+    text-decoration: none;
 }
 
 .ml-navbar {
@@ -97,7 +104,6 @@ body {
 }
 
 /* Homepage */
-
     /* Custom left tabs */
 
 .tabs-left > .nav-tabs {
@@ -153,7 +159,6 @@ body {
   border-color: #ddd transparent #ddd #ddd;
   *border-right-color: #ffffff;
 }
-
     /* End Custom Left Tabs */
 
 .docent {
@@ -164,40 +169,12 @@ body {
 	display: inline-block;
 }
 
-.vert-title {
-    float: left;
-	transform: rotate(270deg);
-}
-
-table.docent-table {
-    width: 100%;
-	float: right;
-}
-
-table.docent-table tr th a{
-    width: 1.2em;
-    white-space: nowrap;
-
-    color: #000;
-    display: block;
-    /*Firefox*/
-    -moz-transform: rotate(-90deg);
-    /*Safari*/
-    -webkit-transform: rotate(-90deg);
-    /*Opera*/
-    -o-transform: rotate(-90deg);
-    /*IE*/
-    writing-mode: tb-rl;
-    filter: flipv fliph;
-    border:1px black solid;
-}
-
 /* End Homepage */
 
 /* Forms Homepage */
 
 .form-table-head, .form-table-data {
-    border-bottom: 1px solid rgb(204,204,204);	
+    border-bottom: 1px solid rgb(204,204,204);
 }
 
 .form-table-item {
@@ -209,13 +186,13 @@ table.docent-table tr th a{
 /* Form Create */
 
 .form-info-block {
-    float: left;
+    float: right;
     margin-top: 120px;
     width: 45%;
 }
 
 .form-block {
-    float: right;
+    float: left;
     padding-top: 40px;
     width: 50%;
 }
@@ -225,20 +202,28 @@ table.docent-table tr th a{
     width: 90%;
 }
 
+button#form-reset {
+	float: left;
+}
+
+button#form-submit {
+	margin-left: 10px;
+}
+
 a#clear-btn {
 	top: 2px;
 }
 
-a#add-new-btn, a#add-new-btn-paragraph, a#clear-btn {
+a.add-new-btn, a#add-new-btn-paragraph, a.clear-btn {
     color: black;
 }
 
-a#add-new-btn:hover, a#clear-btn:hover {
+a.add-new-btn:hover, a.clear-btn:hover {
     text-decoration: none;
     color: gray;
 }
 
-a#add-new-btn-paragraph:hover {	
+a#add-new-btn-paragraph:hover {
     text-decoration: none;
     color: black;
     cursor: text;
@@ -268,7 +253,7 @@ p.input-group {
 
 .form-date {
     width: 90%;
-    display: inline-block;    
+    display: inline-block;
 }
 
 .post-button {
@@ -285,6 +270,11 @@ p.input-group {
 
 .selectize-control > .selectize-dropdown {
     top: 36px;
+}
+
+.select2-container-multi .select2-choices .select2-search-choice,
+.select2-container-multi .select2-choices .select2-search-field input {
+	line-height: 17px;
 }
 
 /* End Form Create */
@@ -318,7 +308,7 @@ pre.pretty-json span.string {
     width: 49%;
 }
 
-.ace_editor { 
+.ace_editor {
     height: 1487px;
     outline:1px solid #e9e9e9;
     font-family: arial, sans-serif;
