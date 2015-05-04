@@ -41,23 +41,25 @@ module.exports = function (app, passport) {
     });
 
     // USERS
-    /*
-     app.get('/api/users', function(req, res) {
-     Models.User.find({'_id': { '$exists': true }}, function(err, users) {
-     if (err) {
-     console.log(err);
-     return done(err);
-     }
-     res.status(200).send(users);
-     });
-     });
-     */
+    app.get('/api/users', function(req, res) {
+        Models.User.find({'_id': { '$exists': true }}, function(err, users) {
+            if (err) {
+                console.log(err);
+                return done(err);
+            }
+            res.status(200).send(_.map(users, function(obj) {
+                return obj.username;
+            }));
+        });
+    });
+
     app.post('/register', function (req, res) {
         console.log('receiving POST on server');
         var user = new Models.User({
             _id: Models.genId(),
             username: req.body.username,
-            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8))
+            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8)),
+            center: req.body.center
         });
         user.save(function (err) {
             if (err) {

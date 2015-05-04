@@ -1,22 +1,35 @@
 <div ng-controller="RegisterCtrl">
     <h3>Register</h3>
-    <form>
-        <label>
-            Username:
-            <input type="text" ng-model="user.username">
-        </label>
-        <label>
-            Password:
-            <input type="text" ng-model="user.password">
-        </label>
-        <label>
-            Email:
-            <input type="text" ng-model="user.email">
-        </label>
-        <label>
+    <form name="userForm">
+        <div class="form-input">
+            <label>
+                Username:
+                <input name="username" type="text" ng-model="user.username" ng-model-options="{ updateOn: 'blur' }" username-available>
+            </label>
+            <div ng-if="userForm.username.$pending.username">checking....</div>
+            <div ng-if="userForm.username.$error.username">username exists already</div>
+        </div>
+        <div class="form-input">
+            <label>
+                Password:
+                <input type="text" ng-model="user.password">
+            </label>
+        </div>
+        <div class="form-input">
+            <label>
+                Email:
+                <input type="email" ng-model="user.email">
+            </label>
+        </div>
+        <div class="form-input">
             Center:
-            <input type="text" ng-model="user.center">
-        </label>
+            <ui-select class="form-select" ng-model="user.center" theme="select2" ng-disabled="disabled" ng-required>
+                <ui-select-match placeholder="Select center...">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="center in centers | propsFilter: {name: $select.search}">
+                    <div ng-bind-html="center.name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
         <button ng-click="createUser()">Submit</button>
     </form>
 </div>
