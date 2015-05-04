@@ -1,15 +1,15 @@
-var express         = require('express'),
-    mongoose        = require('mongoose'),
-    passport        = require('passport'),
-    cors            = require('cors'),
-    flash           = require('connect-flash'),
+var express = require('express'),
+    mongoose = require('mongoose'),
+    passport = require('passport'),
+    cors = require('cors'),
+    flash = require('connect-flash'),
 
-    morgan          = require('morgan'),
-    path            = require('path'),
-    cookieParser    = require('cookie-parser'),
-    bodyParser      = require('body-parser'),
-    compress        = require('compression'),
-    session         = require('express-session');
+    morgan = require('morgan'),
+    path = require('path'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    compress = require('compression'),
+    session = require('express-session');
 
 var app = express();
 var port = 3001;
@@ -27,7 +27,7 @@ app.use(cors());
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.json()); // get information from html forms
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 
 // required for passport
 app.use(session({
@@ -48,13 +48,13 @@ app.use('/css', express.static(path.join(publicDir + '/css')));
 app.use('/views', express.static(path.join(publicDir + '/views')));
 app.use('/vendor', express.static(path.join(publicDir + '/vendor')));
 
-app.get('/js', function(req, res, next) {
+app.get('/js', function (req, res, next) {
     res.setHeader('Content-Type', 'application/javascript');
 });
 
 require('./server/routes.js')(app, passport);
 
-app.get('/*', function(req, res) {
+app.get('/*', function (req, res) {
     res.sendFile(publicDir + '/index.html');
 });
 

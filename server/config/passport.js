@@ -1,28 +1,28 @@
-var LocalStrategy   = require('passport-local').Strategy,
-    Models          = require('../models');
+var LocalStrategy = require('passport-local').Strategy,
+    Models = require('../models');
 
-module.exports = function(passport) {
+module.exports = function (passport) {
     // used to serialize the user for the session
-    passport.serializeUser(function(user, done) {
+    passport.serializeUser(function (user, done) {
         done(null, user.id);
     });
 
     // used to deserialize the user
-    passport.deserializeUser(function(id, done) {
-        Models.User.findById(id, function(err, user) {
+    passport.deserializeUser(function (id, done) {
+        Models.User.findById(id, function (err, user) {
             done(err, user);
         });
     });
 
-    passport.use('local-login', new LocalStrategy ({
+    passport.use('local-login', new LocalStrategy({
         usernameField: 'username',
         passwordField: 'password',
         passReqToCallback: true
-    }, function(req, username, password, done) {
+    }, function (req, username, password, done) {
         Models.User
-            .findOne({ 'username': username })
+            .findOne({'username': username})
             .populate('center')
-            .exec(function(err, user) {
+            .exec(function (err, user) {
                 if (err) {
                     console.log(err);
                     return done(err);
@@ -36,12 +36,12 @@ module.exports = function(passport) {
             });
     }));
 
-    passport.use('local-admin', new LocalStrategy ({
+    passport.use('local-admin', new LocalStrategy({
         usernameField: 'username',
         passwordField: 'password',
         passReqToCallback: true
-    }, function(req, username, password, done) {
-        Models.User.findOne({ 'username': username }, function(err, user) {
+    }, function (req, username, password, done) {
+        Models.User.findOne({'username': username}, function (err, user) {
             if (err) {
                 console.log(err);
                 return done(err);

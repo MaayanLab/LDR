@@ -3,29 +3,29 @@
 angular.module('milestonesLanding')
     .controller('FormModalCtrl', function FormModalCtrl($scope, $modalInstance, data) {
 
-      $scope.modalForm = {};
+        $scope.modalForm = {};
 
-      $scope.editData = false;
+        $scope.editData = false;
 
-      $scope.datatype = data.inpType;
+        $scope.datatype = data.inpType;
 
-      if (data.selected) {
-        $scope.editData = true;
-        $scope.modalForm = data.selected;
-      }
+        if (data.selected) {
+            $scope.editData = true;
+            $scope.modalForm = data.selected;
+        }
 
 
-      $scope.close = function() {
-        $modalInstance.close($scope.modalForm);
-      };
+        $scope.close = function () {
+            $modalInstance.close($scope.modalForm);
+        };
 
-      $scope.delete = function() {
-        $modalInstance.close('delete');
-      };
+        $scope.delete = function () {
+            $modalInstance.close('delete');
+        };
 
-      $scope.cancel = function() {
-        $modalInstance.dismiss('cancel');
-      };
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
 
     });
 
