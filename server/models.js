@@ -31,7 +31,8 @@ try {
 var userSchema = new Schema({
     username: { type: String, required: true, index: { unique: true } },
     password: { type: String, required: true },
-    center: { type: Schema.ObjectId, ref: 'Center' }
+    email:    { type: String, required: true, index: { unique: true } },
+    center:   { type: Schema.ObjectId, required: true, ref: 'Center' }
 });
 
 userSchema.methods.generateHash = function(password) {

@@ -48,6 +48,7 @@ document.getElementsByTagName("head")[0].appendChild(newBase);
 <script type="text/javascript" src="js/controllers/formCreate.js"></script>
 <script type="text/javascript" src="js/controllers/formData.js"></script>
 <script type="text/javascript" src="js/controllers/formBatch.js"></script>
+<script type="text/javascript" src="js/controllers/register.js"></script>
 
 </head>
 <body class="ng-cloak">
@@ -71,13 +72,13 @@ document.getElementsByTagName("head")[0].appendChild(newBase);
                     <ul class="nav navbar-nav navbar-right">
                         <li><h5 ng-show="isLoggedIn" class="hello">Logged in as {{ currentUser.username }}</h5></li>
                         <li ng-show="isLoggedInAdmin"><a ui-sref="admin">Admin</a></li>
-                        <li class="dropdown" ng-show="isLoggedIn">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Data Releases <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a ui-sref="forms">Data Releases Home</a></li>
-                            <li><a ui-sref="formCreate">Add New</a></li>
-                            <!--<li><a ui-sref="formBatch">Add Batch</a></li> May not be needed. Leaving alone for now-->
-                        </ul>
+                        <li class="dropdown" ng-show="isLoggedIn && !isLoggedInAdmin">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Data Releases <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a ui-sref="forms">Data Releases Home</a></li>
+                                <li><a ui-sref="formCreate">Add New</a></li>
+                                <!--<li><a ui-sref="formBatch">Add Batch</a></li> May not be needed. Leaving alone for now-->
+                            </ul>
                         </li> 
                         <li ng-show="isLoggedIn"><a ui-sref="formData">Data</a></li>
                         <li ng-show="isLoggedIn"><a ng-click="logout()">Logout</a></li>

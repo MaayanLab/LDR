@@ -1,10 +1,11 @@
-var jsonWT          = require('jsonwebtoken'),
+var jsonWT        = require('jsonwebtoken'),
   jwt             = require('express-jwt'),
   shortId         = require('shortid'),
-  Models          = require('./app/models'),
+  Models          = require('./models'),
   config          = require('./config/database'),
   baseUrl         = require('./config/baseUrl').baseUrl,
-  _               = require('lodash');
+  _               = require('lodash')
+  bcrypt          = require('bcrypt')
 
 
 function createToken(user) {
@@ -27,6 +28,18 @@ module.exports = function(app, passport) {
     res.send(Models.Data.schema.tree);
   });
 
+  app.get('/api/centers', function(req, res) {
+    Models.Center
+      .find({})
+      .exec(function(err, centers) {
+        if (err) {
+          console.log(err);
+          res.status(404).send(err);
+        }
+        res.status(200).send(centers);
+      });
+  });
+
   // USERS
   /*
    app.get('/api/users', function(req, res) {
@@ -39,6 +52,20 @@ module.exports = function(app, passport) {
    });
    });
    */
+  app.post('/register', function(req, res) {
+      console.log('receiving POST on server');
+      var user = new Models.User({
+          _id: Models.genId(),
+          username: req.body.username,
+          password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8))
+      });
+      user.save(function(err) {
+          if (err) {
+              console.log(err);
+          }
+      });
+  });
+
   app.get('/logout', function(req, res) {
     req.logout();
     res.status(200).send('User successfully logged out');

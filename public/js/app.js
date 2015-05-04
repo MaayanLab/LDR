@@ -5,6 +5,7 @@ angular.module( 'milestonesLanding', [
   'milestonesLanding.formCreate',
   'milestonesLanding.formData',
   'milestonesLanding.formBatch',
+  'milestonesLanding.register',
   'ui.router',
   'ui.bootstrap',
   'angular-storage',
@@ -90,6 +91,12 @@ angular.module( 'milestonesLanding', [
               $rootScope.isLoggedIn = true;
               $rootScope.isLoggedInAdmin = false;
             }
+          }
+        }
+        if (to.data.loggedIn) {
+          if (store.get('jwt') && !jwtHelper.isTokenExpired(store.get('jwt'))) {
+            e.preventDefault();
+            $state.go('home');
           }
         }
       }
