@@ -4,8 +4,6 @@ var express         = require('express'),
     cors            = require('cors'),
     flash           = require('connect-flash'),
 
-//    formsAngular    = require('forms-angular'),
-
     morgan          = require('morgan'),
     path            = require('path'),
     cookieParser    = require('cookie-parser'),
@@ -62,7 +60,7 @@ app.get('/*', function(req, res) {
 
 app.use(function (err, req, res, next) {
   if (err.name === 'UnauthorizedError') {
-    res.send(401, 'Token invalid. You must be logged in to proceed.');
+    res.status(401).send('Token invalid. You must be logged in to proceed.');
   }
 });
 

@@ -1,16 +1,16 @@
+// Controller for login page
+// Currently unused, replaced by login in title bar
+
 angular.module( 'milestonesLanding.login', [
-    'ui.router',
-    'angular-storage'
+  'ui.router',
+  'angular-storage'
 ])
-.config(function($stateProvider) {
+  .config(function($stateProvider) {
     $stateProvider.state('login', {
-        url: '/login',
-        controller: 'LoginCtrl',
-        templateUrl: 'views/login.html'
+      url: '/login',
+      controller: 'LoginCtrl',
+      templateUrl: 'views/login.html'
     });
-})
-.controller('LoginCtrl', function LoginController($scope, $http, store, $state) {
-
-    
-
-});
+  })
+  .controller('LoginCtrl', function LoginController($scope, $http, store, $state) {
+  });

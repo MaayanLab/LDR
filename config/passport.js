@@ -41,7 +41,6 @@ module.exports = function(passport) {
         passwordField: 'password',
         passReqToCallback: true
     }, function(req, username, password, done) {
-        if (username === 'admin') {
         Models.User.findOne({ 'username': username }, function(err, user) {
             if (err) {
                 console.log(err);
@@ -51,11 +50,10 @@ module.exports = function(passport) {
                 return done(null, false, req.flash('loginMessage', 'No user found.'));
             if (!user.validPassword(password))
                 return done(null, false, req.flash('loginMessage', 'Incorrect password.'));
-        
-            return done(null, user);
+            if (user.admin === false)
+              return done(null, false, req.flash('loginMessage', 'User does not have admin privileges'));
+
+          return done(null, user);
         });
-        } else {
-            return done(null, false, req.flash('loginMessage', 'Sorry you must be the admin to access this page'));
-        }
     }));
 };
