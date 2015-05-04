@@ -188,7 +188,7 @@ module.exports = {
     Center: Center,
     Assay: Assay,
     CellLine: CellLine,
-    Perturbagen: Perturbagen, 
+    Perturbagen: Perturbagen,
     Readout: Readout,
     Disease: Disease,
     Data: Data

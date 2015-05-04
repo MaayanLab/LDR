@@ -1,11 +1,11 @@
 var jsonWT        = require('jsonwebtoken'),
-  jwt             = require('express-jwt'),
-  shortId         = require('shortid'),
-  Models          = require('./models'),
-  config          = require('./config/database'),
-  baseUrl         = require('./config/baseUrl').baseUrl,
-  _               = require('lodash')
-  bcrypt          = require('bcrypt')
+    jwt             = require('express-jwt'),
+    shortId         = require('shortid'),
+    Models          = require('./models'),
+    config          = require('./config/database'),
+    baseUrl         = require('./config/baseUrl').baseUrl,
+    _               = require('lodash')
+bcrypt          = require('bcrypt')
 
 
 function createToken(user) {
@@ -30,14 +30,14 @@ module.exports = function(app, passport) {
 
   app.get('/api/centers', function(req, res) {
     Models.Center
-      .find({})
-      .exec(function(err, centers) {
-        if (err) {
-          console.log(err);
-          res.status(404).send(err);
-        }
-        res.status(200).send(centers);
-      });
+        .find({})
+        .exec(function(err, centers) {
+          if (err) {
+            console.log(err);
+            res.status(404).send(err);
+          }
+          res.status(200).send(centers);
+        });
   });
 
   // USERS
@@ -53,17 +53,17 @@ module.exports = function(app, passport) {
    });
    */
   app.post('/register', function(req, res) {
-      console.log('receiving POST on server');
-      var user = new Models.User({
-          _id: Models.genId(),
-          username: req.body.username,
-          password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8))
-      });
-      user.save(function(err) {
-          if (err) {
-              console.log(err);
-          }
-      });
+    console.log('receiving POST on server');
+    var user = new Models.User({
+      _id: Models.genId(),
+      username: req.body.username,
+      password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8))
+    });
+    user.save(function(err) {
+      if (err) {
+        console.log(err);
+      }
+    });
   });
 
   app.get('/logout', function(req, res) {
@@ -96,15 +96,15 @@ module.exports = function(app, passport) {
       query = { '_id': { '$exists': true }};
     }
     Models.Assay
-      .find(query)
-      .populate('center')
-      .exec(function(err, assays) {
-        if (err) {
-          console.log(err);
-          res.status(404).send(err);
-        }
-        res.status(200).send(assays);
-      });
+        .find(query)
+        .populate('center')
+        .exec(function(err, assays) {
+          if (err) {
+            console.log(err);
+            res.status(404).send(err);
+          }
+          res.status(200).send(assays);
+        });
   });
 
   app.post('/api/secure/assays', function(req, res) {
@@ -162,15 +162,15 @@ module.exports = function(app, passport) {
       query = { '_id': { '$exists': true }};
     }
     Models.CellLine
-      .find(query)
-      .populate('center')
-      .exec(function(err, cellLines) {
-        if (err) {
-          console.log(err);
-          res.status(404).send(err);
-        }
-        res.status(200).send(cellLines);
-      });
+        .find(query)
+        .populate('center')
+        .exec(function(err, cellLines) {
+          if (err) {
+            console.log(err);
+            res.status(404).send(err);
+          }
+          res.status(200).send(cellLines);
+        });
   });
 
   app.post('/api/secure/cellLines', function(req, res) {
@@ -225,15 +225,15 @@ module.exports = function(app, passport) {
       query = { '_id': { '$exists': true }};
     }
     Models.Perturbagen
-      .find(query)
-      .populate('center')
-      .exec(function(err, perturbagens) {
-        if (err) {
-          console.log(err);
-          res.status(404).send(err);
-        }
-        res.status(200).send(perturbagens);
-      });
+        .find(query)
+        .populate('center')
+        .exec(function(err, perturbagens) {
+          if (err) {
+            console.log(err);
+            res.status(404).send(err);
+          }
+          res.status(200).send(perturbagens);
+        });
   });
 
   app.post('/api/secure/perturbagens', function(req, res) {
@@ -288,15 +288,15 @@ module.exports = function(app, passport) {
       query = { '_id': { '$exists': true }};
     }
     Models.Readout
-      .find(query)
-      .populate('center')
-      .exec(function(err, readouts) {
-        if (err) {
-          console.log(err);
-          res.status(404).send(err);
-        }
-        res.status(200).send(readouts);
-      });
+        .find(query)
+        .populate('center')
+        .exec(function(err, readouts) {
+          if (err) {
+            console.log(err);
+            res.status(404).send(err);
+          }
+          res.status(200).send(readouts);
+        });
   });
 
   app.post('/api/secure/readouts', function(req, res) {
@@ -349,20 +349,20 @@ module.exports = function(app, passport) {
       query = { _id: req.query.formId };
 
     Models.Data
-      .find(query)
-      .populate('user')
-      .populate('center')
-      .populate('assay')
-      .populate('cellLines')
-      .populate('perturbagens')
-      .populate('readouts')
-      .exec(function(err, allData) {
-        if (err) {
-          console.log(err);
-          res.status(404).send('Forms could not be found.');
-        }
-        res.status(200).send(allData);
-      });
+        .find(query)
+        .populate('user')
+        .populate('center')
+        .populate('assay')
+        .populate('cellLines')
+        .populate('perturbagens')
+        .populate('readouts')
+        .exec(function(err, allData) {
+          if (err) {
+            console.log(err);
+            res.status(404).send('Forms could not be found.');
+          }
+          res.status(200).send(allData);
+        });
   });
 
   // TODO: Change after making assay and cell line acronyms

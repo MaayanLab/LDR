@@ -20,20 +20,20 @@ module.exports = function(passport) {
         passReqToCallback: true
     }, function(req, username, password, done) {
         Models.User
-        .findOne({ 'username': username })
-        .populate('center')
-        .exec(function(err, user) {
-            if (err) {
-                console.log(err);
-                return done(err);
-            }
-            if (!user)
-                return done(null, false, req.flash('loginMessage', 'No user found.'));
-            if (!user.validPassword(password))
-                return done(null, false, req.flash('loginMessage', 'Incorrect password.'));
+            .findOne({ 'username': username })
+            .populate('center')
+            .exec(function(err, user) {
+                if (err) {
+                    console.log(err);
+                    return done(err);
+                }
+                if (!user)
+                    return done(null, false, req.flash('loginMessage', 'No user found.'));
+                if (!user.validPassword(password))
+                    return done(null, false, req.flash('loginMessage', 'Incorrect password.'));
 
-            return done(null, user);
-        });
+                return done(null, user);
+            });
     }));
 
     passport.use('local-admin', new LocalStrategy ({
@@ -51,9 +51,9 @@ module.exports = function(passport) {
             if (!user.validPassword(password))
                 return done(null, false, req.flash('loginMessage', 'Incorrect password.'));
             if (user.admin === false)
-              return done(null, false, req.flash('loginMessage', 'User does not have admin privileges'));
+                return done(null, false, req.flash('loginMessage', 'User does not have admin privileges'));
 
-          return done(null, user);
+            return done(null, user);
         });
     }));
 };

@@ -56,12 +56,12 @@ require('./server/routes.js')(app, passport);
 
 app.get('/*', function(req, res) {
     res.sendFile(publicDir + '/index.html');
-  });
+});
 
 app.use(function (err, req, res, next) {
-  if (err.name === 'UnauthorizedError') {
-    res.status(401).send('Token invalid. You must be logged in to proceed.');
-  }
+    if (err.name === 'UnauthorizedError') {
+        res.status(401).send('Token invalid. You must be logged in to proceed.');
+    }
 });
 
 app.listen(port);
