@@ -1,12 +1,12 @@
 var jwt             = require('express-jwt'),
-  Models          = require('../app/models'),
+  Models          = require('../models'),
   config          = require('../config/database'),
   _               = require('lodash');
 
 module.exports = function(app, passport) {
 
-// READOUTS GET, POST, PUT, DELETE
-  app.get('/api/readouts', function(req, res) {
+  // ASSAYS GET, POST, PUT, DELETE
+  app.get('/api/assays', function(req, res) {
     // params are blank, id, or center
     var query;
     if (req.query.id) {
@@ -18,34 +18,36 @@ module.exports = function(app, passport) {
     else {
       query = {};
     }
-    Models.Readout
+    Models.Assay
       .find(query)
       .populate('center')
-      .exec(function(err, readouts) {
+      .exec(function(err, assays) {
         if (err) {
           console.log(err);
           res.status(404).send(err);
         }
-        res.status(200).send(readouts);
+        res.status(200).send(assays);
       });
   });
 
-  app.post('/api/secure/readouts', function(req, res) {
-    console.log('Posting');
-    var inputData = req.body;
-    inputData._id = Models.genId();
-    var saveData = Models.Readout.create(inputData);
-    res.status(201).send(saveData);
+  app.post('/api/secure/assays', function(req, res) {
+    console.log('Posting To Assays');
+    var assayData = req.body;
+    assayData._id = Models.genId();
+    Models.Assay.create(assayData, function(err,result) {
+      if (err)
+        console.log(err);
+      res.status(201).send(result);
+    });
   });
 
-  app.put('/api/secure/readouts', function(req, res) {
-    // params are blank, id, or center
-    console.log('Updating readout with id ' + req.query.id);
+  app.put('/api/secure/assays', function(req, res) {
+    console.log('Updating assay with id ' + req.query.id);
     if (req.query.id) {
       var query = { '_id': req.query.id};
-      var newROut = req.body;
-      delete newROut._id;
-      Models.Readout.update(query, newROut, function(err,result) {
+      var newAssay = req.body;
+      delete newAssay._id;
+      Models.Assay.update(query, newAssay, function(err,result) {
         if (err) {
           console.log(err);
           res.status(404).send(err);
@@ -54,12 +56,12 @@ module.exports = function(app, passport) {
       });
     }
     else {
-      res.status(404).send('Readout id wasn\'t given, or the URL query was invalid');
+      res.status(404).send('Assay id wasn\'t given, or the URL query was invalid');
     }
   });
 
-  app.delete('/api/secure/readouts', function(req, res) {
-    Models.Readout.find({ '_id': req.query.id }).remove(function(err, result) {
+  app.delete('/api/secure/assays', function(req, res) {
+    Models.Assay.find({ '_id': req.query.id }).remove(function(err, result) {
       if (err) {
         console.log(err);
         res.status(404).send('Could not delete assay with id: ' + req.query.id + ' Error: ' + err);

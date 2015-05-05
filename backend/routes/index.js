@@ -1,6 +1,6 @@
 var jsonWT          = require('jsonwebtoken'),
   jwt             = require('express-jwt'),
-  Models          = require('../app/models'),
+  Models          = require('../models'),
   config          = require('../config/database'),
   _               = require('lodash');
 
