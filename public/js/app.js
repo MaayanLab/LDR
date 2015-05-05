@@ -168,7 +168,4 @@ angular.module('milestonesLanding', [
             });
         };
 
-    })
-
-;
-
+    });
