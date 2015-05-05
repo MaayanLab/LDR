@@ -13,7 +13,7 @@ angular.module('milestonesLanding.admin', [
                 requiresAdmin: true
             }
         });
-    }).controller('AdminCtrl', function AdminController($scope, $http, store, $state, FormGets, FormUpdates, DataGets, DataPosts, DataDeletes) {
+    }).controller('AdminCtrl', function AdminController($scope, $http, store, $state, FormGets, FormUpdates) {
         var currentUser = store.get('currentUser');
         $scope.allForms = [];
 
@@ -54,28 +54,4 @@ angular.module('milestonesLanding.admin', [
             }
         };
 
-        //$scope.removeAssay = function(assay) {
-        //    DataDeletes.deleteAssay(assay._id).success(function(data) {
-        //        console.log(data);
-        //    });
-        //};
-        //
-        //
-        //$scope.removeCellLine = function(cLine) {
-        //    DataDeletes.deleteCellLine(cLine._id).success(function(data) {
-        //        console.log(data);
-        //    });
-        //};
-        //
-        //$scope.removePerturbagen = function(pert) {
-        //    DataDeletes.deletePerturbagen(pert._id).success(function(data) {
-        //        console.log(data);
-        //    });
-        //};
-        //
-        //$scope.removeReadout = function(rOut) {
-        //    AdminFactory.deleteReadout(rOut._id).success(function(data) {
-        //        console.log(data);
-        //    });
-        //};
     });
