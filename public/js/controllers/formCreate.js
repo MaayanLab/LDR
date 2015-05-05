@@ -1,7 +1,6 @@
 angular.module('milestonesLanding.formCreate', [
     'ui.router',
     'angular-storage',
-    'ui.select',
     'ngSanitize',
     'ui.bootstrap',
     'ngLodash',
@@ -17,40 +16,44 @@ angular.module('milestonesLanding.formCreate', [
                 requiresLogin: true
             }
         });
-        // Filter for UI select
-    }).filter('propsFilter', function () {
-        return function (items, props) {
-            var out = [];
-
-            if (angular.isArray(items)) {
-                items.forEach(function (item) {
-                    var itemMatches = false;
-
-                    var keys = Object.keys(props);
-                    for (var i = 0; i < keys.length; i++) {
-                        var prop = keys[i];
-                        var text = props[prop].toLowerCase();
-                        if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
-                            itemMatches = true;
-                            break;
-                        }
-                    }
-
-                    if (itemMatches) {
-                        out.push(item);
-                    }
-                });
-            } else {
-                // Let the output be the input untouched
-                out = items;
-            }
-            return out;
-        };
-    }).controller('FormCreateCtrl', function FormCreateController($scope, $http, $q, $location, $anchorScroll,
+    })
+    .controller('FormCreateCtrl', function FormCreateController($scope, $http, $location, $anchorScroll,
                                                                   store, $state, $modal, lodash, FormUpdates,
                                                                   FormPosts, DataGets, DataPosts) {
 
         $scope.user = store.get('currentUser');
+
+        $scope.options = {
+            assay: {
+                name: 'assay',
+                title: 'Assay',
+                modalTitle: 'Assay',
+                placeholder: 'Select Assay...',
+                multiple: false
+            },
+            cellLines: {
+                name: 'cellLines',
+                title: 'Cell Lines',
+                modalTitle: 'Cell Line',
+                model: 'form.cellLines',
+                placeholder: 'Select Cell Lines...',
+                multiple: true
+            }
+        };
+
+        $scope.tagCache = {};
+
+        $scope.onSelect = function(obj, option) {
+            $scope.form[option] = obj;
+        };
+
+        $scope.onSelectCache = function(key, option) {
+            $scope.form[option][key.text] = $scope.tagCache[key.text];
+        };
+
+        $scope.onRemoveCache = function(key, option) {
+            delete $scope.form[option][key.text];
+        };
 
         // Grouped all API calls to save having to call four functions each time
         var getAllMetaData = function (centerId) {
@@ -69,20 +72,7 @@ angular.module('milestonesLanding.formCreate', [
             });
         };
 
-        /*$scope.funcAsync = function(query) {
-
-            $http.get(reqStr).then(
-                function (response) {
-                    $scope.manipulatedGenes = response.data;
-                    console.log(response);
-                },
-                function () {
-                    console.log('error');
-                }
-            );
-        };*/
-
-        $scope.funcAsync = function(val) {
+        $scope.funcAsync = function(val, multipleBool) {
             if (val === '') {
                 return;
             }
@@ -91,34 +81,12 @@ angular.module('milestonesLanding.formCreate', [
                     address: val,
                     sensor: false
                 }
-            }).then(function(response){
+            }).then(function(response) {
                 return response.data.results.map(function(item){
-                    return item.formatted_address;
+                    $scope.tagCache[item.formatted_address] = item;
+                    return (multipleBool ? item.formatted_address : item);
                 });
             });
-        };
-
-        var tags = [
-            { "text": "Tag1" },
-            { "text": "Tag2" },
-            { "text": "Tag3" },
-            { "text": "Tag4" },
-            { "text": "Tag5" },
-            { "text": "Tag6" },
-            { "text": "Tag7" },
-            { "text": "Tag8" },
-            { "text": "Tag9" },
-            { "text": "Tag10" }
-        ];
-
-        $scope.load = function() {
-            var deferred = $q.defer();
-            deferred.resolve(tags);
-            return deferred.promise;
-        };
-
-        $scope.funcAsync2 = function(val) {
-            return $scope.load();
         };
 
         // Get request is too slow. After fixing, will replace large array at bottom of controller
@@ -263,7 +231,9 @@ angular.module('milestonesLanding.formCreate', [
         // Post form
         $scope.post = function () {
 
-            $scope.showValidation = true;
+            console.log($scope.form);
+
+            /*$scope.showValidation = true;
             var outputForm = {};
             // TODO: Pretty sure this doesn't work. Should strip all keys with falsey values
             lodash.transform($scope.form, function (res, value, key) {
@@ -319,7 +289,7 @@ angular.module('milestonesLanding.formCreate', [
 
             else {
                 $state.go('forms');
-            }
+            }*/
         };
 
         $scope.diseases = [

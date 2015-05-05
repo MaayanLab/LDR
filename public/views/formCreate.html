@@ -1,10 +1,4 @@
 <div ng-controller="FormCreateCtrl">
-    <!--<div class="form-info-block">
-        <p>Add Milestones meta-data to your center's list by filling out the form on the left. <strong>Required fields are Assay, Cell lines, Perturbagens, Readouts, and at least one release date.</strong> For security reasons, you are not allowed to change the center name. If this is incorrect, please <a href="mailto:michael.mcdermott@mssm.edu?Subject=[Milestones Forms Improvment]">contact Michael McDermott</a>.<p>
-        <p>Upon clicking the entry fields, you'll notice that there is an autocomplete available for each one. These entries were taken directly from your center's submitted data at the beginning of 2015.</p>
-        <p>Although not shown, there is additional meta-data recorded for each entry. You can see the list of all entries with all of their respective meta-data by visiting the <a ui-sref="formData">Form Data</a> page also found at the top right of the page. <strong>We recommend that you check all meta-data at the Form Data page before submitting any forms.</strong> Also note that you must be logged in to view your meta-data</p>
-        <p>If there is an entry missing from the input list, you may also click the <a style="text-decoration: none;" id="add-new-btn-paragraph" class="glyphicon glyphicon-plus"></a> button to add an entry without leaving the page. If entered correctly, your addition should immediately appear in the list of autocomplete items.</p>
-    </div>-->
     <!--
         http://plnkr.co/edit/BcJOezOABxSuc2fa5lRy?p=preview
     -->
@@ -14,187 +8,25 @@
         </div>
         <div class="row">
             <div class="col-sm-4">
-
-                <div class="form-input">
-                    <h4 class="form-title">Assay</h4>
-                    <tags-input ng-model="form.cellLines" placeholder="Select Assay..." add-from-autocomplete-only="true">
-                        <auto-complete source="funcAsync($query)" load-on-down-arrow="true"></auto-complete>
+                <div ng-repeat="option in options" class="form-input">
+                    <h4 class="form-title">{{option.title}}</h4>
+                    <input ng-if="!option.multiple" type="text" ng-model="unused" placeholder="{{option.placeholder}}" typeahead="item as item.formatted_address for item in funcAsync($viewValue)" typeahead-on-select="onSelect($item, option.name)" typeahead-loading="loadingLocations" class="form-control">                    
+                    <tags-input ng-if="option.multiple" replace-spaces-with-dashes="false" ng-model="usused" on-tag-added="onSelectCache($tag, option.name)" on-tag-removed="onRemoveCache($tag, option.name)" placeholder="multiple" add-from-autocomplete-only="true">
+                        <auto-complete source="funcAsync($query, option.multiple)"></auto-complete>
                     </tags-input>
-                    <a ng-if="form.assay.name !== undefined" class="glyphicon glyphicon-remove clear-btn"
-                       ng-click="clearSelection('Assay')"></a>
-                    <a class="glyphicon glyphicon-plus add-new-btn" ng-click="addNew('Assay')"></a>
+                    <a ng-if="option.model['name'] !== undefined" class="glyphicon glyphicon-remove clear-btn" ng-click="clearSelection(option.modalTitle)"></a>
+                    <a class="glyphicon glyphicon-plus add-new-btn" ng-click="addNew(option.modalTitle)"></a>
                 </div>
-
-                <div class="form-input">
-                    <h4 class="form-title">Assay</h4>
-                    <input type="text" ng-model="asyncSelected" placeholder="Locations loaded via $http" typeahead="address for address in funcAsync($viewValue)" typeahead-loading="loadingLocations" class="form-control">
-                    <a ng-if="form.assay.name !== undefined" class="glyphicon glyphicon-remove clear-btn"
-                       ng-click="clearSelection('Assay')"></a>
-                    <a class="glyphicon glyphicon-plus add-new-btn" ng-click="addNew('Assay')"></a>
-                </div>
-
-                <div class="form-input">
-                    <h4 class="form-title">Readouts</h4>
-                    <ui-select class="form-select" multiple ng-model="form.readouts" ng-disabled="disabled" required>
-                        <ui-select-match placeholder="Select readouts...">{{$item.name}}
-                            &lt;{{$item.datatype}}&gt;</ui-select-match>
-                        <ui-select-choices
-                                repeat="rout in readouts | propsFilter: {name: $select.search, datatype: $select.search}">
-                            <div ng-bind-html="rout.name | highlight: $select.search"></div>
-                            <small>
-                                <strong>type:</strong> <span
-                                    ng-bind-html="''+rout.datatype | highlight: $select.search"></span>
-                            </small>
-                        </ui-select-choices>
-                    </ui-select>
-                    <a ng-if="form.readouts.length !== 0" class="glyphicon glyphicon-remove clear-btn"
-                       ng-click="clearSelection('Readout')"></a>
-                    <a class="glyphicon glyphicon-plus add-new-btn" ng-click="addNew('Readout')"></a>
-                </div>
-
-                <div class="form-input">
-                    <h4 class="form-title">Manipulated Gene</h4>
-                    <ui-select class="form-select" multiple ng-model="form.readouts" ng-disabled="disabled" required>
-                        <ui-select-match placeholder="Select readouts...">{{$item.name}}
-                            &lt;{{$item.datatype}}&gt;</ui-select-match>
-                        <ui-select-choices refresh="funcAsync($select.search)" refresh-delay="0"
-                                           repeat="rout in readouts | propsFilter: {name: $select.search, datatype: $select.search}">
-                            <div ng-bind-html="rout.name | highlight: $select.search"></div>
-                            <small>
-                                <strong>type:</strong> <span
-                                    ng-bind-html="''+rout.datatype | highlight: $select.search"></span>
-                            </small>
-                        </ui-select-choices>
-                    </ui-select>
-                    <a ng-if="form.readouts.length !== 0" class="glyphicon glyphicon-remove clear-btn"
-                       ng-click="clearSelection('Readout')"></a>
-                    <a class="glyphicon glyphicon-plus add-new-btn" ng-click="addNew('Readout')"></a>
-                </div>
-
-                <div class="form-input">
-                    <h4 class="form-title">Readouts</h4>
-                    <ui-select class="form-select" multiple ng-model="form.readouts" ng-disabled="disabled" required>
-                        <ui-select-match placeholder="Select readouts...">{{$item.name}}
-                            &lt;{{$item.datatype}}&gt;</ui-select-match>
-                        <ui-select-choices
-                                repeat="rout in readouts | propsFilter: {name: $select.search, datatype: $select.search}">
-                            <div ng-bind-html="rout.name | highlight: $select.search"></div>
-                            <small>
-                                <strong>type:</strong> <span
-                                    ng-bind-html="''+rout.datatype | highlight: $select.search"></span>
-                            </small>
-                        </ui-select-choices>
-                    </ui-select>
-                    <a ng-if="form.readouts.length !== 0" class="glyphicon glyphicon-remove clear-btn"
-                       ng-click="clearSelection('Readout')"></a>
-                    <a class="glyphicon glyphicon-plus add-new-btn" ng-click="addNew('Readout')"></a>
-                </div>
-
-                <div class="form-input">
-                    <h4 class="form-title">Readouts</h4>
-                    <ui-select class="form-select" multiple ng-model="form.readouts" ng-disabled="disabled" required>
-                        <ui-select-match placeholder="Select readouts...">{{$item.name}}
-                            &lt;{{$item.datatype}}&gt;</ui-select-match>
-                        <ui-select-choices
-                                repeat="rout in readouts | propsFilter: {name: $select.search, datatype: $select.search}">
-                            <div ng-bind-html="rout.name | highlight: $select.search"></div>
-                            <small>
-                                <strong>type:</strong> <span
-                                    ng-bind-html="''+rout.datatype | highlight: $select.search"></span>
-                            </small>
-                        </ui-select-choices>
-                    </ui-select>
-                    <a ng-if="form.readouts.length !== 0" class="glyphicon glyphicon-remove clear-btn"
-                       ng-click="clearSelection('Readout')"></a>
-                    <a class="glyphicon glyphicon-plus add-new-btn" ng-click="addNew('Readout')"></a>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <h4 class="form-title">Cell lines</h4>
-                <h4 class="form-count">count: {{form.cellLines.length}}</h4>
-
-                <div class="form-input">
-                    <ui-select class="form-select" multiple ng-model="form.cellLines" theme="select2"
-                               ng-disabled="disabled">
-                        <ui-select-match placeholder="Select cell lines...">{{$item.name}}
-                            &lt;{{$item.class}}&gt;</ui-select-match>
-                        <ui-select-choices
-                                repeat="line in cellLines | propsFilter: {name: $select.search, class: $select.search}">
-                            <div ng-bind-html="line.name | highlight: $select.search"></div>
-                            <small>
-                                <strong>class:</strong> <span
-                                    ng-bind-html="''+line.class | highlight: $select.search"></span>
-                            </small>
-                        </ui-select-choices>
-                    </ui-select>
-                    <a ng-if="form.cellLines.length !== 0" class="glyphicon glyphicon-remove clear-btn"
-                       ng-click="clearSelection('CellLine')"></a>
-                    <a class="glyphicon glyphicon-plus add-new-btn" ng-click="addNew('Cell Line')"></a>
-                </div>
-
-                <h4 class="form-title">Perturbagens</h4>
-                <h4 class="form-count">count: {{form.perturbagens.length}}</h4>
-
-                <div class="form-input">
-                    <ui-select class="form-select" multiple ng-model="form.perturbagens" theme="select2"
-                               ng-disabled="disabled">
-                        <ui-select-match placeholder="Select perturbagens...">{{$item.name}}
-                            &lt;{{$item.type}}&gt;</ui-select-match>
-                        <ui-select-choices
-                                repeat="pert in perturbagens | propsFilter: {name: $select.search, type: $select.search}">
-                            <div ng-bind-html="pert.name | highlight: $select.search"></div>
-                            <small>
-                                <strong>type:</strong> <span
-                                    ng-bind-html="''+pert.type | highlight: $select.search"></span>
-                            </small>
-                        </ui-select-choices>
-                    </ui-select>
-                    <a ng-if="form.perturbagens.length !== 0" class="glyphicon glyphicon-remove clear-btn"
-                       ng-click="clearSelection('Perturbagen')"></a>
-                    <a class="glyphicon glyphicon-plus add-new-btn" ng-click="addNew('Perturbagen')"></a>
-                </div>
-
-
-                <h4 class="form-title">Relevant Disease</h4>
-
-                <div class="form-input">
-                    <ui-select class="form-select" ng-model="form.disease" theme="select2" ng-disabled="disabled">
-                        <ui-select-match placeholder="Select relevant disease...">{{$select.selected.name}}
-                        </ui-select-match>
-                        <ui-select-choices
-                                repeat="disease in diseases | propsFilter: {name: $select.search, info: $select.search}">
-                            <div ng-bind-html="disease.name | highlight: $select.search"></div>
-                        </ui-select-choices>
-                    </ui-select>
-                    <a ng-if="form.disease.name !== undefined" class="glyphicon glyphicon-remove clear-btn"
-                       ng-click="clearSelection('Disease')"></a>
-                    <a class="glyphicon glyphicon-plus add-new-btn" ng-click="addNew('Disease')"></a>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <p>Add Milestones meta-data to your center's list by filling out the form on the left. <strong>Required
-                    fields are Assay, Cell lines, Perturbagens, Readouts, and at least one release date.</strong> For
-                    security reasons, you are not allowed to change the center name. If this is incorrect, please <a
-                            href="mailto:michael.mcdermott@mssm.edu?Subject=[Milestones Forms Improvment]">contact
-                        Michael McDermott</a>.
-
-                <p>
-
-                <p>Upon clicking the entry fields, you'll notice that there is an autocomplete available for each one.
-                    These entries were taken directly from your center's submitted data at the beginning of 2015.</p>
-
-                <p>Although not shown, there is additional meta-data recorded for each entry. You can see the list of
-                    all entries with all of their respective meta-data by visiting the <a ui-sref="formData">Form
-                        Data</a> page also found at the top right of the page. <strong>We recommend that you check all
-                        meta-data at the Form Data page before submitting any forms.</strong> Also note that you must be
-                    logged in to view your meta-data</p>
-
-                <p>If there is an entry missing from the input list, you may also click the <a
-                        style="text-decoration: none;" id="add-new-btn-paragraph" class="glyphicon glyphicon-plus"></a>
-                    button to add an entry without leaving the page. If entered correctly, your addition should
-                    immediately appear in the list of autocomplete items.</p>
             </div>
         </div>
+        <div class="row">
+            <div class="post-button text-center">
+                <button type="button" ng-click="reset(dataForm)" id="form-reset" class="btn btn-default text-center">Reset</button>
+                <input type="checkbox" ng-model="addAnother"> Add another
+                <button type="submit" ng-click="post()" id="form-submit" class="btn btn-primary text-center">Submit</button>
+            </div>
+        </div>
+
         <!--<div class="row">
             <div class="col-sm-6">
                 <div class="form-date">
@@ -237,42 +69,6 @@
                     </p>
                 </div>
             </div>
-            <div class="row">
-                <div class="post-button text-center">
-                    <button type="button" ng-click="reset(dataForm)" id="form-reset" class="btn btn-default text-center">Reset</button>
-                    <input type="checkbox" ng-model="addAnother"> Add another
-                    <button type="submit" ng-click="post()" id="form-submit" class="btn btn-primary text-center">Submit</button>
-                </div>
-            </div>
         </div>-->
     </form>
 </div>
-<!--
-<div ng-repeat="option in options">
-<h4 class="form-title">{{option.title}}</h4>
-<div class="form-input">
-
-    <ui-select ng-if="!option.multiple" class="form-select" ng-model="option.model" theme="select2" ng-disabled="disabled" ng-required>
-        <ui-select-match placeholder="{{option.placeholder}}">{{$select.selected.name}}</ui-select-match>
-        <ui-select-choices repeat="item in option.data | propsFilter: { name: $select.search, 'option.auxField': $select.search }">
-            <div ng-bind-html="item.name | highlight: $select.search"></div>
-            <small>
-                <strong>{{option.auxField}}:</strong> <span ng-bind-html="''+item[option.auxField] | highlight: $select.search"></span>
-            </small>
-        </ui-select-choices>
-    </ui-select>
-
-    <ui-select ng-if="option.multiple" multiple="true" class="form-select" ng-model="option.model" theme="select2" ng-disabled="disabled" ng-required>
-        <ui-select-match placeholder="{{option.placeholder}}">{{$select.selected.name}}</ui-select-match>
-        <ui-select-choices repeat="item in option.data | propsFilter: { name: $select.search, 'option.auxField': $select.search }">
-            <div ng-bind-html="item.name | highlight: $select.search"></div>
-            <small>
-                <strong>{{option.auxField}}:</strong> <span ng-bind-html="''+item[option.auxField] | highlight: $select.search"></span>
-            </small>
-        </ui-select-choices>
-    </ui-select>
-
-    <a ng-if="form[option.name].name !== undefined" class="glyphicon glyphicon-remove clear-btn" ng-click="clearSelection(option.title)"></a>
-    <a class="glyphicon glyphicon-plus add-new-btn" ng-click="addNew(option.title)"></a>
-</div>
--->
