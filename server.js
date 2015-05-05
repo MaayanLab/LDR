@@ -14,11 +14,11 @@ var express = require('express'),
 var app = express();
 var port = 3001;
 
-var configDB = require('./server/config/database');
+var configDB = require('./backend/config/database');
 
 mongoose.connect(configDB.url);
 
-require('./server/config/passport')(passport); // pass passport for configuration
+require('./backend/config/passport')(passport); // pass passport for configuration
 
 app.use(cors());
 
@@ -52,7 +52,7 @@ app.get('/js', function (req, res, next) {
     res.setHeader('Content-Type', 'application/javascript');
 });
 
-require('./server/routes.js')(app, passport);
+require('./backend/routes')(app, passport);
 
 app.get('/*', function (req, res) {
     res.sendFile(publicDir + '/index.html');
