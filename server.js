@@ -52,9 +52,13 @@ app.get('/js', function (req, res, next) {
     res.setHeader('Content-Type', 'application/javascript');
 });
 
+/*app.get('*.css', function (req, res, next) {
+    res.setHeader('Content-Type', 'text/css');
+});*/
+
 require('./backend/routes')(app, passport);
 
-app.get('/*', function (req, res) {
+app.get('/', function (req, res) {
     res.sendFile(publicDir + '/index.html');
 });
 
