@@ -68,6 +68,35 @@ angular.module('milestonesLanding.formCreate', [
             });
         };
 
+        /*$scope.funcAsync = function(query) {
+
+            $http.get(reqStr).then(
+                function (response) {
+                    $scope.manipulatedGenes = response.data;
+                    console.log(response);
+                },
+                function () {
+                    console.log('error');
+                }
+            );
+        };*/
+
+        $scope.funcAsync = function(val) {
+            if (val === '') {
+                return;
+            }
+            return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {
+                params: {
+                    address: val,
+                    sensor: false
+                }
+            }).then(function(response){
+                return response.data.results.map(function(item){
+                    return item.formatted_address;
+                });
+            });
+        };
+
         // Get request is too slow. After fixing, will replace large array at bottom of controller
         //DataGets.getDiseases().success(function(diseases) {
         //    $scope.diseases = diseases;

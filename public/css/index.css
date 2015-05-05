@@ -192,9 +192,7 @@ body {
 }
 
 .form-block {
-    float: left;
     padding-top: 40px;
-    width: 50%;
 }
 
 .form-select {

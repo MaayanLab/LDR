@@ -8,10 +8,11 @@ angular.module('milestonesLanding', [
     'milestonesLanding.register',
     'ui.router',
     'ui.bootstrap',
+    'ui.select',
     'angular-storage',
     'angular-jwt'
 ])
-    .config(function milestonesLandingConfig($urlRouterProvider, jwtInterceptorProvider, $httpProvider, $locationProvider) {
+    .config(function milestonesLandingConfig($urlRouterProvider, jwtInterceptorProvider, $httpProvider, $locationProvider, uiSelectConfig) {
         // Remove hash # from URL
         $locationProvider.html5Mode(true);
 
@@ -37,6 +38,8 @@ angular.module('milestonesLanding', [
                 }
             };
         });
+
+        uiSelectConfig.theme = 'select2';
 
     })
     .run(function ($rootScope, $state, store, jwtHelper) {
