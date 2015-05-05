@@ -1,7 +1,7 @@
 {
   "name": "forms-angular",
   "author": "Mark Chapman <support@forms-angular.org>",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "homepage": "https://github.com/forms-angular/forms-angular",
   "description": "No nonsense forms for the MEAN stack",
   "keywords": [
@@ -22,7 +22,7 @@
     "angular-sanitize": ">=1.3.0",
     "angular-ui-bootstrap-bower": ">=0.8.0",
     "underscore": "1.6",
-    "ngInfiniteScroll": "^1.1.2",
+    "ngInfiniteScroll": "^1.2",
     "angular-elastic": "~2"
   },
   "devDependencies": {
@@ -42,11 +42,14 @@
     "Gruntfile.js",
     "package.json"
   ],
-  "_release": "0.4.0",
+  "resolutions": {
+    "angular": ">=1.3.0"
+  },
+  "_release": "0.4.1",
   "_resolution": {
     "type": "version",
-    "tag": "0.4.0",
-    "commit": "15d0f1d8e8f8a20d2d706ad7e998fe6414f72b89"
+    "tag": "0.4.1",
+    "commit": "84a66dd54be83e571435c357ff717533e8039aec"
   },
   "_source": "git://github.com/forms-angular/forms-angular.git",
   "_target": "^0.4.0",

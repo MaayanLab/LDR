@@ -12,7 +12,13 @@ angular.module('milestonesLanding', [
     'angular-storage',
     'angular-jwt'
 ])
-    .config(function milestonesLandingConfig($urlRouterProvider, jwtInterceptorProvider, $httpProvider, $locationProvider, uiSelectConfig) {
+    .config(function milestonesLandingConfig($urlRouterProvider, jwtInterceptorProvider, $httpProvider,
+                                             $locationProvider, uiSelectConfig) {
+
+        // Remove the 'X-Requested-With' header from all requests to prevent CORS errors
+        // http://stackoverflow.com/questions/16661032/http-get-is-not-allowed-by-access-control-allow-origin-but-ajax-is
+        //delete $httpProvider.defaults.headers.common['X-Requested-With'];
+
         // Remove hash # from URL
         $locationProvider.html5Mode(true);
 
@@ -20,10 +26,10 @@ angular.module('milestonesLanding', [
         $urlRouterProvider.otherwise(base);
 
         // Add JWT to every request to server
-        jwtInterceptorProvider.tokenGetter = function (store) {
-            return store.get('jwt');
-        };
-        $httpProvider.interceptors.push('jwtInterceptor');
+        //jwtInterceptorProvider.tokenGetter = function (store) {
+        //    return store.get('jwt');
+        //};
+        //$httpProvider.interceptors.push('jwtInterceptor');
 
         // For AJAX errors
         $httpProvider.interceptors.push(function ($q, $location) {

@@ -4,7 +4,8 @@ angular.module('milestonesLanding.formCreate', [
     'ui.select',
     'ngSanitize',
     'ui.bootstrap',
-    'ngLodash'
+    'ngLodash',
+    'ngTagsInput'
 ])
     // UI Router state formCreate
     .config(function ($stateProvider) {
@@ -45,7 +46,7 @@ angular.module('milestonesLanding.formCreate', [
             }
             return out;
         };
-    }).controller('FormCreateCtrl', function FormCreateController($scope, $http, $location, $anchorScroll,
+    }).controller('FormCreateCtrl', function FormCreateController($scope, $http, $q, $location, $anchorScroll,
                                                                   store, $state, $modal, lodash, FormUpdates,
                                                                   FormPosts, DataGets, DataPosts) {
 
@@ -95,6 +96,29 @@ angular.module('milestonesLanding.formCreate', [
                     return item.formatted_address;
                 });
             });
+        };
+
+        var tags = [
+            { "text": "Tag1" },
+            { "text": "Tag2" },
+            { "text": "Tag3" },
+            { "text": "Tag4" },
+            { "text": "Tag5" },
+            { "text": "Tag6" },
+            { "text": "Tag7" },
+            { "text": "Tag8" },
+            { "text": "Tag9" },
+            { "text": "Tag10" }
+        ];
+
+        $scope.load = function() {
+            var deferred = $q.defer();
+            deferred.resolve(tags);
+            return deferred.promise;
+        };
+
+        $scope.funcAsync2 = function(val) {
+            return $scope.load();
         };
 
         // Get request is too slow. After fixing, will replace large array at bottom of controller

@@ -5782,10 +5782,6 @@ button.close {
     display: none !important;
   }
 }
-body {
-  position: relative;
-  padding-top: 40px;
-}
 .list-item {
   min-height: 20px;
   padding: 19px;
@@ -5821,9 +5817,11 @@ body {
   padding-left: 20px;
 }
 .header-rhs {
-  width: 226px;
-  padding-right: 60px;
+  min-width: 226px;
   min-height: 40px;
+  padding-right: 20px;
+  padding-bottom: 5px;
+  display: block;
 }
 .list-header .header-rhs {
   margin: 15px 0;
@@ -5833,12 +5831,6 @@ body {
   width: 100%;
   margin-top: 11px;
   z-index: 1;
-}
-.header-rhs {
-  width: inherited !important;
-  padding-right: 20px !important;
-  padding-bottom: 5px;
-  display: block;
 }
 .gridStyle {
   border: 1px solid #d4d4d4;
@@ -5868,6 +5860,9 @@ button.form-btn {
   width: 8em;
   height: 2em;
 }
+.form-btn-grp {
+  max-width: 17em;
+}
 form.form-horizontal.compact input + .help-block,
 form.form-horizontal.compact select + .help-block,
 form.form-horizontal.compact textarea + .help-block,
@@ -5895,18 +5890,20 @@ form .schema-foot blockquote {
   border-color: rgba(0, 0, 0, 0.15);
 }
 form .schema-head {
-  margin-top: 0;
+  margin-top: 8px;
   margin-bottom: 5px;
   border: 1px solid #ddd;
   padding: 4px 180px;
 }
 form .sub-doc {
-  padding: 0 5px 0 0;
+  padding: 5px 5px 2px 0;
   width: 97%;
   margin-bottom: 3px;
+  position: relative;
 }
 form .sub-doc-btns {
-  margin-left: 15px;
+  position: absolute;
+  right: 8px;
 }
 form .schema-foot {
   padding: 5px 180px;
@@ -5919,8 +5916,17 @@ form input[type="checkbox"].ng-invalid-required:after {
   /* padding-left is too small at 12 if inline help is not used*/
   padding-left: 12px;
 }
+form span:first-child input[type="radio"].ng-invalid-required:after {
+  content: "*";
+  font-weight: bold;
+  color: red;
+  /* padding-left is too small at 12 if inline help is not used*/
+  padding-left: 12px;
+}
 form input.ng-invalid-required,
-form select.fng-invalid-required {
+form select.fng-invalid-required,
+form select.ng-invalid-required,
+form textarea.ng-invalid-required {
   background-color: rgba(255, 0, 0, 0.1);
 }
 form option {
@@ -5937,7 +5943,6 @@ form .form-inline > .sub-doc {
 .global-search {
   position: relative;
   float: right;
-  width: 236px;
 }
 .results-container {
   width: 6000px;
@@ -5960,10 +5965,49 @@ form .form-inline > .sub-doc {
 .search-results .search-result.focus {
   color: white;
 }
+.dropdown-menu > .disabled > li,
+.dropdown-menu > .disabled > a,
+.dropdown-menu > .disabled > a:hover,
+.dropdown-menu > .disabled > a:focus {
+  cursor: not-allowed;
+}
 .list-item {
   padding: 9px;
   border-radius: 3px;
   min-height: 40px;
+}
+button.form-btn {
+  font-size: 60%;
+  padding-top: 0.25em;
+}
+.form-horizontal input.input-sm,
+.form-horizontal textarea.input-sm {
+  font-size: 14px;
+  padding: 2px 6px;
+}
+.form-horizontal select.input-sm {
+  font-size: 14px;
+  padding-left: 5px;
+}
+.form-horizontal .checkbox {
+  float: left;
+  padding: 5px 10px 0 6px;
+}
+.form-horizontal .control-label {
+  padding-top: 6px;
+}
+.form-horizontal .bs3-input {
+  padding-left: 0;
+}
+.form-horizontal .help-block {
+  clear: left;
+  bottom-margin: 4px;
+}
+textarea[msd-elastic] {
+  min-height: 25px;
+}
+.fileupload-buttonbar .btn {
+  padding: 5px 8px;
 }
 .page-header {
   font-family: inherit;
@@ -5984,7 +6028,7 @@ form .form-inline > .sub-doc {
     position: static;
   }
   .global-search {
-    padding-right: 1em;
+    padding-right: 7px;
   }
 }
 form.form-horizontal .form-group {
@@ -6000,6 +6044,12 @@ form .schema-foot {
   background-color: #f5f5f5;
   border: 1px solid #e3e3e3;
   border-radius: 4px;
+}
+form .sub-doc {
+  margin-left: 12px;
+}
+form .sub-doc-btns {
+  z-index: 1;
 }
 form .checkbox input[type="checkbox"] {
   margin-left: -5px;
@@ -6032,8 +6082,7 @@ form .tab-content {
     border: 0;
     margin-left: 0;
     margin-right: 0;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0;
     -webkit-box-shadow: none;
     box-shadow: none;
   }
