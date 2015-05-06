@@ -6,9 +6,9 @@
         <div class="row">
             <h4 id="formCenter" class="col-sm-12 form-center">Center: {{form.center.name}}</h4>
         </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <div ng-repeat="option in options" class="form-input">
+        <!--<div ng-repeat="option in options">
+            <div ng-if="$index % 2 == 0" class="row">
+                <div class="form-input col-sm-6">
                     <h4 class="form-title">{{option.title}}</h4>
                     <input ng-if="!option.multiple" type="text" ng-model="unused" placeholder="{{option.placeholder}}" typeahead="item as item.formatted_address for item in funcAsync($viewValue)" typeahead-on-select="onSelect($item, option.name)" typeahead-loading="loadingLocations" class="form-control">                    
                     <tags-input ng-if="option.multiple" replace-spaces-with-dashes="false" ng-model="usused" on-tag-added="onSelectCache($tag, option.name)" on-tag-removed="onRemoveCache($tag, option.name)" placeholder="multiple" add-from-autocomplete-only="true">
@@ -18,12 +18,25 @@
                     <a class="glyphicon glyphicon-plus add-new-btn" ng-click="addNew(option.modalTitle)"></a>
                 </div>
             </div>
+        </div>-->
+        <div class="row" ng-repeat="rows in chunkedData">
+            <div ng-repeat="option in rows">
+                <div class="form-input col-sm-6">
+                    <h4 class="form-title">{{option.title}}</h4>
+                    <a class="glyphicon glyphicon-plus add-new-btn" ng-click="addNew(option.modalTitle)"></a>
+                    <input ng-if="!option.multiple" type="text" ng-model="unused" placeholder="{{option.placeholder}}" typeahead="item as item.formatted_address for item in funcAsync($viewValue)" typeahead-on-select="onSelect($item, option.name)" typeahead-loading="loadingLocations" class="form-control">                    
+                    <tags-input ng-if="option.multiple" replace-spaces-with-dashes="false" ng-model="usused" on-tag-added="onSelectCache($tag, option.name)" on-tag-removed="onRemoveCache($tag, option.name)" placeholder="{{option.placeholder}}" add-from-autocomplete-only="true">
+                    <auto-complete source="funcAsync($query, option.multiple)"></auto-complete>
+                    </tags-input>
+                    <a class="glyphicon glyphicon-remove clear-btn" ng-click="clearSelection(option.modalTitle)"></a>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="post-button text-center">
                 <button type="button" ng-click="reset(dataForm)" id="form-reset" class="btn btn-default text-center">Reset</button>
                 <input type="checkbox" ng-model="addAnother"> Add another
-                <button type="submit" ng-click="post()" id="form-submit" class="btn btn-primary text-center">Submit</button>
+                <button type="button" ng-click="post()" id="form-submit" class="btn btn-primary text-center">Submit</button>
             </div>
         </div>
 

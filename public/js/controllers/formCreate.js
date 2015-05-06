@@ -23,52 +23,104 @@ angular.module('milestonesLanding.formCreate', [
 
         $scope.user = store.get('currentUser');
 
-        $scope.options = {
-            assay: {
+        $scope.options = [
+            {
                 name: 'assay',
+                text: '',
                 title: 'Assay',
                 modalTitle: 'Assay',
                 placeholder: 'Select Assay...',
                 multiple: false
             },
-            cellLines: {
+            {
                 name: 'cellLines',
                 title: 'Cell Lines',
                 modalTitle: 'Cell Line',
-                model: 'form.cellLines',
                 placeholder: 'Select Cell Lines...',
                 multiple: true
+            },
+            {
+                name: 'readouts',
+                title: 'Readouts',
+                modalTitle: 'Readout',
+                placeholder: 'Select Readouts...',
+                multiple: true
+            },
+            {
+                name: 'perturbagens',
+                title: 'Perturbagens',
+                modalTitle: 'Perturbagen',
+                placeholder: 'Select Perturbagens...',
+                multiple: true
+            },
+            {
+                name: 'manipulatedGene',
+                title: 'Manipulated Gene',
+                modalTitle: 'Manipulated Gene',
+                placeholder: 'Select Manipulated Gene...',
+                multiple: false
+            },
+            {
+                name: 'organism',
+                title: 'Organism',
+                modalTitle: 'Organism',
+                placeholder: 'Select Organism...',
+                multiple: false
+            },
+            {
+                name: 'relevantDisease',
+                title: 'Relevant Disease',
+                modalTitle: 'Relevant Disease',
+                placeholder: 'Select Relevant Disease...',
+                multiple: false
+            },
+            {
+                name: 'experiment',
+                title: 'Experiment',
+                modalTitle: 'Experiment',
+                placeholder: 'Select Experiment',
+                multiple: false
+            },
+            {
+                name: 'analysisTools',
+                title: 'Analysis Tools',
+                modalTitle: 'Analysis Tool',
+                placeholder: 'Select Analysis Tools...',
+                multiple: true
+            },
+            {
+                name: 'tagsKeywords',
+                title: 'Tags/Keywords',
+                modalTitle: 'Tag/Keyword',
+                placeholder: 'Select Tag/Keywords...',
+                multiple: true
             }
-        };
+        ];
 
-        $scope.tagCache = {};
+        function chunk(arr, size) {
+            var newArr = [];
+            for (var i=0; i<arr.length; i+=size) {
+                newArr.push(arr.slice(i, i+size));
+            }
+            return newArr;
+        }
+
+        $scope.chunkedData = chunk($scope.options, 2);
+
 
         $scope.onSelect = function(obj, option) {
             $scope.form[option] = obj;
         };
 
+        var tagCache = {};
+
         $scope.onSelectCache = function(key, option) {
-            $scope.form[option][key.text] = $scope.tagCache[key.text];
+            $scope.form[option].push( tagCache[key.text] );
         };
 
         $scope.onRemoveCache = function(key, option) {
-            delete $scope.form[option][key.text];
-        };
-
-        // Grouped all API calls to save having to call four functions each time
-        var getAllMetaData = function (centerId) {
-            // API calls for data
-            DataGets.getAssays({centerId: centerId}).success(function (assays) {
-                $scope.assays = assays;
-            });
-            DataGets.getCellLines({centerId: centerId}).success(function (cellLines) {
-                $scope.cellLines = cellLines;
-            });
-            DataGets.getPerturbagens({centerId: centerId}).success(function (perturbagens) {
-                $scope.perturbagens = perturbagens;
-            });
-            DataGets.getReadouts({centerId: centerId}).success(function (readouts) {
-                $scope.readouts = readouts;
+            lodash.remove($scope.form[option], function(obj) {
+                return obj.formatted_address === key.text;
             });
         };
 
@@ -83,16 +135,11 @@ angular.module('milestonesLanding.formCreate', [
                 }
             }).then(function(response) {
                 return response.data.results.map(function(item){
-                    $scope.tagCache[item.formatted_address] = item;
+                    tagCache[item.formatted_address] = item;
                     return (multipleBool ? item.formatted_address : item);
                 });
             });
         };
-
-        // Get request is too slow. After fixing, will replace large array at bottom of controller
-        //DataGets.getDiseases().success(function(diseases) {
-        //    $scope.diseases = diseases;
-        //});
 
         // Date picker
         $scope.clear = function () {
@@ -160,16 +207,13 @@ angular.module('milestonesLanding.formCreate', [
             $scope.form.status = 'awaiting approval';
             $scope.form.dateModified = new Date();
             $scope.form.center = $scope.user.center;
-            $scope.form.assay = {};
-            $scope.form.cellLines = [];
-            $scope.form.perturbagens = [];
-            $scope.form.readouts = [];
-            $scope.form.releaseDates = {};
-            $scope.form.disease = {};
+            $.each($scope.options, function(i, option) {
+                $scope.form[option.name] = option.multiple ? [] : {};
+            });
         };
 
         // Clear field when user clicks 'X' button
-        $scope.clearSelection = function (selection) {
+        $scope.clearSelection = function(selection) {
             if (selection === 'Assay')
                 $scope.form.assay = {};
             else if (selection === 'CellLine')
@@ -182,40 +226,8 @@ angular.module('milestonesLanding.formCreate', [
                 $scope.form.disease = {};
         };
 
-        // Open Modal
-        $scope.addNew = function (inpType) {
-            var modalInstance = $modal.open({
-                templateUrl: 'views/formModal.html',
-                controller: 'FormModalCtrl',
-                resolve: {
-                    data: function () {
-                        return {
-                            inpType: inpType
-                        };
-                    }
-                }
-            });
-            modalInstance.result.then(function (result) {
-                result.user = $scope.user._id;
-                result.center = $scope.user.center._id;
-                if (inpType === 'Assay') {
-                    DataPosts.postAssay(result);
-                }
-                if (inpType === 'Cell Line') {
-                    DataPosts.postCellLine(result);
-                }
-                if (inpType === 'Perturbagen') {
-                    DataPosts.postPerturbagen(result);
-                }
-                if (inpType === 'Readout') {
-                    DataPosts.postReadout(result);
-                }
-                if (inpType === 'Disease') {
-                    DataPosts.postDisease(result);
-                }
-            }, function () {
-                getAllMetaData($scope.user.center._id);
-            });
+        $scope.addNew = function() {
+            console.log('TODO');
         };
 
         // Update form
@@ -233,10 +245,9 @@ angular.module('milestonesLanding.formCreate', [
 
             console.log($scope.form);
 
-            /*$scope.showValidation = true;
+            $scope.showValidation = true;
             var outputForm = {};
-            // TODO: Pretty sure this doesn't work. Should strip all keys with falsey values
-            lodash.transform($scope.form, function (res, value, key) {
+            $.each($scope.form, function (key, value) {
                 if (value)
                     outputForm[key] = value;
             });
@@ -246,12 +257,8 @@ angular.module('milestonesLanding.formCreate', [
             outputForm.perturbagenCount = $scope.form.perturbagens.length;
             outputForm.readoutCount = $scope.form.readouts.length;
 
-            // Reset status and date
-            outputForm.status = 'awaiting approval';
-            outputForm.dateModified = new Date();
-
-            // Only push IDs of model systems, this allows for them to change in the form when changed elsewhere
-            outputForm.assay = $scope.form.assay._id;
+            // TODO: Only push IDs of model systems, this allows for them to change in the form when changed elsewhere
+            /*outputForm.assay = $scope.form.assay._id;
             outputForm.cellLines = [];
             for (var i = 0; i < outputForm.cellLineCount; i++) {
                 outputForm.cellLines.push($scope.form.cellLines[i]._id);
@@ -264,7 +271,9 @@ angular.module('milestonesLanding.formCreate', [
             for (var k = 0; k < outputForm.readoutCount; k++) {
                 outputForm.readouts.push($scope.form.readouts[k]._id);
             }
+            */
 
+            console.log(outputForm);
 
             FormPosts
                 .postForm(outputForm)
@@ -289,46 +298,9 @@ angular.module('milestonesLanding.formCreate', [
 
             else {
                 $state.go('forms');
-            }*/
-        };
-
-        $scope.diseases = [
-            {
-                name: "aagenaes syndrome",
-                info: ""
-            },
-            {
-                name: "aarskog syndrome",
-                info: ""
-            },
-            {
-                name: "aase smith syndrome",
-                info: ""
-            },
-            {
-                name: "abcd syndrome",
-                info: ""
-            },
-            {
-                name: "abderhalden kaufmann lignac syndrome",
-                info: ""
-            },
-            {
-                name: "abdominal aortic aneurysm",
-                info: ""
-            },
-            {
-                name: "abdominal chemodectomas with cutaneous angiolipomas",
-                info: ""
-            },
-            {
-                name: "abdominal cystic lymphangioma",
-                info: ""
             }
-        ];
+        };
 
         // Init form. Will be changed to inside a conditional when editing is implemented
         $scope.reset();
-        getAllMetaData($scope.user.center._id);
-
     });

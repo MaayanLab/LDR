@@ -29,6 +29,7 @@ try {
 }
 
 var userSchema = new Schema({
+    _id:      { type: Schema.ObjectId, required: true, default: genId(), index: {unique: true} },
     username: { type: String, required: true, index: {unique: true} },
     password: { type: String, required: true},
     email:    { type: String, required: true, index: {unique: true} },
@@ -51,6 +52,7 @@ try {
 
 
 var releaseDateSchema = new Schema({
+    _id:      { type: Schema.ObjectId, required: true, default: genId(), index: {unique: true} },
     levelOne: {type: Date, required: true},
     levelTwo: Date,
     levelThree: Date,
@@ -58,6 +60,7 @@ var releaseDateSchema = new Schema({
 });
 
 var perturbagenSchema = new Schema({
+    _id:      { type: Schema.ObjectId, required: true, default: genId(), index: {unique: true} },
     center: {type: Schema.ObjectId, ref: 'Center'},
     name: {type: String, required: true, index: {unique: true}},
     type: {type: String, required: true}
@@ -75,6 +78,7 @@ var countTypeSchema = new Schema({
 });
 
 var cellLineSchema = new Schema({
+    _id:      { type: Schema.ObjectId, required: true, default: genId(), index: {unique: true} },
     center: {type: Schema.ObjectId, ref: 'Center'},
     controlOrDisease: String,
     name: {type: String, required: true, index: {unique: true}},
@@ -106,6 +110,7 @@ var instanceMetaSchema = new Schema({
 });
 
 var readoutSchema = new Schema({
+    _id:      { type: Schema.ObjectId, required: true, default: genId(), index: {unique: true} },
     center: {type: Schema.ObjectId, ref: 'Center'},
     name: {type: String, required: true, index: {unique: true}},
     datatype: String
@@ -118,6 +123,7 @@ try {
 }
 
 var diseaseSchema = new Schema({
+    _id:      { type: Schema.ObjectId, required: true, default: genId(), index: {unique: true} },
     center: {type: Schema.ObjectId, ref: 'Center'},
     name: {type: String, required: true, index: {unique: true}},
     info: {type: String, required: true}
@@ -130,6 +136,7 @@ try {
 }
 
 var assaySchema = new Schema({
+    _id:      { type: Schema.ObjectId, required: true, default: genId(), index: {unique: true} },
     center: {type: Schema.ObjectId, ref: 'Center'},
     name: {type: String, required: true, index: {unique: true}},
     info: {type: String, required: true}
@@ -142,7 +149,7 @@ try {
 }
 
 var dataSchema = new Schema({
-    _id: {type: String, required: true, index: {unique: true}},
+    _id:      { type: Schema.ObjectId, required: true, default: genId(), index: {unique: true} },
     user: {type: Schema.ObjectId, ref: 'User'},
     center: {type: Schema.ObjectId, ref: 'Center'},
     centerName: String, // Used for creation of IDs and for Qiaonan's Milestones Page

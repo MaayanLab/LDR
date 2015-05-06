@@ -1,6 +1,6 @@
 var jwt             = require('express-jwt'),
   Models          = require('../models'),
-  config          = require('../backend/config/database'),
+  config          = require('../config/database'),
   _               = require('lodash');
 
 

@@ -20,7 +20,7 @@ angular.module('milestonesLanding', [
         //delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
         // Remove hash # from URL
-        //$locationProvider.html5Mode(true);
+        // $locationProvider.html5Mode(true);
 
         // Reroute to home if URL is not valid
         $urlRouterProvider.otherwise(base);

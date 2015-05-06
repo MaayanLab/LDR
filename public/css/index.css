@@ -185,6 +185,10 @@ body {
 
 /* Form Create */
 
+.form-input {
+    background: lightgray;
+    height: 100px;
+}
 .form-info-block {
     float: right;
     margin-top: 120px;
@@ -215,6 +219,11 @@ a#clear-btn {
 a.add-new-btn, a#add-new-btn-paragraph, a.clear-btn {
     color: black;
 }
+a.add-new-btn {
+    position: relative;
+    top: 19px;
+    left: 10px;
+}
 
 a.add-new-btn:hover, a.clear-btn:hover {
     text-decoration: none;
@@ -237,7 +246,6 @@ p.input-group {
 }
 
 .form-title {
-    width: 45%;
     margin-top: 20px;
 	float: left;
 }
@@ -259,20 +267,8 @@ p.input-group {
     text-align: right;
     width: 90%;
 }
-
-/* UI SELECT */
-.select2 > .select2-choice.ui-select-match {
-    /* Because of the inclusion of Bootstrap */
-    height: 29px;
-}
-
-.selectize-control > .selectize-dropdown {
-    top: 36px;
-}
-
-.select2-container-multi .select2-choices .select2-search-choice,
-.select2-container-multi .select2-choices .select2-search-field input {
-	line-height: 17px;
+tags-input .tags {
+    width: 100% !important;
 }
 
 /* End Form Create */

@@ -11,7 +11,8 @@ var jwtCheck = jwt({
 
 module.exports = function(app, passport) {
 
-  app.use('/api/secure', jwtCheck);
+    // TODO: Uncomment to require token on request to /api/secure
+  //app.use('/api/secure', jwtCheck);
 
   app.get('/MilestonesLanding/MilestonesLanding/', function(req, res) {
     res.redirect('/MilestonesLanding/');
@@ -22,5 +23,6 @@ module.exports = function(app, passport) {
   require('./readouts')(app, passport);
   require('./perturbagens')(app, passport);
   require('./users')(app, passport);
+  require('./formRoutes')(app, passport);
 
 };
