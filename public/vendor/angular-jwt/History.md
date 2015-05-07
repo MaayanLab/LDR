@@ -1,4 +1,31 @@
 
+0.0.7 / 2015-04-07
+==================
+
+  * Merge pull request #33 from dunglas/patch-1
+  * Fix Auth0 link in README.md
+  * Merge pull request #30 from RoberMac/master
+  * UTF-8 encoding support
+  * UTF-8 encoding support
+  * Merge pull request #29 from lopsided/master
+  * Document how to avoid sending authentication headers for template requests
+  * Merge pull request #28 from ChtiDkois/patch-1
+  * Little trick for utf-8 encoding support
+  * Merge pull request #25 from ntotten/master
+  * Update and rename LICENSE to LICENSE.txt
+  * Merge pull request #24 from ntotten/master
+  * Cleaned license, readme
+  * Merge pull request #22 from nnjpp/patch-1
+  * Update bower.json to 0.0.6
+  * Updated CDN url
+  * Merge pull request #20 from capesean/master
+  * Using refresh token & grant type
+  * Using the refreshToken in the $http call
+  * Merge pull request #17 from zhuangya/npm-main
+  * Merge pull request #18 from Graphicnerd/patch-1
+  * Update README.md
+  * add main for package.json
+
 0.0.4 / 2014-10-06
 ==================
 

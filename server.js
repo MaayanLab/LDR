@@ -58,7 +58,7 @@ app.get('/js', function (req, res, next) {
 
 require('./backend/routes')(app, passport);
 
-app.get('/', function (req, res) {
+app.get('/*', function (req, res) {
     res.sendFile(publicDir + '/index.html');
 });
 

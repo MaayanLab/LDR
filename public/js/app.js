@@ -4,16 +4,14 @@ angular.module('milestonesLanding', [
     'milestonesLanding.admin',
     'milestonesLanding.formCreate',
     'milestonesLanding.formData',
-    'milestonesLanding.formBatch',
     'milestonesLanding.register',
     'ui.router',
     'ui.bootstrap',
-    'ui.select',
     'angular-storage',
     'angular-jwt'
 ])
     .config(function milestonesLandingConfig($urlRouterProvider, jwtInterceptorProvider, $httpProvider,
-                                             $locationProvider, uiSelectConfig) {
+                                             $locationProvider) {
 
         // Remove the 'X-Requested-With' header from all requests to prevent CORS errors
         // http://stackoverflow.com/questions/16661032/http-get-is-not-allowed-by-access-control-allow-origin-but-ajax-is
@@ -26,10 +24,10 @@ angular.module('milestonesLanding', [
         $urlRouterProvider.otherwise(base);
 
         // Add JWT to every request to server
-        //jwtInterceptorProvider.tokenGetter = function (store) {
-        //    return store.get('jwt');
-        //};
-        //$httpProvider.interceptors.push('jwtInterceptor');
+        jwtInterceptorProvider.tokenGetter = function (store) {
+            return store.get('jwt');
+        };
+        $httpProvider.interceptors.push('jwtInterceptor');
 
         // For AJAX errors
         $httpProvider.interceptors.push(function ($q, $location) {
@@ -44,13 +42,10 @@ angular.module('milestonesLanding', [
                 }
             };
         });
-
-        uiSelectConfig.theme = 'select2';
-
     })
     .run(function ($rootScope, $state, store, jwtHelper) {
-        "use strict";
 
+        $rootScope.currentUser = store.get('currentUser');
         $rootScope.message = '';
         // Check status of user on every state change
         // Used for Navbar and blocking pages from unauthorized users
@@ -112,7 +107,7 @@ angular.module('milestonesLanding', [
             else if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
                 $rootScope.isLoggedIn = false;
             }
-            else {
+            else if ($rootScope.currentUser !== undefined) {
                 if ($rootScope.currentUser.admin) {
                     $rootScope.isLoggedIn = true;
                     $rootScope.isLoggedInAdmin = true;
@@ -123,7 +118,7 @@ angular.module('milestonesLanding', [
                 }
             }
         });
-    }).controller('milestonesLandingCtrl', function milestonesLandingCtrl($scope, $rootScope, $http, $state, store, jwtHelper) {
+    }).controller('milestonesLandingCtrl', function milestonesLandingCtrl($scope, $rootScope, $http, $state, store) {
 
         $scope.base = base;
         $scope.pageTitle = 'Milestones Landing';
@@ -150,6 +145,7 @@ angular.module('milestonesLanding', [
                 store.set('jwt', result.data.id_token);
                 $state.go('forms');
             }, function (error) {
+                console.log(error);
                 // Error: authentication failed
                 store.set('message', 'Authentication failed.');
                 alert('Login was unsuccessful. Please try again.');
@@ -160,7 +156,7 @@ angular.module('milestonesLanding', [
         $scope.logout = function () {
             $rootScope.message = 'Logged out.';
             $http({
-                url: base + 'api/logout',
+                url: base + 'logout',
                 method: 'GET'
             }).then(function (result) {
                 // No Error
@@ -173,7 +169,7 @@ angular.module('milestonesLanding', [
                 $state.go('home');
             }, function (error) {
                 // Error
-                $rootScope.message = result;
+                $rootScope.message = error;
             });
         };
 

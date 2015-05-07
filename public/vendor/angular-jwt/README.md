@@ -85,7 +85,7 @@ angular.module('app', ['angular-jwt'])
     url: '/hola',
     method: 'GET'
   });
-}
+})
 ````
 
 ### Not sending the JWT for specific requests
@@ -108,7 +108,29 @@ angular.module('app', ['angular-jwt'])
     skipAuthorization: true
     method: 'GET'
   });
-}
+})
+````
+
+### Not sending the JWT for template requests
+
+By default the interceptor will send the JWT for all HTTP requests. This includes any `ng-include` directives or 
+`templateUrls` defined in a `state` in the `stateProvider`. If you want to avoid sending the JWT for these requests you
+should adapt your `tokenGetter` method to fit your needs. For example:
+
+````js
+angular.module('app', ['angular-jwt'])
+.config(function Config($httpProvider, jwtInterceptorProvider) {
+  jwtInterceptorProvider.tokenGetter = ['config', function(config) {
+    // Skip authentication for any requests ending in .html
+    if (config.url.substr(config.url.length - 5) == '.html') {
+      return null;
+    }
+    
+    return localStorage.getItem('id_token');
+  }];
+  
+  $httpProvider.interceptors.push('jwtInterceptor');
+})
 ````
 
 ### Sending different tokens based on URLs
@@ -223,7 +245,7 @@ Auth0 helps you to:
 
 ## Author
 
-[Auth0](auth0.com)
+[Auth0](https://auth0.com)
 
 ## License
 
