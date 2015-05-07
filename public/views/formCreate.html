@@ -2,86 +2,36 @@
     <!--
         http://plnkr.co/edit/BcJOezOABxSuc2fa5lRy?p=preview
     -->
-    <form name="dataForm" class="form-block" novalidate>
-        <div class="row">
+    <!--<form>-->
+        <!--<div class="row">
             <h4 id="formCenter" class="col-sm-12 form-center">Center: {{form.center.name}}</h4>
-        </div>
-        <!--<div ng-repeat="option in options">
-            <div ng-if="$index % 2 == 0" class="row">
+        </div>-->
+        <!--<div class="row" ng-repeat="rows in columnizedData">
+            <div ng-repeat="field in rows">
                 <div class="form-input col-sm-6">
-                    <h4 class="form-title">{{option.title}}</h4>
-                    <input ng-if="!option.multiple" type="text" ng-model="unused" placeholder="{{option.placeholder}}" typeahead="item as item.formatted_address for item in funcAsync($viewValue)" typeahead-on-select="onSelect($item, option.name)" typeahead-loading="loadingLocations" class="form-control">                    
-                    <tags-input ng-if="option.multiple" replace-spaces-with-dashes="false" ng-model="usused" on-tag-added="onSelectCache($tag, option.name)" on-tag-removed="onRemoveCache($tag, option.name)" placeholder="multiple" add-from-autocomplete-only="true">
-                        <auto-complete source="funcAsync($query, option.multiple)"></auto-complete>
+                    <h4 class="form-title">{{field.title}}</h4>
+                    <a class="glyphicon glyphicon-plus add-new-btn" ng-click="addNew(field.modalTitle)"></a>
+                    <tags-input ng-model="field.selectedData" allow-leftover-text="false" max-tags="{{field.maxTags}}" enforce-max-tags replace-spaces-with-dashes="false" placeholder="{{option.placeholder}}" add-from-autocomplete-only="true">
+                        <auto-complete source="updateAutocomplete($query)"></auto-complete>
                     </tags-input>
-                    <a ng-if="option.model['name'] !== undefined" class="glyphicon glyphicon-remove clear-btn" ng-click="clearSelection(option.modalTitle)"></a>
-                    <a class="glyphicon glyphicon-plus add-new-btn" ng-click="addNew(option.modalTitle)"></a>
+                    <a class="glyphicon glyphicon-remove clear-btn" ng-click="clearSelection(field.modalTitle)"></a>
                 </div>
             </div>
         </div>-->
-        <div class="row" ng-repeat="rows in chunkedData">
-            <div ng-repeat="option in rows">
-                <div class="form-input col-sm-6">
-                    <h4 class="form-title">{{option.title}}</h4>
-                    <a class="glyphicon glyphicon-plus add-new-btn" ng-click="addNew(option.modalTitle)"></a>
-                    <input ng-if="!option.multiple" type="text" ng-model="unused" placeholder="{{option.placeholder}}" typeahead="item as item.formatted_address for item in funcAsync($viewValue)" typeahead-on-select="onSelect($item, option.name)" typeahead-loading="loadingLocations" class="form-control">                    
-                    <tags-input ng-if="option.multiple" replace-spaces-with-dashes="false" ng-model="usused" on-tag-added="onSelectCache($tag, option.name)" on-tag-removed="onRemoveCache($tag, option.name)" placeholder="{{option.placeholder}}" add-from-autocomplete-only="true">
-                    <auto-complete source="funcAsync($query, option.multiple)"></auto-complete>
-                    </tags-input>
-                    <a class="glyphicon glyphicon-remove clear-btn" ng-click="clearSelection(option.modalTitle)"></a>
-                </div>
-            </div>
+
+        <div ng-repeat="field in fields">
+            <tags-input ng-model="field.selectedData" max-tags="{{field.maxTags}}" enforce-max-tags placeholder="{{field.placeholder}}">
+                <auto-complete source="updateAutocomplete($query)"></auto-complete>
+            </tags-input>
         </div>
-        <div class="row">
+
+
+        <!--<div class="row">
             <div class="post-button text-center">
-                <button type="button" ng-click="reset(dataForm)" id="form-reset" class="btn btn-default text-center">Reset</button>
+                <button type="button" ng-click="reset()" id="form-reset" class="btn btn-default text-center">Reset</button>
                 <input type="checkbox" ng-model="addAnother"> Add another
                 <button type="button" ng-click="post()" id="form-submit" class="btn btn-primary text-center">Submit</button>
             </div>
-        </div>
-
-        <!--<div class="row">
-            <div class="col-sm-6">
-                <div class="form-date">
-                    <h4 class="form-title">Level 1</h4>
-                    <p class="input-group">
-                    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="form.releaseDates.levelOne" is-open="lvlOneOpened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabledDate(date, mode)" close-text="Close" ng-required="!(form.releaseDates.levelOne || form.releaseDates.levelTwo || form.releaseDates.levelThree || form.releaseDates.levelFour)" />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="lvlOneOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                    </p>
-                </div>
-
-                <div class="form-date">
-                    <h4 class="form-title">Level 2</h4>
-                    <p class="input-group">
-                    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="form.releaseDates.levelTwo" is-open="lvlTwoOpened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabledDate(date, mode)" close-text="Close" ng-required="!(form.releaseDates.levelOne || form.releaseDates.levelTwo || form.releaseDates.levelThree || form.releaseDates.levelFour)" />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="lvlTwoOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                    </p>
-                </div>
-
-                <div class="form-date">
-                    <h4 class="form-title">Level 3</h4>
-                    <p class="input-group">
-                    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="form.releaseDates.levelThree" is-open="lvlThreeOpened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabledDate(date, mode)" close-text="Close" ng-required="!(form.releaseDates.levelOne || form.releaseDates.levelTwo || form.releaseDates.levelThree || form.releaseDates.levelFour)" />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="lvlThreeOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                    </p>
-                </div>
-
-                <div class="form-date">
-                    <h4 class="form-title">Level 4</h4>
-                    <p class="input-group">
-                    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="form.releaseDates.levelFour" is-open="lvlFourOpened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabledDate(date, mode)" close-text="Close" ng-required="!(form.releaseDates.levelOne || form.releaseDates.levelTwo || form.releaseDates.levelThree || form.releaseDates.levelFour)" />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="lvlFourOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                    </p>
-                </div>
-            </div>
         </div>-->
-    </form>
+        <!--</form>-->
 </div>
