@@ -105,16 +105,15 @@ gulp.task('vendor', function () {
 });
 
 gulp.task('buildWithoutLint', function (callback) {
-    runSequence('build-clean', ['vendor', 'html', 'css', 'js', 'fonts', 'images', 'copyFavIconInfo'],
-        'nodemon', callback)
+    runSequence('build-clean', ['vendor', 'html', 'css', 'js', 'fonts', 'images', 'copyFavIconInfo'], callback)
 });
 
 gulp.task('buildWithLint', function (callback) {
     runSequence('build-clean', ['vendor', 'html', 'css', 'js', 'fonts', 'images', 'copyFavIconInfo'],
-        'jshint', 'nodemon', callback)
+        'jshint', callback)
 });
 
-gulp.task('nodemon', function () {
+gulp.task('nodemon', ['buildWithLint'], function () {
     $.nodemon({
         script: 'server.js',
         ext: 'js css html',
@@ -123,10 +122,7 @@ gulp.task('nodemon', function () {
         tasks: function (changedFiles) {
             var tasks = [];
             changedFiles.forEach(function (file) {
-                if (path.extname(file) === '.js' && !~tasks.indexOf('js')) {
-                    tasks.push('js');
-                    tasks.push('jshint');
-                }
+                if (path.extname(file) === '.js' && !~tasks.indexOf('js')) tasks.push('js');
                 if (path.extname(file) === '.css' && !~tasks.indexOf('css')) tasks.push('css');
                 if (path.extname(file) === '.html' && !~tasks.indexOf('html')) tasks.push('html');
             });

@@ -2,7 +2,6 @@ var express = require('express'),
     mongoose = require('mongoose'),
     cors = require('cors'),
     flash = require('connect-flash'),
-
     morgan = require('morgan'),
     path = require('path'),
     bodyParser = require('body-parser'),
@@ -23,9 +22,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 app.use(compress());
 
 var publicDir = __dirname + '/dist/';
-console.log('Serving files from...');
-console.log(publicDir);
-
+console.log('Serving static files from ' + publicDir);
 app.use('/', express.static(path.join(publicDir)));
 
 /*app.get('*.css', function (req, res, next) {
