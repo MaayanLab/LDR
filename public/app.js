@@ -1,4 +1,5 @@
 angular.module('milestonesLanding', [
+    'milestonesLanding.navBar',
     'milestonesLanding.home',
     'milestonesLanding.forms',
     'milestonesLanding.admin',
@@ -118,7 +119,7 @@ angular.module('milestonesLanding', [
                 }
             }
         });
-    }).controller('milestonesLandingCtrl', function milestonesLandingCtrl($scope, $rootScope, $http, $state, store, jwtHelper) {
+    }).controller('milestonesLandingCtrl', function milestonesLandingCtrl($scope) {
         $scope.pageTitle = 'Milestones Landing';
 
         // Don't think this works, but should dynamically change title of page
@@ -127,47 +128,4 @@ angular.module('milestonesLanding', [
                 $scope.pageTitle = nextRoute.$$route.pageTitle + ' | Milestones Landing';
             }
         });
-
-        $scope.user = {};
-
-        // Post to /login
-        $scope.login = function () {
-            $http({
-                url: 'login',
-                method: 'POST',
-                data: $scope.user
-            }).then(function (result) {
-                // No error: authentication OK
-                // Set current user and jwt. Then go to forms page
-                store.set('currentUser', result.data.user);
-                store.set('jwt', result.data.id_token);
-                $state.go('forms');
-            }, function (error) {
-                // Error: authentication failed
-                store.set('message', 'Authentication failed.');
-                alert('Login was unsuccessful. Please try again.');
-            });
-        };
-
-        // Don't really need an AJAX request here, all that's important is deleting the currentUser and JWT
-        $scope.logout = function () {
-            $rootScope.message = 'Logged out.';
-            $http({
-                url: 'logout',
-                method: 'GET'
-            }).then(function (result) {
-                // No Error
-                $rootScope.message = result;
-                $rootScope.isLoggedIn = false;
-                $rootScope.isLoggedInAdmin = false;
-                store.remove('currentUser');
-                store.remove('jwt');
-                alert('Successfully logged out');
-                $state.go('home');
-            }, function (error) {
-                // Error
-                $rootScope.message = result;
-            });
-        };
-
     });
