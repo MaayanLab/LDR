@@ -65,7 +65,7 @@ gulp.task('css', function () {
         .pipe($.order([
             SRC_DIRECTORY + 'css/index.css'
         ]))
-        //.pipe($.concat('bundle.css'))
+        .pipe($.concat('bundle.min.css'))
         .pipe($.autoprefixer())
         .pipe($.sourcemaps.init())
         .pipe(minifyCss())
@@ -74,7 +74,7 @@ gulp.task('css', function () {
 });
 
 gulp.task('watch', function () {
-    return gulp.watch(SRC_DIRECTORY + 'index.html', ['copyIndex']);
+    return gulp.watch(SRC_DIRECTORY + 'index.html', ['html']);
 });
 
 gulp.task('jshint', function () {
@@ -100,7 +100,7 @@ gulp.task('vendor', function () {
         .pipe(jsFilter.restore())
 
         .pipe(cssFilter)
-        .pipe($.concat('vendor.css'))
+        .pipe($.concat('vendor.min.css'))
         .pipe($.autoprefixer())
         .pipe($.sourcemaps.init())
         .pipe(minifyCss())
