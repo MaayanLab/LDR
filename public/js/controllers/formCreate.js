@@ -12,10 +12,10 @@ angular.module('milestonesLanding.formCreate', [
     $stateProvider.state('formCreate', {
         url: '/forms/create',
         controller: 'FormCreateCtrl',
-        templateUrl: 'views/formCreate.html'/*,
+        templateUrl: 'views/formCreate.html',
         data: {
             requiresLogin: true
-        }*/
+        }
     });
 })
 
@@ -30,14 +30,28 @@ angular.module('milestonesLanding.formCreate', [
     };
 })
 
-.controller('FormCreateCtrl', function FormCreateController($scope, $timeout) {/*$scope, $timeout, $http, $location, $anchorScroll,
+.controller('FormCreateCtrl', function FormCreateController($scope, $timeout, $http, $location, $anchorScroll,
                                                                       store, $state, $modal, lodash, FormUpdates,
-                                                                      FormPosts, DataGets, DataPosts) {*/
+                                                                      FormPosts, DataGets, DataPosts) {
 
     //$scope.user = store.get('currentUser');
+    
+    $scope.form = {
+        selectedData: {
+            assay: [],
+            cellLines: [],
+            readouts: [],
+            perturbagens: [],
+            manipulatedGene: [],
+            organism: [],
+            relevantDisease: [],
+            experiment: [],
+            analysisTools: [],
+            tagsKeywords: []
+        }
+    };
 
-    //var MAX_TAGS = 100;
-
+    var MAX_TAGS = 100;
     $scope.fields = [
         {
             name: 'assay',
@@ -45,7 +59,7 @@ angular.module('milestonesLanding.formCreate', [
             modalTitle: 'Assay',
             placeholder: 'Select one assay...',
             maxTags: 1,
-            selectedData: []
+            model: $scope.form.selectedData.assay
         },
         {
             name: 'cellLines',
@@ -53,15 +67,15 @@ angular.module('milestonesLanding.formCreate', [
             modalTitle: 'Cell Line',
             placeholder: 'Select cell line(s)...',
             maxTags: 100,
-            selectedData: []
-        }/*,
+            model: $scope.form.selectedData.cellLines
+        },
         {
             name: 'readouts',
             title: 'Readouts',
             modalTitle: 'Readout',
             placeholder: 'Select readout(s)...',
             maxTags: MAX_TAGS,
-            selectedData: []
+            model: $scope.form.selectedData.readouts
         },
         {
             name: 'perturbagens',
@@ -69,7 +83,7 @@ angular.module('milestonesLanding.formCreate', [
             modalTitle: 'Perturbagen',
             placeholder: 'Select perturbagens...',
             maxTags: MAX_TAGS,
-            selectedData: []
+            model: $scope.form.selectedData.perturbagens
         },
         {
             name: 'manipulatedGene',
@@ -77,7 +91,7 @@ angular.module('milestonesLanding.formCreate', [
             modalTitle: 'Manipulated Gene',
             placeholder: 'Select one manipulated gene...',
             maxTags: 1,
-            selectedData: []
+            model: $scope.form.selectedData.manipulatedGene
         },
         {
             name: 'organism',
@@ -85,7 +99,7 @@ angular.module('milestonesLanding.formCreate', [
             modalTitle: 'Organism',
             placeholder: 'Select Organism...',
             maxTags: 1,
-            selectedData: []
+            model: $scope.form.selectedData.organism
         },
         {
             name: 'relevantDisease',
@@ -93,7 +107,7 @@ angular.module('milestonesLanding.formCreate', [
             modalTitle: 'Relevant Disease',
             placeholder: 'Select Relevant Disease...',
             maxTags: 1,
-            selectedData: []
+            model: $scope.form.selectedData.relevantDisease
         },
         {
             name: 'experiment',
@@ -101,7 +115,7 @@ angular.module('milestonesLanding.formCreate', [
             modalTitle: 'Experiment',
             placeholder: 'Select Experiment',
             maxTags: 1,
-            selectedData: []
+            model: $scope.form.selectedData.experiment
         },
         {
             name: 'analysisTools',
@@ -109,7 +123,7 @@ angular.module('milestonesLanding.formCreate', [
             modalTitle: 'Analysis Tool',
             placeholder: 'Select Analysis Tools...',
             maxTags: MAX_TAGS,
-            selectedData: []
+            model: $scope.form.selectedData.analysisTools
         },
         {
             name: 'tagsKeywords',
@@ -117,8 +131,8 @@ angular.module('milestonesLanding.formCreate', [
             modalTitle: 'Tag/Keyword',
             placeholder: 'Select Tag/Keywords...',
             maxTags: MAX_TAGS,
-            selectedData: []
-        }*/
+            model: $scope.form.selectedData.tagsKeywords
+        }
     ];
 
     /*function columnize(arr, size) {
@@ -131,8 +145,8 @@ angular.module('milestonesLanding.formCreate', [
 
     //$scope.columnizedData = columnize($scope.fields, 2);
 
-    $scope.updateAutocomplete = function(val) {
-        /*return $http.get('http://146.203.54.165:7078/cell', {
+    $scope.autocompleteSource = function(val) {
+        return $http.get('http://146.203.54.165:7078/cell', {
             params: {
                 name: val
             }
@@ -143,31 +157,7 @@ angular.module('milestonesLanding.formCreate', [
                 result._id = new Date();
                 return result;
             });
-        });*/
-        return $timeout(function () {
-
-            return [{
-                "text": "Tag1"
-            }, {
-                "text": "Tag2"
-            }, {
-                "text": "Tag3"
-            }, {
-                "text": "Tag4"
-            }, {
-                "text": "Tag5"
-            }, {
-                "text": "Tag6"
-            }, {
-                "text": "Tag7"
-            }, {
-                "text": "Tag8"
-            }, {
-                "text": "Tag9"
-            }, {
-                "text": "Tag10"
-            }]
-        })
+        });
     };
 
     // Clear form, set pristine and untouched, refresh status and date modified
@@ -196,8 +186,9 @@ angular.module('milestonesLanding.formCreate', [
         console.log('TODO');
     };*/
 
-    // Post form
-    $scope.post = function() {
+    $scope.submit = function() {
+
+        console.log($scope.form);
 
         /*var form = {};
         form.user = $scope.user._id;

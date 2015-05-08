@@ -1,37 +1,12 @@
-<div ng-controller="FormCreateCtrl">
-    <!--
-        http://plnkr.co/edit/BcJOezOABxSuc2fa5lRy?p=preview
-    -->
-    <!--<form>-->
-        <!--<div class="row">
-            <h4 id="formCenter" class="col-sm-12 form-center">Center: {{form.center.name}}</h4>
-        </div>-->
-        <!--<div class="row" ng-repeat="rows in columnizedData">
-            <div ng-repeat="field in rows">
-                <div class="form-input col-sm-6">
-                    <h4 class="form-title">{{field.title}}</h4>
-                    <a class="glyphicon glyphicon-plus add-new-btn" ng-click="addNew(field.modalTitle)"></a>
-                    <tags-input ng-model="field.selectedData" allow-leftover-text="false" max-tags="{{field.maxTags}}" enforce-max-tags replace-spaces-with-dashes="false" placeholder="{{option.placeholder}}" add-from-autocomplete-only="true">
-                        <auto-complete source="updateAutocomplete($query)"></auto-complete>
-                    </tags-input>
-                    <a class="glyphicon glyphicon-remove clear-btn" ng-click="clearSelection(field.modalTitle)"></a>
-                </div>
-            </div>
-        </div>-->
-
-        <div ng-repeat="field in fields">
-            <tags-input ng-model="field.selectedData" max-tags="{{field.maxTags}}" enforce-max-tags placeholder="{{field.placeholder}}">
-                <auto-complete source="updateAutocomplete($query)"></auto-complete>
-            </tags-input>
-        </div>
-
-
-        <!--<div class="row">
-            <div class="post-button text-center">
-                <button type="button" ng-click="reset()" id="form-reset" class="btn btn-default text-center">Reset</button>
-                <input type="checkbox" ng-model="addAnother"> Add another
-                <button type="button" ng-click="post()" id="form-submit" class="btn btn-primary text-center">Submit</button>
-            </div>
-        </div>-->
-        <!--</form>-->
-</div>
+<form ng-controller="FormCreateCtrl">
+    <div ng-repeat="field in fields">
+        <lm-form-field
+            title="{{field.title}}"
+            max-tags="{{field.maxTags}}"
+            placeholder="{{field.placeholder}}",
+            ng-model="field.model"
+            autocomplete-source="autocompleteSource()"
+        ></lm-form-field>
+    </div>
+    <button type="button" ng-click="submit()">Submit</button>
+</form>

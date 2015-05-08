@@ -1,0 +1,8 @@
+<div class="col-sm-6">
+    <h4>{{title}}</h4>
+    <!--<a class="glyphicon glyphicon-plus add-new-btn" ng-click="openModal()"></a>-->
+    <tags-input ng-model="ngModel" allow-leftover-text="false" max-tags="{{maxTags}}" placeholder="{{placeholder}}" add-from-autocomplete-only="true">
+        <auto-complete source="autocompleteSource($query)"></auto-complete>
+    </tags-input>
+    <!--<a class="glyphicon glyphicon-remove clear-btn" ng-click="clearSelection()"></a>-->
+</div>
