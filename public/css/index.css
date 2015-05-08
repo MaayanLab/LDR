@@ -90,10 +90,6 @@ body {
     text-decoration: none;
 }
 
-.ml-navbar {
-	margin: 0px 75px;
-}
-
 .ml-view {
 	font-family: Roboto, sans-serif;
     margin: 0px 90px;
@@ -172,6 +168,10 @@ body {
 /* End Homepage */
 
 /* Forms Homepage */
+#metadataForm section {
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+}
 
 .form-table-head, .form-table-data {
     border-bottom: 1px solid rgb(204,204,204);
@@ -220,9 +220,6 @@ a.add-new-btn, a#add-new-btn-paragraph, a.clear-btn {
     color: black;
 }
 a.add-new-btn {
-    position: relative;
-    top: 19px;
-    left: 10px;
 }
 
 a.add-new-btn:hover, a.clear-btn:hover {

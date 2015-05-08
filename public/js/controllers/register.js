@@ -4,7 +4,7 @@ angular.module('milestonesLanding.register', [
 ])
     .config(function ($stateProvider) {
         $stateProvider.state('register', {
-            url: base + 'register',
+            url: 'register',
             controller: 'RegisterCtrl',
             templateUrl: 'views/register.html',
             data: {
@@ -16,7 +16,7 @@ angular.module('milestonesLanding.register', [
         return {
             getCenters: function() {
                 return $http({
-                    url: base + 'api/centers',
+                    url: 'api/centers',
                     method: 'GET'
                 });
             }
@@ -26,7 +26,7 @@ angular.module('milestonesLanding.register', [
         return {
             getUsers: function() {
                 return $http({
-                    url: base + 'api/users',
+                    url: 'api/users',
                     method: 'GET'
                 });
             }
@@ -100,7 +100,7 @@ angular.module('milestonesLanding.register', [
         
         $scope.userList;
         $http({
-            url: base + 'api/users',
+            url: 'api/users',
             method: 'GET'
         }).success(function(data) {
             $scope.userList = data;

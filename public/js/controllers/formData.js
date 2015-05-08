@@ -20,19 +20,19 @@ angular.module('milestonesLanding.formData', [
                 props = lodash.pick(props, lodash.identity);
                 if (!props) {
                     return $http({
-                        url: base + 'api/assays',
+                        url: 'api/assays',
                         method: 'GET'
                     });
                 }
                 else if (props.id) {
                     return $http({
-                        url: base + 'api/assays?id=' + props.id,
+                        url: 'api/assays?id=' + props.id,
                         method: 'GET'
                     });
                 }
                 else if (props.centerId) {
                     return $http({
-                        url: base + 'api/assays?centerId=' + props.centerId,
+                        url: 'api/assays?centerId=' + props.centerId,
                         method: 'GET'
                     });
                 }
@@ -44,19 +44,19 @@ angular.module('milestonesLanding.formData', [
                 props = lodash.pick(props, lodash.identity);
                 if (!props) {
                     return $http({
-                        url: base + 'api/cellLines',
+                        url: 'api/cellLines',
                         method: 'GET'
                     });
                 }
                 else if (props.id) {
                     return $http({
-                        url: base + 'api/cellLines?id=' + props.id,
+                        url: 'api/cellLines?id=' + props.id,
                         method: 'GET'
                     });
                 }
                 else if (props.centerId) {
                     return $http({
-                        url: base + 'api/cellLines?centerId=' + props.centerId,
+                        url: 'api/cellLines?centerId=' + props.centerId,
                         method: 'GET'
                     });
                 }
@@ -68,19 +68,19 @@ angular.module('milestonesLanding.formData', [
                 props = lodash.pick(props, lodash.identity);
                 if (!props) {
                     return $http({
-                        url: base + 'api/perturbagens',
+                        url: 'api/perturbagens',
                         method: 'GET'
                     });
                 }
                 else if (props.id) {
                     return $http({
-                        url: base + 'api/perturbagens?id=' + props.id,
+                        url: 'api/perturbagens?id=' + props.id,
                         method: 'GET'
                     });
                 }
                 else if (props.centerId) {
                     return $http({
-                        url: base + 'api/perturbagens?centerId=' + props.centerId,
+                        url: 'api/perturbagens?centerId=' + props.centerId,
                         method: 'GET'
                     });
                 }
@@ -92,19 +92,19 @@ angular.module('milestonesLanding.formData', [
                 props = lodash.pick(props, lodash.identity);
                 if (!props) {
                     return $http({
-                        url: base + 'api/readouts',
+                        url: 'api/readouts',
                         method: 'GET'
                     });
                 }
                 else if (props.id) {
                     return $http({
-                        url: base + 'api/readouts?id=' + props.id,
+                        url: 'api/readouts?id=' + props.id,
                         method: 'GET'
                     });
                 }
                 else if (props.centerId) {
                     return $http({
-                        url: base + 'api/readouts?centerId=' + props.centerId,
+                        url: 'api/readouts?centerId=' + props.centerId,
                         method: 'GET'
                     });
                 }
@@ -116,19 +116,19 @@ angular.module('milestonesLanding.formData', [
                 props = lodash.pick(props, lodash.identity);
                 if (!props) {
                     return $http({
-                        url: base + 'api/assays',
+                        url: 'api/assays',
                         method: 'GET'
                     });
                 }
                 else if (props.id) {
                     return $http({
-                        url: base + 'api/assays?id=' + props.id,
+                        url: 'api/assays?id=' + props.id,
                         method: 'GET'
                     });
                 }
                 else if (props.centerId) {
                     return $http({
-                        url: base + 'api/assays?centerId=' + props.centerId,
+                        url: 'api/assays?centerId=' + props.centerId,
                         method: 'GET'
                     });
                 }
@@ -141,28 +141,28 @@ angular.module('milestonesLanding.formData', [
         return {
             postAssay: function (assay) {
                 return $http({
-                    url: base + 'api/secure/assays',
+                    url: 'api/secure/assays',
                     method: 'POST',
                     data: assay
                 });
             },
             postCellLine: function (cLine) {
                 return $http({
-                    url: base + 'api/secure/cellLines',
+                    url: 'api/secure/cellLines',
                     method: 'POST',
                     data: cLine
                 });
             },
             postPerturbagen: function (pert) {
                 return $http({
-                    url: base + 'api/secure/perturbagens',
+                    url: 'api/secure/perturbagens',
                     method: 'POST',
                     data: pert
                 });
             },
             postReadout: function (rOut) {
                 return $http({
-                    url: base + 'api/secure/readouts',
+                    url: 'api/secure/readouts',
                     method: 'POST',
                     data: rOut
                 });
@@ -172,28 +172,28 @@ angular.module('milestonesLanding.formData', [
         return {
             updateAssay: function (assay) {
                 return $http({
-                    url: base + 'api/secure/assays?id=' + assay._id,
+                    url: 'api/secure/assays?id=' + assay._id,
                     method: 'PUT',
                     data: assay
                 });
             },
             updateCellLine: function (cLine) {
                 return $http({
-                    url: base + 'api/secure/cellLines?id=' + cLine._id,
+                    url: 'api/secure/cellLines?id=' + cLine._id,
                     method: 'PUT',
                     data: cLine
                 });
             },
             updatePerturbagen: function (pert) {
                 return $http({
-                    url: base + 'api/secure/perturbagens?id=' + pert._id,
+                    url: 'api/secure/perturbagens?id=' + pert._id,
                     method: 'PUT',
                     data: pert
                 });
             },
             updateReadout: function (rOut) {
                 return $http({
-                    url: base + 'api/secure/readouts?id=' + rOut._id,
+                    url: 'api/secure/readouts?id=' + rOut._id,
                     method: 'PUT',
                     data: rOut
                 });
@@ -205,25 +205,25 @@ angular.module('milestonesLanding.formData', [
         return {
             deleteAssay: function (assayId) {
                 return $http({
-                    url: base + 'api/secure/assays?id=' + assayId,
+                    url: 'api/secure/assays?id=' + assayId,
                     method: 'DELETE'
                 });
             },
             deleteCellLine: function (cLineId) {
                 return $http({
-                    url: base + 'api/secure/cellLines?id=' + cLineId,
+                    url: 'api/secure/cellLines?id=' + cLineId,
                     method: 'DELETE'
                 });
             },
             deletePerturbagen: function (pertId) {
                 return $http({
-                    url: base + 'api/secure/perturbagens?id=' + pertId,
+                    url: 'api/secure/perturbagens?id=' + pertId,
                     method: 'DELETE'
                 });
             },
             deleteReadout: function (rOutId) {
                 return $http({
-                    url: base + 'api/secure/readouts?id=' + rOutId,
+                    url: 'api/secure/readouts?id=' + rOutId,
                     method: 'DELETE'
                 });
             }

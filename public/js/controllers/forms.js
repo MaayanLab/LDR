@@ -18,13 +18,13 @@ angular.module('milestonesLanding.forms', [
         return {
             getUserForms: function (userId) {
                 return $http({
-                    url: base + 'api/data?userId=' + userId,
+                    url: 'api/data?userId=' + userId,
                     method: 'GET'
                 });
             },
             getAllForms: function () {
                 return $http({
-                    url: base + 'api/data',
+                    url: 'api/data',
                     method: 'GET'
                 });
             }
@@ -33,7 +33,7 @@ angular.module('milestonesLanding.forms', [
         return {
             deleteForm: function (formId) {
                 return $http({
-                    url: base + 'api/secure/data?formId=' + formId,
+                    url: 'api/secure/data?formId=' + formId,
                     method: 'DELETE'
                 });
             }
@@ -42,7 +42,7 @@ angular.module('milestonesLanding.forms', [
         return {
             updateForm: function (form) {
                 return $http({
-                    url: base + 'api/secure/data?formId=' + form._id,
+                    url: 'api/secure/data?formId=' + form._id,
                     method: 'PUT',
                     data: form
                 });
@@ -52,7 +52,7 @@ angular.module('milestonesLanding.forms', [
         return {
             postForm: function (inputForm) {
                 return $http({
-                    url: base + 'api/secure/data',
+                    url: 'api/secure/data',
                     method: 'POST',
                     data: inputForm
                 });

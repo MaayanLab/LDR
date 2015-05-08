@@ -19,22 +19,12 @@ angular.module('milestonesLanding.formCreate', [
     });
 })
 
-.directive('enforceMaxTags', function () {
-    return {
-        require: 'ngModel',
-        link: function (scope, element, attrs, ngModelCtrl) {
-            ngModelCtrl.$parsers.push(function(value) {
-                console.log('link called');
-            });
-        }
-    };
-})
-
 .controller('FormCreateCtrl', function FormCreateController($scope, $timeout, $http, $location, $anchorScroll,
                                                                       store, $state, $modal, lodash, FormUpdates,
                                                                       FormPosts, DataGets, DataPosts) {
 
-    //$scope.user = store.get('currentUser');
+    $scope.user = store.get('currentUser');
+    $scope.center = $scope.user.center.name;
     
     $scope.form = {
         selectedData: {
@@ -48,6 +38,18 @@ angular.module('milestonesLanding.formCreate', [
             experiment: [],
             analysisTools: [],
             tagsKeywords: []
+        },
+        releaseDates: {
+            level1: { val: null },
+            level2: { val: null },
+            level3: { val: null },
+            level4: { val: null }
+        },
+        urls: {
+            pubMedUrl:     { val: null },
+            dataUrl:       { val: null },
+            metaDataUrl:   { val: null },
+            qcDocumentUrl: { val: null }
         }
     };
 
@@ -135,15 +137,43 @@ angular.module('milestonesLanding.formCreate', [
         }
     ];
 
-    /*function columnize(arr, size) {
-        var newArr = [];
-        for (var i=0; i<arr.length; i+=size) {
-            newArr.push(arr.slice(i, i+size));
+    $scope.releaseDates = [
+        {
+            level: 1,
+            model: $scope.form.releaseDates.level1
+        },
+        {
+            level: 2,
+            model: $scope.form.releaseDates.level2
+        },
+        {
+            level: 3,
+            model: $scope.form.releaseDates.level3
+        },
+        {
+            level: 4,
+            model: $scope.form.releaseDates.level4
         }
-        return newArr;
-    }*/
-
-    //$scope.columnizedData = columnize($scope.fields, 2);
+    ];
+    
+    $scope.urls = [
+        {
+            title: 'PubMed URL',
+            model: $scope.form.urls.pubMedUrl
+        },
+        {
+            title: 'Data URL',
+            model: $scope.form.urls.dataUrl
+        },
+        {
+            title: 'Meta-Data URL',
+            model: $scope.form.urls.metaDataUrl
+        },
+        {
+            title: 'URL to the QC document',
+            model: $scope.form.urls.qcDocumentUrl
+        }
+    ];
 
     $scope.autocompleteSource = function(val) {
         return $http.get('http://146.203.54.165:7078/cell', {
@@ -159,32 +189,6 @@ angular.module('milestonesLanding.formCreate', [
             });
         });
     };
-
-    // Clear form, set pristine and untouched, refresh status and date modified
-    //$scope.reset = function() {
-        //$scope.addAnother = false;
-        /*$.each($scope.fields, function(i, field) {
-            field.selectedData = [];
-        });*/
-    //};
-
-    // Clear field when user clicks 'X' button
-    /*$scope.clearSelection = function(selection) {
-        if (selection === 'Assay')
-            $scope.form.assay = {};
-        else if (selection === 'CellLine')
-            $scope.form.cellLines = [];
-        else if (selection === 'Perturbagen')
-            $scope.form.perturbagens = [];
-        else if (selection === 'Readout')
-            $scope.form.readouts = [];
-        else if (selection === 'Disease')
-            $scope.form.disease = {};
-    };
-
-    $scope.addNew = function() {
-        console.log('TODO');
-    };*/
 
     $scope.submit = function() {
 

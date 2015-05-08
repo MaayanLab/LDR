@@ -23,7 +23,7 @@ angular.module('milestonesLanding', [
         // $locationProvider.html5Mode(true);
 
         // Reroute to home if URL is not valid
-        $urlRouterProvider.otherwise(base);
+        //$urlRouterProvider.otherwise(base);
 
         // Add JWT to every request to server
         //jwtInterceptorProvider.tokenGetter = function (store) {
@@ -39,7 +39,7 @@ angular.module('milestonesLanding', [
                 },
                 responseError: function (response) {
                     if (response.status === 401)
-                        $location.url(base);
+                        //$location.url(base);
                     return $q.reject(response);
                 }
             };
@@ -124,7 +124,6 @@ angular.module('milestonesLanding', [
             }
         });
     }).controller('milestonesLandingCtrl', function milestonesLandingCtrl($scope, $rootScope, $http, $state, store, jwtHelper) {
-        $scope.base = base;
         $scope.pageTitle = 'Milestones Landing';
 
         // Don't think this works, but should dynamically change title of page
@@ -139,7 +138,7 @@ angular.module('milestonesLanding', [
         // Post to /login
         $scope.login = function () {
             $http({
-                url: base + 'login',
+                url: 'login',
                 method: 'POST',
                 data: $scope.user
             }).then(function (result) {
@@ -159,7 +158,7 @@ angular.module('milestonesLanding', [
         $scope.logout = function () {
             $rootScope.message = 'Logged out.';
             $http({
-                url: base + 'api/logout',
+                url: 'api/logout',
                 method: 'GET'
             }).then(function (result) {
                 // No Error

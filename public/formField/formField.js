@@ -13,6 +13,12 @@ angular.module('milestonesLanding')
         },
         templateUrl: 'formField/formField.html',
         link: function(scope, element, attrs) {
+            scope.clearSelection = function() {
+                angular.copy([], scope.ngModel);
+            };
+            scope.openModal = function() {
+                console.log('open modal');
+            };
         }
     };
 });
