@@ -1,4 +1,4 @@
-var jsonWT          = require('jsonwebtoken'),
+var jsonWT = require('jsonwebtoken'),
     jwt = require('express-jwt'),
     Models = require('../models'),
     config = require('../config/database'),
@@ -9,65 +9,47 @@ function createToken(user) {
     return jsonWT.sign(_.omit(user, 'password'), config.secret, {expiresInMinutes: 60 * 5});
 }
 
-module.exports = function (app, passport) {
+module.exports = function (app) {
 
-    // USERS
-    app.get('/api/users', function (req, res) {
-        Models.User.find({}, function (err, users) {
-            if (err) {
-                console.log(err);
-                return done(err);
-            }
-            res.status(200).send(users);
-        });
-    });
-
+// USERS
+    /*
+     app.get('/api/users', function(req, res) {
+     Models.User.find({}, function(err, users) {
+     if (err) {
+     console.log(err);
+     return done(err);
+     }
+     res.status(200).send(users);
+     });
+     });
+     */
     app.get('/logout', function (req, res) {
         req.logout();
         res.status(200).send('User successfully logged out');
     });
 
     app.post('/login', function (req, res) {
-        console.log(req.body);
         Models.User
             .findOne({'username': req.body.username})
             .populate('center')
             .exec(function (err, user) {
                 if (err) {
                     console.log(err);
-                    res.status(404).send(err);
+                    return done(err);
                 }
                 if (!user)
-                    res.status(404).send('User could not be found.');
+                    return res.status(404).send('User not found.');
                 if (!user.validPassword(req.body.password))
-                    res.status(401).send('Password was incorrect');
+                    return res.status(401).send('Password invalid. Please try again.');
 
-                var token = createToken(user);
+                var token = createToken(req.user);
                 var userBlob = {
                     user: user,
                     id_token: token
                 };
-                console.log(userBlob.user);
+                console.log(userBlob);
                 res.status(201).send(userBlob);
+
             });
     });
-
-    app.post('/register', function (req, res) {
-        console.log('receiving POST on server');
-        var user = new Models.User({
-            _id: Models.genId(),
-            username: req.body.username,
-            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8)),
-            center: req.body.center
-        });
-        user.save(function (err) {
-            if (err) {
-                console.log(err);
-                res.status(404).send(err);
-            }
-        });
-        res.status(304).send(user);
-    });
-
-}
-;
+};

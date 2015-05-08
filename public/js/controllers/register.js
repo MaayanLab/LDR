@@ -4,7 +4,7 @@ angular.module('milestonesLanding.register', [
 ])
     .config(function ($stateProvider) {
         $stateProvider.state('register', {
-            url: base + 'register',
+            url: 'register',
             controller: 'RegisterCtrl',
             templateUrl: 'views/register.html',
             data: {
@@ -16,7 +16,7 @@ angular.module('milestonesLanding.register', [
         return {
             getCenters: function() {
                 return $http({
-                    url: base + 'api/centers',
+                    url: 'api/centers',
                     method: 'GET'
                 });
             }
@@ -26,11 +26,11 @@ angular.module('milestonesLanding.register', [
         return {
             getUsers: function() {
                 return $http({
-                    url: base + 'api/users',
+                    url: 'api/users',
                     method: 'GET'
                 });
             }
-        }
+        };
     })
     .directive('emailAvailable', function($timeout, $q) {
         var isValidEmail = function(email) {
@@ -66,7 +66,7 @@ angular.module('milestonesLanding.register', [
                     return def.promise;*/
                 };
             }
-        }
+        };
     })
     .directive('usernameAvailable', function($timeout, $q) {
         return {
@@ -98,9 +98,9 @@ angular.module('milestonesLanding.register', [
             $scope.centers = data;
         });
         
-        $scope.userList;
+        $scope.userList = [];
         $http({
-            url: base + 'api/users',
+            url: 'api/users',
             method: 'GET'
         }).success(function(data) {
             $scope.userList = data;
@@ -116,5 +116,5 @@ angular.module('milestonesLanding.register', [
                 data: $scope.user
             });
             $scope.user = {};
-        }
+        };
     });

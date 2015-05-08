@@ -3,7 +3,7 @@
 <head>
     <title ng-bind="pageTitle"></title>
     <script type="text/javascript">
-        var base = '/';
+        /*var base = '/';
 
         //if (document.location.hostname === 'localhost' || document.location.hostname === 'loretta') {
         //    var base = '/';
@@ -12,12 +12,13 @@
         //}
         var newBase = document.createElement("base");
         newBase.setAttribute("href", base);
-        document.getElementsByTagName("head")[0].appendChild(newBase);
+        document.getElementsByTagName("head")[0].appendChild(newBase);*/
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">-->
     <!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">-->
+<<<<<<< HEAD
     <link rel="stylesheet" type="text/css" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="vendor/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="vendor/pickadate/lib/compressed/themes/classic.css">
@@ -56,12 +57,21 @@
     <script type="text/javascript" src="vendor/angular-ui-utils/ui-utils.min.js"></script>
     <script type="text/javascript" src="vendor/ng-tags-input/ng-tags-input.min.js"></script>
     <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/2.3.0/ng-tags-input.js"></script>-->
+=======
+
+    <link rel="stylesheet" type="text/css" href="vendor.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+
+    <script type="text/javascript" src="vendor.js"></script>
+    <script type="text/javascript" src="bundle.js"></script>
+
+>>>>>>> components
 
 </head>
 <body class="ng-cloak">
 <div class="wrap">
     <nav role="navigation" class="navbar">
-        <div class="container-fluid">
+        <div class="container">
             <div class="ml-navbar">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -110,10 +120,10 @@
             </div>
             <!-- /.ml-navbar -->
         </div>
-        <!-- /.container-fluid -->
+        <!-- /.container -->
     </nav>
     <div class="ml-view">
-        <div class="container-fluid" ui-view></div>
+        <div class="container" ui-view></div>
     </div>
 </div>
 <div class="push"></div>

@@ -1,5 +1,5 @@
 {
-  "name": "MilestonesLanding",
+  "name": "Milestones",
   "version": "1.0.0",
   "description": "The homepage for Milestones meta-data forms and display.",
   "main": "server.js",
@@ -15,7 +15,7 @@
     "express": "^4.0.0",
     "express-jwt": "^1.4.0",
     "express-session": "^1.0.4",
-    "jsonwebtoken": "^3.2.2",
+    "jsonwebtoken": "^5.0.0",
     "lodash": "^3.3.1",
     "method-override": "^1.0.2",
     "mongoose": "^4.0.1",
@@ -25,7 +25,27 @@
     "passport-local": "^0.1.6",
     "shortid": "^2.1.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "del": "^1.1.1",
+    "fail": "0.0.0",
+    "gulp": "^3.8.11",
+    "gulp-autoprefixer": "^2.2.0",
+    "gulp-concat": "^2.5.2",
+    "gulp-filter": "^2.0.2",
+    "gulp-flatten": "0.0.4",
+    "gulp-ignore": "^1.2.1",
+    "gulp-imagemin": "^2.2.1",
+    "gulp-jshint": "^1.10.0",
+    "gulp-load-plugins": "^0.10.0",
+    "gulp-minify-css": "^1.1.1",
+    "gulp-nodemon": "^2.0.3",
+    "gulp-order": "^1.1.1",
+    "gulp-size": "^1.2.1",
+    "gulp-sourcemaps": "^1.5.2",
+    "jshint-stylish": "^1.0.2",
+    "main-bower-files": "^2.7.0",
+    "run-sequence": "^1.1.0"
+  },
   "scripts": {
     "test": "test",
     "start": "node server.js"
