@@ -40,10 +40,10 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 app.use(compress());
 
-var publicDir = __dirname + '/public';
+var publicDir = __dirname + '/dist/';
 console.log(publicDir);
 
-app.use('/', express.static(path.join(publicDir + '/')));
+app.use('/', express.static(path.join(publicDir)));
 
 /*app.get('*.css', function (req, res, next) {
     res.setHeader('Content-Type', 'text/css');

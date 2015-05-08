@@ -30,7 +30,7 @@ angular.module('milestonesLanding.register', [
                     method: 'GET'
                 });
             }
-        }
+        };
     })
     .directive('emailAvailable', function($timeout, $q) {
         var isValidEmail = function(email) {
@@ -66,7 +66,7 @@ angular.module('milestonesLanding.register', [
                     return def.promise;*/
                 };
             }
-        }
+        };
     })
     .directive('usernameAvailable', function($timeout, $q) {
         return {
@@ -98,7 +98,7 @@ angular.module('milestonesLanding.register', [
             $scope.centers = data;
         });
         
-        $scope.userList;
+        $scope.userList = [];
         $http({
             url: 'api/users',
             method: 'GET'
@@ -116,5 +116,5 @@ angular.module('milestonesLanding.register', [
                 data: $scope.user
             });
             $scope.user = {};
-        }
+        };
     });

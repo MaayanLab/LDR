@@ -4,16 +4,14 @@ angular.module('milestonesLanding', [
     'milestonesLanding.admin',
     'milestonesLanding.formCreate',
     'milestonesLanding.formData',
-    'milestonesLanding.formBatch',
     'milestonesLanding.register',
     'ui.router',
     'ui.bootstrap',
-    'ui.select',
     'angular-storage',
     'angular-jwt'
 ])
-    .config(function milestonesLandingConfig($urlRouterProvider, jwtInterceptorProvider, $httpProvider,
-                                             $locationProvider, uiSelectConfig) {
+    .config(function milestonesLandingConfig($urlRouterProvider, jwtInterceptorProvider,
+                                             $httpProvider, $locationProvider) {
 
         // Remove the 'X-Requested-With' header from all requests to prevent CORS errors
         // http://stackoverflow.com/questions/16661032/http-get-is-not-allowed-by-access-control-allow-origin-but-ajax-is
@@ -44,9 +42,6 @@ angular.module('milestonesLanding', [
                 }
             };
         });
-
-        uiSelectConfig.theme = 'select2';
-
     })
     .run(function ($rootScope, $state, store, jwtHelper) {
         "use strict";
@@ -158,7 +153,7 @@ angular.module('milestonesLanding', [
         $scope.logout = function () {
             $rootScope.message = 'Logged out.';
             $http({
-                url: 'api/logout',
+                url: 'logout',
                 method: 'GET'
             }).then(function (result) {
                 // No Error
