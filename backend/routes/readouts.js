@@ -1,9 +1,8 @@
 var jwt             = require('express-jwt'),
   Models          = require('../models'),
-  config          = require('../config/database'),
-  _               = require('lodash');
+  config          = require('../config/database');
 
-module.exports = function(app, passport) {
+module.exports = function(app) {
 
 // READOUTS GET, POST, PUT, DELETE
   app.get('/api/readouts', function(req, res) {

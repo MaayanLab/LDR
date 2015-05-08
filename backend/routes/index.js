@@ -1,14 +1,8 @@
 var jwt = require('express-jwt'),
     Models = require('../models'),
-    config = require('../config/database'),
-    _ = require('lodash');
+    config = require('../config/database');
 
-
-var jwtCheck = jwt({
-    secret: config.secret
-});
-
-module.exports = function (app, passport) {
+module.exports = function (app) {
 
     // TODO: Uncomment to require token on request to /api/secure
     //app.use('/api/secure', jwtCheck);
@@ -17,11 +11,11 @@ module.exports = function (app, passport) {
         res.redirect('/MilestonesLanding/');
     });
 
-    require('./assays')(app, passport);
-    require('./cellLines')(app, passport);
-    require('./readouts')(app, passport);
-    require('./perturbagens')(app, passport);
-    require('./users')(app, passport);
-    require('./formRoutes')(app, passport);
+    require('./assays')(app);
+    require('./cellLines')(app);
+    require('./readouts')(app);
+    require('./perturbagens')(app);
+    require('./users')(app);
+    require('./formRoutes')(app);
 
 };

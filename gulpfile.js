@@ -53,14 +53,12 @@ gulp.task('images', function () {
 });
 
 gulp.task('js', function () {
-
     return gulp.src([SRC_DIRECTORY + '**/*.js', '!' + SRC_DIRECTORY + 'vendor/**'])
         .pipe($.concat('bundle.js'))
         .pipe(gulp.dest(BUILD_DIRECTORY));
 });
 
 gulp.task('css', function () {
-
     return gulp.src(SRC_DIRECTORY + 'css/index.css')
         .pipe($.order([
             SRC_DIRECTORY + 'css/index.css'
@@ -73,9 +71,6 @@ gulp.task('css', function () {
         .pipe(gulp.dest(BUILD_DIRECTORY))
 });
 
-gulp.task('watch', function () {
-    return gulp.watch(SRC_DIRECTORY + 'index.html', ['html']);
-});
 
 gulp.task('jshint', function () {
     return gulp.src([SRC_DIRECTORY + '**/*.js', '!' + SRC_DIRECTORY + 'vendor/**'])
@@ -111,21 +106,32 @@ gulp.task('vendor', function () {
 
 gulp.task('buildWithoutLint', function (callback) {
     runSequence('build-clean', ['vendor', 'html', 'css', 'js', 'fonts', 'images', 'copyFavIconInfo'],
-        'nodemon', 'watch', callback)
+        'nodemon', callback)
 });
 
 gulp.task('buildWithLint', function (callback) {
     runSequence('build-clean', ['vendor', 'html', 'css', 'js', 'fonts', 'images', 'copyFavIconInfo'],
-        'jshint', 'nodemon', 'watch', callback)
+        'jshint', 'nodemon', callback)
 });
 
 gulp.task('nodemon', function () {
     $.nodemon({
         script: 'server.js',
-        ext: 'js html',
+        ext: 'js css html',
         env: {'NODE_ENV': 'development'},
-        ignore: ['*.*'],
-        tasks: ['build']
+        //ignore: ['*.*'],
+        tasks: function (changedFiles) {
+            var tasks = [];
+            changedFiles.forEach(function (file) {
+                if (path.extname(file) === '.js' && !~tasks.indexOf('js')) {
+                    tasks.push('js');
+                    tasks.push('jshint');
+                }
+                if (path.extname(file) === '.css' && !~tasks.indexOf('css')) tasks.push('css');
+                if (path.extname(file) === '.html' && !~tasks.indexOf('html')) tasks.push('html');
+            });
+            return tasks
+        }
     })
 });
 

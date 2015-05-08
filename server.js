@@ -1,15 +1,12 @@
 var express = require('express'),
     mongoose = require('mongoose'),
-    passport = require('passport'),
     cors = require('cors'),
     flash = require('connect-flash'),
 
     morgan = require('morgan'),
     path = require('path'),
-    cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
-    compress = require('compression'),
-    session = require('express-session');
+    compress = require('compression');
 
 var app = express();
 var port = 3001;
@@ -18,29 +15,15 @@ var configDB = require('./backend/config/database');
 
 mongoose.connect(configDB.url);
 
-require('./backend/config/passport')(passport); // pass passport for configuration
-
 app.use(cors());
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(morgan('dev')); // log every request to the console
-app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({extended: true}));
-
-// required for passport
-app.use(session({
-    secret: configDB.secret,
-    resave: true,
-    saveUninitialized: true
-}));
-app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 app.use(compress());
 
 var publicDir = __dirname + '/dist/';
+console.log('Serving files from...');
 console.log(publicDir);
 
 app.use('/', express.static(path.join(publicDir)));
@@ -49,7 +32,7 @@ app.use('/', express.static(path.join(publicDir)));
     res.setHeader('Content-Type', 'text/css');
 });*/
 
-require('./backend/routes')(app, passport);
+require('./backend/routes')(app);
 
 app.get('/*', function (req, res) {
     res.sendFile(publicDir + '/index.html');
@@ -62,4 +45,4 @@ app.use(function (err, req, res, next) {
 });
 
 app.listen(port);
-console.log('Everything\'s going down on port ' + port);
+console.log('The magic is happening on port ' + port);
