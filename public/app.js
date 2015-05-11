@@ -1,10 +1,10 @@
 angular.module('milestonesLanding', [
     'milestonesLanding.navBar',
     'milestonesLanding.home',
-    'milestonesLanding.forms',
     'milestonesLanding.admin',
-    'milestonesLanding.formCreate',
-    'milestonesLanding.formData',
+    'milestonesLanding.dataReleases.overview',
+    'milestonesLanding.dataReleases.create',
+    'milestonesLanding.metadata.overview',
     'milestonesLanding.register',
     'ui.router',
     'ui.bootstrap',

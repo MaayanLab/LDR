@@ -1,0 +1,72 @@
+<section>
+    <h4>Assays</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Info</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="assay in assays" ng-click="selectData('Assay', assay)">
+                <td>{{assay.name}}</td>
+                <td>{{assay.info}}</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+<section>
+    <h4>Cell Lines</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Class</th>
+                <th>Tissue</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="line in cellLines" ng-click="selectData('Cell Line', line)">
+                <td>{{line.name}}</td>
+                <td>{{line.type}}</td>
+                <td>{{line.class}}</td>
+                <td>{{line.tissue}}</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+<section>
+    <h4>Perturbagens</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="pert in perturbagens" ng-click="selectData('Perturbagen', pert)">
+                <td>{{pert.name}}</td>
+                <td>{{pert.type}}</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+<section>
+    <h4>Readouts</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Datatype</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="rOut in readouts" ng-click="selectData('Readout', rOut)">
+                <td>{{rOut.name}}</td>
+                <td>{{rOut.datatype}}</td>
+            </tr>
+        </tbody>
+    </table>
+</section>

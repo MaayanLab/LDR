@@ -15,19 +15,31 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div id="navbarCollapse" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><h5 ng-show="isLoggedIn" class="hello">Logged in as {{ currentUser.username }}</h5></li>
-                    <li ng-show="isLoggedInAdmin"><a ui-sref="admin">Admin</a></li>
+                    <li>
+                        <h5 ng-show="isLoggedIn" class="hello">Logged in as {{ currentUser.username }}</h5>
+                    </li>
+                    <li ng-show="isLoggedInAdmin">
+                        <a ui-sref="admin">Admin</a>
+                    </li>
                     <li class="dropdown" ng-show="isLoggedIn && !isLoggedInAdmin">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button"
                             aria-expanded="false">Data Releases <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a ui-sref="forms">Data Releases Home</a></li>
-                            <li><a ui-sref="formCreate">Add New</a></li>
+                            <li>
+                                <a ui-sref="dataReleasesOverview">Overview</a>
+                            </li>
+                            <li>
+                                <a ui-sref="dataReleasesCreate">Add New</a>
+                            </li>
                             <!--<li><a ui-sref="formBatch">Add Batch</a></li> May not be needed. Leaving alone for now-->
                         </ul>
                     </li>
-                    <li ng-show="isLoggedIn"><a ui-sref="formData">Metadata</a></li>
-                    <li ng-show="isLoggedIn"><a ng-click="logout()">Logout</a></li>
+                    <li ng-show="isLoggedIn">
+                        <a ui-sref="metadata">Metadata</a>
+                    </li>
+                    <li ng-show="isLoggedIn">
+                        <a ng-click="logout()">Logout</a>
+                    </li>
                     <li ng-show="!isLoggedIn">
                         <form class="navbar-form navbar-right" role="search">
                             <div class="form-group">

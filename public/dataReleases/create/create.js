@@ -1,4 +1,4 @@
-angular.module('milestonesLanding.formCreate', [
+angular.module('milestonesLanding.dataReleases.create', [
     'ui.router',
     'angular-storage',
     'ngSanitize',
@@ -9,19 +9,19 @@ angular.module('milestonesLanding.formCreate', [
 
 // UI Router state formCreate
 .config(function($stateProvider) {
-    $stateProvider.state('formCreate', {
-        url: '/forms/create',
-        controller: 'FormCreateCtrl',
-        templateUrl: 'views/formCreate.html',
+    $stateProvider.state('dataReleasesCreate', {
+        url: '/data-releases/create',
+        controller: 'dataReleases.create.ctrl',
+        templateUrl: '/dataReleases/create/create.html',
         data: {
             requiresLogin: true
         }
     });
 })
 
-.controller('FormCreateCtrl', function FormCreateController($scope, $timeout, $http, $location, $anchorScroll,
-                                                                      store, $state, $modal, lodash, FormUpdates,
-                                                                      FormPosts, DataGets, DataPosts) {
+.controller('dataReleases.create.ctrl', function(
+        $scope, $timeout, $http, $location, $anchorScroll, store, $state, $modal, lodash, api
+    ) {
 
     $scope.user = store.get('currentUser');
     $scope.center = $scope.user.center.name;

@@ -1,0 +1,37 @@
+<h3 class="text-center">Data Releases</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Dataset ID</th>
+            <th>Status</th>
+            <th>Assay</th>
+            <th>Readout Count</th>
+            <th>Level 1 Release Date</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="form in forms" class="form-table-data">
+            <td id="id">{{form._id}}</td>
+            <td id="status">{{form.status}}</td>
+            <td id="assay-name">{{form.assay.name}}</td>
+            <td id="readout-count">{{form.readoutCount}}</td>
+            <td id="release-date">{{form.releaseDates.levelOne | date:'MM-dd-yyyy'}}</td>
+            <td>
+                <div class="btn-group">
+                    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
+                        Action
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a ng-click="editForm(form)">Edit</a></li>
+                        <li><a ng-click="deleteForm(form)">Delete</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr ng-if="forms.length === 0">
+            <td colspan="5" class="col-md-12">There are no releases to display. Please <a ui-sref="formCreate">add data here</a>.</td>
+        </tr>
+    </tbody>
+</table>

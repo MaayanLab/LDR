@@ -19,7 +19,7 @@ angular.module('milestonesLanding.navBar', [])
                     // Set current user and jwt. Then go to forms page
                     store.set('currentUser', result.data.user);
                     store.set('jwt', result.data.id_token);
-                    $state.go('forms');
+                    $state.go('dataReleasesOverview');
                 }, function (error) {
                     // Error: authentication failed
                     store.set('message', 'Authentication failed.');

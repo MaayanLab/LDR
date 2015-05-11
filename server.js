@@ -31,7 +31,7 @@ app.use('/', express.static(path.join(publicDir)));
 
 require('./backend/routes')(app);
 
-app.get('/*', function (req, res) {
+app.get('/', function (req, res) {
     res.sendFile(publicDir + '/index.html');
 });
 
