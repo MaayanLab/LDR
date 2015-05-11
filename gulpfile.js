@@ -119,7 +119,7 @@ gulp.task('buildWithLint', function (callback) {
     runSequence('build-clean', 'vendor', 'html', 'css', 'js', 'fonts', 'images', 'copyFavIconInfo', 'jshint', callback)
 });
 
-gulp.task('nodemon', ['buildWithLint'], function () {
+gulp.task('nodemon', function () {
     $.nodemon({
         script: 'server.js',
         ext: 'js css html',
@@ -131,7 +131,7 @@ gulp.task('nodemon', ['buildWithLint'], function () {
                 if (path.extname(file) === '.js' && !~tasks.indexOf('js')) tasks.push('js');
                 if (path.extname(file) === '.css' && !~tasks.indexOf('css')) tasks.push('css');
                 if (path.extname(file) === '.html' && !~tasks.indexOf('html')) tasks.push('html');
-                else if (!~tasks.indexOf('html')) tasks.push('buildWithoutLint');
+                else if (!~tasks.indexOf('buildWithoutLint')) tasks.push('buildWithoutLint');
             });
             return tasks
         }

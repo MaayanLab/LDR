@@ -1,7 +1,7 @@
 <div ng-controller="FormDataCtrl">
-    <div class="table">
+    <div class="meta-data">
         <h4 class="meta-header">Assays</h4>
-        <table class="table table-hovertable">
+        <table class="table table-hover meta-data-table">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -9,17 +9,24 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="assay in assays" ng-click="selectData('Assay', assay)">
-                    <td class="col-md-3">{{assay.name}}</td>
-                    <td class="col-md-9">{{assay.info}}</td>
-                </tr>
+            <tr ng-repeat="assay in assays" ng-click="selectData('Assay', assay)">
+                <td class="col-md-4">{{assay.name}}</td>
+                <td class="col-md-8">{{assay.info}}</td>
+            </tr>
+            <tr ng-if="assays.length !== 0">
+                <td class="col-md-2"><a class="pointer" ng-click="addNew('Assay')">Add new assay</a></td>
+                <td></td>
+            </tr>
+            <tr ng-if="assays.length === 0">
+                <td colspan="5" class="col-md-12">There are no assays to display. Please <a class="pointer" ng-click="addNew('Assay')">add an assay here</a>.</td>
+            </tr>
             </tbody>
         </table>
     </div>
 
-    <div class="table">
+    <div class="meta-data">
         <h4 class="meta-header">Cell Lines</h4>
-        <table class="table table-hovertable">
+        <table class="table table-hover meta-data-table">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -29,19 +36,28 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="line in cellLines" ng-click="selectData('Cell Line', line)">
-                    <td class="col-md-3">{{line.name}}</td>
-                    <td class="col-md-3">{{line.type}}</td>
-                    <td class="col-md-3">{{line.class}}</td>
-                    <td class="col-md-3">{{line.tissue}}</td>
-                </tr>
+            <tr ng-repeat="line in cellLines" ng-click="selectData('Cell Line', line)">
+                <td class="col-md-4">{{line.name}}</td>
+                <td class="col-md-2">{{line.type}}</td>
+                <td class="col-md-3">{{line.class}}</td>
+                <td class="col-md-3">{{line.tissue}}</td>
+            </tr>
+            <tr ng-if="cellLines.length !== 0">
+                <td class="col-md-2"><a class="pointer" ng-click="addNew('Cell Line')">Add new cell line</a></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr ng-if="cellLines.length === 0">
+                <td colspan="5" class="col-md-12">There are no cell lines to display. Please <a class="pointer" ng-click="addNew('Cell Line')">add a cell line here</a>.</td>
+            </tr>
             </tbody>
         </table>
     </div>
 
-    <div class="table">
+    <div class="meta-data">
         <h4 class="meta-header">Perturbagens</h4>
-        <table class="table table-hovertable">
+        <table class="table table-hover meta-data-table">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -49,17 +65,24 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="pert in perturbagens" ng-click="selectData('Perturbagen', pert)">
-                    <td class="col-md-3">{{pert.name}}</td>
-                    <td class="col-md-9">{{pert.type}}</td>
-                </tr>
+            <tr ng-repeat="pert in perturbagens" ng-click="selectData('Perturbagen', pert)">
+                <td class="col-md-4">{{pert.name}}</td>
+                <td class="col-md-8">{{pert.type}}</td>
+            </tr>
+            <tr ng-if="perturbagens.length !== 0">
+                <td class="col-md-2"><a class="pointer" ng-click="addNew('Perturbagen')">Add new perturbagen</a></td>
+                <td></td>
+            </tr>
+            <tr ng-if="perturbagens.length === 0">
+                <td colspan="5" class="col-md-12">There are no perturbagens to display. Please <a class="pointer" ng-click="addNew('Perturbagen')">add a perturbagen here</a>.</td>
+            </tr>
             </tbody>
         </table>
     </div>
 
-    <div class="table">
+    <div class="meta-data">
         <h4 class="meta-header">Readouts</h4>
-        <table class="table table-hovertable">
+        <table class="table table-hover meta-data-table">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -67,11 +90,19 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="rOut in readouts" ng-click="selectData('Readout', rOut)">
-                    <td class="col-md-3">{{rOut.name}}</td>
-                    <td class="col-md-9">{{rOut.datatype}}</td>
-                </tr>
+            <tr ng-repeat="rOut in readouts" ng-click="selectData('Readout', rOut)">
+                <td class="col-md-4">{{rOut.name}}</td>
+                <td class="col-md-8">{{rOut.datatype}}</td>
+            </tr>
+            <tr ng-if="readouts.length !== 0">
+                <td class="col-md-2"><a class="pointer" ng-click="addNew('Readout')">Add new readout</a></td>
+                <td></td>
+            </tr>
+            <tr ng-if="readouts.length === 0">
+                <td colspan="5" class="col-md-12">There are no readouts to display. Please <a class="pointer" ng-click="addNew('Readout')">add a readout here</a>.</td>
+            </tr>
             </tbody>
         </table>
     </div>
+
 </div>
