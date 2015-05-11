@@ -20,8 +20,7 @@ angular.module('milestonesLanding.formCreate', [
 })
 
 .controller('FormCreateCtrl', function FormCreateController($scope, $timeout, $http, $location, $anchorScroll,
-                                                                      store, $state, $modal, lodash, FormUpdates,
-                                                                      FormPosts, DataGets, DataPosts) {
+                                                                      store, $state, $modal, lodash) {
 
     $scope.user = store.get('currentUser');
     $scope.center = $scope.user.center.name;

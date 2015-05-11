@@ -319,16 +319,6 @@ button#post-batch-btn {
 	width: 100%;
 }
 
-table.meta-data-table {
-	width: 90%;
-    float: right;
-    cursor: default;
-}
-
-h4.meta-header {
-	margin-top: 40px;
-}
-
 /* End Form Data */
 
 .push {

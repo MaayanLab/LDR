@@ -14,7 +14,7 @@ angular.module('milestonesLanding.forms', [
         });
 
         // AJAX requests for Form CRUD
-    }).factory('FormGets', function ($http) {
+    })/*.factory('FormGets', function ($http) {
         return {
             getUserForms: function (userId) {
                 return $http({
@@ -58,8 +58,8 @@ angular.module('milestonesLanding.forms', [
                 });
             }
         };
-    }).controller('FormsCtrl', function FormsController($scope, $http, store, $state, FormGets, DataGets, DataPosts, FormDeletes) {
-        var currentUser = store.get('currentUser');
+    })*/.controller('FormsCtrl', function FormsController($scope, $http, store, $state) {
+        /*var currentUser = store.get('currentUser');
         $scope.user = currentUser;
         $scope.forms = [];
 
@@ -83,5 +83,5 @@ angular.module('milestonesLanding.forms', [
                     $scope.forms = data;
                 });
             }
-        };
+        };*/
     });
