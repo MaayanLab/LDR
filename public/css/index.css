@@ -28,13 +28,9 @@ body {
     border-color: #67201E
 }
 
-.navbar {
-    border-bottom: 1px solid #204d74;
-    border-radius: 0px;
+.navbar-wrapper {
     background-color: #286090;
-    min-height: 44px;
     padding: 29px 15px 0px 15px;
-    border-radius: 0;
 }
 
 .navbar-nav>li>a, .select2-results .select2-highlighted {
@@ -76,13 +72,10 @@ body {
     color: #d5d5e5;
 }
 
-.ml-title {
+.nav .title {
     color: #fff;
     padding: 0;
-    float: left;
-    height: 50px;
     font-size: 20px;
-    line-height: 22px;
 }
 
 .ml-title:hover, .ml-title:focus {
