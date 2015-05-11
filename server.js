@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(flash()); // use connect-flash for flash messages stored in session
 app.use(compress());
 
-var publicDir = __dirname + '/dist/';
+var publicDir = __dirname + '/public/';
 console.log('Serving static files from ' + publicDir);
 app.use('/', express.static(path.join(publicDir)));
 
