@@ -13,7 +13,6 @@ COPY config ./config
 COPY public ./public
 
 RUN npm install
-
 RUN bower install --allow-root
 
 EXPOSE 3001

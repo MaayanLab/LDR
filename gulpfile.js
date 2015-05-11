@@ -29,6 +29,7 @@ gulp.task('build-clean', function () {
 
 gulp.task('html', function () {
     return gulp.src(SRC_DIRECTORY + '**/*')
+        .pipe($.plumber())
         .pipe(htmlFilter)
         .pipe(gulp.dest(BUILD_DIRECTORY));
 });
@@ -40,6 +41,7 @@ gulp.task('copyFavIconInfo', function () {
 
 gulp.task('fonts', function () {
     return gulp.src(SRC_DIRECTORY + '**/*')
+        .pipe($.plumber())
         .pipe(fontFilter)
         .pipe($.flatten())
         .pipe(gulp.dest(BUILD_DIRECTORY + 'fonts/'));
@@ -47,6 +49,7 @@ gulp.task('fonts', function () {
 
 gulp.task('images', function () {
     return gulp.src(SRC_DIRECTORY + '/images/**/*.{jpg,jpeg,png,gif,ico}')
+        .pipe($.plumber())
         .pipe($.imagemin({optimizationLevel: 3, progressive: true, interlaced: true}))
         .pipe(gulp.dest(BUILD_DIRECTORY))
         .pipe($.size());
@@ -54,12 +57,14 @@ gulp.task('images', function () {
 
 gulp.task('js', function () {
     return gulp.src([SRC_DIRECTORY + '**/*.js', '!' + SRC_DIRECTORY + 'vendor/**'])
+        .pipe($.plumber())
         .pipe($.concat('bundle.js'))
         .pipe(gulp.dest(BUILD_DIRECTORY));
 });
 
 gulp.task('css', function () {
     return gulp.src(SRC_DIRECTORY + 'css/index.css')
+        .pipe($.plumber())
         .pipe($.order([
             SRC_DIRECTORY + 'css/index.css'
         ]))
@@ -74,6 +79,7 @@ gulp.task('css', function () {
 
 gulp.task('jshint', function () {
     return gulp.src([SRC_DIRECTORY + '**/*.js', '!' + SRC_DIRECTORY + 'vendor/**'])
+        .pipe($.plumber())
         .pipe($.jshint())
         .pipe($.jshint.reporter('jshint-stylish'))
         .pipe($.jshint.reporter('fail'));
@@ -88,6 +94,7 @@ gulp.task('vendor', function () {
             bowerJson: BOWER_JSON_DIRECTORY
         }
     }))
+        .pipe($.plumber())
         .pipe(jsFilter)
         .pipe($.concat('vendor.js'))
         .pipe($.size())
@@ -105,30 +112,32 @@ gulp.task('vendor', function () {
 });
 
 gulp.task('buildWithoutLint', function (callback) {
-    runSequence('build-clean', ['vendor', 'html', 'css', 'js', 'fonts', 'images', 'copyFavIconInfo'], callback)
+    runSequence('build-clean', 'vendor', 'html', 'css', 'js', 'fonts', 'images', 'copyFavIconInfo', callback)
 });
 
 gulp.task('buildWithLint', function (callback) {
-    runSequence('build-clean', ['vendor', 'html', 'css', 'js', 'fonts', 'images', 'copyFavIconInfo'],
-        'jshint', callback)
+    runSequence('build-clean', 'vendor', 'html', 'css', 'js', 'fonts', 'images', 'copyFavIconInfo', 'jshint', callback)
 });
 
-gulp.task('nodemon', ['buildWithLint'], function () {
+gulp.task('nodemon', function () {
     $.nodemon({
         script: 'server.js',
         ext: 'js css html',
         env: {'NODE_ENV': 'development'},
-        //ignore: ['*.*'],
+        ignore: ['node_modules', 'public/vendor', 'dist', '.git', '.idea', '.DS_Store', '.bowerrc', 'gulpfile.js'],
         tasks: function (changedFiles) {
             var tasks = [];
             changedFiles.forEach(function (file) {
                 if (path.extname(file) === '.js' && !~tasks.indexOf('js')) tasks.push('js');
                 if (path.extname(file) === '.css' && !~tasks.indexOf('css')) tasks.push('css');
                 if (path.extname(file) === '.html' && !~tasks.indexOf('html')) tasks.push('html');
+                else if (!~tasks.indexOf('buildWithoutLint')) tasks.push('buildWithoutLint');
             });
             return tasks
         }
     })
 });
 
-gulp.task('default', ['buildWithLint']);
+gulp.task('default', function(callback) {
+    runSequence('buildWithLint', 'nodemon', callback);
+});
