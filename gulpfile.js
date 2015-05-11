@@ -119,7 +119,7 @@ gulp.task('buildWithLint', function (callback) {
     runSequence('build-clean', 'vendor', 'html', 'css', 'js', 'fonts', 'images', 'copyFavIconInfo', 'jshint', callback)
 });
 
-gulp.task('nodemon', function () {
+gulp.task('nodemon', ['buildWithLint'], function () {
     $.nodemon({
         script: 'server.js',
         ext: 'js css html',

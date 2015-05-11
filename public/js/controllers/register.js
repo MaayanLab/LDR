@@ -92,6 +92,7 @@ angular.module('milestonesLanding.register', [
             }
         };
     })
+
     .controller('RegisterCtrl', function LoginController($scope, $http, store, $state, CentersGet) {
         $scope.centers = [];
         CentersGet.getCenters().success(function(data) {
@@ -118,3 +119,4 @@ angular.module('milestonesLanding.register', [
             $scope.user = {};
         };
     });
+

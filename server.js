@@ -2,7 +2,6 @@ var express = require('express'),
     mongoose = require('mongoose'),
     cors = require('cors'),
     flash = require('connect-flash'),
-
     morgan = require('morgan'),
     path = require('path'),
     bodyParser = require('body-parser'),
