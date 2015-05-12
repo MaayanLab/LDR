@@ -1,0 +1,35 @@
+<h3>Register</h3>
+<form name="userForm">
+    <div>
+        <label>
+            Username:
+            <input name="username" type="text" ng-model="user.username" ng-model-options="{ updateOn: 'blur' }" username-available>
+        </label>
+        <div ng-if="userForm.username.$pending.username">Checking...</div>
+        <div ng-if="userForm.username.$error.username">Username exists already</div>
+    </div>
+    <div>
+        <label>
+            Password:
+            <input type="text" ng-model="user.password">
+        </label>
+    </div>
+    <div>
+        <label>
+            Email:
+            <input name="email" type="email" ng-model="user.email" email-available>
+        </label>
+        <div ng-if="userForm.email.$pending.email">Validating...</div>
+        <div ng-if="userForm.email.$error.email">Email is invalid</div>
+    </div>
+    <div>
+        <label>Center:</label>
+        <ui-select class="form-select" ng-model="user.center" theme="select2" ng-disabled="disabled" ng-required>
+            <ui-select-match placeholder="Select center...">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="center in centers | propsFilter: {name: $select.search}">
+                <div ng-bind-html="center.name | highlight: $select.search"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <button ng-click="createUser()">Submit</button>
+</form>
