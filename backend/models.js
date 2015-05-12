@@ -1,40 +1,24 @@
 var mongoose = require('mongoose'),
-    //shortId = require('shortid'),
-    bcrypt = require('bcrypt-nodejs');
-
+    bcrypt = require('bcrypt-nodejs'),
+    request = require('superagent'),
+    nameServerUrl = require('./config/nameServer').url;
 
 var genId = function () {
     return mongoose.Types.ObjectId();
 };
 
 // Mongoose Models and Schemas
-var User;
-var Assay;
-var CellLine;
-var Perturbagen;
-var Readout;
-var ReleaseDate;
-var Data;
-
+var User, Center, DataRelease;
 var Schema = mongoose.Schema;
 
-var centerSchema = new Schema({
-    name: {type: String, required: true, index: {unique: true}}
-});
-
-try {
-    Center = mongoose.model('Center');
-} catch (e) {
-    Center = mongoose.model('Center', centerSchema, 'centers');
-}
-
+// User
 var userSchema = new Schema({
-    _id:      { type: Schema.ObjectId, required: true, default: genId(), index: {unique: true} },
-    username: { type: String, required: true, index: {unique: true} },
-    password: { type: String, required: true},
-    email:    { type: String, required: true, index: {unique: true} },
-    center:   { type: Schema.ObjectId, required: true, ref: 'Center' },
-    admin:    { type: Boolean, required: true, default: false }
+    _id: { type: Schema.ObjectId, required: true, default: genId(), index: { unique: true } },
+    username: { type: String, required: true, index: { unique: true } },
+    password: { type: String, required: true },
+    email: { type: String, required: true, index: { unique: true } },
+    center: { type: Schema.ObjectId, required: true, ref: 'Center' },
+    admin: { type: Boolean, required: true, default: false }
 });
 
 userSchema.methods.generateHash = function (password) {
@@ -51,156 +35,135 @@ try {
     User = mongoose.model('User', userSchema, 'users');
 }
 
-
-var releaseDateSchema = new Schema({
-    _id:      { type: Schema.ObjectId, required: true, default: genId(), index: {unique: true} },
-    levelOne: {type: Date, required: true},
-    levelTwo: Date,
-    levelThree: Date,
-    levelFour: Date
-});
-
-var perturbagenSchema = new Schema({
-    _id:      { type: Schema.ObjectId, required: true, default: genId(), index: {unique: true} },
-    center: {type: Schema.ObjectId, ref: 'Center'},
-    name: {type: String, required: true, index: {unique: true}},
-    type: {type: String, required: true}
+// Center
+var centerSchema = new Schema({
+    name: { type: String, required: true, index: { unique: true } }
 });
 
 try {
-    Perturbagen = mongoose.model('Perturbagen');
+    Center = mongoose.model('Center');
 } catch (e) {
-    Perturbagen = mongoose.model('Perturbagen', perturbagenSchema, 'perturbagens');
+    Center = mongoose.model('Center', centerSchema, 'centers');
 }
 
-var countTypeSchema = new Schema({
-    count: Number,
-    type: String
-});
-
-var cellLineSchema = new Schema({
-    _id:      { type: Schema.ObjectId, required: true, default: genId(), index: {unique: true} },
-    center: {type: Schema.ObjectId, ref: 'Center'},
-    controlOrDisease: String,
-    name: {type: String, required: true, index: {unique: true}},
-    type: {type: String, required: true},
-    class: String,
-    tissue: String
-});
-
-try {
-    CellLine = mongoose.model('CellLine');
-} catch (e) {
-    CellLine = mongoose.model('CellLine', cellLineSchema, 'cellLines');
-}
-
-var cellLineMetaSchema = new Schema({
-    count: Number,
-    type: String
-});
-
-var mapSchema = new Schema({
-    perturbagen: String,
-    cellLine: String
-});
-
-var instanceMetaSchema = new Schema({
-    reps: Number,
-    techReps: Number,
-    map: [mapSchema]
-});
-
-var readoutSchema = new Schema({
-    _id:      { type: Schema.ObjectId, required: true, default: genId(), index: {unique: true} },
-    center: {type: Schema.ObjectId, ref: 'Center'},
-    name: {type: String, required: true, index: {unique: true}},
-    datatype: String
-});
-
-try {
-    Readout = mongoose.model('Readout');
-} catch (e) {
-    Readout = mongoose.model('Readout', readoutSchema, 'readouts');
-}
-
-var diseaseSchema = new Schema({
-    _id:      { type: Schema.ObjectId, required: true, default: genId(), index: {unique: true} },
-    center: {type: Schema.ObjectId, ref: 'Center'},
-    name: {type: String, required: true, index: {unique: true}},
-    info: {type: String, required: true}
-});
-
-try {
-    Disease = mongoose.model('Disease');
-} catch (e) {
-    Disease = mongoose.model('Disease', diseaseSchema, 'diseases');
-}
-
-var assaySchema = new Schema({
-    _id:      { type: Schema.ObjectId, required: true, default: genId(), index: {unique: true} },
-    center: {type: Schema.ObjectId, ref: 'Center'},
-    name: {type: String, required: true, index: {unique: true}},
-    info: {type: String, required: true}
-});
-
-try {
-    Assay = mongoose.model('Assay');
-} catch (e) {
-    Assay = mongoose.model('Assay', assaySchema, 'assays');
-}
-
-var dataSchema = new Schema({
-    _id:      { type: Schema.ObjectId, required: true, default: genId(), index: {unique: true} },
-    user: {type: Schema.ObjectId, ref: 'User'},
-    center: {type: Schema.ObjectId, ref: 'Center'},
-    centerName: String, // Used for creation of IDs and for Qiaonan's Milestones Page
-    status: String,
-    dateModified: Date,
-    assay: {type: Schema.ObjectId, ref: 'Assay'},
-    readoutCount: Number,
+var dataReleaseSchema = new Schema({
+    _id: { type: Schema.ObjectId, required: true, default: genId(), index: { unique: true } },
+    user: { type: Schema.ObjectId, ref: 'User' },
+    center: { type: Schema.ObjectId, ref: 'Center' },
+    approved: { type: Boolean, required: true },
+    dateModified: { type: Date, required: true },
     releaseDates: {
         levelOne: Date,
         levelTwo: Date,
         levelThree: Date,
         levelFour: Date
     },
-    perturbagens: [{type: Schema.ObjectId, ref: 'Perturbagen'}],
-    perturbagensMeta: {
-        pair: Boolean,
-        dose: [String],
-        doseCount: Number,
-        time: [String],
-        timeUnit: String,
-        timePoints: Number,
-        countType: [countTypeSchema]
+    metaData: {
+        // These are IDs or arrays of IDs pointing to the name-metadata server
+        analysisTools: [String],
+        assay: String,
+        cellLines: [String],
+        disease: String,
+        experiment: String,
+        manipulatedGene: String,
+        organism: String,
+        perturbagens: [String],
+        readouts: [String],
+        tagsKeywords: [String]
     },
-    cellLines: [{type: Schema.ObjectId, ref: 'CellLine'}],
-    cellLinesMeta: [cellLineMetaSchema],
-    instanceMeta: {
-        reps: Number,
-        techReps: Number,
-        map: [mapSchema]
-    },
-    readouts: [{type: Schema.ObjectId, ref: 'Readout'}]
+    urls: {
+        dataUrl: String,
+        metaDataUrl: String,
+        pubMedUrl: String,
+        qcDocumentUrl: String
+    }
 });
 
+dataReleaseSchema.statics.buildMetaData = function () {
+    /**
+     * getDataFromNameServer: Make request to name-server returning JSON of meta-data
+     * @param path: relative path of name server URL for POST request
+     * @param idObj: { id: String } or { id: [Strings] }
+     */
+    var getDataFromNameServer = function (path, idObj) {
+        if (idObj) {
+            request
+                // TODO: Change path once Qiaonan creates the API
+                .post(nameServerUrl + path)
+                .set('Content-Type', 'application/json')
+                .send(idObj)
+                .set('Accept', 'application/json')
+                .end(function (err, res) {
+                    if (res.ok) {
+                        console.log('POST request returned from name server ' + JSON.stringify(res.body));
+                        return res.body;
+                    } else {
+                        console.log('Error occurred during POST to name server: ' + res.text);
+                        return { error: res.text };
+                    }
+                });
+        }
+        else {
+            request
+                .get(nameServerUrl + path)
+                .set('Accept', 'application/json')
+                .end(function (err, res) {
+                    if (res.ok) {
+                        console.log('GET request to name server successful. Response: ' + JSON.stringify(res.body));
+                        return res.body;
+                    } else {
+                        console.log('Error occured during GET request to name server: ' + res.text);
+                        return { error: res.text };
+                    }
+                })
+        }
+    };
+
+    // TODO: Implement suggest server from Miami
+    //var getDataFromMiami = function (path, idObj) {};
+
+    if (this.metaData.analysisTools.length === 1)
+        this.metaData.analysisTools = getDataFromNameServer('/form/tool?id=' + this.metaData.analysisTools[0]);
+    else if (this.metaData.analysisTools.length > 1)
+        this.metaData.analysisTools = getDataFromNameServer('/form/tool', { id: this.metaData.analysisTools });
+
+    this.metaData.assay = getDataFromNameServer('/form/assay?id=' + this.metaData.assay);
+
+    if (this.metaData.cellLines.length === 1)
+        this.metaData.cellLines = getDataFromNameServer('/form/cell?id=' + this.metaData.cellLines[0]);
+    else if (this.metaData.cellLines.length > 1)
+        this.metaData.cellLines = getDataFromNameServer('/form/cell', { id: this.metaData.cellLines });
+
+    this.metaData.disease = getDataFromNameServer('/form/disease?id=' + this.metaData.disease);
+    this.metaData.experiment = getDataFromNameServer('/form/experiment?id=' + this.metaData.experiment);
+    this.metaData.manipulatedGene = getDataFromNameServer('/form/gene?id=' + this.metaData.manipulatedGene);
+    this.metaData.organism = getDataFromNameServer('/form/organism?id=' + this.metaData.organism);
+
+    if (this.metaData.perturbagens.length === 1)
+        this.metaData.perturbagens = getDataFromNameServer('/form/perturbagen?id=' + this.metaData.perturbagens[0]);
+    else if (this.metaData.perturbagens.length > 1)
+        this.metaData.perturbagens = getDataFromNameServer('/form/perturbagen', { id: this.metaData.perturbagens });
+
+    if (this.metaData.readouts.length === 1)
+        this.metaData.readouts = getDataFromNameServer('/form/readout?id=' + this.metaData.readouts[0]);
+    else if (this.metaData.readouts.length > 1)
+        this.metaData.readouts = getDataFromNameServer('/form/readout', { id: this.metaData.readouts });
+
+    if (this.metaData.tagsKeywords.length === 1)
+        this.metaData.tagsKeywords = getDataFromNameServer('/form/keyword?id=' + this.metaData.tagsKeywords[0]);
+    else if (this.metaData.tagsKeywords.length > 1)
+        this.metaData.tagsKeywords = getDataFromNameServer('/form/keyword', { id: this.metaData.tagsKeywords });
+};
+
 try {
-    Data = mongoose.model('Data');
+    DataRelease = mongoose.model('DataRelease');
 } catch (e) {
-    Data = mongoose.model('Data', dataSchema, 'data');
+    DataRelease = mongoose.model('DataRelease', dataReleaseSchema, 'dataReleases');
 }
 
 module.exports = {
     genId: genId,
     User: User,
     Center: Center,
-    Assay: Assay,
-    CellLine: CellLine,
-    Perturbagen: Perturbagen,
-    Readout: Readout,
-    Disease: Disease,
-    Data: Data
+    DataRelease: DataRelease
 };
-
-// Use to re-init db. Must do mongorestore using dump from oldDb folder
-// var initDb = require('./initDb.js');
