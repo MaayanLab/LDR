@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var path = require('path');
 var runSequence = require('run-sequence');
 var del = require('del');
+var karma = require('karma').server;
 var minifyCss = require('gulp-minify-css');
 var $ = require('gulp-load-plugins')();
 
@@ -18,8 +19,8 @@ var cssFilter = $.filter('**/*.css');
 var htmlFilter = $.filter('**/*.html');
 var fontFilter = $.filter('**/*.{svg,ttf,woff,woff2}');
 
-gulp.task('build-clean', function () {
-    return del([BUILD_DIRECTORY + '*'], function (err, deletedFiles) {
+gulp.task('build-clean', function() {
+    return del([BUILD_DIRECTORY + '*'], function(err, deletedFiles) {
         if (err) {
             console.log(err);
         }
@@ -27,19 +28,19 @@ gulp.task('build-clean', function () {
     });
 });
 
-gulp.task('html', function () {
+gulp.task('html', function() {
     return gulp.src(SRC_DIRECTORY + '**/*')
         .pipe($.plumber())
         .pipe(htmlFilter)
         .pipe(gulp.dest(BUILD_DIRECTORY));
 });
 
-gulp.task('copyFavIconInfo', function () {
+gulp.task('copyFavIconInfo', function() {
     return gulp.src(SRC_DIRECTORY + '/images/**/*.{xml,json}')
         .pipe(gulp.dest(BUILD_DIRECTORY));
 });
 
-gulp.task('fonts', function () {
+gulp.task('fonts', function() {
     return gulp.src(SRC_DIRECTORY + '**/*')
         .pipe($.plumber())
         .pipe(fontFilter)
@@ -47,22 +48,22 @@ gulp.task('fonts', function () {
         .pipe(gulp.dest(BUILD_DIRECTORY + 'fonts/'));
 });
 
-gulp.task('images', function () {
+gulp.task('images', function() {
     return gulp.src(SRC_DIRECTORY + '/images/**/*.{jpg,jpeg,png,gif,ico}')
         .pipe($.plumber())
-        .pipe($.imagemin({optimizationLevel: 3, progressive: true, interlaced: true}))
+        .pipe($.imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
         .pipe(gulp.dest(BUILD_DIRECTORY))
         .pipe($.size());
 });
 
-gulp.task('js', function () {
+gulp.task('js', function() {
     return gulp.src([SRC_DIRECTORY + '**/*.js', '!' + SRC_DIRECTORY + 'vendor/**'])
         .pipe($.plumber())
         .pipe($.concat('bundle.js'))
         .pipe(gulp.dest(BUILD_DIRECTORY));
 });
 
-gulp.task('css', function () {
+gulp.task('css', function() {
     return gulp.src(SRC_DIRECTORY + 'css/index.css')
         .pipe($.plumber())
         .pipe($.order([
@@ -76,8 +77,14 @@ gulp.task('css', function () {
         .pipe(gulp.dest(BUILD_DIRECTORY))
 });
 
+gulp.task('karma', function(callback) {
+    return karma.start({
+        configFile: __dirname + '/karma.conf.js',
+        singleRun: true
+    }, callback);
+});
 
-gulp.task('jshint', function () {
+gulp.task('jshint', function() {
     return gulp.src([SRC_DIRECTORY + '**/*.js', '!' + SRC_DIRECTORY + 'vendor/**'])
         .pipe($.plumber())
         .pipe($.jshint())
@@ -86,7 +93,7 @@ gulp.task('jshint', function () {
 });
 
 // this tells gulp to combine my Angular dependencies and to output the vendor.js file into the dist/ folder
-gulp.task('vendor', function () {
+gulp.task('vendor', function() {
     return gulp.src(mainBowerFiles({
         paths: {
             bowerDirectory: BOWER_DIRECTORY,
@@ -111,27 +118,26 @@ gulp.task('vendor', function () {
         .pipe(gulp.dest(BUILD_DIRECTORY));
 });
 
-gulp.task('buildWithoutLint', function (callback) {
+gulp.task('buildWithoutLint', function(callback) {
     runSequence('build-clean', 'vendor', 'html', 'css', 'js', 'fonts', 'images', 'copyFavIconInfo', callback)
 });
 
-gulp.task('buildWithLint', function (callback) {
+gulp.task('buildWithLint', function(callback) {
     runSequence('build-clean', 'vendor', 'html', 'css', 'js', 'fonts', 'images', 'copyFavIconInfo', 'jshint', callback)
 });
 
-gulp.task('nodemon', function () {
+gulp.task('nodemon', function() {
     $.nodemon({
         script: 'server.js',
         ext: 'js css html',
-        env: {'NODE_ENV': 'development'},
+        env: { 'NODE_ENV': 'development' },
         ignore: ['node_modules', 'public/vendor', 'dist', '.git', '.idea', '.DS_Store', '.bowerrc', 'gulpfile.js'],
-        tasks: function (changedFiles) {
+        tasks: function(changedFiles) {
             var tasks = [];
-            changedFiles.forEach(function (file) {
+            changedFiles.forEach(function(file) {
                 if (path.extname(file) === '.js' && !~tasks.indexOf('js')) tasks.push('js');
                 if (path.extname(file) === '.css' && !~tasks.indexOf('css')) tasks.push('css');
                 if (path.extname(file) === '.html' && !~tasks.indexOf('html')) tasks.push('html');
-                else if (!~tasks.indexOf('buildWithoutLint')) tasks.push('buildWithoutLint');
             });
             return tasks
         }
