@@ -13,7 +13,7 @@ var Schema = mongoose.Schema;
 
 // User
 var userSchema = new Schema({
-    _id: { type: Schema.ObjectId, required: true, default: genId(), index: { unique: true } },
+    //_id: { type: Schema.ObjectId, required: true, default: genId(), index: { unique: true } },
     username: { type: String, required: true, index: { unique: true } },
     password: { type: String, required: true },
     email: { type: String, required: true, index: { unique: true } },
@@ -47,7 +47,7 @@ try {
 }
 
 var dataReleaseSchema = new Schema({
-    _id: { type: Schema.ObjectId, required: true, default: genId(), index: { unique: true } },
+    //_id: { type: Schema.ObjectId, required: true, index: { unique: true } },
     user: { type: Schema.ObjectId, ref: 'User' },
     center: { type: Schema.ObjectId, ref: 'Center' },
     approved: { type: Boolean, required: true },
@@ -61,12 +61,12 @@ var dataReleaseSchema = new Schema({
     metaData: {
         // These are IDs or arrays of IDs pointing to the name-metadata server
         analysisTools: [String],
-        assay: String,
+        assay: [String],
         cellLines: [String],
-        disease: String,
-        experiment: String,
-        manipulatedGene: String,
-        organism: String,
+        disease: [String],
+        experiment: [String],
+        manipulatedGene: [String],
+        organism: [String],
         perturbagens: [String],
         readouts: [String],
         tagsKeywords: [String]

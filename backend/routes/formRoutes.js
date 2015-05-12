@@ -7,16 +7,17 @@ module.exports = function (app) {
     // FORM/DATASET GET, POST, PUT, DELETE
     app.get('/api/data', function (req, res) {
         var query = {};
-        if (req.query.userId && req.query.formId)
-            query = { _id: req.query.formId, user: req.query.userId };
-        else if (req.query.userId)
-            query = { user: req.query.userId };
+        if (req.query.centerId && req.query.formId)
+            query = { _id: req.query.formId, center: req.query.centerId };
+        else if (req.query.centerId)
+            query = { center: req.query.centerId };
         else if (req.query.formId)
             query = { _id: req.query.formId };
 
+        console.log(query)
         DataRelease
             .find(query)
-            .buildMetaData()
+            //.buildMetaData()
             .exec(function (err, allData) {
                 if (err) {
                     console.log(err);
@@ -58,9 +59,9 @@ module.exports = function (app) {
         var inputData = req.body;
         inputData.approved = false;
         inputData.dateModified = new Date();
-        console.log(inputData);
 
         var form = new DataRelease(inputData);
+        console.log(form);
         form.save(function (err) {
             console.log(err);
         });

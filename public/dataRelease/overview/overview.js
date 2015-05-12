@@ -24,7 +24,7 @@ angular.module('milestonesLanding.dataRelease.overview', [
     $scope.user = currentUser;
     $scope.forms = [];
 
-    dataApi.get({ userId: $scope.user._id }).success(function(data) {
+    dataApi.get({ centerId: $scope.user.center._id }).success(function(data) {
         $scope.forms = data;
     });
 

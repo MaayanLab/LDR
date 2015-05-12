@@ -24,7 +24,7 @@ angular.module('milestonesLanding.dataRelease.create', [
     ) {
 
     $scope.user = store.get('currentUser');
-    $scope.center = $scope.user.center.name;
+    $scope.center = $scope.user.center;
     
     $scope.form = {
         selectedData: {
@@ -194,26 +194,34 @@ angular.module('milestonesLanding.dataRelease.create', [
 
         console.log($scope.form);
 
-        /*var form = {};
-        form.user = $scope.user._id;
-        form.dateModified = new Date();
-        form.center = $scope.user.center;
-
-        $.each($scope.fields, function(key, field) {
-            if (field.selectedData.length) {
-                form[field.name] = field.selectedData;
-            }
+        var releaseDates = {};
+        $.each($scope.form.releaseDates, function(key, obj) {
+            releaseDates[key] = obj.val;
         });
 
-        /*FormPosts
-            .postForm(outputForm)
+        var urls = {};
+        $.each($scope.form.urls, function(key, obj) {
+            urls[key] = obj.val;
+        });
+
+        var form = {
+            user: $scope.user._id,
+            dateModified: new Date(),
+            center: $scope.user.center,
+            metaData: $scope.form.selectedData,
+            releaseDates: releaseDates,
+            urls: urls
+        };
+
+        var formApi = api('data');
+        formApi.post(form)
             .error(function (err) {
                 console.log(err);
             })
             .success(function (result) {
                 console.log('Form posted.');
-                console.log(outputForm);
-            });*/
+                console.log(form);
+            });
 
         /*console.log(form);
 
