@@ -21,6 +21,8 @@ module.exports = function(config) {
             'public/vendor/angular-mocks/angular-mocks.js',
             'public/vendor/jquery/dist/jquery.js',
             'public/vendor/**/*min.js',
+            // Load sourcemaps but don't include them --> leads to PhantomJS errors
+            { pattern: '**/*.map', included: false },
             'public/{*.js,!(vendor)/**/*.js}',
             'test/**/*Spec.js'
         ],
@@ -38,6 +40,7 @@ module.exports = function(config) {
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
             // Cover all files except public/vendor
+            '**/*.js': ['sourcemap'],
             'public/{*.js,!(vendor)/**/*.js}': ['coverage']
         },
 
@@ -80,7 +83,7 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['PhantomJS'],
+        browsers: ['Chrome', 'PhantomJS'],
 
 
         // Continuous Integration mode

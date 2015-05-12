@@ -55,6 +55,7 @@
     "karma-mocha-reporter": "^1.0.2",
     "karma-phantomjs-launcher": "^0.1.4",
     "karma-sinon-chai": "^0.3.0",
+    "karma-sourcemap-loader": "^0.3.4",
     "main-bower-files": "^2.7.0",
     "mocha": "^2.2.4",
     "run-sequence": "^1.1.0"
