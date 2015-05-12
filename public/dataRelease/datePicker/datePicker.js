@@ -1,4 +1,4 @@
-angular.module('milestonesLanding')
+angular.module('milestones')
 
 .directive('lmDatePicker', function() {
     return {

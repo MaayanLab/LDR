@@ -1,18 +1,18 @@
-angular.module('milestonesLanding', [
-    'milestonesLanding.nav',
-    'milestonesLanding.home',
-    'milestonesLanding.dataRelease.overview',
-    'milestonesLanding.dataRelease.create',
-    'milestonesLanding.metadata.overview',
-    'milestonesLanding.user.admin',
-    'milestonesLanding.user.registration',
+angular.module('milestones', [
+    'milestones.nav',
+    'milestones.home',
+    'milestones.dataRelease.overview',
+    'milestones.dataRelease.create',
+    'milestones.metadata.overview',
+    'milestones.user.admin',
+    'milestones.user.registration',
     'ui.router',
     'ui.bootstrap',
     'angular-storage',
     'angular-jwt'
 ])
 
-.config(function milestonesLandingConfig(
+    .config(function milestonesConfig(
         $urlRouterProvider, jwtInterceptorProvider, $httpProvider, $locationProvider
     ) {
 
@@ -124,8 +124,8 @@ angular.module('milestonesLanding', [
     });
 })
 
-.controller('milestonesLandingCtrl', function milestonesLandingCtrl($scope) {
-    $scope.pageTitle = 'Milestones Landing';
+    .controller('milestonesCtrl', function milestonesCtrl($scope) {
+        $scope.pageTitle = 'Milestones';
 
     // Don't think this works, but should dynamically change title of page
     $scope.$on('$routeChangeSuccess', function (e, nextRoute) {

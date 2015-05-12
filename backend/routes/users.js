@@ -12,10 +12,10 @@ function createToken(user) {
     });
 }
 
-module.exports = function (app) {
+module.exports = function(app) {
     // USERS
-    app.get('/api/users', function (req, res) {
-        User.find({}, function (err, users) {
+    app.get('/api/users', function(req, res) {
+        User.find({}, function(err, users) {
             if (err) {
                 console.log(err);
                 res.status(404).send('Error getting users: ' + err);
@@ -25,15 +25,15 @@ module.exports = function (app) {
     });
 
     // Not really needed. Just need to delete JWT on client side
-    app.get('/logout', function (req, res) {
+    app.get('/logout', function(req, res) {
         res.status(200).send('User successfully logged out');
     });
 
-    app.post('/login', function (req, res) {
+    app.post('/login', function(req, res) {
         User
-            .findOne({'username': req.body.username})
+            .findOne({ 'username': req.body.username })
             .populate('center')
-            .exec(function (err, user) {
+            .exec(function(err, user) {
                 if (err) {
                     console.log(err);
                     res.status(404).send('Error logging user in: ' + err);
@@ -55,10 +55,10 @@ module.exports = function (app) {
             });
     });
 
-    app.post('/register', function (req, res) {
+    app.post('/register', function(req, res) {
         var inputUser = req.body;
         var newUser = new User(inputUser);
-        newUser.save(function (err) {
+        newUser.save(function(err) {
             if (err) {
                 res.status(400).send('Error creating user: ' + err);
             }

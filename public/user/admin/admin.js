@@ -1,7 +1,7 @@
-angular.module('milestonesLanding.user.admin', [
+angular.module('milestones.user.admin', [
     'ui.router',
     'angular-storage',
-    'milestonesLanding.api'
+    'milestones.api'
 ])
 
 .config(function($stateProvider) {

@@ -1,6 +1,6 @@
-angular.module('milestonesLanding.user.registration', [
+angular.module('milestones.user.registration', [
     'ui.router',
-    'milestonesLanding.api'
+    'milestones.api'
 ])
 
 .config(function ($stateProvider) {

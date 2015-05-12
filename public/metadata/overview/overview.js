@@ -1,4 +1,4 @@
-angular.module('milestonesLanding.metadata.overview', [
+angular.module('milestones.metadata.overview', [
     'ui.router',
     'angular-storage'
 ])
