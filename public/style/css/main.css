@@ -12,7 +12,7 @@ body {
 a {
   color: #286090;
 }
-.wrap {
+#wrap {
   background-color: #ffffff;
   min-height: 100%;
   height: auto !important;
@@ -29,31 +29,38 @@ a {
 }
 .navbar-wrapper {
   background-color: #286090;
-  padding: 29px 15px 0px 15px;
+  padding: 5px 15px 0px 15px;
 }
-.navbar-nav > li > a,
-.select2-results .select2-highlighted {
-  color: #ffffff;
-  background-color: #286090;
+nav a {
+  color: white;
 }
-.navbar-nav > li > a:hover {
-  color: #ffffff;
-  background-color: #286090;
+nav a:focus {
+  color: white;
 }
-.nav .open > a,
-.nav .open > a:focus,
-.nav .open > a:hover {
-  background-color: #286090;
-  border-color: #204d74;
+nav a:hover {
+  color: #8ABDE8;
+}
+nav h1 {
+  margin: 0;
+}
+nav h1 a {
+  font-size: 29px;
+}
+nav h1 a:hover,
+nav h1 a:focus {
+  text-decoration: none;
 }
 .nav > li > a:focus,
 .nav > li > a:hover {
-  background-color: #286090;
+  background: #286090;
 }
-.nav .title {
-  color: #ffffff;
-  padding: 0;
-  font-size: 20px;
+.dropdown-menu {
+  border-radius: 0;
+}
+.nav > li.dropdown.active.open > a,
+.nav > li.dropdown.open > a {
+  background: #286090;
+  border-color: white;
 }
 .nav-items {
   display: inline-flex;
@@ -72,13 +79,11 @@ a {
   cursor: default;
   color: #d5d5e5;
 }
-.ml-title:hover,
-.ml-title:focus {
-  color: #ffffff;
-  text-decoration: none;
-}
 #page {
   margin-top: 20px;
+}
+.content {
+  margin: 20px auto;
 }
 .ml-view {
   font-family: Roboto, sans-serif;
@@ -143,10 +148,6 @@ a {
 }
 .form-table-item {
   padding: 2px 5px;
-}
-.form-input {
-  background: lightgray;
-  height: 100px;
 }
 .form-info-block {
   float: right;
@@ -257,12 +258,12 @@ table.meta-data-table {
 h4.meta-header {
   margin-top: 40px;
 }
-.push {
+#push {
   margin-top: 60px;
   height: 140px;
   background-color: white;
 }
-.footer {
+#footer {
   height: 60px;
   border-top: 1px solid #eeeeee;
   border-radius: 0px;

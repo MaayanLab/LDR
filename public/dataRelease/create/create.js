@@ -1,4 +1,4 @@
-angular.module('milestonesLanding.dataReleases.create', [
+angular.module('milestonesLanding.dataRelease.create', [
     'ui.router',
     'angular-storage',
     'ngSanitize',
@@ -9,17 +9,17 @@ angular.module('milestonesLanding.dataReleases.create', [
 
 // UI Router state formCreate
 .config(function($stateProvider) {
-    $stateProvider.state('dataReleasesCreate', {
-        url: '/data-releases/create',
-        controller: 'dataReleases.create.ctrl',
-        templateUrl: '/dataReleases/create/create.html',
+    $stateProvider.state('dataReleaseCreate', {
+        url: '/data-release/create',
+        controller: 'dataRelease.create.ctrl',
+        templateUrl: '/dataRelease/create/create.html',
         data: {
             requiresLogin: true
         }
     });
 })
 
-.controller('dataReleases.create.ctrl', function(
+.controller('dataRelease.create.ctrl', function(
         $scope, $timeout, $http, $location, $anchorScroll, store, $state, $modal, lodash, api
     ) {
 

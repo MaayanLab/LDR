@@ -1,25 +1,28 @@
-angular.module('milestonesLanding.navBar', [])
+angular.module('milestonesLanding.nav', [])
 
-.directive('mlNavBar', function($http, $state, $rootScope, store) {
+.directive('mlNav', function($http, $state, $rootScope, store) {
     return {
         restrict: 'E',
-        templateUrl: 'navBar/navBar.html',
+        templateUrl: 'nav/nav.html',
         link: function(scope, element, attrs) {
             
             scope.user = {};
 
-            // Post to /login
             scope.login = function () {
                 $http({
                     url: 'login',
                     method: 'POST',
                     data: scope.user
-                }).then(function (result) {
+                }).then(function(result) {
                     // No error: authentication OK
                     // Set current user and jwt. Then go to forms page
                     store.set('currentUser', result.data.user);
                     store.set('jwt', result.data.id_token);
-                    $state.go('dataReleasesOverview');
+                    $rootScope.isLoggedIn = true;
+                    // TODO: This is a hack. Talk to Michael.
+                    $rootScope.isLoggedInAdmin = scope.user.username === 'nihadmin' ? true : false;
+                    $state.go('home');
+                    $rootScope.currentUser = scope.user;
                 }, function (error) {
                     // Error: authentication failed
                     store.set('message', 'Authentication failed.');
@@ -47,7 +50,6 @@ angular.module('milestonesLanding.navBar', [])
                     $rootScope.message = result;
                 });
             };
-
         }
     };
 });

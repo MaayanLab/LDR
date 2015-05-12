@@ -1,0 +1,33 @@
+<h3 class="text-center">Data Release Form</h3>
+<h4 class="text-center">{{center}}</h4>
+<div>
+    <form>
+        <section class="row">
+            <h4 class="col-sm-12">Metadata</h4>
+            <lm-form-field ng-repeat="field in fields"
+                title="{{field.title}}"
+                max-tags="{{field.maxTags}}"
+                placeholder="{{field.placeholder}}",
+                ng-model="field.model"
+                autocomplete-source="autocompleteSource()"
+            ></lm-form-field>
+        </section>
+        <section class="row">
+            <h4 class="col-sm-12">Release Dates</h4>
+            <lm-date-picker ng-repeat="date in releaseDates"
+                level="{{date.level}}"
+                ng-model="date.model.val"
+            ></lm-date-picker>
+        </section>
+        <section class="row">
+            <h4 class="col-sm-12">URLs</h4>
+            <label ng-repeat="url in urls" class="col-sm-6">
+                {{url.title}}
+                <input type="text" ng-model="url.model.val">
+            </label>
+        </section>
+        <section>
+            <button type="button" ng-click="submit()">Submit</button>
+        </section>
+    </form>
+</div>

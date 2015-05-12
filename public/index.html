@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="vendor/pickadate/lib/compressed/themes/classic.date.css">
     <link rel="stylesheet" type="text/css" href="vendor/ng-tags-input/ng-tags-input.min.css">
 
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="style/css/main.css">
 
     <!-- Core dependencies -->
     <script type="text/javascript" src="vendor/angular/angular.js"></script>
@@ -43,30 +43,26 @@
     <!-- End Core Dep. -->
 
     <script type="text/javascript" src="app.js"></script>
-    <script type="text/javascript" src="js/controllers/home.js"></script>
-    <script type="text/javascript" src="js/controllers/admin.js"></script>
-    <script type="text/javascript" src="js/controllers/formModal.js"></script>
-    <script type="text/javascript" src="js/controllers/register.js"></script>
-
     <script type="text/javascript" src="api/api.js"></script>
-    <script type="text/javascript" src="dataReleases/overview/overview.js"></script>
-    <script type="text/javascript" src="dataReleases/create/create.js"></script>
-    <script type="text/javascript" src="datePicker/datePicker.js"></script>
-    <script type="text/javascript" src="formField/formField.js"></script>
-    <script type="text/javascript" src="formField/enforceMaxTags.js"></script>
+    <script type="text/javascript" src="dataRelease/overview/overview.js"></script>
+    <script type="text/javascript" src="dataRelease/create/create.js"></script>
+    <script type="text/javascript" src="dataRelease/formField/formField.js"></script>
+    <script type="text/javascript" src="dataRelease/formField/enforceMaxTags.js"></script>
+    <script type="text/javascript" src="dataRelease/datePicker/datePicker.js"></script>
+    <script type="text/javascript" src="home/home.js"></script>
     <script type="text/javascript" src="metadata/overview/overview.js"></script>
-    <script type="text/javascript" src="navBar/navBar.js"></script>
+    <script type="text/javascript" src="nav/nav.js"></script>
+    <script type="text/javascript" src="user/admin/admin.js"></script>
+    <script type="text/javascript" src="user/registration/registration.js"></script>
 
 </head>
     <body class="ng-cloak">
-        <div class="wrap">
-            <ml-nav-bar></ml-nav-bar>
-            <div class="ml-view">
-                <div id="page" class="container" ui-view></div>
-            </div>
+        <div id="wrap">
+            <ml-nav></ml-nav>
+            <div id="page" class="container" ui-view></div>
         </div>
-        <div class="push"></div>
-        <div class="footer">
+        <div id="push"></div>
+        <div id="footer">
             <div class="container">
                 <p class="text-center credit">DCIC: Created at the Maayan Lab at Mount Sinai</p>
             </div>

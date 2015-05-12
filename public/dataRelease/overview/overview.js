@@ -1,4 +1,4 @@
-angular.module('milestonesLanding.dataReleases.overview', [
+angular.module('milestonesLanding.dataRelease.overview', [
     'ui.router',
     'angular-storage',
     'milestonesLanding.api'
@@ -6,10 +6,10 @@ angular.module('milestonesLanding.dataReleases.overview', [
 
 // UI Router state forms
 .config(function ($stateProvider) {
-    $stateProvider.state('dataReleasesOverview', {
-        url: '/data-releases/overview',
-        templateUrl: 'dataReleases/overview/overview.html',
-        controller: 'dataReleases.overview.ctrl',
+    $stateProvider.state('dataReleaseOverview', {
+        url: '/data-release/overview',
+        templateUrl: 'dataRelease/overview/overview.html',
+        controller: 'dataRelease.overview.ctrl',
         data: {
             requiresLogin: true
         }
@@ -17,7 +17,7 @@ angular.module('milestonesLanding.dataReleases.overview', [
 
 })
 
-.controller('dataReleases.overview.ctrl', function($scope, $http, store, $state, api) {
+.controller('dataRelease.overview.ctrl', function($scope, $http, store, $state, api) {
     var currentUser = store.get('currentUser'),
         dataApi = api('data');
 
