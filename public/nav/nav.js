@@ -1,4 +1,4 @@
-angular.module('milestonesLanding.nav', [])
+angular.module('milestones.nav', [])
 
 .directive('mlNav', function($http, $state, $rootScope, store) {
     return {

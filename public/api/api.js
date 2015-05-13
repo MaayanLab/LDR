@@ -1,4 +1,4 @@
-angular.module('milestonesLanding.api', [])
+angular.module('milestones.api', [])
 
 .factory('api', function($http, lodash) {
 

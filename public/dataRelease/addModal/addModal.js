@@ -1,6 +1,6 @@
 // Controller for modal instances
 
-angular.module('milestonesLanding')
+angular.module('milestones')
     .controller('FormModalCtrl', function FormModalCtrl($scope, $modalInstance, data) {
 
         $scope.modalForm = {};

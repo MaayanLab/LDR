@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
     request = require('superagent'),
     nameServerUrl = require('./config/nameServer').url;
 
-var genId = function () {
+var genId = function() {
     return mongoose.Types.ObjectId();
 };
 
@@ -13,7 +13,6 @@ var Schema = mongoose.Schema;
 
 // User
 var userSchema = new Schema({
-    //_id: { type: Schema.ObjectId, required: true, default: genId(), index: { unique: true } },
     username: { type: String, required: true, index: { unique: true } },
     password: { type: String, required: true },
     email: { type: String, required: true, index: { unique: true } },
@@ -21,11 +20,11 @@ var userSchema = new Schema({
     admin: { type: Boolean, required: true, default: false }
 });
 
-userSchema.methods.generateHash = function (password) {
+userSchema.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
 };
 
-userSchema.methods.validPassword = function (password) {
+userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 };
 
@@ -47,7 +46,6 @@ try {
 }
 
 var dataReleaseSchema = new Schema({
-    //_id: { type: Schema.ObjectId, required: true, index: { unique: true } },
     user: { type: Schema.ObjectId, ref: 'User' },
     center: { type: Schema.ObjectId, ref: 'Center' },
     approved: { type: Boolean, required: true },
@@ -59,14 +57,14 @@ var dataReleaseSchema = new Schema({
         levelFour: Date
     },
     metaData: {
-        // These are IDs or arrays of IDs pointing to the name-metadata server
+        // These are arrays of IDs pointing to the name-metadata server
         analysisTools: [String],
-        assay: [String],
+        assay: [String], // Always length 1
         cellLines: [String],
-        disease: [String],
-        experiment: [String],
-        manipulatedGene: [String],
-        organism: [String],
+        disease: [String], // Always length 1
+        experiment: [String], // Always length 1
+        manipulatedGene: [String], // Always length 1
+        organism: [String], // Always length 1
         perturbagens: [String],
         readouts: [String],
         tagsKeywords: [String]
@@ -79,13 +77,13 @@ var dataReleaseSchema = new Schema({
     }
 });
 
-dataReleaseSchema.statics.buildMetaData = function () {
+dataReleaseSchema.statics.buildMetaData = function() {
     /**
      * getDataFromNameServer: Make request to name-server returning JSON of meta-data
      * @param path: relative path of name server URL for POST request
      * @param idObj: { id: String } or { id: [Strings] }
      */
-    var getDataFromNameServer = function (path, idObj) {
+    var getDataFromNameServer = function(path, idObj) {
         if (idObj) {
             request
                 // TODO: Change path once Qiaonan creates the API
@@ -93,7 +91,7 @@ dataReleaseSchema.statics.buildMetaData = function () {
                 .set('Content-Type', 'application/json')
                 .send(idObj)
                 .set('Accept', 'application/json')
-                .end(function (err, res) {
+                .end(function(err, res) {
                     if (res.ok) {
                         console.log('POST request returned from name server ' + JSON.stringify(res.body));
                         return res.body;
@@ -107,7 +105,7 @@ dataReleaseSchema.statics.buildMetaData = function () {
             request
                 .get(nameServerUrl + path)
                 .set('Accept', 'application/json')
-                .end(function (err, res) {
+                .end(function(err, res) {
                     if (res.ok) {
                         console.log('GET request to name server successful. Response: ' + JSON.stringify(res.body));
                         return res.body;
@@ -127,17 +125,17 @@ dataReleaseSchema.statics.buildMetaData = function () {
     else if (this.metaData.analysisTools.length > 1)
         this.metaData.analysisTools = getDataFromNameServer('/form/tool', { id: this.metaData.analysisTools });
 
-    this.metaData.assay = getDataFromNameServer('/form/assay?id=' + this.metaData.assay);
+    this.metaData.assay = getDataFromNameServer('/form/assay?id=' + this.metaData.assay[0]);
 
     if (this.metaData.cellLines.length === 1)
         this.metaData.cellLines = getDataFromNameServer('/form/cell?id=' + this.metaData.cellLines[0]);
     else if (this.metaData.cellLines.length > 1)
         this.metaData.cellLines = getDataFromNameServer('/form/cell', { id: this.metaData.cellLines });
 
-    this.metaData.disease = getDataFromNameServer('/form/disease?id=' + this.metaData.disease);
-    this.metaData.experiment = getDataFromNameServer('/form/experiment?id=' + this.metaData.experiment);
-    this.metaData.manipulatedGene = getDataFromNameServer('/form/gene?id=' + this.metaData.manipulatedGene);
-    this.metaData.organism = getDataFromNameServer('/form/organism?id=' + this.metaData.organism);
+    this.metaData.disease = getDataFromNameServer('/form/disease?id=' + this.metaData.disease[0]);
+    this.metaData.experiment = getDataFromNameServer('/form/experiment?id=' + this.metaData.experiment[0]);
+    this.metaData.manipulatedGene = getDataFromNameServer('/form/gene?id=' + this.metaData.manipulatedGene[0]);
+    this.metaData.organism = getDataFromNameServer('/form/organism?id=' + this.metaData.organism[0]);
 
     if (this.metaData.perturbagens.length === 1)
         this.metaData.perturbagens = getDataFromNameServer('/form/perturbagen?id=' + this.metaData.perturbagens[0]);

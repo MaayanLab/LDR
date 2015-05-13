@@ -1,4 +1,4 @@
-angular.module('milestonesLanding.dataRelease.create', [
+angular.module('milestones.dataRelease.create', [
     'ui.router',
     'angular-storage',
     'ngSanitize',

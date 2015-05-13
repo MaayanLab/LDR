@@ -1,7 +1,7 @@
-angular.module('milestonesLanding.dataRelease.overview', [
+angular.module('milestones.dataRelease.overview', [
     'ui.router',
     'angular-storage',
-    'milestonesLanding.api'
+    'milestones.api'
 ])
 
 // UI Router state forms
