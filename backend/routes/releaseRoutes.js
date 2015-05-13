@@ -17,7 +17,7 @@ module.exports = function(app) {
                         console.log(err);
                         res.status(404).send('Releases could not be found.');
                     }
-                    //buildMetadata(release);
+                    buildMetadata(release);
                     console.log('RELEASE: ' + release);
                     debugger;
                     res.status(200).send(release);
