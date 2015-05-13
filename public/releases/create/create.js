@@ -200,11 +200,6 @@ angular.module('milestones.releases.create', [
 
     $scope.submit = function() {
 
-        var releaseDates = {};
-        $.each($scope.form.releaseDates, function(key, obj) {
-            releaseDates[key] = obj.val;
-        });
-
         var urls = {};
         $.each($scope.form.urls, function(key, obj) {
             urls[key] = obj.val;
@@ -223,8 +218,6 @@ angular.module('milestones.releases.create', [
             urls: urls
         };
 
-        debugger;
-
         console.log(form);
         var formApi = api('releases');
         formApi.post(form)
@@ -233,7 +226,7 @@ angular.module('milestones.releases.create', [
             })
             .success(function (result) {
                 console.log('Form posted.');
-                console.log(result);
+                debugger;
                 $state.go('releasesCreate', { id: result._id });
             });
 
@@ -251,6 +244,4 @@ angular.module('milestones.releases.create', [
         }*/
     };
 
-    // Init form. Will be changed to inside a conditional when editing is implemented
-    //$scope.reset();
 });

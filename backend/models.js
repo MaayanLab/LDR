@@ -52,10 +52,10 @@ var dataReleaseSchema = new Schema({
     approved: { type: Boolean, required: true },
     dateModified: { type: Date, required: true },
     releaseDates: {
-        levelOne: Date,
-        levelTwo: Date,
-        levelThree: Date,
-        levelFour: Date
+        level1: String,
+        level2: String,
+        level3: String,
+        level4: String
     },
     metadata: {
         // These are arrays of IDs pointing to the name-metadata server
