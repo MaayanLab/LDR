@@ -9,47 +9,53 @@ module.exports = function(app) {
 
     // Individual form endpoint. Empty query returns empty form. Query id returns form with that id
     app.get('/api/releases/form/:id', function(req, res) {
-        if (req.param("id")) {
+        if (req.params.id) {
             DataRelease
-                .find({ _id: req.param("id") })
+                .find({ _id: req.params.id })
                 .exec(function(err, release) {
                     if (err) {
                         console.log(err);
                         res.status(404).send('Releases could not be found.');
                     }
-                    buildMetadata(release);
+                    //buildMetadata(release);
+                    console.log('RELEASE: ' + release); 
                     res.status(200).send(release);
                 });
         }
         else {
-            var releaseInit = {
-                metadata: {
-                    assay: [],
-                    cellLines: [],
-                    readouts: [],
-                    perturbagens: [],
-                    manipulatedGene: [],
-                    organism: [],
-                    relevantDisease: [],
-                    experiment: [],
-                    analysisTools: [],
-                    tagsKeywords: []
-                },
-                releaseDates: {
-                    level1: { val: null },
-                    level2: { val: null },
-                    level3: { val: null },
-                    level4: { val: null }
-                },
-                urls: {
-                    pubMedUrl: { val: null },
-                    dataUrl: { val: null },
-                    metadataUrl: { val: null },
-                    qcDocumentUrl: { val: null }
-                }
-            };
-            res.status(200).send(releaseInit)
+            res.status(404).send('Error: id parameter not given in request');
         }
+    });
+
+    app.get('/api/releases/form/', function(req, res) {
+        var releaseInit = {
+            metadata: {
+                assay: [],
+                cellLines: [],
+                readouts: [],
+                perturbagens: [],
+                manipulatedGene: [],
+                organism: [],
+                relevantDisease: [],
+                experiment: [],
+                analysisTools: [],
+                tagsKeywords: []
+            },
+            releaseDates: {
+                level1: { val: null },
+                level2: { val: null },
+                level3: { val: null },
+                level4: { val: null }
+            },
+            urls: {
+                pubMedUrl: { val: null },
+                dataUrl: { val: null },
+                metadataUrl: { val: null },
+                qcDocumentUrl: { val: null }
+            }
+        };
+        res.status(200).send(releaseInit)
+
     });
 
     // Multiple forms endpoint. Empty query returns all forms. centerId and userId return forms for user or center

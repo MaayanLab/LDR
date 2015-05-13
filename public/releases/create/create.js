@@ -56,8 +56,7 @@ angular.module('milestones.releases.create', [
         }
     };
 
-    var params = $stateParams.id === '' ? {} : $stateParams;
-    api('releases/form/').get(params).success(function(form) {
+    api('releases/form/' + $stateParams.id).get().success(function(form) {
         $scope.form = form;
     });
 
@@ -70,7 +69,7 @@ angular.module('milestones.releases.create', [
             modalTitle: 'Assay',
             placeholder: 'Select one assay...',
             maxTags: 1,
-            model: $scope.form.selectedData.assay
+            model: $scope.form.metadata.assay
         },
         {
             name: 'cellLines',
@@ -78,7 +77,7 @@ angular.module('milestones.releases.create', [
             modalTitle: 'Cell Line',
             placeholder: 'Select cell line(s)...',
             maxTags: 100,
-            model: $scope.form.selectedData.cellLines
+            model: $scope.form.metadata.cellLines
         },
         {
             name: 'readouts',
@@ -86,7 +85,7 @@ angular.module('milestones.releases.create', [
             modalTitle: 'Readout',
             placeholder: 'Select readout(s)...',
             maxTags: MAX_TAGS,
-            model: $scope.form.selectedData.readouts
+            model: $scope.form.metadata.readouts
         },
         {
             name: 'perturbagens',
@@ -94,7 +93,7 @@ angular.module('milestones.releases.create', [
             modalTitle: 'Perturbagen',
             placeholder: 'Select perturbagens...',
             maxTags: MAX_TAGS,
-            model: $scope.form.selectedData.perturbagens
+            model: $scope.form.metadata.perturbagens
         },
         {
             name: 'manipulatedGene',
@@ -102,7 +101,7 @@ angular.module('milestones.releases.create', [
             modalTitle: 'Manipulated Gene',
             placeholder: 'Select one manipulated gene...',
             maxTags: 1,
-            model: $scope.form.selectedData.manipulatedGene
+            model: $scope.form.metadata.manipulatedGene
         },
         {
             name: 'organism',
@@ -110,7 +109,7 @@ angular.module('milestones.releases.create', [
             modalTitle: 'Organism',
             placeholder: 'Select Organism...',
             maxTags: 1,
-            model: $scope.form.selectedData.organism
+            model: $scope.form.metadata.organism
         },
         {
             name: 'relevantDisease',
@@ -118,7 +117,7 @@ angular.module('milestones.releases.create', [
             modalTitle: 'Relevant Disease',
             placeholder: 'Select Relevant Disease...',
             maxTags: 1,
-            model: $scope.form.selectedData.relevantDisease
+            model: $scope.form.metadata.relevantDisease
         },
         {
             name: 'experiment',
@@ -126,7 +125,7 @@ angular.module('milestones.releases.create', [
             modalTitle: 'Experiment',
             placeholder: 'Select Experiment',
             maxTags: 1,
-            model: $scope.form.selectedData.experiment
+            model: $scope.form.metadata.experiment
         },
         {
             name: 'analysisTools',
@@ -134,7 +133,7 @@ angular.module('milestones.releases.create', [
             modalTitle: 'Analysis Tool',
             placeholder: 'Select Analysis Tools...',
             maxTags: MAX_TAGS,
-            model: $scope.form.selectedData.analysisTools
+            model: $scope.form.metadata.analysisTools
         },
         {
             name: 'tagsKeywords',
@@ -142,7 +141,7 @@ angular.module('milestones.releases.create', [
             modalTitle: 'Tag/Keyword',
             placeholder: 'Select Tag/Keywords...',
             maxTags: MAX_TAGS,
-            model: $scope.form.selectedData.tagsKeywords
+            model: $scope.form.metadata.tagsKeywords
         }
     ];
 
@@ -212,8 +211,8 @@ angular.module('milestones.releases.create', [
         });
 
         var metadata = {};
-        $.each($scope.form.selectedData, function(key) {
-            metadata[key] = lodash.map($scope.form.selectedData[key], '_id');
+        $.each($scope.form.metadata, function(key) {
+            metadata[key] = lodash.map($scope.form.metadata[key], '_id');
         });
 
         var form = {
@@ -224,6 +223,8 @@ angular.module('milestones.releases.create', [
             urls: urls
         };
 
+        debugger;
+
         console.log(form);
         var formApi = api('releases');
         formApi.post(form)
@@ -233,7 +234,7 @@ angular.module('milestones.releases.create', [
             .success(function (result) {
                 console.log('Form posted.');
                 console.log(result);
-                $state.go('/releases/form', { id: result._id });
+                $state.go('releasesCreate', { id: result._id });
             });
 
         /*console.log(form);
