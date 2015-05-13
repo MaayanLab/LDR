@@ -149,5 +149,5 @@ module.exports = {
     User: User,
     Center: Center,
     DataRelease: DataRelease,
-    buildMetaData: buildMetaData
+    buildMetadata: buildMetadata
 };
