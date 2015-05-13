@@ -57,6 +57,7 @@ angular.module('milestones.releases.create', [
     };
 
     api('releases/form/' + $stateParams.id).get().success(function(form) {
+        debugger;
         $scope.form = form;
     });
 
@@ -199,15 +200,16 @@ angular.module('milestones.releases.create', [
     };
 
     $scope.submit = function() {
+        debugger;
 
         var releaseDates = {};
         $.each($scope.form.releaseDates, function(key, obj) {
-            releaseDates[key] = obj.val;
+            releaseDates[key] = obj;
         });
 
         var urls = {};
         $.each($scope.form.urls, function(key, obj) {
-            urls[key] = obj.val;
+            urls[key] = obj;
         });
 
         var metadata = {};
@@ -222,8 +224,6 @@ angular.module('milestones.releases.create', [
             releaseDates: releaseDates,
             urls: urls
         };
-
-        debugger;
 
         console.log(form);
         var formApi = api('releases');

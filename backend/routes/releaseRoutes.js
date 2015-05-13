@@ -11,7 +11,7 @@ module.exports = function(app) {
     app.get('/api/releases/form/:id', function(req, res) {
         if (req.params.id) {
             DataRelease
-                .find({ _id: req.params.id })
+                .findOne({ _id: req.params.id })
                 .exec(function(err, release) {
                     if (err) {
                         console.log(err);
