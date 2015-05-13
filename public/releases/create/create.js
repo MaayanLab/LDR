@@ -23,8 +23,6 @@ angular.module('milestones.releases.create', [
         $stateParams, $scope, $timeout, $http, $location, $anchorScroll, store, $state, $modal, lodash, api
     ) {
     
-    console.log($stateParams);
-
     $scope.user = store.get('currentUser');
     $scope.center = $scope.user.center;
 
@@ -57,6 +55,7 @@ angular.module('milestones.releases.create', [
     };
 
     api('releases/form/' + $stateParams.id).get().success(function(form) {
+        debugger;
         $scope.form = form;
     });
 
@@ -199,11 +198,7 @@ angular.module('milestones.releases.create', [
     };
 
     $scope.submit = function() {
-
-        var urls = {};
-        $.each($scope.form.urls, function(key, obj) {
-            urls[key] = obj.val;
-        });
+        debugger;
 
         var metadata = {};
         $.each($scope.form.metadata, function(key) {
@@ -214,19 +209,22 @@ angular.module('milestones.releases.create', [
             user: $scope.user._id,
             center: $scope.user.center,
             metadata: metadata,
-            releaseDates: releaseDates,
-            urls: urls
+            releaseDates: $scope.form.releaseDates,
+            urls: $scope.form.urls
         };
 
+        console.log('Form being posted:');
         console.log(form);
         var formApi = api('releases');
+        form.urls.pubMedUrl = { val: 'foooooo' };
         formApi.post(form)
             .error(function (err) {
                 console.log(err);
             })
             .success(function (result) {
                 console.log('Form posted.');
-                debugger;
+                console.log('Result from post is.');
+                console.log(result);
                 $state.go('releasesCreate', { id: result._id });
             });
 
