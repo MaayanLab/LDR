@@ -1,8 +1,8 @@
 angular.module('milestones', [
     'milestones.nav',
     'milestones.home',
-    'milestones.dataRelease.overview',
-    'milestones.dataRelease.create',
+    'milestones.releases.overview',
+    'milestones.releases.create',
     'milestones.metadata.overview',
     'milestones.user.admin',
     'milestones.user.registration',

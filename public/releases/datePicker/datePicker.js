@@ -8,7 +8,7 @@ angular.module('milestones')
             level: '@',
             ngModel: '='
         },
-        templateUrl: 'dataRelease/datePicker/datePicker.html',
+        templateUrl: 'releases/datePicker/datePicker.html',
         link: function(scope, element, attrs) {
             scope.format = 'MM/dd/yyyy';
             scope.open = function($event) {

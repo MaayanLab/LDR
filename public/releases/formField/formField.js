@@ -11,7 +11,7 @@ angular.module('milestones')
             autocompleteSource: '&',
             ngModel: '='
         },
-        templateUrl: 'dataRelease/formField/formField.html',
+        templateUrl: 'releases/formField/formField.html',
         link: function(scope, element, attrs) {
             scope.clearSelection = function() {
                 angular.copy([], scope.ngModel);

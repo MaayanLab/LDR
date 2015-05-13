@@ -17,6 +17,7 @@
     "express-session": "^1.0.4",
     "gulp-less": "^3.0.3",
     "jsonwebtoken": "^5.0.0",
+    "karma-sinon-chai": "^0.3.0",
     "lodash": "^3.8.0",
     "method-override": "^1.0.2",
     "mongoose": "^4.0.1",
@@ -58,7 +59,8 @@
     "karma-sourcemap-loader": "^0.3.4",
     "main-bower-files": "^2.7.0",
     "mocha": "^2.2.4",
-    "run-sequence": "^1.1.0"
+    "run-sequence": "^1.1.0",
+    "sinon": "^1.14.1"
   },
   "scripts": {
     "test": "test",

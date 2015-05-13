@@ -23,7 +23,7 @@ describe('DataReleases', function() {
         beforeEach(inject(function() {
             $scope = {};
             // Load controller
-            createController = $controller('dataRelease.create.ctrl', { api: api, $scope: $scope });
+            createController = $controller('releases.create.ctrl', { api: api, $scope: $scope });
         }));
 
         it('should have a defined controller', function() {
@@ -43,7 +43,7 @@ describe('DataReleases', function() {
         beforeEach(inject(function() {
             $scope = {};
             // Load controller
-            overviewController = $controller('dataRelease.overview.ctrl', { api: api, $scope: $scope });
+            overviewController = $controller('releases.overview.ctrl', { api: api, $scope: $scope });
         }));
 
         it('should have a defined controller', function() {
