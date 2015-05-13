@@ -77,80 +77,66 @@ var dataReleaseSchema = new Schema({
     }
 });
 
-dataReleaseSchema.statics.buildMetaData = function() {
-    /**
-     * getDataFromNameServer: Make request to name-server returning JSON of meta-data
-     * @param path: relative path of name server URL for POST request
-     * @param idObj: { id: String } or { id: [Strings] }
-     */
-    var getDataFromNameServer = function(path, idObj) {
-        if (idObj) {
-            request
-                // TODO: Change path once Qiaonan creates the API
-                .post(nameServerUrl + path)
-                .set('Content-Type', 'application/json')
-                .send(idObj)
-                .set('Accept', 'application/json')
-                .end(function(err, res) {
-                    if (res.ok) {
-                        console.log('POST request returned from name server ' + JSON.stringify(res.body));
-                        return res.body;
-                    } else {
-                        console.log('Error occurred during POST to name server: ' + res.text);
-                        return { error: res.text };
-                    }
-                });
-        }
-        else {
-            request
-                .get(nameServerUrl + path)
-                .set('Accept', 'application/json')
-                .end(function(err, res) {
-                    if (res.ok) {
-                        console.log('GET request to name server successful. Response: ' + JSON.stringify(res.body));
-                        return res.body;
-                    } else {
-                        console.log('Error occured during GET request to name server: ' + res.text);
-                        return { error: res.text };
-                    }
-                })
-        }
+/**
+ * buildMeta: Make request to name-server and replace IDs with MongoDB documents
+ * @param releaseData: JSON stored in local database with pointers to Name Server meta-data
+ * @param path: relative path of name server URL for request
+ */
+var buildMetaData = function(releaseData) {
+    console.log(releaseData);
+
+    var getDataFromNameServer = function(path) {
+        request
+            .get(nameServerUrl + path)
+            .set('Accept', 'application/json')
+            .end(function(err, res) {
+                if (res.ok) {
+                    console.log('GET request to name server successful. Response: ' + JSON.stringify(res.body));
+                    return res.body;
+                } else {
+                    console.log('Error occured during GET request to name server: ' + res.text);
+                    return { error: res.text };
+                }
+            })
     };
 
     // TODO: Implement suggest server from Miami
     //var getDataFromMiami = function (path, idObj) {};
 
-    if (this.metaData.analysisTools.length === 1)
-        this.metaData.analysisTools = getDataFromNameServer('/form/tool?id=' + this.metaData.analysisTools[0]);
-    else if (this.metaData.analysisTools.length > 1)
-        this.metaData.analysisTools = getDataFromNameServer('/form/tool', { id: this.metaData.analysisTools });
+    for (var i = 0; i < releaseData.length; i++) {
 
-    this.metaData.assay = getDataFromNameServer('/form/assay?id=' + this.metaData.assay[0]);
+        //if (releaseData[i].metaData.analysisTools.length === 1)
+        //    releaseData[i].metaData.analysisTools = getDataFromNameServer('/form/tool?_id=' + releaseData[i].metaData.analysisTools[0]);
+        //else if (releaseData[i].metaData.analysisTools.length > 1)
+        //    releaseData[i].metaData.analysisTools = getDataFromNameServer('/form/tool?_id=' + releaseData[i].metaData.analysisTools);
 
-    if (this.metaData.cellLines.length === 1)
-        this.metaData.cellLines = getDataFromNameServer('/form/cell?id=' + this.metaData.cellLines[0]);
-    else if (this.metaData.cellLines.length > 1)
-        this.metaData.cellLines = getDataFromNameServer('/form/cell', { id: this.metaData.cellLines });
+        releaseData[i].metaData.assay = getDataFromNameServer('/form/assay?_id=' + releaseData[i].metaData.assay[0]);
 
-    this.metaData.disease = getDataFromNameServer('/form/disease?id=' + this.metaData.disease[0]);
-    this.metaData.experiment = getDataFromNameServer('/form/experiment?id=' + this.metaData.experiment[0]);
-    this.metaData.manipulatedGene = getDataFromNameServer('/form/gene?id=' + this.metaData.manipulatedGene[0]);
-    this.metaData.organism = getDataFromNameServer('/form/organism?id=' + this.metaData.organism[0]);
+        if (releaseData[i].metaData.cellLines.length === 1)
+            releaseData[i].metaData.cellLines = getDataFromNameServer('/form/cell?_id=' + releaseData[i].metaData.cellLines[0]);
+        else if (releaseData[i].metaData.cellLines.length > 1)
+            releaseData[i].metaData.cellLines = getDataFromNameServer('/form/cell?_id=' + releaseData[i].metaData.cellLines);
 
-    if (this.metaData.perturbagens.length === 1)
-        this.metaData.perturbagens = getDataFromNameServer('/form/perturbagen?id=' + this.metaData.perturbagens[0]);
-    else if (this.metaData.perturbagens.length > 1)
-        this.metaData.perturbagens = getDataFromNameServer('/form/perturbagen', { id: this.metaData.perturbagens });
+        releaseData[i].metaData.disease = getDataFromNameServer('/form/disease?_id=' + releaseData[i].metaData.disease[0]);
+        //releaseData[i].metaData.experiment = getDataFromNameServer('/form/experiment?_id=' + releaseData[i].metaData.experiment[0]);
+        //releaseData[i].metaData.manipulatedGene = getDataFromNameServer('/form/gene?_id=' + releaseData[i].metaData.manipulatedGene[0]);
+        //releaseData[i].metaData.organism = getDataFromNameServer('/form/organism?_id=' + releaseData[i].metaData.organism[0]);
 
-    if (this.metaData.readouts.length === 1)
-        this.metaData.readouts = getDataFromNameServer('/form/readout?id=' + this.metaData.readouts[0]);
-    else if (this.metaData.readouts.length > 1)
-        this.metaData.readouts = getDataFromNameServer('/form/readout', { id: this.metaData.readouts });
+        if (releaseData[i].metaData.perturbagens.length === 1)
+            releaseData[i].metaData.perturbagens = getDataFromNameServer('/form/perturbagen?_id=' + releaseData[i].metaData.perturbagens[0]);
+        else if (releaseData[i].metaData.perturbagens.length > 1)
+            releaseData[i].metaData.perturbagens = getDataFromNameServer('/form/perturbagen?_id=' + releaseData[i].metaData.perturbagens);
 
-    if (this.metaData.tagsKeywords.length === 1)
-        this.metaData.tagsKeywords = getDataFromNameServer('/form/keyword?id=' + this.metaData.tagsKeywords[0]);
-    else if (this.metaData.tagsKeywords.length > 1)
-        this.metaData.tagsKeywords = getDataFromNameServer('/form/keyword', { id: this.metaData.tagsKeywords });
+        if (releaseData[i].metaData.readouts.length === 1)
+            releaseData[i].metaData.readouts = getDataFromNameServer('/form/readout?_id=' + releaseData[i].metaData.readouts[0]);
+        else if (releaseData[i].metaData.readouts.length > 1)
+            releaseData[i].metaData.readouts = getDataFromNameServer('/form/readout?_id=' + releaseData[i].metaData.readouts);
+
+        //if (releaseData[i].metaData.tagsKeywords.length === 1)
+        //    releaseData[i].metaData.tagsKeywords = getDataFromNameServer('/form/keyword?_id=' + releaseData[i].metaData.tagsKeywords[0]);
+        //else if (releaseData[i].metaData.tagsKeywords.length > 1)
+        //    releaseData[i].metaData.tagsKeywords = getDataFromNameServer('/form/keyword?_id=' + releaseData[i].metaData.tagsKeywords );
+    }
 };
 
 try {
@@ -163,5 +149,6 @@ module.exports = {
     genId: genId,
     User: User,
     Center: Center,
-    DataRelease: DataRelease
+    DataRelease: DataRelease,
+    buildMetaData: buildMetaData
 };

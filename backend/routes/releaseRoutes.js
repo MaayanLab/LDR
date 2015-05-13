@@ -1,5 +1,6 @@
 var jwt = require('express-jwt'),
     DataRelease = require('../models').DataRelease,
+    buildMetaData = require('../models').buildMetaData,
     config = require('../config/database');
 
 module.exports = function(app) {
@@ -17,12 +18,12 @@ module.exports = function(app) {
         DataRelease
             .find(query)
             .lean()
-            //.buildMetaData()
             .exec(function(err, allData) {
                 if (err) {
                     console.log(err);
                     res.status(404).send('Releases could not be found.');
                 }
+                buildMetaData(allData);
                 res.status(200).send(allData);
             });
     });

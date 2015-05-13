@@ -191,15 +191,13 @@ angular.module('milestones.releases.create', [
             return response.data.map(function(item) {
                 var result = {};
                 result.text = item.name;
-                result._id = new Date();
+                result._id = item._id;
                 return result;
             });
         });
     };
 
     $scope.submit = function() {
-
-        console.log($scope.form);
 
         var releaseDates = {};
         $.each($scope.form.releaseDates, function(key, obj) {
@@ -211,23 +209,27 @@ angular.module('milestones.releases.create', [
             urls[key] = obj.val;
         });
 
+        var metaData = {};
+        $.each($scope.form.selectedData, function(key) {
+            metaData[key] = lodash.map($scope.form.selectedData[key], '_id');
+        });
+
         var form = {
             user: $scope.user._id,
-            dateModified: new Date(),
             center: $scope.user.center,
-            metaData: $scope.form.selectedData,
+            metaData: metaData,
             releaseDates: releaseDates,
             urls: urls
         };
 
-        var formApi = api('data');
+        console.log(form);
+        var formApi = api('releases');
         formApi.post(form)
             .error(function (err) {
                 console.log(err);
             })
             .success(function (result) {
                 console.log('Form posted.');
-                console.log(form);
             });
 
         /*console.log(form);
