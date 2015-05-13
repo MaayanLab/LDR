@@ -176,7 +176,7 @@ angular.module('milestonesLanding.dataRelease.create', [
     ];
 
     $scope.autocompleteSource = function(val) {
-        return $http.get('http://146.203.54.165:7078/cell', {
+        return $http.get('http://146.203.54.165:7078/form/cell', {
             params: {
                 name: val
             }
