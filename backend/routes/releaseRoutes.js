@@ -9,6 +9,7 @@ module.exports = function(app) {
 
     // Individual form endpoint. Empty query returns empty form. Query id returns form with that id
     app.get('/api/releases/form/:id', function(req, res) {
+        console.log('request to formId endpoint');
         if (req.params.id) {
             DataRelease
                 .findOne({ _id: req.params.id })
@@ -17,9 +18,9 @@ module.exports = function(app) {
                         console.log(err);
                         res.status(404).send('Releases could not be found.');
                     }
-                    buildMetadata(release);
-                    console.log('RELEASE: ' + release);
-                    debugger;
+                    // TODO: Change implementation of buildMetadata() before uncommenting. Will need to handle promises.
+                    //release = buildMetadata(release);
+                    console.log(release);
                     res.status(200).send(release);
                 });
         }

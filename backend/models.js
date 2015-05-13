@@ -1,6 +1,6 @@
 var mongoose = require('mongoose'),
     bcrypt = require('bcrypt-nodejs'),
-    request = require('superagent'),
+    request = require('superagent-promise'),
     lodash = require('lodash');
     nameServerUrl = require('./config/nameServer').url;
 
@@ -84,58 +84,26 @@ var dataReleaseSchema = new Schema({
  * @param path: relative path of name server URL for request
  */
 var buildMetadata = function(releaseData) {
+    var metadataObj = releaseData.metadata.toObject();
 
-    var getDataFromNameServer = function(path) {
-        request
-            .get(nameServerUrl + path)
-            .set('Accept', 'application/json')
-            .end(function(err, res) {
-                if (res.ok) {
-                    console.log('GET request to name server successful. Response: ' + JSON.stringify(res.body));
-                    return res.body;
-                } else {
-                    console.log('Error occured during GET request to name server: ' + res.text);
-                    return { error: res.text };
-                }
-            })
-    };
-
-    // TODO: Implement suggest server from Miami
-    //var getDataFromMiami = function (path, idObj) {};
-
-    lodash(releaseData).forEach(function(release) {
-        //if (release.metadata.analysisTools.length === 1)
-        //    release.metadata.analysisTools = getDataFromNameServer('/form/tool?_id=' + release.metadata.analysisTools[0]);
-        //else if (release.metadata.analysisTools.length > 1)
-        //    release.metadata.analysisTools = getDataFromNameServer('/form/tool?_id=' + release.metadata.analysisTools);
-
-        release.metadata.assay = getDataFromNameServer('/form/assay?_id=' + release.metadata.assay[0]);
-
-        if (release.metadata.cellLines.length === 1)
-            release.metadata.cellLines = getDataFromNameServer('/form/cell?_id=' + release.metadata.cellLines[0]);
-        else if (release.metadata.cellLines.length > 1)
-            release.metadata.cellLines = getDataFromNameServer('/form/cell?_id=' + release.metadata.cellLines);
-
-        release.metadata.disease = getDataFromNameServer('/form/disease?_id=' + release.metadata.disease[0]);
-        //release.metadata.experiment = getDataFromNameServer('/form/experiment?_id=' + release.metadata.experiment[0]);
-        //release.metadata.manipulatedGene = getDataFromNameServer('/form/gene?_id=' + release.metadata.manipulatedGene[0]);
-        //release.metadata.organism = getDataFromNameServer('/form/organism?_id=' + release.metadata.organism[0]);
-
-        if (release.metadata.perturbagens.length === 1)
-            release.metadata.perturbagens = getDataFromNameServer('/form/perturbagen?_id=' + release.metadata.perturbagens[0]);
-        else if (release.metadata.perturbagens.length > 1)
-            release.metadata.perturbagens = getDataFromNameServer('/form/perturbagen?_id=' + release.metadata.perturbagens);
-
-        if (release.metadata.readouts.length === 1)
-            release.metadata.readouts = getDataFromNameServer('/form/readout?_id=' + release.metadata.readouts[0]);
-        else if (release.metadata.readouts.length > 1)
-            release.metadata.readouts = getDataFromNameServer('/form/readout?_id=' + release.metadata.readouts);
-
-        //if (release.metadata.tagsKeywords.length === 1)
-        //    release.metadata.tagsKeywords = getDataFromNameServer('/form/keyword?_id=' + release.metadata.tagsKeywords[0]);
-        //else if (release.metadata.tagsKeywords.length > 1)
-        //    release.metadata.tagsKeywords = getDataFromNameServer('/form/keyword?_id=' + release.metadata.tagsKeywords );
-    });
+    // TODO: Need to return promises and wait for all of them in route logic
+    //lodash.forEach(metadataObj, function(valArray, key) {
+    //
+    //    if (valArray.length === 1) {
+    //        if (key === 'cellLines') {
+    //            var path = '/form/cell?_id=' + valArray[0];
+    //
+    //        request('GET', nameServerUrl + path)
+    //            .end()
+    //            .then(function(res) {
+    //                console.log('GET request to name server successful. Response: ' + JSON.stringify(res.body));
+    //                valArray[0] = JSON.stringify(res.body);
+    //            });
+    //        }
+    //    }
+    //
+    //});
+    //return releaseData;
 };
 
 try {
