@@ -1,59 +1,80 @@
 var jwt = require('express-jwt'),
     DataRelease = require('../models').DataRelease,
+    buildMetaData = require('../models').buildMetaData,
     config = require('../config/database');
 
 module.exports = function(app) {
 
     // FORM/DATASET GET, POST, PUT, DELETE
+
+    // Individual form endpoint. Empty query returns empty form. Query id returns form with that id
+    app.get('/api/releases/form', function(req, res) {
+        if (req.query.id) {
+            DataRelease
+                .find({ _id: req.query.id })
+                .exec(function(err, release) {
+                    if (err) {
+                        console.log(err);
+                        res.status(404).send('Releases could not be found.');
+                    }
+                    buildMetaData(release);
+                    res.status(200).send(release);
+                });
+        }
+        else {
+            var releaseInit = {
+                metaData: {
+                    assay: [],
+                    cellLines: [],
+                    readouts: [],
+                    perturbagens: [],
+                    manipulatedGene: [],
+                    organism: [],
+                    relevantDisease: [],
+                    experiment: [],
+                    analysisTools: [],
+                    tagsKeywords: []
+                },
+                releaseDates: {
+                    level1: { val: null },
+                    level2: { val: null },
+                    level3: { val: null },
+                    level4: { val: null }
+                },
+                urls: {
+                    pubMedUrl: { val: null },
+                    dataUrl: { val: null },
+                    metaDataUrl: { val: null },
+                    qcDocumentUrl: { val: null }
+                }
+            };
+            res.status(200).send(releaseInit)
+        }
+    });
+
+    // Multiple forms endpoint. Empty query returns all forms. centerId and userId return forms for user or center
     app.get('/api/releases', function(req, res) {
         var query = {};
-        if (req.query.centerId && req.query.formId)
-            query = { _id: req.query.formId, center: req.query.centerId };
+        if (req.query.centerId && req.query.userId)
+            query = { center: req.query.centerId, userId: req.query.userId };
         else if (req.query.centerId)
             query = { center: req.query.centerId };
-        else if (req.query.formId)
-            query = { _id: req.query.formId };
+        else if (req.query.userId)
+            query = { userId: req.query.userId };
 
         DataRelease
             .find(query)
-            .lean()
-            //.buildMetaData()
             .exec(function(err, allData) {
                 if (err) {
                     console.log(err);
                     res.status(404).send('Releases could not be found.');
                 }
+                buildMetaData(allData);
                 res.status(200).send(allData);
             });
     });
 
     app.post('/api/secure/releases', function(req, res) {
-
-        /*
-         var getCellLine = function(id, callback) {
-         Models.CellLine.find({ '_id': id }, function(err, result) {
-         if (err) {
-         callback(err, null);
-         }
-         callback(null, result[0]);
-         });
-         };
-
-         console.log('Posting To Data');
-         var inputData = req.body;
-         if (inputData.cellLines.length > 1) {
-         inputData._id = 'LINCS-' + inputData.center.name + '-MTPL-' + shortId.generate();
-         } else if (inputData.cellLines.length === 1) {
-         getCellLine(inputData.cellLines[0], function(err, cellLine) {
-         if (err) {
-         console.log(err);
-         }
-         inputData._id = 'LINCS-' + inputData.center.name + '-' + cellLine.name + '-' + shortId.generate();
-         });
-         } else {
-         inputData._id = 'LINCS-' + inputData.center.name + '-NONE-' + shortId.generate();
-         }
-         */
 
         console.log('Posting To releases...');
         var inputData = req.body;
