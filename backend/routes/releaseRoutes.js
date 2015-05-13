@@ -8,10 +8,10 @@ module.exports = function(app) {
     // FORM/DATASET GET, POST, PUT, DELETE
 
     // Individual form endpoint. Empty query returns empty form. Query id returns form with that id
-    app.get('/api/releases/form', function(req, res) {
-        if (req.query.id) {
+    app.get('/api/releases/form/:id', function(req, res) {
+        if (req.param("id")) {
             DataRelease
-                .find({ _id: req.query.id })
+                .find({ _id: req.param("id") })
                 .exec(function(err, release) {
                     if (err) {
                         console.log(err);
