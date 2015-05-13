@@ -28,13 +28,9 @@ angular.module('milestones.releases.create', [
     $scope.user = store.get('currentUser');
     $scope.center = $scope.user.center;
 
-    /*var params = $stateParams.id === '' ? {} : $stateParams;
-    api('releases/form').get(params).success(function(form) {
-        $scope.form = form;
-    });*/
-
+    // TODO: Decide if there's a better way to do this.
     $scope.form = {
-        selectedData: {
+        metadata: {
             assay: [],
             cellLines: [],
             readouts: [],
@@ -55,10 +51,16 @@ angular.module('milestones.releases.create', [
         urls: {
             pubMedUrl:     { val: null },
             dataUrl:       { val: null },
-            metaDataUrl:   { val: null },
+            metadataUrl:   { val: null },
             qcDocumentUrl: { val: null }
         }
     };
+
+    var params = $stateParams.id === '' ? {} : $stateParams;
+    api('releases/form/').get(params).success(function(form) {
+        $scope.form = form;
+    });
+
 
     var MAX_TAGS = 100;
     $scope.fields = [
@@ -174,7 +176,7 @@ angular.module('milestones.releases.create', [
         },
         {
             title: 'Meta-Data URL',
-            model: $scope.form.urls.metaDataUrl
+            model: $scope.form.urls.metadataUrl
         },
         {
             title: 'URL to the QC document',
@@ -209,15 +211,15 @@ angular.module('milestones.releases.create', [
             urls[key] = obj.val;
         });
 
-        var metaData = {};
+        var metadata = {};
         $.each($scope.form.selectedData, function(key) {
-            metaData[key] = lodash.map($scope.form.selectedData[key], '_id');
+            metadata[key] = lodash.map($scope.form.selectedData[key], '_id');
         });
 
         var form = {
             user: $scope.user._id,
             center: $scope.user.center,
-            metaData: metaData,
+            metadata: metadata,
             releaseDates: releaseDates,
             urls: urls
         };
@@ -230,6 +232,8 @@ angular.module('milestones.releases.create', [
             })
             .success(function (result) {
                 console.log('Form posted.');
+                console.log(result);
+                $state.go('/releases/form', { id: result._id });
             });
 
         /*console.log(form);
