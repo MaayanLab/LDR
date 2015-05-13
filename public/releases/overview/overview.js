@@ -37,21 +37,12 @@ angular.module('milestones.releases.overview', [
     $scope.deleteForm = function(form) {
         console.log(form);
         if (confirm('Are you sure you would like to delete this entry?')) {
-            /*dataApi.del({ formId: form._id }).success(function () {
-                // Reload data
-                debugger;
-                dataApi.get({ userId: $scope.user._id }).success(function (data) {
-                    debugger;
+            dataApi.del({ formId: form._id }).success(function() {
+                alert('Deleted.');
+                dataApi.get({ userId: $scope.user._id }).success(function(data) {
                     $scope.forms = data;
                 });
-            });*/
-            $http({
-                url: '/api/secure/releases?formId=' + form._id,
-                method: 'DELETE'
-            }).success(function() {
-                debugger;
             });
         }
-        alert('delete!');
     };
 });

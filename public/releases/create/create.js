@@ -10,7 +10,7 @@ angular.module('milestones.releases.create', [
 // UI Router state formCreate
 .config(function($stateProvider) {
     $stateProvider.state('releasesCreate', {
-        url: '/releases/create',
+        url: '/releases/form/{id:string}',
         controller: 'releases.create.ctrl',
         templateUrl: '/releases/create/create.html',
         data: {
@@ -20,12 +20,19 @@ angular.module('milestones.releases.create', [
 })
 
 .controller('releases.create.ctrl', function(
-        $scope, $timeout, $http, $location, $anchorScroll, store, $state, $modal, lodash, api
+        $stateParams, $scope, $timeout, $http, $location, $anchorScroll, store, $state, $modal, lodash, api
     ) {
+    
+    console.log($stateParams);
 
     $scope.user = store.get('currentUser');
     $scope.center = $scope.user.center;
-    
+
+    /*var params = $stateParams.id === '' ? {} : $stateParams;
+    api('releases/form').get(params).success(function(form) {
+        $scope.form = form;
+    });*/
+
     $scope.form = {
         selectedData: {
             assay: [],

@@ -30,13 +30,11 @@ angular.module('milestones.api', [])
                     data: params
                 });
             },
-            del: function(id) {
+            del: function(params) {
                 return $http({
                     url: SECURE + endpoint,
                     method: 'DELETE',
-                    params: {
-                        id: id
-                    }
+                    params: params
                 });
             }
         };
