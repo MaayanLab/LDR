@@ -64,6 +64,7 @@ module.exports = function(app) {
 
         DataRelease
             .find(query)
+            //.lean()
             .exec(function(err, allData) {
                 if (err) {
                     console.log(err);
