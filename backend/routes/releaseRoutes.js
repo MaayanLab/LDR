@@ -1,6 +1,6 @@
 var jwt = require('express-jwt'),
     DataRelease = require('../models').DataRelease,
-    buildMetaData = require('../models').buildMetaData,
+    buildMetadata = require('../models').buildMetadata,
     config = require('../config/database');
 
 module.exports = function(app) {
@@ -17,13 +17,13 @@ module.exports = function(app) {
                         console.log(err);
                         res.status(404).send('Releases could not be found.');
                     }
-                    buildMetaData(release);
+                    buildMetadata(release);
                     res.status(200).send(release);
                 });
         }
         else {
             var releaseInit = {
-                metaData: {
+                metadata: {
                     assay: [],
                     cellLines: [],
                     readouts: [],
@@ -44,7 +44,7 @@ module.exports = function(app) {
                 urls: {
                     pubMedUrl: { val: null },
                     dataUrl: { val: null },
-                    metaDataUrl: { val: null },
+                    metadataUrl: { val: null },
                     qcDocumentUrl: { val: null }
                 }
             };
@@ -70,7 +70,7 @@ module.exports = function(app) {
                     console.log(err);
                     res.status(404).send('Releases could not be found.');
                 }
-                buildMetaData(allData);
+                buildMetadata(allData);
                 res.status(200).send(allData);
             });
     });

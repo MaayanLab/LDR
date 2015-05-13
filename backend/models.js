@@ -83,7 +83,7 @@ var dataReleaseSchema = new Schema({
  * @param releaseData: JSON stored in local database with pointers to Name Server meta-data
  * @param path: relative path of name server URL for request
  */
-var buildMetaData = function(releaseData) {
+var buildMetadata = function(releaseData) {
 
     var getDataFromNameServer = function(path) {
         request
