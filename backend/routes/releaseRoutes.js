@@ -18,7 +18,8 @@ module.exports = function(app) {
                         res.status(404).send('Releases could not be found.');
                     }
                     //buildMetadata(release);
-                    console.log('RELEASE: ' + release); 
+                    console.log('RELEASE: ' + release);
+                    debugger;
                     res.status(200).send(release);
                 });
         }
@@ -28,6 +29,7 @@ module.exports = function(app) {
     });
 
     app.get('/api/releases/form/', function(req, res) {
+        debugger;
         var releaseInit = {
             metadata: {
                 assay: [],
@@ -88,12 +90,14 @@ module.exports = function(app) {
         inputData.approved = false;
         inputData.dateModified = new Date();
 
+        debugger;
+
         var form = new DataRelease(inputData);
         console.log(form);
         form.save(function(err) {
             console.log(err);
         });
-
+        debugger;
         res.status(201).send(form);
     });
 

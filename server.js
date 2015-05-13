@@ -12,6 +12,7 @@ var port = 3001;
 var configDB = require('./backend/config/database');
 
 mongoose.connect(configDB.url);
+mongoose.set('debug', true);
 
 app.use(cors());
 app.use(morgan('dev')); // log every request to the console

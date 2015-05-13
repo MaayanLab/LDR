@@ -221,7 +221,7 @@ angular.module('milestones.releases.create', [
             user: $scope.user._id,
             center: $scope.user.center,
             metadata: metadata,
-            releaseDates: releaseDates,
+            releaseDates: $scope.form.releaseDates,
             urls: urls
         };
 
@@ -233,7 +233,7 @@ angular.module('milestones.releases.create', [
             })
             .success(function (result) {
                 console.log('Form posted.');
-                console.log(result);
+                debugger;
                 $state.go('releasesCreate', { id: result._id });
             });
 
@@ -251,6 +251,4 @@ angular.module('milestones.releases.create', [
         }*/
     };
 
-    // Init form. Will be changed to inside a conditional when editing is implemented
-    //$scope.reset();
 });
