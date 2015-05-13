@@ -15,11 +15,7 @@ module.exports = function(app) {
         res.redirect('/MilestonesLanding/');
     });
 
-    require('./assays')(app);
-    require('./cellLines')(app);
-    require('./readouts')(app);
-    require('./perturbagens')(app);
     require('./users')(app);
-    require('./formRoutes')(app);
+    require('./releaseRoutes')(app);
 
 };
