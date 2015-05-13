@@ -57,7 +57,7 @@ var dataReleaseSchema = new Schema({
         levelThree: Date,
         levelFour: Date
     },
-    metaData: {
+    metadata: {
         // These are arrays of IDs pointing to the name-metadata server
         analysisTools: [String],
         assay: [String], // Always length 1
@@ -72,7 +72,7 @@ var dataReleaseSchema = new Schema({
     },
     urls: {
         dataUrl: String,
-        metaDataUrl: String,
+        metadataUrl: String,
         pubMedUrl: String,
         qcDocumentUrl: String
     }
@@ -83,7 +83,7 @@ var dataReleaseSchema = new Schema({
  * @param releaseData: JSON stored in local database with pointers to Name Server meta-data
  * @param path: relative path of name server URL for request
  */
-var buildMetaData = function(releaseData) {
+var buildMetadata = function(releaseData) {
 
     var getDataFromNameServer = function(path) {
         request
@@ -104,37 +104,37 @@ var buildMetaData = function(releaseData) {
     //var getDataFromMiami = function (path, idObj) {};
 
     lodash(releaseData).forEach(function(release) {
-        //if (release.metaData.analysisTools.length === 1)
-        //    release.metaData.analysisTools = getDataFromNameServer('/form/tool?_id=' + release.metaData.analysisTools[0]);
-        //else if (release.metaData.analysisTools.length > 1)
-        //    release.metaData.analysisTools = getDataFromNameServer('/form/tool?_id=' + release.metaData.analysisTools);
+        //if (release.metadata.analysisTools.length === 1)
+        //    release.metadata.analysisTools = getDataFromNameServer('/form/tool?_id=' + release.metadata.analysisTools[0]);
+        //else if (release.metadata.analysisTools.length > 1)
+        //    release.metadata.analysisTools = getDataFromNameServer('/form/tool?_id=' + release.metadata.analysisTools);
 
-        release.metaData.assay = getDataFromNameServer('/form/assay?_id=' + release.metaData.assay[0]);
+        release.metadata.assay = getDataFromNameServer('/form/assay?_id=' + release.metadata.assay[0]);
 
-        if (release.metaData.cellLines.length === 1)
-            release.metaData.cellLines = getDataFromNameServer('/form/cell?_id=' + release.metaData.cellLines[0]);
-        else if (release.metaData.cellLines.length > 1)
-            release.metaData.cellLines = getDataFromNameServer('/form/cell?_id=' + release.metaData.cellLines);
+        if (release.metadata.cellLines.length === 1)
+            release.metadata.cellLines = getDataFromNameServer('/form/cell?_id=' + release.metadata.cellLines[0]);
+        else if (release.metadata.cellLines.length > 1)
+            release.metadata.cellLines = getDataFromNameServer('/form/cell?_id=' + release.metadata.cellLines);
 
-        release.metaData.disease = getDataFromNameServer('/form/disease?_id=' + release.metaData.disease[0]);
-        //release.metaData.experiment = getDataFromNameServer('/form/experiment?_id=' + release.metaData.experiment[0]);
-        //release.metaData.manipulatedGene = getDataFromNameServer('/form/gene?_id=' + release.metaData.manipulatedGene[0]);
-        //release.metaData.organism = getDataFromNameServer('/form/organism?_id=' + release.metaData.organism[0]);
+        release.metadata.disease = getDataFromNameServer('/form/disease?_id=' + release.metadata.disease[0]);
+        //release.metadata.experiment = getDataFromNameServer('/form/experiment?_id=' + release.metadata.experiment[0]);
+        //release.metadata.manipulatedGene = getDataFromNameServer('/form/gene?_id=' + release.metadata.manipulatedGene[0]);
+        //release.metadata.organism = getDataFromNameServer('/form/organism?_id=' + release.metadata.organism[0]);
 
-        if (release.metaData.perturbagens.length === 1)
-            release.metaData.perturbagens = getDataFromNameServer('/form/perturbagen?_id=' + release.metaData.perturbagens[0]);
-        else if (release.metaData.perturbagens.length > 1)
-            release.metaData.perturbagens = getDataFromNameServer('/form/perturbagen?_id=' + release.metaData.perturbagens);
+        if (release.metadata.perturbagens.length === 1)
+            release.metadata.perturbagens = getDataFromNameServer('/form/perturbagen?_id=' + release.metadata.perturbagens[0]);
+        else if (release.metadata.perturbagens.length > 1)
+            release.metadata.perturbagens = getDataFromNameServer('/form/perturbagen?_id=' + release.metadata.perturbagens);
 
-        if (release.metaData.readouts.length === 1)
-            release.metaData.readouts = getDataFromNameServer('/form/readout?_id=' + release.metaData.readouts[0]);
-        else if (release.metaData.readouts.length > 1)
-            release.metaData.readouts = getDataFromNameServer('/form/readout?_id=' + release.metaData.readouts);
+        if (release.metadata.readouts.length === 1)
+            release.metadata.readouts = getDataFromNameServer('/form/readout?_id=' + release.metadata.readouts[0]);
+        else if (release.metadata.readouts.length > 1)
+            release.metadata.readouts = getDataFromNameServer('/form/readout?_id=' + release.metadata.readouts);
 
-        //if (release.metaData.tagsKeywords.length === 1)
-        //    release.metaData.tagsKeywords = getDataFromNameServer('/form/keyword?_id=' + release.metaData.tagsKeywords[0]);
-        //else if (release.metaData.tagsKeywords.length > 1)
-        //    release.metaData.tagsKeywords = getDataFromNameServer('/form/keyword?_id=' + release.metaData.tagsKeywords );
+        //if (release.metadata.tagsKeywords.length === 1)
+        //    release.metadata.tagsKeywords = getDataFromNameServer('/form/keyword?_id=' + release.metadata.tagsKeywords[0]);
+        //else if (release.metadata.tagsKeywords.length > 1)
+        //    release.metadata.tagsKeywords = getDataFromNameServer('/form/keyword?_id=' + release.metadata.tagsKeywords );
     });
 };
 
@@ -149,5 +149,5 @@ module.exports = {
     User: User,
     Center: Center,
     DataRelease: DataRelease,
-    buildMetaData: buildMetaData
+    buildMetadata: buildMetadata
 };
