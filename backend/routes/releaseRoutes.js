@@ -23,8 +23,11 @@ module.exports = function(app) {
                     res.status(404).send('Error: Release with given id could not be found.');
                 }
 
-                var metadataPromises = buildMetadata(release);
+                var resultObj = {};
+                var metadataPromises = buildMetadata(release, resultObj);
                 Q.all(metadataPromises).then(function() {
+                    console.log(resultObj);
+                    release.metadata = resultObj
                     res.status(200).send(release);
                 });
             });

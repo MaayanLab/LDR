@@ -52,29 +52,29 @@ var dataReleaseSchema = new Schema({
     approved: { type: Boolean, required: true },
     dateModified: { type: Date, required: true },
     releaseDates: {
-        level1: { type: String, required: true },
-        level2: { type: String, required: true },
-        level3: { type: String, required: true },
-        level4: { type: String, required: true }
+        level1: { type: String, default: "" },
+        level2: { type: String, default: "" },
+        level3: { type: String, default: "" },
+        level4: { type: String, default: "" },
     },
     metadata: {
         // These are arrays of IDs pointing to the name-metadata server
-        analysisTools: { type: [String], required: true },
-        assay: { type: [String], required: true }, // Always length 1
-        cellLines: { type: [String], required: true },
-        disease: { type: [String], required: true }, // Always length 1
-        experiment: { type: [String], required: true }, // Always length 1
-        manipulatedGene: { type: [String], required: true }, // Always length 1
-        organism: { type: [String], required: true }, // Always length 1
-        perturbagens: { type: [String], required: true },
-        readouts: { type: [String], required: true },
-        tagsKeywords: { type: [String], required: true }
+        analysisTools: { type: [], default: [] },
+        assay: { type: [], default: [] }, // Always length 1
+        cellLines: { type: [], default: [] },
+        disease: { type: [], default: [] }, // Always length 1
+        experiment: { type: [], default: [] }, // Always length 1
+        manipulatedGene: { type: [], default: [] }, // Always length 1
+        organism: { type: [], default: [] }, // Always length 1
+        perturbagens: { type: [], default: [] },
+        readouts: { type: [], default: [] },
+        tagsKeywords: { type: [], default: [] }
     },
     urls: {
-        dataUrl: { type: String, required: true },
-        metadataUrl: { type: String, required: true },
-        pubMedUrl: { type: String, required: true },
-        qcDocumentUrl: { type: String, required: true }
+        dataUrl: { type: String, default: "" },
+        metadataUrl: { type: String, default: "" },
+        pubMedUrl: { type: String, default: "" },
+        qcDocumentUrl: { type: String, default: "" }
     }
 });
 
@@ -83,13 +83,13 @@ var dataReleaseSchema = new Schema({
  * @param releaseData: JSON stored in local database with pointers to Name/Metadata Server
  * @param path: relative path of name server URL for request
  */
-var buildMetadata = function(releaseData) {
+var buildMetadata = function(releaseData, resultObj) {
     var promisesArr = [];
     var metadataObj = releaseData.metadata.toObject();
 
     _.forEach(metadataObj, function(valArray, key) {
         var path;
-        var id = valArray.length === 1 ? valArray[0] : valArray;
+        var id = valArray.length === 1 ? valArray[0] : JSON.stringify(valArray);
 
         //if (key === 'analysisTools')
         //    path = '/form/tool?_id=' + id;
@@ -116,12 +116,18 @@ var buildMetadata = function(releaseData) {
         if (path) {
             var promise = request('GET', nameServerUrl + path)
                 .end(function(err, res) {
+                    console.log('RES BODY');
+                    console.log(res.body);
+                    console.log(resultObj);
                     if (err) {
                         console.log(err);
                     }
-                    _.forEach(valArray, function(val, i) {
-                        valArray[i] = res.body;
-                    });
+                    if (valArray.length === 1) {
+                        resultObj[key] = [res.body];
+                    }
+                    else {
+                        resultObj[key] = res.body;
+                    }
                 });
             promisesArr.push(promise);
         }

@@ -156,8 +156,9 @@ angular.module('milestones.releases.create', [
         if (form._id) {
             $scope.form._id = form._id;
         }
+        //debugger;
         lodash.each($scope.form.releaseDates, function(obj) {
-            obj.model = form.releaseDates[obj.name];
+            obj.model = form.releaseDates['level' + obj.level];
         });
         lodash.each($scope.form.urls, function(obj) {
             obj.model = form.urls[obj.name];
@@ -190,21 +191,23 @@ angular.module('milestones.releases.create', [
         console.log($scope.form);
 
         var form = {
-            _id: $scope.form._id,
             user: $scope.user._id,
             center: $scope.user.center,
             metadata: {},
             releaseDates: {},
             urls: {}
         };
+        if ($scope.form._id) {
+            form._id = $scope.form._id;
+        }
         lodash.each($scope.form.metadata, function(obj) {
-            form.metadata[obj.name] = obj.model;
+            form.metadata[obj.name] = lodash.map(obj.model, function(obj) { return obj._id });
         });
         lodash.each($scope.form.releaseDates, function(obj) {
-            form.releaseDates['level' + obj.level] = obj.model;
+            form.releaseDates['level' + obj.level] = lodash.isUndefined(obj.model) ? '' : obj.model;
         });
         lodash.each($scope.form.urls, function(obj) {
-            form.urls[obj.name] = obj.model;
+            form.urls[obj.name] = lodash.isUndefined(obj.model) ? '' : obj.model;
         });
         
         console.log('Form being posted:');
