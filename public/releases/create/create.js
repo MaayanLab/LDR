@@ -113,7 +113,7 @@ angular.module('milestones.releases.create', [
         releaseDates: [
             {
                 level: 1,
-                model: 'foo'
+                model: ''
             },
             {
                 level: 2,
@@ -135,12 +135,12 @@ angular.module('milestones.releases.create', [
                 model: ''
             },
             {
-                name: 'dateUrl',
+                name: 'dataUrl',
                 title: 'Data URL',
                 model: ''
             },
             {
-                name: 'metaDataUrl',
+                name: 'metadataUrl',
                 title: 'Metadata URL',
                 model: ''
             },
@@ -152,39 +152,23 @@ angular.module('milestones.releases.create', [
         ],
     };
 
-    /*
-    {
-        metadata: {
-            assay: [],
-            cellLines: [],
-            readouts: [],
-            perturbagens: [],
-            manipulatedGene: [],
-            organism: [],
-            relevantDisease: [],
-            experiment: [],
-            analysisTools: [],
-            tagsKeywords: []
-        },
-        releaseDates: {
-            level1: '',
-            level2: '',
-            level3: '',
-            level4: ''
-        },
-        urls: {
-            pubMedUrl:     '',
-            dataUrl:       '',
-            metadataUrl:   '',
-            qcDocumentUrl: ''
-        }
-    }
-    */
-
     api('releases/form/' + $stateParams.id).get().success(function(form) {
-        /*lodash.each(form.metadata, function(sObj, sKey) {
-            lodash.zipWith($scope.form[sKey], sObj);
-        });*/
+        if (form._id) {
+            $scope.form._id = form._id;
+        }
+        lodash.each($scope.form.releaseDates, function(obj) {
+            obj.model = form.releaseDates[obj.name];
+        });
+        lodash.each($scope.form.urls, function(obj) {
+            obj.model = form.urls[obj.name];
+        });
+        lodash.each($scope.form.metadata, function(obj) {
+            var newData = form.metadata[obj.name];
+            lodash.each(newData, function(newObj) {
+                newObj.text = newObj.name;
+            });
+            obj.model = newData;
+        });
     });
 
     $scope.autocompleteSource = function(val) {
@@ -204,32 +188,34 @@ angular.module('milestones.releases.create', [
 
     $scope.submit = function() {
         console.log($scope.form);
-        
-        /*debugger;
-        
-
-        var metadata = {};
-        $.each($scope.form.metadata, function(key) {
-            metadata[key] = lodash.map($scope.form.metadata[key], '_id');
-        });
 
         var form = {
+            _id: $scope.form._id,
             user: $scope.user._id,
             center: $scope.user.center,
-            metadata: metadata,
-            releaseDates: $scope.form.releaseDates,
-            urls: $scope.form.urls
+            metadata: {},
+            releaseDates: {},
+            urls: {}
         };
-
+        lodash.each($scope.form.metadata, function(obj) {
+            form.metadata[obj.name] = obj.model;
+        });
+        lodash.each($scope.form.releaseDates, function(obj) {
+            form.releaseDates['level' + obj.level] = obj.model;
+        });
+        lodash.each($scope.form.urls, function(obj) {
+            form.urls[obj.name] = obj.model;
+        });
+        
         console.log('Form being posted:');
         console.log(form);
         var formApi = api('releases');
-        form.urls.pubMedUrl = { val: 'foooooo' };
         formApi.post(form)
-            .error(function (err) {
+            .error(function(err) {
                 console.log(err);
             })
-            .success(function (result) {
+            .success(function(result) {
+                debugger;
                 console.log('Form posted.');
                 console.log('Result from post is.');
                 console.log(result);

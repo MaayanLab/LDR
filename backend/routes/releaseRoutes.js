@@ -95,6 +95,9 @@ module.exports = function(app) {
         if (inputData._id) {
             console.log('Data has an ID field. Updating release with id: ' + inputData._id);
             var query = { _id: inputData._id };
+            delete inputData._id;
+            console.log(inputData);
+            console.log("INPUT ID" + inputData._id);
             DataRelease.findOneAndUpdate(query, inputData, function(err, release) {
                 if (err) {
                     console.log(err);
@@ -102,6 +105,7 @@ module.exports = function(app) {
                         '. Please try again')
                 }
                 else {
+                    console.log("OUTPUT ID" + release._id)
                     res.status(202).send(release);
                 }
             });
