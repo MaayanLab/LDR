@@ -149,7 +149,7 @@ angular.module('milestones.releases.create', [
                 title: 'URL to the QC document',
                 model: ''
             }
-        ],
+        ]
     };
 
     api('releases/form/' + $stateParams.id).get().success(function(form) {
@@ -201,7 +201,9 @@ angular.module('milestones.releases.create', [
             form._id = $scope.form._id;
         }
         lodash.each($scope.form.metadata, function(obj) {
-            form.metadata[obj.name] = lodash.map(obj.model, function(obj) { return obj._id });
+            form.metadata[obj.name] = lodash.map(obj.model, function(obj) {
+                return obj._id;
+            });
         });
         lodash.each($scope.form.releaseDates, function(obj) {
             form.releaseDates['level' + obj.level] = lodash.isUndefined(obj.model) ? '' : obj.model;
@@ -218,7 +220,6 @@ angular.module('milestones.releases.create', [
                 console.log(err);
             })
             .success(function(result) {
-                debugger;
                 console.log('Form posted.');
                 console.log('Result from post is.');
                 console.log(result);
