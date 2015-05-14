@@ -47,15 +47,15 @@ try {
 }
 
 var dataReleaseSchema = new Schema({
-    user: { type: Schema.ObjectId, ref: 'User' },
-    center: { type: Schema.ObjectId, ref: 'Center' },
+    user: { type: Schema.ObjectId, ref: 'User', required: true },
+    center: { type: Schema.ObjectId, ref: 'Center', required: true },
     approved: { type: Boolean, required: true },
     dateModified: { type: Date, required: true },
     releaseDates: {
         level1: { type: String, default: "" },
         level2: { type: String, default: "" },
         level3: { type: String, default: "" },
-        level4: { type: String, default: "" },
+        level4: { type: String, default: "" }
     },
     metadata: {
         // These are arrays of IDs pointing to the name-metadata server

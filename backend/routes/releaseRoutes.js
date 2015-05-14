@@ -119,18 +119,25 @@ module.exports = function(app) {
         inputData.approved = false;
 
         // POSTed data has an _id. Find the document and update it.
-        console.log('Updating release with id: ' + inputData._id);
-        var query = { _id: inputData._id };
+        console.log('Updating release with id: ' + req.params.id);
+        var query = { _id: req.params.id };
         delete inputData._id;
-        console.log(inputData);
-        DataRelease.findOneAndUpdate(query, inputData, function(err, release) {
+        DataRelease.update(query, inputData, function(err) {
             if (err) {
                 console.log(err);
                 res.status(400).send('There was an error updating entry with id ' + query._id +
                     '. Please try again')
             }
             else {
-                res.status(202).send(release);
+
+                DataRelease.findOne(query, function(err, release) {
+                    if (err) {
+                        console.log(err);
+                        res.status(404).send('Release with id: ' + query._id +
+                            ' was updated, but could not be returned')
+                    }
+                    res.status(202).send(release);
+                });
             }
         });
     });
@@ -143,7 +150,7 @@ module.exports = function(app) {
                 res.status(404).send('There was an error deleting the data release with id ' + req.query.formId +
                     ' Error: ' + err);
             }
-            res.status(200).send('The data release with id ' + req.query.formId + ' was deleted');
+            res.status(200).send('The data release with id ' + req.params.id + ' was deleted');
         });
     });
 };

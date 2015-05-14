@@ -8,6 +8,7 @@ describe('API', function() {
     beforeEach(module('milestones'));
     beforeEach(inject(function(_api_, $injector) {
         api = _api_;
+        // Mock backend to only test API unit
         $httpBackend = $injector.get('$httpBackend');
         releaseReqHandler = $httpBackend.when('GET', 'api/releases')
             .respond([{
@@ -31,7 +32,7 @@ describe('API', function() {
         $httpBackend.verifyNoOutstandingRequest();
     });
 
-    it('can get an instance of the factory', function() {
+    it('should get an instance of the factory', function() {
         expect(api).to.exist;
     });
 
@@ -53,7 +54,6 @@ describe('API', function() {
             done();
         });
         $httpBackend.flush();
-
     })
 
 });
