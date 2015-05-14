@@ -19,6 +19,7 @@
     "morgan": "^1.0.1",
     "ng-tags-input": "^2.3.0",
     "promise": "^7.0.1",
+    "q": "^1.4.0",
     "superagent-promise": "^0.2.0",
     "underscore": "^1.8.3"
   },

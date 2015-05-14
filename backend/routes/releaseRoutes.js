@@ -1,4 +1,6 @@
 var jwt = require('express-jwt'),
+    _ = require('lodash'),
+    Q = require('q'),
     DataRelease = require('../models').DataRelease,
     buildMetadata = require('../models').buildMetadata,
     config = require('../config/database');
@@ -7,30 +9,29 @@ module.exports = function(app) {
 
     // FORM/DATASET GET, POST, PUT, DELETE
 
-    // Individual form endpoint. Empty query returns empty form. Query id returns form with that id
+    // Individual form endpoint. Query id returns form with that id for editing on front end.
     app.get('/api/releases/form/:id', function(req, res) {
         console.log('request to formId endpoint');
-        if (req.params.id) {
-            DataRelease
-                .findOne({ _id: req.params.id })
-                .exec(function(err, release) {
-                    if (err) {
-                        console.log(err);
-                        res.status(404).send('Releases could not be found.');
-                    }
-                    // TODO: Change implementation of buildMetadata() before uncommenting. Will need to handle promises.
-                    //release = buildMetadata(release);
-                    console.log(release);
+        DataRelease
+            .findOne({ _id: req.params.id })
+            .exec(function(err, release) {
+                if (err) {
+                    console.log(err);
+                    res.status(404).send('Error: Release could not be found. Id may be invalid');
+                }
+                if (!release) {
+                    res.status(404).send('Error: Release with given id could not be found.');
+                }
+
+                var metadataPromises = buildMetadata(release);
+                Q.all(metadataPromises).then(function() {
                     res.status(200).send(release);
                 });
-        }
-        else {
-            res.status(404).send('Error: id parameter not given in request');
-        }
+            });
     });
 
-    app.get('/api/releases/form/', function(req, res) {
-        debugger;
+    // Returns empty form for initialization on front-end
+    app.get(['/api/releases/form','/api/releases/form/'], function(req, res) {
         var releaseInit = {
             metadata: {
                 assay: [],
@@ -57,12 +58,12 @@ module.exports = function(app) {
                 qcDocumentUrl: { val: null }
             }
         };
-        res.status(200).send(releaseInit)
-
+        res.status(200).send(releaseInit);
     });
 
     // Multiple forms endpoint. Empty query returns all forms. centerId and userId return forms for user or center
     app.get('/api/releases', function(req, res) {
+        console.log('api');
         var query = {};
         if (req.query.centerId && req.query.userId)
             query = { center: req.query.centerId, userId: req.query.userId };
@@ -73,13 +74,12 @@ module.exports = function(app) {
 
         DataRelease
             .find(query)
-            //.lean()
+            .lean()
             .exec(function(err, allData) {
                 if (err) {
                     console.log(err);
                     res.status(404).send('Releases could not be found.');
                 }
-                buildMetadata(allData);
                 res.status(200).send(allData);
             });
     });

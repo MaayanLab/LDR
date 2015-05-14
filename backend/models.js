@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
     bcrypt = require('bcrypt-nodejs'),
     request = require('superagent-promise'),
-    lodash = require('lodash');
+    _ = require('lodash'),
     nameServerUrl = require('./config/nameServer').url;
 
 var genId = function() {
@@ -52,10 +52,10 @@ var dataReleaseSchema = new Schema({
     approved: { type: Boolean, required: true },
     dateModified: { type: Date, required: true },
     releaseDates: {
-        level1: { val: String},
-        level2: { val: String},
-        level3: { val: String},
-        level4: { val: String}
+        level1: { val: String },
+        level2: { val: String },
+        level3: { val: String },
+        level4: { val: String }
     },
     metadata: {
         // These are arrays of IDs pointing to the name-metadata server
@@ -79,31 +79,54 @@ var dataReleaseSchema = new Schema({
 });
 
 /**
- * buildMeta: Make request to name-server and replace IDs with MongoDB documents
- * @param releaseData: JSON stored in local database with pointers to Name Server meta-data
+ * buildMeta: Make request to name-server and replace arrays of IDs with arrays of JSON data
+ * @param releaseData: JSON stored in local database with pointers to Name/Metadata Server
  * @param path: relative path of name server URL for request
  */
 var buildMetadata = function(releaseData) {
+    var promisesArr = [];
     var metadataObj = releaseData.metadata.toObject();
 
-    // TODO: Need to return promises and wait for all of them in route logic
-    //lodash.forEach(metadataObj, function(valArray, key) {
-    //
-    //    if (valArray.length === 1) {
-    //        if (key === 'cellLines') {
-    //            var path = '/form/cell?_id=' + valArray[0];
-    //
-    //        request('GET', nameServerUrl + path)
-    //            .end()
-    //            .then(function(res) {
-    //                console.log('GET request to name server successful. Response: ' + JSON.stringify(res.body));
-    //                valArray[0] = JSON.stringify(res.body);
-    //            });
-    //        }
-    //    }
-    //
-    //});
-    //return releaseData;
+    _.forEach(metadataObj, function(valArray, key) {
+        var path;
+        var id = valArray.length === 1 ? valArray[0] : valArray;
+
+        //if (key === 'analysisTools')
+        //    path = '/form/tool?_id=' + id;
+        if (key === 'assay')
+            path = '/form/assay?_id=' + id;
+        else if (key === 'cellLines')
+            path = '/form/cell?_id=' + id;
+        else if (key === 'disease')
+            path = '/form/disease?_id=' + id;
+        //else if (key === 'experiment')
+        //    path = '/form/experiment?_id=' + id;
+        //else if (key === 'manipulatedGene')
+        //    path = '/form/gene?_id=' + id;
+        //else if (key === 'organism')
+        //    path = '/form/organism?_id=' + id;
+        else if (key === 'perturbagens')
+            path = '/form/perturbagen?_id=' + id;
+        else if (key === 'readouts')
+            path = '/form/readout?_id=' + id;
+        //else if (key === 'tagsKeywords')
+        //    path = '/form/keyword?_id=' + va
+
+
+        if (path) {
+            var promise = request('GET', nameServerUrl + path)
+                .end(function(err, res) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    _.forEach(valArray, function(val, i) {
+                        valArray[i] = res.body;
+                    });
+                });
+            promisesArr.push(promise);
+        }
+    });
+    return promisesArr;
 };
 
 try {
