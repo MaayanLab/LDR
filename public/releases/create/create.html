@@ -4,7 +4,7 @@
     <form>
         <section class="row">
             <h4 class="col-sm-12">Metadata</h4>
-            <lm-form-field ng-repeat="field in fields"
+            <lm-form-field ng-repeat="field in form.metadata"
                 title="{{field.title}}"
                 max-tags="{{field.maxTags}}"
                 placeholder="{{field.placeholder}}",
@@ -14,16 +14,16 @@
         </section>
         <section class="row">
             <h4 class="col-sm-12">Release Dates</h4>
-            <lm-date-picker ng-repeat="date in releaseDates"
+            <lm-date-picker ng-repeat="date in form.releaseDates track by $index"
                 level="{{date.level}}"
-                ng-model="date.model.val"
+                ng-model="form.releaseDates[$index].model"
             ></lm-date-picker>
         </section>
         <section class="row">
             <h4 class="col-sm-12">URLs</h4>
-            <label ng-repeat="url in urls" class="col-sm-6">
+            <label ng-repeat="url in form.urls track by $index" class="col-sm-6">
                 {{url.title}}
-                <input type="text" ng-model="url.model.val">
+                <input type="text" ng-model="form.urls[$index].model">
             </label>
         </section>
         <section>

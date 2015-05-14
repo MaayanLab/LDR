@@ -46,16 +46,16 @@ module.exports = function(app) {
                 tagsKeywords: []
             },
             releaseDates: {
-                level1: { val: null },
-                level2: { val: null },
-                level3: { val: null },
-                level4: { val: null }
+                level1: '',
+                level2: '',
+                level3: '',
+                level4: ''
             },
             urls: {
-                pubMedUrl: { val: null },
-                dataUrl: { val: null },
-                metadataUrl: { val: null },
-                qcDocumentUrl: { val: null }
+                pubMedUrl: '',
+                dataUrl: '',
+                metadataUrl: '',
+                qcDocumentUrl: ''
             }
         };
         res.status(200).send(releaseInit);
@@ -91,14 +91,11 @@ module.exports = function(app) {
         inputData.approved = false;
         inputData.dateModified = new Date();
 
-        debugger;
-
         var form = new DataRelease(inputData);
         console.log(form);
         form.save(function(err) {
             console.log(err);
         });
-        debugger;
         res.status(201).send(form);
     });
 

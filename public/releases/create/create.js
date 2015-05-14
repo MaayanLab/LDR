@@ -26,8 +26,134 @@ angular.module('milestones.releases.create', [
     $scope.user = store.get('currentUser');
     $scope.center = $scope.user.center;
 
-    // TODO: Decide if there's a better way to do this.
+    var MAX_TAGS = 100;
     $scope.form = {
+        metadata: [
+            {
+                name: 'assay',
+                title: 'Assay',
+                modalTitle: 'Assay',
+                placeholder: 'Select one assay...',
+                maxTags: 1,
+                model: []
+            },
+            {
+                name: 'cellLines',
+                title: 'Cell Lines',
+                modalTitle: 'Cell Line',
+                placeholder: 'Select cell line(s)...',
+                maxTags: 100,
+                model: []
+            },
+            {
+                name: 'readouts',
+                title: 'Readouts',
+                modalTitle: 'Readout',
+                placeholder: 'Select readout(s)...',
+                maxTags: MAX_TAGS,
+                model: []
+            },
+            {
+                name: 'perturbagens',
+                title: 'Perturbagens',
+                modalTitle: 'Perturbagen',
+                placeholder: 'Select perturbagens...',
+                maxTags: MAX_TAGS,
+                model: []
+            },
+            {
+                name: 'manipulatedGene',
+                title: 'Manipulated Gene',
+                modalTitle: 'Manipulated Gene',
+                placeholder: 'Select one manipulated gene...',
+                maxTags: 1,
+                model: []
+            },
+            {
+                name: 'organism',
+                title: 'Organism',
+                modalTitle: 'Organism',
+                placeholder: 'Select Organism...',
+                maxTags: 1,
+                model: []
+            },
+            {
+                name: 'relevantDisease',
+                title: 'Relevant Disease',
+                modalTitle: 'Relevant Disease',
+                placeholder: 'Select Relevant Disease...',
+                maxTags: 1,
+                model: []
+            },
+            {
+                name: 'experiment',
+                title: 'Experiment',
+                modalTitle: 'Experiment',
+                placeholder: 'Select Experiment',
+                maxTags: 1,
+                model: []
+            },
+            {
+                name: 'analysisTools',
+                title: 'Analysis Tools',
+                modalTitle: 'Analysis Tool',
+                placeholder: 'Select Analysis Tools...',
+                maxTags: MAX_TAGS,
+                model: []
+            },
+            {
+                name: 'tagsKeywords',
+                title: 'Tags/Keywords',
+                modalTitle: 'Tag/Keyword',
+                placeholder: 'Select Tag/Keywords...',
+                maxTags: MAX_TAGS,
+                model: []
+            }
+        ],
+        releaseDates: [
+            {
+                level: 1,
+                model: 'foo'
+            },
+            {
+                level: 2,
+                model: ''
+            },
+            {
+                level: 3,
+                model: ''
+            },
+            {
+                level: 4,
+                model: ''
+            }
+        ],
+        urls: [
+            {
+                name: 'pubMedUrl',
+                title: 'PubMed URL',
+                model: ''
+            },
+            {
+                name: 'dateUrl',
+                title: 'Data URL',
+                model: ''
+            },
+            {
+                name: 'metaDataUrl',
+                title: 'Metadata URL',
+                model: ''
+            },
+            {
+                name: 'qcDocumentUrl',
+                title: 'URL to the QC document',
+                model: ''
+            }
+        ],
+    };
+
+    /*
+    {
         metadata: {
             assay: [],
             cellLines: [],
@@ -41,146 +167,25 @@ angular.module('milestones.releases.create', [
             tagsKeywords: []
         },
         releaseDates: {
-            level1: { val: null },
-            level2: { val: null },
-            level3: { val: null },
-            level4: { val: null }
+            level1: '',
+            level2: '',
+            level3: '',
+            level4: ''
         },
         urls: {
-            pubMedUrl:     { val: null },
-            dataUrl:       { val: null },
-            metadataUrl:   { val: null },
-            qcDocumentUrl: { val: null }
+            pubMedUrl:     '',
+            dataUrl:       '',
+            metadataUrl:   '',
+            qcDocumentUrl: ''
         }
-    };
+    }
+    */
 
     api('releases/form/' + $stateParams.id).get().success(function(form) {
-        debugger;
-        $scope.form = form;
+        /*lodash.each(form.metadata, function(sObj, sKey) {
+            lodash.zipWith($scope.form[sKey], sObj);
+        });*/
     });
-
-
-    var MAX_TAGS = 100;
-    $scope.fields = [
-        {
-            name: 'assay',
-            title: 'Assay',
-            modalTitle: 'Assay',
-            placeholder: 'Select one assay...',
-            maxTags: 1,
-            model: $scope.form.metadata.assay
-        },
-        {
-            name: 'cellLines',
-            title: 'Cell Lines',
-            modalTitle: 'Cell Line',
-            placeholder: 'Select cell line(s)...',
-            maxTags: 100,
-            model: $scope.form.metadata.cellLines
-        },
-        {
-            name: 'readouts',
-            title: 'Readouts',
-            modalTitle: 'Readout',
-            placeholder: 'Select readout(s)...',
-            maxTags: MAX_TAGS,
-            model: $scope.form.metadata.readouts
-        },
-        {
-            name: 'perturbagens',
-            title: 'Perturbagens',
-            modalTitle: 'Perturbagen',
-            placeholder: 'Select perturbagens...',
-            maxTags: MAX_TAGS,
-            model: $scope.form.metadata.perturbagens
-        },
-        {
-            name: 'manipulatedGene',
-            title: 'Manipulated Gene',
-            modalTitle: 'Manipulated Gene',
-            placeholder: 'Select one manipulated gene...',
-            maxTags: 1,
-            model: $scope.form.metadata.manipulatedGene
-        },
-        {
-            name: 'organism',
-            title: 'Organism',
-            modalTitle: 'Organism',
-            placeholder: 'Select Organism...',
-            maxTags: 1,
-            model: $scope.form.metadata.organism
-        },
-        {
-            name: 'relevantDisease',
-            title: 'Relevant Disease',
-            modalTitle: 'Relevant Disease',
-            placeholder: 'Select Relevant Disease...',
-            maxTags: 1,
-            model: $scope.form.metadata.relevantDisease
-        },
-        {
-            name: 'experiment',
-            title: 'Experiment',
-            modalTitle: 'Experiment',
-            placeholder: 'Select Experiment',
-            maxTags: 1,
-            model: $scope.form.metadata.experiment
-        },
-        {
-            name: 'analysisTools',
-            title: 'Analysis Tools',
-            modalTitle: 'Analysis Tool',
-            placeholder: 'Select Analysis Tools...',
-            maxTags: MAX_TAGS,
-            model: $scope.form.metadata.analysisTools
-        },
-        {
-            name: 'tagsKeywords',
-            title: 'Tags/Keywords',
-            modalTitle: 'Tag/Keyword',
-            placeholder: 'Select Tag/Keywords...',
-            maxTags: MAX_TAGS,
-            model: $scope.form.metadata.tagsKeywords
-        }
-    ];
-
-    $scope.releaseDates = [
-        {
-            level: 1,
-            model: $scope.form.releaseDates.level1
-        },
-        {
-            level: 2,
-            model: $scope.form.releaseDates.level2
-        },
-        {
-            level: 3,
-            model: $scope.form.releaseDates.level3
-        },
-        {
-            level: 4,
-            model: $scope.form.releaseDates.level4
-        }
-    ];
-    
-    $scope.urls = [
-        {
-            title: 'PubMed URL',
-            model: $scope.form.urls.pubMedUrl
-        },
-        {
-            title: 'Data URL',
-            model: $scope.form.urls.dataUrl
-        },
-        {
-            title: 'Meta-Data URL',
-            model: $scope.form.urls.metadataUrl
-        },
-        {
-            title: 'URL to the QC document',
-            model: $scope.form.urls.qcDocumentUrl
-        }
-    ];
 
     $scope.autocompleteSource = function(val) {
         return $http.get('http://146.203.54.165:7078/form/cell', {
@@ -198,7 +203,10 @@ angular.module('milestones.releases.create', [
     };
 
     $scope.submit = function() {
-        debugger;
+        console.log($scope.form);
+        
+        /*debugger;
+        
 
         var metadata = {};
         $.each($scope.form.metadata, function(key) {

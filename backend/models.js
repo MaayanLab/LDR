@@ -52,10 +52,10 @@ var dataReleaseSchema = new Schema({
     approved: { type: Boolean, required: true },
     dateModified: { type: Date, required: true },
     releaseDates: {
-        level1: { val: String },
-        level2: { val: String },
-        level3: { val: String },
-        level4: { val: String }
+        level1: String,
+        level2: String,
+        level3: String,
+        level4: String
     },
     metadata: {
         // These are arrays of IDs pointing to the name-metadata server
@@ -71,10 +71,10 @@ var dataReleaseSchema = new Schema({
         tagsKeywords: [String]
     },
     urls: {
-        dataUrl: { val: String },
-        metadataUrl: { val: String },
-        pubMedUrl: { val: String },
-        qcDocumentUrl: { val: String }
+        dataUrl: String,
+        metadataUrl: String,
+        pubMedUrl: String,
+        qcDocumentUrl: String
     }
 });
 
