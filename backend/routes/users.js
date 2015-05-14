@@ -14,7 +14,7 @@ function createToken(user) {
 
 module.exports = function(app) {
     // USERS
-    app.get('/api/users', function(req, res) {
+    app.get('/api/users/', function(req, res) {
         User.find({}, function(err, users) {
             if (err) {
                 console.log(err);
