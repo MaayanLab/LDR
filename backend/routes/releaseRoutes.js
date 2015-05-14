@@ -84,30 +84,42 @@ module.exports = function(app) {
             });
     });
 
+    // If an _id field is given with POST, find and update. If not, save it to the database.
     app.post('/api/secure/releases', function(req, res) {
 
-        console.log('Posting To releases...');
         var inputData = req.body;
-        inputData.approved = false;
         inputData.dateModified = new Date();
+        inputData.approved = false;
 
-        var form = new DataRelease(inputData);
-        console.log(form);
-        form.save(function(err) {
-            console.log(err);
-        });
-        res.status(201).send(form);
-    });
-
-    // UPDATE
-    app.put('/api/secure/releases', function(req, res) {
-        var newForm = req.body;
-        // delete newForm._id;
-        DataRelease.update({ _id: req.query.id }, newForm, function(err, result) {
-            if (err)
-                res.status(404).send('Data release with id ' + req.query.id + ' could not be updated');
-            res.status(200).send(result);
-        });
+        // POSTed data has an _id. Find the document and update it.
+        if (inputData._id) {
+            console.log('Data has an ID field. Updating release with id: ' + inputData._id);
+            var query = { _id: inputData._id };
+            DataRelease.findOneAndUpdate(query, inputData, function(err, release) {
+                if (err) {
+                    console.log(err);
+                    res.status(400).send('There was an error updating entry with id ' + query._id +
+                        '. Please try again')
+                }
+                else {
+                    res.status(202).send(release);
+                }
+            });
+        }
+        // POSTed data does not have an _id. Create a new document in the database.
+        else {
+            var form = new DataRelease(inputData);
+            form.save(function(err) {
+                if (err) {
+                    console.log(err);
+                    res.status(400).send('A ' + err.name + ' occurred while saving JSON to database. ' +
+                        'Please confirm that your JSON is formatted properly. Visit http://www.jsonlint.com to confirm.')
+                }
+                else {
+                    res.status(200).send(form)
+                }
+            });
+        }
     });
 
     // DELETE

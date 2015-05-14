@@ -52,29 +52,29 @@ var dataReleaseSchema = new Schema({
     approved: { type: Boolean, required: true },
     dateModified: { type: Date, required: true },
     releaseDates: {
-        level1: String,
-        level2: String,
-        level3: String,
-        level4: String
+        level1: { type: String, required: true },
+        level2: { type: String, required: true },
+        level3: { type: String, required: true },
+        level4: { type: String, required: true }
     },
     metadata: {
         // These are arrays of IDs pointing to the name-metadata server
-        analysisTools: [String],
-        assay: [String], // Always length 1
-        cellLines: [String],
-        disease: [String], // Always length 1
-        experiment: [String], // Always length 1
-        manipulatedGene: [String], // Always length 1
-        organism: [String], // Always length 1
-        perturbagens: [String],
-        readouts: [String],
-        tagsKeywords: [String]
+        analysisTools: { type: [String], required: true },
+        assay: { type: [String], required: true }, // Always length 1
+        cellLines: { type: [String], required: true },
+        disease: { type: [String], required: true }, // Always length 1
+        experiment: { type: [String], required: true }, // Always length 1
+        manipulatedGene: { type: [String], required: true }, // Always length 1
+        organism: { type: [String], required: true }, // Always length 1
+        perturbagens: { type: [String], required: true },
+        readouts: { type: [String], required: true },
+        tagsKeywords: { type: [String], required: true }
     },
     urls: {
-        dataUrl: String,
-        metadataUrl: String,
-        pubMedUrl: String,
-        qcDocumentUrl: String
+        dataUrl: { type: String, required: true },
+        metadataUrl: { type: String, required: true },
+        pubMedUrl: { type: String, required: true },
+        qcDocumentUrl: { type: String, required: true }
     }
 });
 
