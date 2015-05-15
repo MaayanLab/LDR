@@ -5,14 +5,13 @@
 describe('DataReleases', function() {
 
     beforeEach(module('milestones'));
-    var $controller, $http, store, api, lodash;
+    var $controller, $http, store, api;
 
-    beforeEach(inject(function(_$controller_, _$http_, _api_, _store_, _lodash_) {
+    beforeEach(inject(function(_$controller_, _$http_, _api_, _store_) {
         $controller = _$controller_;
         $http = _$http_;
         store = _store_;
         api = _api_;
-        lodash = _lodash_;
         // Replace local storage with fake function -- MUST BE ABOVE CONTROLLER INIT
         sinon.stub(store, 'get', function(key) {
             return { username: 'testUser', center: { name: 'testCenter' } };
@@ -24,7 +23,7 @@ describe('DataReleases', function() {
         beforeEach(inject(function() {
             $scope = {};
             // Load controller
-            createController = $controller('releases.create.ctrl', { api: api, $scope: $scope, lodash: lodash });
+            createController = $controller('releases.create.ctrl', { api: api, $scope: $scope });
         }));
 
         it('should have a defined controller', function() {
@@ -44,7 +43,7 @@ describe('DataReleases', function() {
         beforeEach(inject(function() {
             $scope = {};
             // Load controller
-            overviewController = $controller('releases.overview.ctrl', { api: api, $scope: $scope, lodash: lodash });
+            overviewController = $controller('releases.overview.ctrl', { api: api, $scope: $scope });
         }));
 
         it('should have a defined controller', function() {

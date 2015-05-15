@@ -8,7 +8,7 @@ angular.module('milestones')
             title: '@',
             maxTags: '@',
             placeholder: '@',
-            autocompleteSource: '&',
+            autocompleteSource: '=',
             ngModel: '='
         },
         templateUrl: 'releases/formField/formField.html',
