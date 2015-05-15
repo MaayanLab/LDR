@@ -24,6 +24,7 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "chai": "^2.3.0",
     "del": "^1.1.1",
     "fail": "0.0.0",
     "gulp": "^3.8.11",

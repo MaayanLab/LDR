@@ -3,8 +3,8 @@ angular.module('milestones.releases.create', [
     'angular-storage',
     'ngSanitize',
     'ui.bootstrap',
-    'ngLodash',
-    'ngTagsInput'
+    'ngTagsInput',
+    'ngLodash'
 ])
 
 // UI Router state formCreate
@@ -156,7 +156,6 @@ angular.module('milestones.releases.create', [
         if (form._id) {
             $scope.form._id = form._id;
         }
-        //debugger;
         lodash.each($scope.form.releaseDates, function(obj) {
             obj.model = form.releaseDates['level' + obj.level];
         });
@@ -197,9 +196,6 @@ angular.module('milestones.releases.create', [
             releaseDates: {},
             urls: {}
         };
-        if ($scope.form._id) {
-            form._id = $scope.form._id;
-        }
         lodash.each($scope.form.metadata, function(obj) {
             form.metadata[obj.name] = lodash.map(obj.model, function(obj) { return obj._id });
         });
@@ -212,31 +208,17 @@ angular.module('milestones.releases.create', [
         
         console.log('Form being posted:');
         console.log(form);
-        var formApi = api('releases');
-        formApi.post(form)
+
+        var endpoint = 'releases/form/';
+        if ($scope.form._id) {
+            endpoint += $scope.form._id;
+        }
+        api(endpoint).post(form)
             .error(function(err) {
                 console.log(err);
             })
             .success(function(result) {
-                debugger;
-                console.log('Form posted.');
-                console.log('Result from post is.');
-                console.log(result);
                 $state.go('releasesCreate', { id: result._id });
             });
-
-        /*console.log(form);
-
-        if ($scope.addAnother) {
-            alert('Submission successful');
-            // Clear form
-            $scope.reset();
-            // Scroll to top (center)
-            $location.hash('formCenter');
-            $anchorScroll();
-        } else {
-            $state.go('forms');
-        }*/
     };
-
 });

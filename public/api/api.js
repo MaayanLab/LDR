@@ -1,7 +1,7 @@
 angular.module('milestones.api', [])
 
-.factory('api', function($http, lodash) {
-
+.factory('api', function($http) {
+    
     var BASE = 'api/',
         SECURE = BASE + 'secure/';
     

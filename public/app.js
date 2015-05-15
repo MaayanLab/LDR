@@ -12,7 +12,7 @@ angular.module('milestones', [
     'angular-jwt'
 ])
 
-    .config(function milestonesConfig(
+.config(function milestonesConfig(
         $urlRouterProvider, jwtInterceptorProvider, $httpProvider, $locationProvider
     ) {
 

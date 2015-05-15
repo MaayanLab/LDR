@@ -21,6 +21,7 @@ module.exports = function(config) {
             'public/vendor/angular-mocks/angular-mocks.js',
             'public/vendor/jquery/dist/jquery.js',
             'public/vendor/**/*min.js',
+            'public/vendor/ng-lodash/build/ng-lodash.js',
             // Load sourcemaps but don't include them --> leads to PhantomJS errors
             { pattern: '**/*.map', included: false },
             'public/{*.js,!(vendor)/**/*.js}',
