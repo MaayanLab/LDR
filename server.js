@@ -12,7 +12,9 @@ var port = 3001;
 var configDB = require('./backend/config/database');
 
 mongoose.connect(configDB.url);
-mongoose.set('debug', true);
+
+// Uncomment to view mongoose logging
+//mongoose.set('debug', true);
 
 app.use(cors());
 app.use(morgan('dev')); // log every request to the console
@@ -24,17 +26,13 @@ var publicDir = __dirname + '/public/';
 console.log('Serving static files from ' + publicDir);
 app.use('/', express.static(path.join(publicDir)));
 
-/*app.get('*.css', function (req, res, next) {
-    res.setHeader('Content-Type', 'text/css');
-});*/
-
 require('./backend/routes')(app);
 
 app.get('/', function (req, res) {
     res.sendFile(publicDir + '/index.html');
 });
 
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
     if (err.name === 'UnauthorizedError') {
         res.status(401).send('Token invalid. You must be logged in to proceed.');
     }

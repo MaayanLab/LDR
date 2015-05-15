@@ -46,14 +46,6 @@ angular.module('milestones.releases.create', [
                 model: []
             },
             {
-                name: 'readouts',
-                title: 'Readouts',
-                modalTitle: 'Readout',
-                placeholder: 'Select readout(s)...',
-                maxTags: MAX_TAGS,
-                model: []
-            },
-            {
                 name: 'perturbagens',
                 title: 'Perturbagens',
                 modalTitle: 'Perturbagen',
@@ -62,8 +54,16 @@ angular.module('milestones.releases.create', [
                 model: []
             },
             {
+                name: 'readouts',
+                title: 'Readouts',
+                modalTitle: 'Readout',
+                placeholder: 'Select readout(s)...',
+                maxTags: MAX_TAGS,
+                model: []
+            },
+            {
                 name: 'manipulatedGene',
-                title: 'Manipulated Gene',
+                title: 'Manipulated Gene (if applicable)',
                 modalTitle: 'Manipulated Gene',
                 placeholder: 'Select one manipulated gene...',
                 maxTags: 1,
@@ -82,14 +82,6 @@ angular.module('milestones.releases.create', [
                 title: 'Relevant Disease',
                 modalTitle: 'Relevant Disease',
                 placeholder: 'Select Relevant Disease...',
-                maxTags: 1,
-                model: []
-            },
-            {
-                name: 'experiment',
-                title: 'Experiment',
-                modalTitle: 'Experiment',
-                placeholder: 'Select Experiment',
                 maxTags: 1,
                 model: []
             },

@@ -14,7 +14,6 @@ angular.module('milestones.releases.overview', [
             requiresLogin: true
         }
     });
-
 })
 
 .controller('releases.overview.ctrl', function($scope, $http, store, $state, api) {
@@ -37,7 +36,7 @@ angular.module('milestones.releases.overview', [
     $scope.deleteForm = function(form) {
         console.log(form);
         if (confirm('Are you sure you would like to delete this entry?')) {
-            dataApi.del({ formId: form._id }).success(function() {
+            dataApi.del({ id: form._id }).success(function() {
                 alert('Deleted.');
                 dataApi.get({ userId: $scope.user._id }).success(function(data) {
                     $scope.forms = data;
