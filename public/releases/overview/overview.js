@@ -18,27 +18,29 @@ angular.module('milestones.releases.overview', [
 
 .controller('releases.overview.ctrl', function($scope, $http, store, $state, api) {
     var currentUser = store.get('currentUser'),
-        dataApi = api('releases');
+        dataApi = api('releases/form/');
 
     $scope.user = currentUser;
     $scope.forms = [];
 
-    dataApi.get({ centerId: $scope.user.center._id }).success(function(data) {
+    api('releases/center/' + $scope.user.center._id).get().success(function(data) {
         $scope.forms = data;
     });
 
     $scope.editForm = function(form) {
-        // TODO: Route to editing of form here
-        //store.set('formToEdit', form);
-        //$state.go('api/releases/kjfskjkfjskdfjk');
+        $state.go('releasesCreate', { id: form._id });
     };
 
     $scope.deleteForm = function(form) {
         console.log(form);
         if (confirm('Are you sure you would like to delete this entry?')) {
+<<<<<<< HEAD
             dataApi.del({ id: form._id }).success(function() {
+=======
+            api('releases/form/' + form._id ).del().success(function() {
+>>>>>>> 667df9795b26430c00a9b504b9b344c202c646d0
                 alert('Deleted.');
-                dataApi.get({ userId: $scope.user._id }).success(function(data) {
+                api('releases/center/' + $scope.user.center._id).get().success(function(data) {
                     $scope.forms = data;
                 });
             });

@@ -16,6 +16,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="form in forms" class="form-table-data">
+<<<<<<< HEAD
                 <!--<td id="id">{{form._id}}</td>-->
                 <td id="assay-name">{{form.assay.name}}</td>
                 <td id="cell-count">{{form.cellLineCount}}</td>
@@ -27,6 +28,13 @@
                 <td ng-if="!form.releaseDates.level1" id="release-level"></td>
                 <!------------------------------------- ---------------------------------->
                 <td id="status">{{form.status}}</td>
+=======
+                <td id="id">{{form._id}}</td>
+                <td id="status">{{form.status}}</td>
+                <td id="assay-name">{{form.metadata.assay.name}}</td>
+                <td id="readout-count">{{form.metadata.readoutCount}}</td>
+                <td id="release-date">{{form.releaseDates.level1 | date:'MM-dd-yyyy'}}</td>
+>>>>>>> 667df9795b26430c00a9b504b9b344c202c646d0
                 <td>
                     <div class="btn-group">
                         <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
