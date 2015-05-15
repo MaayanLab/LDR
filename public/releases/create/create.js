@@ -102,6 +102,12 @@ angular.module('milestones.releases.create', [
                 model: []
             }
         ],
+        experiment: {
+            name: 'experiment',
+            title: 'Brief Description of Experiment',
+            placeholder: 'Enter description...',
+            model: ''
+        },
         releaseDates: [
             {
                 level: 1,

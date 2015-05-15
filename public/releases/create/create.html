@@ -5,21 +5,27 @@
         <section class="row">
             <h4 class="col-sm-12">Data Release Instance</h4>
             <lm-form-field ng-repeat="field in form.metadata"
-                title="{{field.title}}"
-                max-tags="{{field.maxTags}}"
-                placeholder="{{field.placeholder}}"
-                ng-model="field.model"
-                autocomplete-source="autocompleteSource()"
-            ></lm-form-field>
-            <h5>Brief Description of Experiment</h5>
-            <textarea class="form-control" rows="12"></textarea>
+                           title="{{field.title}}"
+                           max-tags="{{field.maxTags}}"
+                           placeholder="{{field.placeholder}}"
+                           ng-model="field.model"
+                           autocomplete-source="autocompleteSource()">
+            </lm-form-field>
+            <div class="col-sm-6">
+                <!--<a class="glyphicon glyphicon-plus add-new-btn" ng-click="openModal()"></a>-->
+                <h5>{{form.experiment.title}}</h5>
+                <input placeholder="{{form.experiment.placeholder}}"
+                       class="experiment"
+                       type="text"
+                       ng-model="form.experiment.model">
+            </div>
         </section>
         <section class="row">
             <h4 class="col-sm-12">Release Dates</h4>
             <lm-date-picker ng-repeat="date in form.releaseDates track by $index"
-                level="{{date.level}}"
-                ng-model="form.releaseDates[$index].model"
-            ></lm-date-picker>
+                            level="{{date.level}}"
+                            ng-model="form.releaseDates[$index].model">
+            </lm-date-picker>
         </section>
         <section class="row">
             <h4 class="col-sm-12">URLs</h4>

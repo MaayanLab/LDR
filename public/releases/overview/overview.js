@@ -34,11 +34,7 @@ angular.module('milestones.releases.overview', [
     $scope.deleteForm = function(form) {
         console.log(form);
         if (confirm('Are you sure you would like to delete this entry?')) {
-<<<<<<< HEAD
-            dataApi.del({ id: form._id }).success(function() {
-=======
             api('releases/form/' + form._id ).del().success(function() {
->>>>>>> 667df9795b26430c00a9b504b9b344c202c646d0
                 alert('Deleted.');
                 api('releases/center/' + $scope.user.center._id).get().success(function(data) {
                     $scope.forms = data;
