@@ -3,7 +3,6 @@ angular.module('milestones', [
         'milestones.home',
         'milestones.releases.overview',
         'milestones.releases.create',
-        'milestones.metadata.overview',
         'milestones.user.admin',
         'milestones.user.registration',
         'ui.router',

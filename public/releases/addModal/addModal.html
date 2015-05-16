@@ -1,75 +1,12 @@
-<div class="modal-header">
-    <h3 ng-show="editData" class="modal-title">Edit {{datatype}}<button class="btn btn-danger pull-right" ng-click="delete()">Delete</button></h3>
-    <h3 ng-show="!editData" class="modal-title">New {{datatype}}</h3>
-    
-</div>
 <div class="modal-body">
-    <form ng-model="modalForm" class="modal-form-input" ng-show="datatype === 'Assay'">
+    <form class="modal-form-input">
         <div class="form-group">
-            <label class="control-label">Name</label>
-            <input type="text" class="form-control" ng-model="modalForm.name" />
-        </div>
-        <div class="form-group">
-            <label class="control-label">Information</label>
-            <input type="text" class="form-control" ng-model="modalForm.info" />
+            <label class="control-label">New Field</label>
+            <input type="text" class="form-control" ng-model="newText.text"/>
         </div>
     </form>
-
-    <form ng-model="modalForm" class="modal-form-input" ng-show="datatype === 'Cell Line'">
-        <div class="form-group">
-            <label class="control-label">Name</label>
-            <input type="text" class="form-control" ng-model="modalForm.name" />
-        </div>
-        <div class="form-group">
-            <label class="control-label">Type (Cell line or Cancer line)</label>
-            <input type="text" class="form-control" ng-model="modalForm.type" />
-        </div>
-        <div class="form-group">
-            <label class="control-label">Class (Normal or iPSC-differentiated)</label>
-            <input type="text" class="form-control" ng-model="modalForm.class" />
-        </div>
-        <div class="form-group">
-            <label class="control-label">Tissue</label>
-            <input type="text" class="form-control" ng-model="modalForm.tissue" />
-        </div>
-    </form>
-
-    <form ng-model="modalForm" class="modal-form-input" ng-show="datatype === 'Perturbagen'">
-        <div class="form-group">
-            <label class="control-label">Name</label>
-            <input type="text" class="form-control" ng-model="modalForm.name" />
-        </div>
-        <div class="form-group">
-            <label class="control-label">Type</label>
-            <input type="text" class="form-control" ng-model="modalForm.type" />
-        </div>
-    </form>
-
-    <form ng-model="modalForm" class="modal-form-input" ng-show="datatype === 'Readout'">
-        <div class="form-group">
-            <label class="control-label">Name</label>
-            <input type="text" class="form-control" ng-model="modalForm.name" />
-        </div>
-        <div class="form-group">
-            <label class="control-label">Datatype</label>
-            <input type="text" class="form-control" ng-model="modalForm.datatype" />
-        </div>
-    </form>
-
-    <form ng-model="modalForm" class="modal-form-input" ng-show="datatype === 'Disease'">
-        <div class="form-group">
-            <label class="control-label">Name</label>
-            <input type="text" class="form-control" ng-model="modalForm.name" />
-        </div>
-        <div class="form-group">
-            <label class="control-label">Information</label>
-            <input type="text" class="form-control" ng-model="modalForm.info" />
-        </div>
-    </form>
-
 </div>
 <div class="modal-footer">
-    <button ng-show="!editData" class="btn btn-primary" ng-click="close()">Add</button>
-    <button ng-show="editData" class="btn btn-primary" ng-click="close()">Update</button>
-    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-primary" ng-click="ok();">Save</button>
+    <button class="btn btn-default" ng-click="cancel();">Cancel</button>
 </div>

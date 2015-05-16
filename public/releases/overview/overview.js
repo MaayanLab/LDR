@@ -14,7 +14,6 @@ angular.module('milestones.releases.overview', [
             requiresLogin: true
         }
     });
-
 })
 
 .controller('releases.overview.ctrl', function($scope, $http, store, $state, api) {

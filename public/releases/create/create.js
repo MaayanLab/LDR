@@ -37,7 +37,9 @@ angular.module('milestones.releases.create', [
                     modalTitle: 'Assay',
                     placeholder: 'Select one assay...',
                     maxTags: 1,
-                    model: []
+                    autocompleteEndpoint: 'assay',
+                    required: true,
+                    model: [],
                 },
                 {
                     name: 'cellLines',
@@ -45,6 +47,8 @@ angular.module('milestones.releases.create', [
                     modalTitle: 'Cell Line',
                     placeholder: 'Select cell line(s)...',
                     maxTags: 100,
+                    autocompleteEndpoint: 'cell',
+                    required: true,
                     model: []
                 },
                 {
@@ -53,6 +57,8 @@ angular.module('milestones.releases.create', [
                     modalTitle: 'Readout',
                     placeholder: 'Select readout(s)...',
                     maxTags: MAX_TAGS,
+                    autocompleteEndpoint: 'readout',
+                    required: true,
                     model: []
                 },
                 {
@@ -61,6 +67,8 @@ angular.module('milestones.releases.create', [
                     modalTitle: 'Perturbagen',
                     placeholder: 'Select perturbagens...',
                     maxTags: MAX_TAGS,
+                    autocompleteEndpoint: 'perturbagen',
+                    required: true,
                     model: []
                 },
                 {
@@ -69,6 +77,7 @@ angular.module('milestones.releases.create', [
                     modalTitle: 'Manipulated Gene',
                     placeholder: 'Select one manipulated gene...',
                     maxTags: 1,
+                    autocompleteEndpoint: '',
                     model: []
                 },
                 {
@@ -77,6 +86,7 @@ angular.module('milestones.releases.create', [
                     modalTitle: 'Organism',
                     placeholder: 'Select Organism...',
                     maxTags: 1,
+                    autocompleteEndpoint: '',
                     model: []
                 },
                 {
@@ -85,14 +95,7 @@ angular.module('milestones.releases.create', [
                     modalTitle: 'Relevant Disease',
                     placeholder: 'Select Relevant Disease...',
                     maxTags: 1,
-                    model: []
-                },
-                {
-                    name: 'experiment',
-                    title: 'Experiment',
-                    modalTitle: 'Experiment',
-                    placeholder: 'Select Experiment',
-                    maxTags: 1,
+                    autocompleteEndpoint: 'disease',
                     model: []
                 },
                 {
@@ -101,6 +104,7 @@ angular.module('milestones.releases.create', [
                     modalTitle: 'Analysis Tool',
                     placeholder: 'Select Analysis Tools...',
                     maxTags: MAX_TAGS,
+                    autocompleteEndpoint: '',
                     model: []
                 },
                 {
@@ -109,9 +113,16 @@ angular.module('milestones.releases.create', [
                     modalTitle: 'Tag/Keyword',
                     placeholder: 'Select Tag/Keywords...',
                     maxTags: MAX_TAGS,
+                    autocompleteEndpoint: '',
                     model: []
                 }
             ],
+            experiment: {
+                name: 'experiment',
+                title: 'Brief Description of Experiment',
+                placeholder: 'Enter description...',
+                model: ''
+            },
             releaseDates: [
                 {
                     level: 1,
@@ -173,19 +184,33 @@ angular.module('milestones.releases.create', [
             });
         });
 
-        $scope.autocompleteSource = function(val) {
-            console.log(val);
-            return $http.get('http://146.203.54.165:7078/form/cell', {
+        function getGroup() {
+            return $scope.user.center.name.slice(0,1).toLowerCase();
+        }
+
+        $scope.autocompleteSource = function(textInput, fieldName) {
+            if (fieldName === 'cellLines') {
+                fieldName = 'cell';
+            }
+            return $http.get(NAME_SERVER + fieldName, {
                 params: {
-                    name: val
+                    name: textInput,
+                    group: getGroup()
                 }
             }).then(function(response) {
-                var results = {};
+                // We build a hash and then convert it to an array of objects
+                // in order to prevent duplicates being returned to
+                // NgTagsInput.
+                var results = {
+                    newField: {
+                        text: 'New field',
+                        newField: true
+                    }
+                };
                 response.data.map(function(item) {
                     var result = {};
                     result.text = item.name;
                     result._id = item._id;
-                    // This prevents duplicates.
                     results[item.name] = result;
                 });
                 return lodash.values(results);
