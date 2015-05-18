@@ -116,9 +116,6 @@ var buildMetadata = function(releaseData, resultObj) {
         if (path) {
             var promise = request('GET', nameServerUrl + path)
                 .end(function(err, res) {
-                    console.log('RES BODY');
-                    console.log(res.body);
-                    console.log(resultObj);
                     if (err) {
                         console.log(err);
                     }

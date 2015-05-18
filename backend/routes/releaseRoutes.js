@@ -63,13 +63,26 @@ module.exports = function(app) {
     app.get('/api/releases/', function(req, res) {
         DataRelease
             .find({})
-            .lean()
             .exec(function(err, allData) {
                 if (err) {
                     console.log(err);
                     res.status(404).send('Releases could not be found.');
                 }
-                res.status(200).send(allData);
+                var releasesArr = [];
+                var i = 0;
+                _.forEach(allData, function(release) {
+                    var resultObj = {};
+                    var metadataPromises = buildMetadata(release, resultObj);
+                    Q.all(metadataPromises).then(function() {
+                        release.metadata = resultObj;
+                        releasesArr.push(release);
+                        console.log(i);
+                        if (i === allData.length - 1) {
+                            res.status(200).send(releasesArr);
+                        }
+                        i++;
+                    });
+                });
             });
     });
 
@@ -83,13 +96,26 @@ module.exports = function(app) {
 
         DataRelease
             .find(query)
-            .lean()
             .exec(function(err, allData) {
                 if (err) {
                     console.log(err);
                     res.status(404).send('Releases could not be found.');
                 }
-                res.status(200).send(allData);
+                var releasesArr = [];
+                var i = 0;
+                _.forEach(allData, function(release) {
+                    var resultObj = {};
+                    var metadataPromises = buildMetadata(release, resultObj);
+                    Q.all(metadataPromises).then(function() {
+                        release.metadata = resultObj;
+                        releasesArr.push(release);
+                        console.log(i);
+                        if (i === allData.length - 1) {
+                            res.status(200).send(releasesArr);
+                        }
+                        i++;
+                    });
+                });
             });
     });
 
