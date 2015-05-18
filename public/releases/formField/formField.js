@@ -1,15 +1,17 @@
 angular.module('milestones')
-    .directive('lmFormField', function($modal, $q, lodash) {
+    .directive('lmFormField', function($modal, lodash) {
         return {
             restrict: 'E',
             required: 'ngModel',
             scope: {
                 title: '@',
+                name: '@',
                 maxTags: '@',
                 placeholder: '@',
                 autocompleteEndpoint: '@',
                 autocompleteSource: '=',
-                ngModel: '='
+                ngModel: '=',
+                isRequired: '@'
             },
             templateUrl: 'releases/formField/formField.html',
             link: function(scope, element, attrs) {
@@ -17,37 +19,21 @@ angular.module('milestones')
                     if (!newTag.newField) {
                         return true;
                     }
-                    /*$modal.open({
+                    $modal.open({
                         templateUrl: 'releases/addModal/addModal.html',
-                        controller: function($scope, $modalInstance) {
-                            $scope.ok = function() {
-                                newTag.text = $scope.newText.text;
-                                newTag.newField = false;
-                                $modalInstance.close();
-                            };
-                            $scope.cancel = function() {
-                                addTag = false;
-                                $modalInstance.dismiss('cancel');
-                            };
-                        }
-                    });*/
-                    return $q(function(resolve, reject) {
-                        $modal.open({
-                            templateUrl: 'releases/addModal/addModal.html',
-                            controller: function($scope, $modalInstance) {
-                                $scope.ok = function() {
-                                    newTag.text = $scope.newText.text;
-                                    newTag.newField = false;
-                                    $modalInstance.close();
-                                    resolve(true);
-                                };
-                                $scope.cancel = function() {
-                                    $modalInstance.dismiss('cancel');
-                                    reject(false);
+                        controller: 'ModalInstanceCtrl',
+                        resolve: {
+                            config: function() {
+                                return {
+                                    newTag: newTag,
+                                    name: scope.name,
+                                    model: scope.ngModel,
+                                    element: element
                                 };
                             }
-                        });
+                        }
                     });
+                    return true;
                 };
             }
         };

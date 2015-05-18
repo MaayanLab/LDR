@@ -56,7 +56,6 @@ nav .form-control {
 }
 nav .btn {
   border: none;
-  border-radius: 0;
 }
 .nav > li > a:focus,
 .nav > li > a:hover {
@@ -258,6 +257,28 @@ input.experiment:focus {
   -moz-box-shadow: 0 0 3px 1px rgba(5, 139, 242, 0.6);
   box-shadow: 0 0 3px 1px rgba(5, 139, 242, 0.6);
 }
+#data-registration-form section {
+  border-top: 1px solid #eee;
+  margin-top: 20px;
+  padding-top: 20px;
+}
+#data-registration-form input {
+  width: 100%;
+}
+#data-registration-form .submit button {
+  background: #eeeeee;
+  border: 1px solid #aaaaaa;
+}
+#data-registration-form .submit button:hover {
+  background: #286090;
+  color: white;
+}
+#data-registration-form label {
+  font-weight: normal;
+}
+.highlight {
+  color: #df6632;
+}
 .modal-content {
   border-radius: 0;
 }
@@ -288,5 +309,10 @@ h4.meta-header {
   margin: 20px 0;
 }
 .form-control {
+  border-radius: 0;
+}
+/* Bootstrap defaults
+ */
+.btn {
   border-radius: 0;
 }

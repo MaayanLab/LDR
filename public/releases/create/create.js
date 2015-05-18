@@ -20,7 +20,7 @@ angular.module('milestones.releases.create', [
     })
 
     .controller('releases.create.ctrl', function(
-            $stateParams, $scope, $timeout, $http, $location, $anchorScroll, store, $state, $modal, lodash, api
+            $stateParams, $scope, $timeout, $http, $location, $anchorScroll, store, $state, $modal, lodash, api, nameServer
         ) {
         
         var NAME_SERVER = 'http://146.203.54.165:7078/form/';
@@ -38,7 +38,7 @@ angular.module('milestones.releases.create', [
                     placeholder: 'Select one assay...',
                     maxTags: 1,
                     autocompleteEndpoint: 'assay',
-                    required: true,
+                    isRequired: true,
                     model: [],
                 },
                 {
@@ -48,7 +48,7 @@ angular.module('milestones.releases.create', [
                     placeholder: 'Select cell line(s)...',
                     maxTags: 100,
                     autocompleteEndpoint: 'cell',
-                    required: true,
+                    isRequired: true,
                     model: []
                 },
                 {
@@ -58,7 +58,7 @@ angular.module('milestones.releases.create', [
                     placeholder: 'Select readout(s)...',
                     maxTags: MAX_TAGS,
                     autocompleteEndpoint: 'readout',
-                    required: true,
+                    isRequired: true,
                     model: []
                 },
                 {
@@ -68,7 +68,7 @@ angular.module('milestones.releases.create', [
                     placeholder: 'Select perturbagens...',
                     maxTags: MAX_TAGS,
                     autocompleteEndpoint: 'perturbagen',
-                    required: true,
+                    isRequired: true,
                     model: []
                 },
                 {
@@ -117,6 +117,7 @@ angular.module('milestones.releases.create', [
                     model: []
                 }
             ],
+            // TODO: Include in metadata
             experiment: {
                 name: 'experiment',
                 title: 'Brief Description of Experiment',
@@ -126,7 +127,8 @@ angular.module('milestones.releases.create', [
             releaseDates: [
                 {
                     level: 1,
-                    model: ''
+                    model: '',
+                    isRequired: true
                 },
                 {
                     level: 2,
@@ -184,20 +186,16 @@ angular.module('milestones.releases.create', [
             });
         });
 
-        function getGroup() {
-            return $scope.user.center.name.slice(0,1).toLowerCase();
+        function getGroup(centerName) {
+            return centerName.slice(0,1).toLowerCase();
         }
 
         $scope.autocompleteSource = function(textInput, fieldName) {
-            if (fieldName === 'cellLines') {
-                fieldName = 'cell';
-            }
-            return $http.get(NAME_SERVER + fieldName, {
-                params: {
-                    name: textInput,
-                    group: getGroup()
-                }
-            }).then(function(response) {
+            var params = {
+                name: textInput,
+                group: getGroup($scope.user.center.name)
+            };
+            return nameServer.get(fieldName, params).then(function(response) {
                 // We build a hash and then convert it to an array of objects
                 // in order to prevent duplicates being returned to
                 // NgTagsInput.
@@ -220,7 +218,7 @@ angular.module('milestones.releases.create', [
         $scope.submit = function() {
             console.log($scope.form);
 
-            var form = {
+            /*var form = {
                 user: $scope.user._id,
                 center: $scope.user.center,
                 metadata: {},
@@ -252,6 +250,6 @@ angular.module('milestones.releases.create', [
                 })
                 .success(function(result) {
                     $state.go('releasesCreate', { id: result._id });
-                });
+                });*/
         };
     });

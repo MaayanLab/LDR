@@ -1,18 +1,20 @@
 <h3 class="text-center">Data Registration Form</h3>
 <h4 class="text-center">Center: {{center.name}}</h4>
-<div>
+<div id="data-registration-form">
     <form>
         <section class="row">
-            <h4 class="col-sm-12">Data Release Instance</h4>
+            <em class="col-sm-12 highlight text-center">* Required</em>
+            <h4 class="col-sm-12 text-center">Data Release Instance</h4>
             <lm-form-field ng-repeat="field in form.metadata"
                 title="{{field.title}}"
+                name="{{field.name}}"
                 autocomplete-endpoint="{{field.autocompleteEndpoint}}"
                 max-tags="{{field.maxTags}}"
                 placeholder="{{field.placeholder}}",
                 ng-model="field.model"
                 autocomplete-source="autocompleteSource"
-                ng-class="{required: field.required}"
-            ></lm-form-field>
+                is-required="{{field.isRequired}}">
+            </lm-form-field>
             <div class="col-sm-6">
                 <!--<a class="glyphicon glyphicon-plus add-new-btn" ng-click="openModal()"></a>-->
                 <h5>{{form.experiment.title}}</h5>
@@ -23,20 +25,21 @@
             </div>
         </section>
         <section class="row">
-            <h4 class="col-sm-12">Release Dates</h4>
+            <h4 class="col-sm-12 text-center">Release Dates</h4>
             <lm-date-picker ng-repeat="date in form.releaseDates track by $index"
                             level="{{date.level}}"
-                            ng-model="form.releaseDates[$index].model">
+                            ng-model="form.releaseDates[$index].model"
+                            is-required="{{form.isRequired}}">
             </lm-date-picker>
         </section>
         <section class="row">
-            <h4 class="col-sm-12">URLs</h4>
+            <h4 class="col-sm-12 text-center">URLs</h4>
             <label ng-repeat="url in form.urls track by $index" class="col-sm-12">
                 {{url.title}}
                 <input type="text" ng-model="form.urls[$index].model">
             </label>
         </section>
-        <section>
+        <section class="submit">
             <button type="button" ng-click="submit()">Submit</button>
         </section>
     </form>

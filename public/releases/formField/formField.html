@@ -1,5 +1,7 @@
 <div class="col-sm-6">
-    <h5>{{title}}</h5>
+    <h5>
+        {{title}}<span ng-if="isRequired">*</span>
+    </h5>
     <!--<a ng-if="ngModel.length" class="glyphicon glyphicon-remove clear-btn" ng-click="clearSelection()"></a>-->
     <!--<a class="glyphicon glyphicon-plus add-new-btn" ng-click="openModal()"></a>-->
     <tags-input
