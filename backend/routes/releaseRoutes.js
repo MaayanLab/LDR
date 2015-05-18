@@ -88,6 +88,7 @@ module.exports = function(app) {
 
     // Multiple releases endpoint for specific center or user
     app.get('/api/releases/:type(center|user)/:id', function(req, res) {
+        console.log('REQUEST RECEIVED');
         var query = {};
         if (req.params.type === 'center')
             query = { center: req.params.id };
@@ -97,10 +98,12 @@ module.exports = function(app) {
         DataRelease
             .find(query)
             .exec(function(err, allData) {
+                console.log('DATA HAS BEEN FETCHED');
                 if (err) {
                     console.log(err);
                     res.status(404).send('Releases could not be found.');
                 }
+                console.log('PASSED IF ERROR');
                 var releasesArr = [];
                 var i = 0;
                 _.forEach(allData, function(release) {

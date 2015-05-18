@@ -24,7 +24,7 @@
                        ng-model="form.experiment.model">
             </div>
         </section>
-        <section class="row">
+        <section id="releaseDates" class="row">
             <h4 class="col-sm-12 text-center">Release Dates</h4>
             <lm-date-picker ng-repeat="date in form.releaseDates track by $index"
                             level="{{date.level}}"
@@ -32,12 +32,12 @@
                             is-required="{{form.isRequired}}">
             </lm-date-picker>
         </section>
-        <section class="row">
+        <section id="urls" class="row">
             <h4 class="col-sm-12 text-center">URLs</h4>
-            <label ng-repeat="url in form.urls track by $index" class="col-sm-12">
-                {{url.title}}
+            <div ng-repeat="url in form.urls track by $index" class="col-sm-12">
+                <h5>{{url.title}}</h5>
                 <input type="text" ng-model="form.urls[$index].model">
-            </label>
+            </div>
         </section>
         <section class="submit">
             <button type="button" ng-click="submit()">Submit</button>

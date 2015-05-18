@@ -1,16 +1,26 @@
-html {
+html,
+body {
   height: 100%;
-  font-family: arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 body {
-  height: 100%;
-  font-family: arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
   background-color: #ffffff;
 }
 a {
   color: #286090;
+}
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #fff6da inset;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700 !important;
 }
 #wrap {
   background-color: #ffffff;
@@ -38,7 +48,7 @@ nav a:focus {
   color: white;
 }
 nav a:hover {
-  color: #8ABDE8;
+  color: #8abde8;
 }
 nav h1 {
   margin: 0;
@@ -93,7 +103,7 @@ nav .btn {
   margin: 20px auto;
 }
 .ml-view {
-  font-family: Roboto, sans-serif;
+  font-family: 'Roboto', sans-serif;
   margin: 0 90px;
 }
 #password-group {
@@ -266,15 +276,34 @@ input.experiment:focus {
   width: 100%;
 }
 #data-registration-form .submit button {
-  background: #eeeeee;
-  border: 1px solid #aaaaaa;
+  background: #df6632;
+  border: none;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 5px 10px;
 }
 #data-registration-form .submit button:hover {
-  background: #286090;
+  background: #942e02;
   color: white;
 }
 #data-registration-form label {
   font-weight: normal;
+}
+#data-registration-form #releaseDates input,
+#data-registration-form #urls input {
+  border: 1px solid #a9a9a9;
+  box-shadow: 1px 1px 1px 0 #d3d3d3 inset;
+  height: 34px;
+  padding: 6px 12px;
+}
+#data-registration-form #releaseDates input:focus,
+#data-registration-form #urls input:focus {
+  outline: 0;
+  -webkit-box-shadow: 0 0 3px 1px rgba(5, 139, 242, 0.6);
+  -moz-box-shadow: 0 0 3px 1px rgba(5, 139, 242, 0.6);
+  box-shadow: 0 0 3px 1px rgba(5, 139, 242, 0.6);
 }
 .highlight {
   color: #df6632;
@@ -315,4 +344,31 @@ h4.meta-header {
  */
 .btn {
   border-radius: 0;
+}
+.btn-danger {
+  background-color: #df6632;
+  border-color: transparent;
+}
+.btn-success {
+  background-color: #286090;
+  border-color: transparent;
+}
+.btn-success:hover,
+.btn-success:active,
+.btn-success:focus {
+  background-color: #8abde8;
+  border-color: transparent;
+}
+.btn-info {
+  background-color: #dfb532;
+  border-color: transparent;
+}
+.btn-info:hover,
+.btn-info:active,
+.btn-info:focus {
+  background-color: #947002;
+  border-color: transparent;
+}
+.normal {
+  font-weight: normal;
 }
