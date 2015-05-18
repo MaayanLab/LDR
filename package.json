@@ -8,6 +8,7 @@
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.0.2",
     "compression": "^1.4.1",
+    "connect-timeout": "^1.6.2",
     "cors": "^2.5.3",
     "ejs": "^0.8.8",
     "express": "^4.0.0",

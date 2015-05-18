@@ -16,7 +16,7 @@ describe('Server', function() {
 
     describe('Endpoints', function() {
 
-        describe('Users', function() {
+        describe('/users', function() {
             it('should return user list from GET request', function(done) {
                 $.get(baseUrl + '/api/users/').done(function(data) {
                     expect(data).to.be.an('array');
