@@ -4,7 +4,7 @@ var express = require('express'),
     morgan = require('morgan'),
     path = require('path'),
     bodyParser = require('body-parser'),
-    timeout = require('connect-timeout'),
+//    timeout = require('connect-timeout'),
     compress = require('compression');
 
 var app = express();
@@ -18,7 +18,7 @@ mongoose.connect(configDB.url);
 //mongoose.set('debug', true);
 
 app.use(cors());
-app.use(timeout('2s'));
+//app.use(timeout('2s'));
 app.use(morgan('dev')); // log every request to the console
 app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({extended: true}));
@@ -40,13 +40,13 @@ app.use(function (err, req, res) {
     }
 });
 
-app.use(haltOnTimedout);
+//app.use(haltOnTimedout);
 
-function haltOnTimedout(req, res, next) {
-    if (!req.timeout) {
-        next();
-    }
-}
+//function haltOnTimedout(req, res, next) {
+//    if (!req.timeout) {
+//        next();
+//    }
+//}
 
 app.listen(port);
 console.log('The magic is happening on port ' + port);
