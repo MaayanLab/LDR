@@ -63,13 +63,20 @@ module.exports = function(app) {
     app.get('/api/releases/', function(req, res) {
         DataRelease
             .find({})
-            .lean()
             .exec(function(err, allData) {
                 if (err) {
                     console.log(err);
                     res.status(404).send('Releases could not be found.');
                 }
-                res.status(200).send(allData);
+                _.forEach(allData, function(release) {
+                    console.log(release);
+                    var resultObj = {};
+                    var metadataPromises = buildMetadata(release, resultObj);
+                    Q.all(metadataPromises).then(function() {
+                        release.metadata = resultObj;
+                        res.status(200).send(release);
+                    });
+                });
             });
     });
 
@@ -83,13 +90,20 @@ module.exports = function(app) {
 
         DataRelease
             .find(query)
-            .lean()
             .exec(function(err, allData) {
                 if (err) {
                     console.log(err);
                     res.status(404).send('Releases could not be found.');
                 }
-                res.status(200).send(allData);
+                _.forEach(allData, function(release) {
+                    console.log(release);
+                    var resultObj = {};
+                    var metadataPromises = buildMetadata(release, resultObj);
+                    Q.all(metadataPromises).then(function() {
+                        release.metadata = resultObj;
+                        res.status(200).send(release);
+                    });
+                });
             });
     });
 
