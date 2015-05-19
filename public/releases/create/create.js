@@ -156,12 +156,12 @@ angular.module('milestones.releases.create', [
                 },
                 {
                     name: 'metadataUrl',
-                    title: 'Metadata URL',
+                    title: 'Metadata Documentation URL',
                     model: ''
                 },
                 {
                     name: 'qcDocumentUrl',
-                    title: 'URL to the QC document',
+                    title: 'QC Documentation URL',
                     model: ''
                 }
             ]
@@ -182,7 +182,7 @@ angular.module('milestones.releases.create', [
             }
             lodash.each($scope.form.releaseDates, function(obj) {
                 var date = form.releaseDates['level' + obj.level];
-                obj.model = date === '' ? null : new Date(date);
+                obj.model = (date === null || date === '') ? null : new Date(date);
             });
             lodash.each($scope.form.urls, function(obj) {
                 obj.model = form.urls[obj.name];
@@ -216,16 +216,15 @@ angular.module('milestones.releases.create', [
                     }
                 };
                 response.data.map(function(item) {
-                    /*if (results[item.name]) {
+                    if (results[item.name]) {
                         return;
-                    }*/
+                    }
                     var obj = {};
                     obj.name = item.name;
                     obj.text = formatText(item.name);
                     obj._id = item._id;
                     results[item.name] = obj;
                 });
-
                 return lodash.values(results);
             });
         };
@@ -268,7 +267,8 @@ angular.module('milestones.releases.create', [
                     console.log(err);
                 })
                 .success(function(result) {
-                    $state.go('releasesCreate', { id: result._id });
+                    //$state.go('releasesCreate', { id: result._id });
+                    $state.go('releasesOverview');
                 });
         };
     });
