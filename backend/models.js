@@ -118,6 +118,11 @@ var buildMetadata = function(releaseData, resultObj) {
                 .end(function(err, res) {
                     if (err) {
                         console.log(err);
+                        return;
+                    }
+                    if (!res) {
+                        console.log('No response from Name Server.');
+                        return;
                     }
                     if (valArray.length === 1) {
                         resultObj[key] = [res.body];

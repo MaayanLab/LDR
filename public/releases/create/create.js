@@ -39,7 +39,7 @@ angular.module('milestones.releases.create', [
                     maxTags: 1,
                     autocompleteEndpoint: 'assay',
                     isRequired: true,
-                    model: [],
+                    model: []
                 },
                 {
                     name: 'cellLines',

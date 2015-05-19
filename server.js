@@ -18,7 +18,11 @@ mongoose.connect(configDB.url);
 //mongoose.set('debug', true);
 
 app.use(cors());
+<<<<<<< HEAD
+app.use(timeout('20s'));
+=======
 //app.use(timeout('2s'));
+>>>>>>> cffde3a06cfc3ec300a3bc944b5bb83d2b2feaa1
 app.use(morgan('dev')); // log every request to the console
 app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({extended: true}));
@@ -40,6 +44,14 @@ app.use(function (err, req, res) {
     }
 });
 
+<<<<<<< HEAD
+app.use(haltOnTimeout);
+function haltOnTimeout(req, res, next) {
+    if (!req.timeout) {
+        next();
+    }
+}
+=======
 //app.use(haltOnTimedout);
 
 //function haltOnTimedout(req, res, next) {
@@ -47,6 +59,7 @@ app.use(function (err, req, res) {
 //        next();
 //    }
 //}
+>>>>>>> cffde3a06cfc3ec300a3bc944b5bb83d2b2feaa1
 
 app.listen(port);
 console.log('The magic is happening on port ' + port);
