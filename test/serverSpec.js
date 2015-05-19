@@ -129,36 +129,36 @@ describe('Server', function() {
 
     });
 
-    describe('Error Handling', function() {
-        var invalidObj = {
-            "keyThatDoesntConformToSchema": "The value associated with the invalid key",
-            "foo": "bar",
-            "foo2": "baz"
-        };
-        var invalidFormId = 'NOT_A_VALID_FORM_ID';
-
-        it('should return a 404 status and message if invalid id given with GET request to /api/releases/form/:id',
-            function(done) {
-                $.get(serverUrl + '/api/releases/form/' + invalidFormId).fail(function(response) {
-                    expect(response).to.exist;
-                    expect(response.status).to.eq(404);
-                    expect(response.responseText).to.be.a('string');
-                    done();
-                })
-            });
-
-        it('should return a 400 status and message if invalid Object is POSTed to /api/secure/releases/form/',
-            function(done) {
-                $.ajax({
-                    type: 'POST',
-                    url: serverUrl + '/api/secure/releases/form/',
-                    data: invalidObj
-                }).fail(function(response) {
-                    expect(response).to.exist;
-                    expect(response.status).to.eq(400);
-                    expect(response.responseText).to.be.a('string');
-                    done();
-                })
-            })
-    });
+    //describe('Error Handling', function() {
+    //    var invalidObj = {
+    //        "keyThatDoesntConformToSchema": "The value associated with the invalid key",
+    //        "foo": "bar",
+    //        "foo2": "baz"
+    //    };
+    //    var invalidFormId = 'NOT_A_VALID_FORM_ID';
+    //
+    //    it('should return a 404 status and message if invalid id given with GET request to /api/releases/form/:id',
+    //        function(done) {
+    //            $.get(serverUrl + '/api/releases/form/' + invalidFormId).fail(function(response) {
+    //                expect(response).to.exist;
+    //                expect(response.status).to.eq(404);
+    //                expect(response.responseText).to.be.a('string');
+    //                done();
+    //            })
+    //        });
+    //
+    //    it('should return a 400 status and message if invalid Object is POSTed to /api/secure/releases/form/',
+    //        function(done) {
+    //            $.ajax({
+    //                type: 'POST',
+    //                url: serverUrl + '/api/secure/releases/form/',
+    //                data: invalidObj
+    //            }).fail(function(response) {
+    //                expect(response).to.exist;
+    //                expect(response.status).to.eq(400);
+    //                expect(response.responseText).to.be.a('string');
+    //                done();
+    //            })
+    //        })
+    //});
 });

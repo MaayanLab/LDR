@@ -1,8 +1,11 @@
 var mongoose = require('mongoose'),
     bcrypt = require('bcrypt-nodejs'),
-    request = require('superagent-promise'),
+    http = require('http'),
+    Q = require('q'),
     _ = require('lodash'),
     nameServerUrl = require('./config/nameServer').url;
+
+http.globalAgent.maxSockets = 20;
 
 var genId = function() {
     return mongoose.Types.ObjectId();
@@ -81,7 +84,7 @@ var dataReleaseSchema = new Schema({
 /**
  * buildMeta: Make request to name-server and replace arrays of IDs with arrays of JSON data
  * @param releaseData: JSON stored in local database with pointers to Name/Metadata Server
- * @param path: relative path of name server URL for request
+ * @param resultObj: Object to be populated with results upon fulfillment of promises
  */
 var buildMetadata = function(releaseData, resultObj) {
     var promisesArr = [];
@@ -114,24 +117,28 @@ var buildMetadata = function(releaseData, resultObj) {
 
 
         if (path) {
-            var promise = request('GET', nameServerUrl + path)
-                .end(function(err, res) {
-                    if (err) {
-                        console.log(err);
-                        return;
-                    }
-                    if (!res) {
-                        console.log('No response from Name Server.');
-                        return;
-                    }
+            var def = Q.defer();
+            http.get(nameServerUrl + path, function(res) {
+                //console.log('HEADERS: ' + JSON.stringify(res.headers));
+                var jsonString = '';
+                res.on('data', function(chunk) {
+                    jsonString += chunk;
+                });
+                res.on('end', function() {
+                    var body = JSON.parse(jsonString);
                     if (valArray.length === 1) {
-                        resultObj[key] = [res.body];
+                        resultObj[key] = [body];
                     }
                     else {
-                        resultObj[key] = res.body;
+                        resultObj[key] = body;
                     }
+                    def.resolve(resultObj);
                 });
-            promisesArr.push(promise);
+            }).on('error', function(err) {
+                console.log('Error in request to name server: ' + err.message);
+                def.reject('A server error occured while populating');
+            });
+            promisesArr.push(def.promise);
         }
     });
     return promisesArr;
