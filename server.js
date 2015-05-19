@@ -18,7 +18,7 @@ mongoose.connect(configDB.url);
 //mongoose.set('debug', true);
 
 app.use(cors());
-app.use(timeout('2s'));
+app.use(timeout('20s'));
 app.use(morgan('dev')); // log every request to the console
 app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({extended: true}));
