@@ -1,6 +1,6 @@
 var mongoose = require('mongoose'),
     bcrypt = require('bcrypt-nodejs'),
-    request = require('request-promise').defaults({maxSockets: 50}),
+    request = require('request-promise').defaults({maxSockets: 200}),
     _ = require('lodash'),
     nameServerUrl = require('./config/nameServer').url;
 
@@ -80,8 +80,8 @@ var dataReleaseSchema = new Schema({
 
 /**
  * buildMeta: Make request to name-server and replace arrays of IDs with arrays of JSON data
- * @param releaseData: JSON stored in local database with pointers to Name/Metadata Server
- * @param path: relative path of name server URL for request
+ * @param releaseData: Object stored in local database with pointers to Name/Metadata Server
+ * @param resultObj: Object that will be built upon fulfillment of promises
  */
 var buildMetadata = function(releaseData, resultObj) {
     var promisesArr = [];
@@ -118,13 +118,11 @@ var buildMetadata = function(releaseData, resultObj) {
                 .then(function(err, res) {
                     if (err) {
                         console.log(err);
-                        return;
                     }
-                    if (!res) {
+                    else if (!res) {
                         console.log('No response from Name Server.');
-                        return;
                     }
-                    if (valArray.length === 1) {
+                    else if (valArray.length === 1) {
                         resultObj[key] = [res.body];
                     }
                     else {
