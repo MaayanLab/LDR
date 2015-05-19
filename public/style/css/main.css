@@ -22,11 +22,9 @@ h6 {
   font-family: 'Roboto', sans-serif;
   font-weight: 700 !important;
 }
-#wrap {
-  background-color: #ffffff;
+#wrapper {
   min-height: 100%;
-  height: auto !important;
-  margin: 0 auto -60px;
+  position: relative;
 }
 .pointer,
 .nav,
@@ -96,8 +94,9 @@ nav .btn {
   cursor: default;
   color: #d5d5e5;
 }
-#page {
+#content {
   margin-top: 20px;
+  padding-bottom: 120px;
 }
 .content {
   margin: 20px auto;
@@ -275,18 +274,30 @@ input.experiment:focus {
 #data-registration-form input {
   width: 100%;
 }
-#data-registration-form .submit button {
-  background: #df6632;
-  border: none;
-  color: white;
-  font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 5px 10px;
-}
-#data-registration-form .submit button:hover {
-  background: #942e02;
-  color: white;
+#data-registration-form #submit {
+  /*button {
+            border: none;
+            color: white;
+            font-family: @font-family-primary;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 5px 10px;
+            &:hover {
+                color: white;
+            }
+        }
+        button.btn-submit {
+            background: @color-primary;
+            &:hover {
+                background: @color-primary-light;
+            }
+        }
+        button.btn-cancel {
+            background: @color-red;
+            &:hover {
+                background: @color-red-dark;
+            }
+        }*/
 }
 #data-registration-form label {
   font-weight: normal;
@@ -323,16 +334,20 @@ table.meta-data-table {
 h4.meta-header {
   margin-top: 40px;
 }
-#push {
-  margin-top: 60px;
-  height: 140px;
-  background-color: white;
-}
 #footer {
-  height: 60px;
-  border-top: 1px solid #eeeeee;
-  border-radius: 0;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fafafa), color-stop(1, #f5f5f5));
+  background: #222222;
+  bottom: 0;
+  color: white;
+  height: 100px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+#footer a {
+  color: white;
+}
+#footer a:hover {
+  color: #8abde8;
 }
 .credit {
   margin: 20px 0;

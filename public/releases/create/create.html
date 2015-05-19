@@ -39,8 +39,9 @@
                 <input type="text" ng-model="form.urls[$index].model">
             </div>
         </section>
-        <section class="submit">
-            <button type="button" ng-click="submit()">Submit</button>
+        <section id="submit">
+            <button class="btn-success" type="button" ng-click="submit()">Submit</button>
+            <button class="btn-danger" type="button" ng-click="cancel()">Cancel</button>
         </section>
     </form>
 </div>
