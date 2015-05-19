@@ -21,9 +21,10 @@ angular.module('milestones.user.admin', [
     var currentUser = store.get('currentUser');
     $scope.allForms = [];
 
-    var dataApi = api('data');
+    var dataApi = api('releases');
 
     dataApi.get().success(function(forms) {
+        debugger;
         $scope.allForms = forms;
     });
 

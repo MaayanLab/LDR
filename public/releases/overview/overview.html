@@ -25,7 +25,10 @@
                 <!-- TODO: Show most recent release date and provide level -->
                 <td id="release-date">{{form.releaseDates.level1 | date:'MM-dd-yyyy'}}</td>
                 <td id="release-level">1</td>
-                <td id="status">{{form.status}}</td>
+                <td id="status">
+                    <span ng-if="form.status" id="status">Approved</span>
+                    <span ng-if="!form.status" id="status">Pending approval</span>
+                </td>
                 <!--<td id="id">{{form._id}}</td>-->
                 <td>
                     <div class="btn-group">

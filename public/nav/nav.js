@@ -30,25 +30,14 @@ angular.module('milestones.nav', [])
                 });
             };
 
-            // Don't really need an AJAX request here, all that's important is deleting the currentUser and JWT
             scope.logout = function () {
                 $rootScope.message = 'Logged out.';
-                $http({
-                    url: 'logout',
-                    method: 'GET'
-                }).then(function (result) {
-                    // No Error
-                    $rootScope.message = result;
-                    $rootScope.isLoggedIn = false;
-                    $rootScope.isLoggedInAdmin = false;
-                    store.remove('currentUser');
-                    store.remove('jwt');
-                    alert('Successfully logged out');
-                    $state.go('home');
-                }, function (error) {
-                    // Error
-                    $rootScope.message = result;
-                });
+                $rootScope.isLoggedIn = false;
+                $rootScope.isLoggedInAdmin = false;
+                store.remove('currentUser');
+                store.remove('jwt');
+                alert('Successfully logged out');
+                $state.go('home');
             };
         }
     };

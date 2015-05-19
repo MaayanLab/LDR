@@ -168,11 +168,12 @@ angular.module('milestones.releases.create', [
         };
 
         function formatText(name) {
-            var MAX = 40;
+            /*var MAX = 40;
             if (name.length < MAX) {
                 return name;
             }
-            return name.slice(0, MAX) + '...';
+            return name.slice(0, MAX) + '...';*/
+            return name;
         }
 
         api('releases/form/' + $stateParams.id).get().success(function(form) {
@@ -180,7 +181,8 @@ angular.module('milestones.releases.create', [
                 $scope.form._id = form._id;
             }
             lodash.each($scope.form.releaseDates, function(obj) {
-                obj.model = form.releaseDates['level' + obj.level];
+                var date = form.releaseDates['level' + obj.level];
+                obj.model = date === '' ? null : new Date(date);
             });
             lodash.each($scope.form.urls, function(obj) {
                 obj.model = form.urls[obj.name];

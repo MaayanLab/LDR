@@ -16,7 +16,7 @@ angular.module('milestones.releases.overview', [
         });
     })
 
-    .controller('releases.overview.ctrl', function($scope, $http, store, $state, api) {
+    .controller('releases.overview.ctrl', function($scope, $http, store, $state, lodash, api) {
         var currentUser = store.get('currentUser'),
             dataApi = api('releases/form/');
 
@@ -24,7 +24,14 @@ angular.module('milestones.releases.overview', [
         $scope.forms = [];
 
         api('releases/center/' + $scope.user.center._id).get().success(function(data) {
-            console.log(data);
+            // Convert release date strings to proper date objects so Angular
+            // can format them correctly.
+            lodash.each(data, function(obj) {
+                lodash.each(obj.releaseDates, function(level, key) {
+                    if (level === '') { return; }
+                    obj.releaseDates[key] = new Date(level);
+                });
+            });
             $scope.forms = data;
         });
 

@@ -15,7 +15,7 @@ angular.module('milestones')
                 $event.stopPropagation();
                 scope.opened = true;
             };
-            scope.format = 'dd-MMMM-yyyy';
+            //scope.format = 'dd-MMMM-yyyy';
         }
     };
 });
