@@ -10,9 +10,6 @@ body {
 a {
   color: #286090;
 }
-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px #fff6da inset;
-}
 h1,
 h2,
 h3,
@@ -359,30 +356,40 @@ h4.meta-header {
  */
 .btn {
   border-radius: 0;
+  border: none;
+}
+.btn:hover,
+.btn:active,
+.btn:focus {
+  border: transparent;
 }
 .btn-danger {
   background-color: #df6632;
-  border-color: transparent;
+  border-color: none;
 }
-.btn-success {
+.btn-success,
+.btn-primary {
   background-color: #286090;
-  border-color: transparent;
+  border-color: none;
 }
 .btn-success:hover,
+.btn-primary:hover,
 .btn-success:active,
-.btn-success:focus {
-  background-color: #8abde8;
-  border-color: transparent;
+.btn-primary:active,
+.btn-success:focus,
+.btn-primary:focus {
+  background-color: #08385f;
+  border-color: none;
 }
 .btn-info {
   background-color: #dfb532;
-  border-color: transparent;
+  border-color: none;
 }
 .btn-info:hover,
 .btn-info:active,
 .btn-info:focus {
   background-color: #947002;
-  border-color: transparent;
+  border-color: none;
 }
 .normal {
   font-weight: normal;

@@ -230,6 +230,10 @@ angular.module('milestones.releases.create', [
             });
         };
 
+        $scope.cancel = function() {
+            $state.go('releasesOverview');
+        };
+
         $scope.submit = function() {
             console.log($scope.form);
 

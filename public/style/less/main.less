@@ -28,9 +28,6 @@ body {
 a {
     color: @color-primary;
 }
-input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px @color-yellow-superlight inset;
-}
 h1,
 h2,
 h3,
@@ -382,29 +379,36 @@ h4.meta-header {
  */
 .btn {
     border-radius: 0;
-}
-.btn-danger {
-    background-color: @color-red;
-    border-color: transparent;
-}
-.btn-success {
-    background-color: @color-primary;
-    border-color: transparent;
+    border: none;
     &:hover,
     &:active,
     &:focus {
-        background-color: @color-primary-light;
-        border-color: transparent;
+        border: transparent;
+    }
+}
+.btn-danger {
+    background-color: @color-red;
+    border-color: none;
+}
+.btn-success,
+.btn-primary {
+    background-color: @color-primary;
+    border-color: none;
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: @color-primary-dark;
+        border-color: none;
     }
 }
 .btn-info {
     background-color: @color-yellow;
-    border-color: transparent;
+    border-color: none;
     &:hover,
     &:active,
     &:focus {
         background-color: @color-yellow-dark;
-        border-color: transparent;
+        border-color: none;
     }
 }
 .normal {
