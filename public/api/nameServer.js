@@ -17,7 +17,8 @@ angular.module('milestones.api')
                     type: 'POST',
                     crossDomain: true,
                     dataType: 'json',
-                    data: data
+                    data: JSON.stringify(data),
+                    contentType: 'application/json'
                 });
             }
         };
