@@ -40,9 +40,8 @@ app.use(function (err, req, res) {
     }
 });
 
-app.use(haltOnTimedout);
-
-function haltOnTimedout(req, res, next) {
+app.use(haltOnTimeout);
+function haltOnTimeout(req, res, next) {
     if (!req.timeout) {
         next();
     }

@@ -214,7 +214,6 @@ angular.module('milestones.releases.create', [
                     }
                 };
                 response.data.map(function(item) {
-                    debugger;
                     var result = {};
                     result.name = item.name;
                     result.text = formatText(item.name);

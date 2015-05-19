@@ -133,10 +133,10 @@ module.exports = function(app) {
             if (err) {
                 console.log(err);
                 res.status(400).send('A ' + err.name + ' occurred while saving JSON to database. ' +
-                    'Please confirm that your JSON is formatted properly. Visit http://www.jsonlint.com to confirm.')
+                    'Please confirm that your JSON is formatted properly. Visit http://www.jsonlint.com to confirm.');
             }
             else {
-                res.status(200).send(form)
+                res.status(200).send(form);
             }
         });
     });
@@ -154,18 +154,18 @@ module.exports = function(app) {
         DataRelease.update(query, inputData, function(err) {
             if (err) {
                 console.log(err);
-                res.status(400).send('There was an error updating entry with id ' + query._id +
-                    '. Please try again')
+                res.status(400).send('There was an error updating entry with id ' + query._id + '. Please try again')
             }
             else {
-
                 DataRelease.findOne(query, function(err, release) {
                     if (err) {
                         console.log(err);
                         res.status(404).send('Release with id: ' + query._id +
                             ' was updated, but could not be returned')
                     }
-                    res.status(202).send(release);
+                    else {
+                        res.status(202).send(release);
+                    }
                 });
             }
         });

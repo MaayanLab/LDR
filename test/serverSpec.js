@@ -4,10 +4,10 @@
 
 describe('Server', function() {
 
-    var baseUrl = 'http://localhost:3001';
+    var serverUrl = 'http://localhost:3001';
 
     it('should be running', function(done) {
-        $.get(baseUrl).done(function(data) {
+        $.get(serverUrl).done(function(data) {
             expect(data).to.exist;
             expect(data).to.be.a('string');
             done();
@@ -18,7 +18,7 @@ describe('Server', function() {
 
         describe('/users', function() {
             it('should return user list from GET request', function(done) {
-                $.get(baseUrl + '/api/users/').done(function(data) {
+                $.get(serverUrl + '/api/users/').done(function(data) {
                     expect(data).to.be.an('array');
                     expect(data).to.not.be.empty;
                     var user = data[0];
@@ -31,7 +31,7 @@ describe('Server', function() {
 
         describe('/releases', function() {
             it('should return data releases from GET request', function(done) {
-                $.get(baseUrl + '/api/releases/').done(function(data) {
+                $.get(serverUrl + '/api/releases/').done(function(data) {
                     expect(data).to.be.an('array');
                     expect(data).to.not.be.empty;
                     var release = data[0];
@@ -46,12 +46,12 @@ describe('Server', function() {
 
     describe('Releases Pipeline', function() {
         it('should return an empty form on GET request to /api/releases/form/', function(done) {
-            $.get(baseUrl + '/api/releases/form/').done(function(form) {
+            $.get(serverUrl + '/api/releases/form/').done(function(form) {
                 expect(form).to.be.an('object');
                 expect(form).to.include.keys('metadata', 'releaseDates', 'urls');
                 done();
             });
-            $.get(baseUrl + '/api/releases/form/').done(function(form) {
+            $.get(serverUrl + '/api/releases/form/').done(function(form) {
                 expect(form).to.be.an('object');
                 expect(form).to.include.keys('metadata', 'releaseDates', 'urls');
                 done();
@@ -74,7 +74,7 @@ describe('Server', function() {
         it('should make a POST request to /api/secure/releases/form/ and return release with id', function(done) {
             $.ajax({
                 type: 'POST',
-                url: baseUrl + '/api/secure/releases/form/',
+                url: serverUrl + '/api/secure/releases/form/',
                 data: validObj
             }).done(function(release) {
                 // Check for keys added by server
@@ -86,7 +86,7 @@ describe('Server', function() {
         });
 
         it('should make a GET request to /api/releases/form/:id and return individual release', function(done) {
-            $.get(baseUrl + '/api/releases/form/' + serverObj._id).done(function(release) {
+            $.get(serverUrl + '/api/releases/form/' + serverObj._id).done(function(release) {
                 expect(release).to.be.an('object');
                 expect(release).to.include.keys('user', 'center', 'approved', 'dateModified', '_id',
                     'urls', 'metadata', 'releaseDates');
@@ -104,7 +104,7 @@ describe('Server', function() {
                 serverObj.urls.pubMedUrl = "ThisValueShouldBeUpdatedOnServer";
                 $.ajax({
                     type: 'POST',
-                    url: baseUrl + '/api/secure/releases/form/' + serverObj._id,
+                    url: serverUrl + '/api/secure/releases/form/' + serverObj._id,
                     data: serverObj
                 }).done(function(updatedRelease) {
                     expect(updatedRelease).include.keys('_id', 'dateModified', 'approved');
@@ -120,7 +120,7 @@ describe('Server', function() {
             function(done) {
                 $.ajax({
                     type: 'DELETE',
-                    url: baseUrl + '/api/secure/releases/form/' + serverObj._id
+                    url: serverUrl + '/api/secure/releases/form/' + serverObj._id
                 }).done(function(response) {
                     expect(response).to.be.a('string');
                     done();
@@ -139,7 +139,7 @@ describe('Server', function() {
 
         it('should return a 404 status and message if invalid id given with GET request to /api/releases/form/:id',
             function(done) {
-                $.get(baseUrl + '/api/releases/form/' + invalidFormId).fail(function(response) {
+                $.get(serverUrl + '/api/releases/form/' + invalidFormId).fail(function(response) {
                     expect(response).to.exist;
                     expect(response.status).to.eq(404);
                     expect(response.responseText).to.be.a('string');
@@ -151,7 +151,7 @@ describe('Server', function() {
             function(done) {
                 $.ajax({
                     type: 'POST',
-                    url: baseUrl + '/api/secure/releases/form/',
+                    url: serverUrl + '/api/secure/releases/form/',
                     data: invalidObj
                 }).fail(function(response) {
                     expect(response).to.exist;
