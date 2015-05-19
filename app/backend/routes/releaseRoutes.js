@@ -69,14 +69,16 @@ module.exports = function(app) {
                     res.status(404).send('Releases could not be found.');
                 }
                 var releasesArr = [];
-                _.forEach(allData, function(release) {
+                _.forEach(allData, function(release, i) {
                     var resultObj = {};
                     var metadataPromises = buildMetadata(release, resultObj);
                     Q.all(metadataPromises).then(function() {
                         release.metadata = resultObj;
                         releasesArr.push(release);
-                    }).then(function() {
-                        res.status(200).send(releasesArr);
+                        // TODO: Fix hacky res send
+                        if (i === allData.length - 1) {
+                            res.status(200).send(releasesArr);
+                        }
                     })
                 });
             });
@@ -101,18 +103,16 @@ module.exports = function(app) {
                 }
                 console.log('PASSED IF ERROR');
                 var releasesArr = [];
-                var i = 0;
-                _.forEach(allData, function(release) {
+                _.forEach(allData, function(release, i) {
                     var resultObj = {};
                     var metadataPromises = buildMetadata(release, resultObj);
                     Q.all(metadataPromises).then(function() {
                         release.metadata = resultObj;
                         releasesArr.push(release);
-                        console.log(i);
+                        // TODO: Fix hacky res send
                         if (i === allData.length - 1) {
                             res.status(200).send(releasesArr);
                         }
-                        i++;
                     });
                 });
             });
