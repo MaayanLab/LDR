@@ -12,32 +12,32 @@ describe('Name Server', function() {
 
     it('should get entries for "A" assay query', function(done) {
         $.get(assayUrl).done(function(data) {
-            expect(data).to.be.an('array');
-            expect(data).to.not.be.empty;
+            data.should.be.an('array');
+            data.should.have.length.above(0);
             done();
         })
     });
 
     it('should get entries for "B" cell line query', function(done) {
         $.get(cLineUrl).done(function(data) {
-            expect(data).to.be.an('array');
-            expect(data).to.not.be.empty;
+            data.should.be.an('array');
+            data.should.have.length.above(0);
             done();
         })
     });
 
     it('should get entries for "C" perturbagen query', function(done) {
         $.get(pertUrl).done(function(data) {
-            expect(data).to.be.an('array');
-            expect(data).to.not.be.empty;
+            data.should.be.an('array');
+            data.should.have.length.above(0);
             done();
         })
     });
 
     it('should get entries for "D" readout query', function(done) {
         $.get(rOutUrl).done(function(data) {
-            expect(data).to.be.an('array');
-            expect(data).to.not.be.empty;
+            data.should.be.an('array');
+            data.should.have.length.above(0);
             done();
         })
     });

@@ -1,5 +1,6 @@
 /**
- * Created by mmcdermott on 5/12/15.
+ * @author Michael McDermott
+ * Created on 5/12/15.
  */
 
 describe('Server', function() {
@@ -8,8 +9,7 @@ describe('Server', function() {
 
     it('should be running', function(done) {
         $.get(serverUrl).done(function(data) {
-            expect(data).to.exist;
-            expect(data).to.be.a('string');
+            data.should.be.a('string');
             done();
         })
     });
@@ -19,11 +19,10 @@ describe('Server', function() {
         describe('/users', function() {
             it('should return user list from GET request', function(done) {
                 $.get(serverUrl + '/api/users/').done(function(data) {
-                    expect(data).to.be.an('array');
-                    expect(data).to.not.be.empty;
+                    data.should.be.an('array');
                     var user = data[0];
-                    expect(user).to.be.an('object');
-                    expect(user).to.include.keys('username', 'password', 'center', 'admin');
+                    user.should.be.an('object');
+                    user.should.include.keys('username', 'password', 'center', 'admin');
                     done();
                 })
             });
@@ -32,11 +31,10 @@ describe('Server', function() {
         describe('/releases', function() {
             it('should return data releases from GET request', function(done) {
                 $.get(serverUrl + '/api/releases/').done(function(data) {
-                    expect(data).to.be.an('array');
-                    expect(data).to.not.be.empty;
+                    data.should.be.an('array');
                     var release = data[0];
-                    expect(release).to.be.an('object');
-                    expect(release).to.include.keys('user', 'center', 'approved', 'dateModified', '_id',
+                    release.should.be.an('object');
+                    release.should.include.keys('user', 'center', 'approved', 'dateModified', '_id',
                         'urls', 'metadata', 'releaseDates');
                     done();
                 })
@@ -61,7 +59,7 @@ describe('Server', function() {
             "user": "5519bd94ea7e106fc6784170",
             "center": "5519bd94ea7e106fc6784164",
             "metadata": {
-                "assay": [], "cellLines": ["554cde880bdc502a4057f5c4"], "readouts": [],
+                "assay": ["555a4cfeed103be1009ca9f8"], "cellLines": ["554cde880bdc502a4057f5c4"], "readouts": [],
                 "perturbagens": [], "manipulatedGene": [], "organism": [], "relevantDisease": [],
                 "experiment": [], "analysisTools": [], "tagsKeywords": []
             },
@@ -122,43 +120,74 @@ describe('Server', function() {
                     type: 'DELETE',
                     url: serverUrl + '/api/secure/releases/form/' + serverObj._id
                 }).done(function(response) {
-                    expect(response).to.be.a('string');
+                    response.should.be.a('string');
                     done();
                 })
             });
 
     });
 
-    //describe('Error Handling', function() {
-    //    var invalidObj = {
-    //        "keyThatDoesntConformToSchema": "The value associated with the invalid key",
-    //        "foo": "bar",
-    //        "foo2": "baz"
-    //    };
-    //    var invalidFormId = 'NOT_A_VALID_FORM_ID';
-    //
-    //    it('should return a 404 status and message if invalid id given with GET request to /api/releases/form/:id',
-    //        function(done) {
-    //            $.get(serverUrl + '/api/releases/form/' + invalidFormId).fail(function(response) {
-    //                expect(response).to.exist;
-    //                expect(response.status).to.eq(404);
-    //                expect(response.responseText).to.be.a('string');
-    //                done();
-    //            })
-    //        });
-    //
-    //    it('should return a 400 status and message if invalid Object is POSTed to /api/secure/releases/form/',
-    //        function(done) {
-    //            $.ajax({
-    //                type: 'POST',
-    //                url: serverUrl + '/api/secure/releases/form/',
-    //                data: invalidObj
-    //            }).fail(function(response) {
-    //                expect(response).to.exist;
-    //                expect(response.status).to.eq(400);
-    //                expect(response.responseText).to.be.a('string');
-    //                done();
-    //            })
-    //        })
-    //});
+    describe('Error Handling', function() {
+        var invalidObj = {
+            "keyThatDoesNotConformToSchema": "The value associated with the invalid key",
+            "foo": "bar",
+            "foo2": "baz"
+        };
+        var invalidFormId = 'NOT_A_VALID_FORM_ID';
+
+        it('should return a 404 status and message if invalid id given with GET request to /api/releases/form/:id',
+            function(done) {
+                $.ajax({
+                    type: 'GET',
+                    url: serverUrl + '/api/releases/form/' + invalidFormId,
+                    error: function(xhr) {
+                        xhr.status.should.equal(404);
+                        xhr.responseText.should.equal('Error: Release could not be found. Id may be invalid');
+                        done();
+                    }
+                });
+            });
+
+        it('should return a 400 status and message if invalid Object is POSTed to /api/secure/releases/form/',
+            function(done) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: serverUrl + '/api/secure/releases/form/',
+                    data: invalidObj,
+                    tryCount: 0,
+                    retryLimit: 3,
+                    error: function(xhr) {
+                        if(xhr.status === 0) {
+                            this.tryCount++;
+                            if (this.tryCount <= this.retryLimit) {
+                                $.ajax(this);
+                                return;
+                            }
+                            return;
+                        }
+                        xhr.status.should.equal(400);
+                        xhr.responseText.should.equal('A ValidationError occurred while saving JSON to database. ' +
+                            'Please confirm that your JSON is formatted properly. ' +
+                            'Visit http://www.jsonlint.com to confirm.');
+                        done();
+                    }
+                });
+
+                var retryCall = function() {
+                    $.ajax({
+                        type: 'POST',
+                        url: serverUrl + '/api/secure/releases/form/',
+                        data: invalidObj,
+                        error: function(xhr) {
+                            xhr.status.should.equal(400);
+                            xhr.responseText.should.equal('A ValidationError occurred while saving JSON to database. ' +
+                                'Please confirm that your JSON is formatted properly. ' +
+                                'Visit http://www.jsonlint.com to confirm.');
+                            done();
+                        }
+                    });
+                };
+            });
+    });
 });

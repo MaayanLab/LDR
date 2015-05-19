@@ -41,6 +41,7 @@ module.exports = function(app) {
     app.get('/api/releases/form/:id', function(req, res) {
         DataRelease
             .findOne({ _id: req.params.id })
+            .populate('center')
             .exec(function(err, release) {
                 if (err) {
                     console.log(err);
@@ -63,13 +64,14 @@ module.exports = function(app) {
     app.get('/api/releases/', function(req, res) {
         DataRelease
             .find({})
+            .populate('center')
             .exec(function(err, allData) {
                 if (err) {
                     console.log(err);
                     res.status(404).send('Releases could not be found.');
                 }
                 var releasesArr = [];
-                _.forEach(allData, function(release, i) {
+                _.each(allData, function(release, i) {
                     var resultObj = {};
                     var metadataPromises = buildMetadata(release, resultObj);
                     Q.all(metadataPromises).then(function() {
@@ -95,6 +97,7 @@ module.exports = function(app) {
 
         DataRelease
             .find(query)
+            .populate('center')
             .exec(function(err, allData) {
                 console.log('DATA HAS BEEN FETCHED');
                 if (err) {
@@ -103,7 +106,7 @@ module.exports = function(app) {
                 }
                 console.log('PASSED IF ERROR');
                 var releasesArr = [];
-                _.forEach(allData, function(release, i) {
+                _.each(allData, function(release, i) {
                     var resultObj = {};
                     var metadataPromises = buildMetadata(release, resultObj);
                     Q.all(metadataPromises).then(function() {

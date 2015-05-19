@@ -1,5 +1,8 @@
-// Karma configuration
-// Generated on Fri May 08 2015 17:36:48 GMT-0400 (EDT)
+/**
+ * Karma Configuration
+ * @author Michael McDermott
+ * Created on 5/12/15.
+ */
 
 module.exports = function(config) {
     config.set({
@@ -37,7 +40,7 @@ module.exports = function(config) {
         ],
 
 
-        // preprocess matching files before serving them to the browser
+        // pre-process matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
             // Cover all files except public/vendor

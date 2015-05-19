@@ -27,7 +27,7 @@ describe('DataReleases', function() {
         }));
 
         it('should have a defined controller', function() {
-            expect(createController).to.exist;
+            createController.should.exist();
         });
         /*
         it('should make a POST on submit', function(done) {
@@ -47,7 +47,7 @@ describe('DataReleases', function() {
         }));
 
         it('should have a defined controller', function() {
-            expect(overviewController).to.exist;
+            overviewController.should.exist();
         });
     });
 

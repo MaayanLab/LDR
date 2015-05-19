@@ -1,3 +1,9 @@
+/**
+ * Gulpfile
+ * @author Michael McDermott
+ * Created on 5/12/15.
+ */
+
 var gulp = require('gulp');
 var path = require('path');
 var runSequence = require('run-sequence');

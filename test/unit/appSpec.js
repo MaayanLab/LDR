@@ -1,10 +1,8 @@
 /**
- * Created by mmcdermott on 5/12/15.
+ * @author Michael McDermott
+ * Created on 5/12/15.
  */
 
-/**
- * Created by mmcdermott on 5/12/15.
- */
 
 describe('App', function() {
 
@@ -35,12 +33,12 @@ describe('App', function() {
         }));
 
         it('should have a defined controller', function() {
-            expect(milestonesController).to.exist;
+            milestonesController.should.exist();
         });
 
         it('should have the correct page title', function() {
-            expect($scope.pageTitle).to.be.a('string');
-            expect($scope.pageTitle).to.be.equal('Milestones');
+            $scope.pageTitle.should.be.a('string');
+            $scope.pageTitle.should.equal('Milestones');
         })
     });
 

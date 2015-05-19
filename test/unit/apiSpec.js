@@ -1,6 +1,8 @@
 /**
- * Created by mmcdermott on 5/12/15.
+ * @author Michael McDermott
+ * Created on 5/12/15.
  */
+
 
 describe('API', function() {
 
@@ -33,14 +35,14 @@ describe('API', function() {
     });
 
     it('should get an instance of the factory', function() {
-        expect(api).to.exist;
+        api.should.exist();
     });
 
     it('should make a GET request to api/releases', function(done) {
         $httpBackend.expectGET('api/releases');
         api('releases').get().success(function(releases) {
-            expect(releases).to.be.an('array');
-            expect(releases[0]).to.include.keys('_id', 'user', 'center', 'dateModified', 'approved');
+            releases.should.be.an('array');
+            releases[0].should.include.keys('_id', 'user', 'center', 'dateModified', 'approved');
             done();
         });
         $httpBackend.flush();
@@ -49,8 +51,8 @@ describe('API', function() {
     it('should make a GET request to api/users', function(done) {
         $httpBackend.expectGET('api/users');
         api('users').get().success(function(users) {
-            expect(users).to.be.an('array');
-            expect(users[0]).to.include.keys('_id', 'username', 'password', 'center', 'admin');
+            users.should.be.an('array');
+            users[0].should.include.keys('_id', 'username', 'password', 'center', 'admin');
             done();
         });
         $httpBackend.flush();

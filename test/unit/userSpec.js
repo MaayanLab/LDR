@@ -1,6 +1,8 @@
 /**
- * Created by mmcdermott on 5/12/15.
+ * @author Michael McDermott
+ * Created on 5/12/15.
  */
+
 describe('User', function() {
 
     beforeEach(module('milestones'));
@@ -26,7 +28,7 @@ describe('User', function() {
         }));
 
         it('should have a defined controller', function() {
-            expect(createController).to.exist;
+            createController.should.exist();
         });
         /*
          it('should make a POST on submit', function(done) {
@@ -46,7 +48,7 @@ describe('User', function() {
         }));
 
         it('should have a defined controller', function() {
-            expect(registrationController).to.exist;
+            registrationController.should.exist();
         });
     });
 
