@@ -22,14 +22,14 @@
                 <td id="cell-count">{{form.metadata.cellLines.length}}</td>
                 <td id="readout-count">{{form.metadata.readouts.length}}</td>
                 
-                <!--------- TODO: Show most recent release date and provide level -------->
+                <!-- TODO: Show most recent release date and provide level -->
                 <td id="release-date">{{form.releaseDates.level1 | date:'MM-dd-yyyy'}}</td>
                 <td id="release-level">1</td>
                 <td id="status">{{form.status}}</td>
                 <!--<td id="id">{{form._id}}</td>-->
                 <td>
                     <div class="btn-group">
-                        <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
+                        <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-href="">
                             Action<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">

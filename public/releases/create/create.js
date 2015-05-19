@@ -39,7 +39,7 @@ angular.module('milestones.releases.create', [
                     maxTags: 1,
                     autocompleteEndpoint: 'assay',
                     isRequired: true,
-                    model: [],
+                    model: []
                 },
                 {
                     name: 'cellLines',
@@ -214,12 +214,16 @@ angular.module('milestones.releases.create', [
                     }
                 };
                 response.data.map(function(item) {
-                    var result = {};
-                    result.name = item.name;
-                    result.text = formatText(item.name);
-                    result._id = item._id;
-                    results[item.name] = result;
+                    /*if (results[item.name]) {
+                        return;
+                    }*/
+                    var obj = {};
+                    obj.name = item.name;
+                    obj.text = formatText(item.name);
+                    obj._id = item._id;
+                    results[item.name] = obj;
                 });
+
                 return lodash.values(results);
             });
         };
@@ -227,7 +231,7 @@ angular.module('milestones.releases.create', [
         $scope.submit = function() {
             console.log($scope.form);
 
-            /*var form = {
+            var form = {
                 user: $scope.user._id,
                 center: $scope.user.center,
                 metadata: {},
@@ -259,6 +263,6 @@ angular.module('milestones.releases.create', [
                 })
                 .success(function(result) {
                     $state.go('releasesCreate', { id: result._id });
-                });*/
+                });
         };
     });

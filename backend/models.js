@@ -83,8 +83,13 @@ var dataReleaseSchema = new Schema({
 
 /**
  * buildMeta: Make request to name-server and replace arrays of IDs with arrays of JSON data
+<<<<<<< HEAD
  * @param releaseData: JSON stored in local database with pointers to Name/Metadata Server
  * @param resultObj: Object to be populated with results upon fulfillment of promises
+=======
+ * @param releaseData: Object stored in local database with pointers to Name/Metadata Server
+ * @param resultObj: Object that will be built upon fulfillment of promises
+>>>>>>> 2577c29b1cf28f6db3e6f4b9198182422ee32b53
  */
 var buildMetadata = function(releaseData, resultObj) {
     var promisesArr = [];
