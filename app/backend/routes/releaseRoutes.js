@@ -41,6 +41,7 @@ module.exports = function(app) {
     app.get('/api/releases/form/:id', function(req, res) {
         DataRelease
             .findOne({ _id: req.params.id })
+            .populate('center')
             .exec(function(err, release) {
                 if (err) {
                     console.log(err);
@@ -63,6 +64,7 @@ module.exports = function(app) {
     app.get('/api/releases/', function(req, res) {
         DataRelease
             .find({})
+            .populate('center')
             .exec(function(err, allData) {
                 if (err) {
                     console.log(err);
