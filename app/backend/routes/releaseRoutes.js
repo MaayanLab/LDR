@@ -69,19 +69,15 @@ module.exports = function(app) {
                     res.status(404).send('Releases could not be found.');
                 }
                 var releasesArr = [];
-                var i = 0;
                 _.forEach(allData, function(release) {
                     var resultObj = {};
                     var metadataPromises = buildMetadata(release, resultObj);
                     Q.all(metadataPromises).then(function() {
                         release.metadata = resultObj;
                         releasesArr.push(release);
-                        console.log(i);
-                        if (i === allData.length - 1) {
-                            res.status(200).send(releasesArr);
-                        }
-                        i++;
-                    });
+                    }).then(function() {
+                        res.status(200).send(releasesArr);
+                    })
                 });
             });
     });
@@ -124,6 +120,7 @@ module.exports = function(app) {
 
     // Post release without id and save it to the database
     app.post('/api/secure/releases/form/', function(req, res) {
+        console.log('CALL TO ENDPOINT: /api/secure/releases/form/');
         var inputData = req.body;
         inputData.dateModified = new Date();
         inputData.approved = false;
@@ -143,6 +140,7 @@ module.exports = function(app) {
 
     // POST release with id, find it and update. If not, save it to the database.
     app.post('/api/secure/releases/form/:id', function(req, res) {
+        console.log('CALL TO ENDPOINT: /api/secure/releases/form/:id');
         var inputData = req.body;
         inputData.dateModified = new Date();
         inputData.approved = false;
