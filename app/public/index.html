@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html ng-app="milestones" ng-controller="milestonesCtrl">
+<head>
+    <title ng-bind="pageTitle"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--FAVICONS-->
+    <link rel="apple-touch-icon" sizes="57x57" href="images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="images/favicons/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="images/favicons/manifest.json">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-TileImage" content="images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <!--END FAVICONS-->
+
+    <link rel="stylesheet" type="text/css" href="vendor/normalize.css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/pickadate/lib/compressed/themes/classic.css">
+    <link rel="stylesheet" type="text/css" href="vendor/pickadate/lib/compressed/themes/classic.date.css">
+    <link rel="stylesheet" type="text/css" href="vendor/ng-tags-input/ng-tags-input.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="style/css/main.css">
+
+    <!-- Core dependencies -->
+    <script type="text/javascript" src="vendor/angular/angular.js"></script>
+    <script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="vendor/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="vendor/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="vendor/a0-angular-storage/dist/angular-storage.min.js"></script>
+    <!-- End Core Dep. -->
+
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="api/api.js"></script>
+    <script type="text/javascript" src="api/nameServer.js"></script>
+    <script type="text/javascript" src="releases/overview/overview.js"></script>
+    <script type="text/javascript" src="releases/create/create.js"></script>
+    <script type="text/javascript" src="releases/formField/formField.js"></script>
+    <script type="text/javascript" src="releases/formField/enforceMaxTags.js"></script>
+    <script type="text/javascript" src="releases/addModal/addModal.js"></script>
+    <script type="text/javascript" src="releases/datePicker/datePicker.js"></script>
+    <script type="text/javascript" src="releases/datePicker/datepickerPopup.js"></script>
+    <script type="text/javascript" src="home/home.js"></script>
+    <script type="text/javascript" src="nav/nav.js"></script>
+    <script type="text/javascript" src="user/admin/admin.js"></script>
+    <script type="text/javascript" src="user/registration/registration.js"></script>
+</head>
+    <body class="ng-cloak">
+        <div id="wrapper">
+            <ml-nav></ml-nav>
+            <div id="content" class="container" ui-view></div>
+            <div ng-include="'footer/footer.html'"></div>
+        </div>
+        <script type="text/javascript" src="vendor/angular-jwt/dist/angular-jwt.min.js"></script>
+        <script type="text/javascript" src="vendor/angular-sanitize/angular-sanitize.min.js"></script>
+        <script type="text/javascript" src='vendor/angular-bootstrap/ui-bootstrap.js'></script>
+        <script type="text/javascript" src='vendor/angular-bootstrap/ui-bootstrap-tpls.js'></script>
+        <script type="text/javascript" src='vendor/ng-lodash/build/ng-lodash.min.js'></script>
+        <script type="text/javascript" src="vendor/angular-ui-utils/ui-utils.min.js"></script>
+        <script type="text/javascript" src="vendor/ng-tags-input/ng-tags-input.min.js"></script>
+    </body>
+</html>

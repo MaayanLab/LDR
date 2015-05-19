@@ -1,20 +1,15 @@
-FROM library/node:0.10
+FROM node:0.10-onbuild
 
-RUN apt-get update && apt-get install -y npm
+RUN apt-get update
 
+RUN apt-get install -y npm
 RUN npm install -g bower
 
-WORKDIR /home
+ADD . /app
 
-COPY *.js* ./
-COPY app ./app
-COPY config ./config
-#COPY app ./node_modules
-COPY public ./public
-
-RUN npm install
+RUN npm install --production
 RUN bower install --allow-root
 
 EXPOSE 3001
 
-CMD /bin/bash -c "node server.js"
+CMD node server.js

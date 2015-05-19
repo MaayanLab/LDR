@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "The homepage for Milestones meta-data forms and display.",
   "main": "server.js",
+  "private": "true",
   "dependencies": {
     "bcrypt": "^0.8.2",
     "bcrypt-nodejs": "^0.0.3",
