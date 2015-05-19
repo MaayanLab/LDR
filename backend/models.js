@@ -1,6 +1,6 @@
 var mongoose = require('mongoose'),
     bcrypt = require('bcrypt-nodejs'),
-    request = require('superagent-promise'),
+    request = require('request-promise').defaults({maxSockets: 50}),
     _ = require('lodash'),
     nameServerUrl = require('./config/nameServer').url;
 
@@ -114,8 +114,8 @@ var buildMetadata = function(releaseData, resultObj) {
 
 
         if (path) {
-            var promise = request('GET', nameServerUrl + path)
-                .end(function(err, res) {
+            var promise = request(nameServerUrl + path)
+                .then(function(err, res) {
                     if (err) {
                         console.log(err);
                         return;
