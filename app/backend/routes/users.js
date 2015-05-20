@@ -6,10 +6,9 @@ var jsonWT = require('jsonwebtoken'),
     _ = require('underscore');
 
 function createToken(user) {
-    // TODO: Change name of issuer after determining final name of application
     return jsonWT.sign(user, config.secret, {
         expiresInMinutes: 60,
-        issuer: 'http://amp.pharm.mssm.edu/MilestonesLanding/'
+        issuer: 'http://amp.pharm.mssm.edu/LDR/'
     });
 }
 
