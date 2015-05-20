@@ -1,4 +1,4 @@
-angular.module('milestones.metadata.overview', [
+angular.module('ldr.metadata.overview', [
     'ui.router',
     'angular-storage'
 ])

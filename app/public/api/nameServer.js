@@ -1,4 +1,4 @@
-angular.module('milestones.api')
+angular.module('ldr.api')
     .factory('nameServer', function($http) {
 
         var BASE_URL = 'http://146.203.54.165:7078/form/';

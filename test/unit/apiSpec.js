@@ -7,7 +7,7 @@
 describe('API', function() {
 
     var api, $httpBackend, releaseReqHandler;
-    beforeEach(module('milestones'));
+    beforeEach(module('ldr'));
     beforeEach(inject(function(_api_, $injector) {
         api = _api_;
         // Mock backend to only test API unit

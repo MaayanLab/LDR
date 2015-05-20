@@ -1,17 +1,17 @@
-angular.module('milestones', [
-        'milestones.nav',
-        'milestones.home',
-        'milestones.releases.overview',
-        'milestones.releases.create',
-        'milestones.user.admin',
-        'milestones.user.registration',
+angular.module('ldr', [
+        'ldr.nav',
+        'ldr.home',
+        'ldr.releases.overview',
+        'ldr.releases.create',
+        'ldr.user.admin',
+        'ldr.user.registration',
         'ui.router',
         'ui.bootstrap',
         'angular-storage',
         'angular-jwt'
     ])
 
-    .config(function milestonesConfig(
+    .config(function ldrConfig(
             $urlRouterProvider, jwtInterceptorProvider, $httpProvider, $locationProvider
         ) {
 
@@ -123,7 +123,7 @@ angular.module('milestones', [
         });
     })
 
-        .controller('milestonesCtrl', function milestonesCtrl($scope) {
+        .controller('ldrCtrl', function ldrCtrl($scope) {
             $scope.pageTitle = 'Milestones';
 
         // Don't think this works, but should dynamically change title of page

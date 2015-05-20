@@ -1,4 +1,4 @@
-angular.module('milestones.releases.create', [
+angular.module('ldr.releases.create', [
         'ui.router',
         'angular-storage',
         'ngSanitize',

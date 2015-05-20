@@ -5,7 +5,7 @@
 
 describe('User', function() {
 
-    beforeEach(module('milestones'));
+    beforeEach(module('ldr'));
     var $controller, $http, store, api;
 
     beforeEach(inject(function(_$controller_, _$http_, _api_, _store_) {

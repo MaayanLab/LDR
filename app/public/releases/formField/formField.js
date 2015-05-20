@@ -1,4 +1,4 @@
-angular.module('milestones')
+angular.module('ldr')
     .directive('lmFormField', function($modal, lodash) {
         return {
             restrict: 'E',
