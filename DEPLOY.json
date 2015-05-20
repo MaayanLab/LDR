@@ -1,0 +1,21 @@
+{
+    "id": "ldr",
+    "instances": 1,
+    "cpus": 1,
+    "mem": 2048,
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "maayanlab/ldr:1.0",
+            "forcePullImage": true,
+            "network": "BRIDGE",
+            "portMappings": [
+                {
+                    "containerPort": 3001,
+                    "hostPort": 0,
+                    "protocol": "tcp"
+                }
+            ]
+        }
+    }
+}

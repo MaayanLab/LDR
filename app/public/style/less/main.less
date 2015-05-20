@@ -1,0 +1,417 @@
+// http://paletton.com/#uid=33y0u0koOs0feCukkuDsjnmvzix
+
+@color-primary: #286090;
+@color-primary-light: #8ABDE8;
+@color-primary-dark: #08385F;
+@color-red: #DF6632;
+@color-red-dark: #942E02;
+@color-yellow: #DFB532;
+@color-yellow-dark: #947002;
+@color-yellow-light: #FFE186;
+@color-yellow-superlight: #FFF6DA;
+@color-gray: #aaa;
+@color-gray-light: #eee;
+@color-gray-charcoal: #222;
+
+@font-family-base: arial, sans-serif;
+@font-family-primary: 'Roboto', sans-serif;
+
+html,
+body {
+    height: 100%;
+    font-family: @font-family-primary;
+    -webkit-font-smoothing: antialiased;
+}
+body {
+    background-color: #ffffff;
+}
+a {
+    color: @color-primary;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: @font-family-primary;
+    font-weight: 700 !important;
+}
+#wrapper {
+    min-height: 100%;
+    position: relative;
+}
+.pointer, .nav, .dropdown-menu > li > a {
+    cursor: pointer;
+}
+.btn-danger {
+    background-color: #b82c28;
+    border-color: #67201e;
+}
+.navbar-wrapper {
+    background-color: @color-primary;
+    padding: 5px 15px 0px 15px;
+}
+nav {
+    a {
+        color: white;
+        &:focus {
+            color: white;
+        }
+        &:hover {
+            color: @color-primary-light;
+        }
+    }
+    h1 {
+        margin: 0;
+        a {
+            font-size: 29px;
+            &:hover,
+            &:focus {
+                text-decoration: none;
+            }
+        }
+    }
+    .form-control {
+        border: none;
+        height: 32px;
+    }
+    .btn {
+        border: none;
+    }
+}
+.nav > li > a:focus,
+.nav > li > a:hover {
+    background: @color-primary;
+}
+.dropdown-menu {
+    border-radius: 0;
+}
+
+.nav > li.dropdown.active.open > a, 
+.nav > li.dropdown.open > a, 
+{
+    background: @color-primary;
+    border-color: white;
+}
+.nav-items {
+    display: inline-flex;
+    margin-top: 5px;
+    height: 100%;
+    vertical-align: middle;
+}
+.title-bar {
+    margin: 0 auto;
+    vertical-align: middle;
+}
+.hello {
+    margin: 0;
+    padding: 15px 15px;
+    line-height: 1.42857143;
+    cursor: default;
+    color: #d5d5e5;
+}
+#content {
+    margin-top: 20px;
+    padding-bottom: 120px;
+}
+.content {
+    margin: 20px auto;
+}
+.ml-view {
+    font-family: @font-family-primary;
+    margin: 0 90px;
+}
+#password-group {
+    padding-right: 5px;
+}
+.tabs-left > .nav-tabs {
+    border-bottom: 0;
+    float: left;
+    margin-right: 19px;
+    border-right: 1px solid #dddddd;
+    > li {
+        float: none;
+        > a:hover, > a:focus {
+            border-color: #eeeeee #dddddd #eeeeee #eeeeee;
+        }
+        > a {
+            min-width: 74px;
+            margin-right: -1px;
+            margin-bottom: 3px;
+            -webkit-border-radius: 4px 0 0 4px;
+            -moz-border-radius: 4px 0 0 4px;
+            border-radius: 4px 0 0 4px;
+        }
+    }
+    .active {
+        > a, > a:hover, > a:focus {
+            border-color: #dddddd transparent #dddddd #dddddd;
+            *border-right-color: #ffffff;
+        }
+    }
+}
+.tab-content > .tab-pane, .pill-content > .pill-pane {
+    display: none;
+}
+.tab-content > .active, .pill-content > .active {
+    display: block;
+}
+.tab-content {
+    min-width: 75%;
+    float: left;
+}
+.docent {
+    width: 100%;
+}
+.tab-pane-data {
+    display: inline-block;
+}
+#metadataForm section {
+    padding: 20px 0;
+    border-bottom: 1px solid @color-gray-light;
+}
+.form-table-head, .form-table-data {
+    border-bottom: 1px solid #cccccc;
+}
+.form-table-item {
+    padding: 2px 5px;
+}
+.form-info-block {
+    float: right;
+    margin-top: 120px;
+    width: 45%;
+}
+.form-block {
+    padding-top: 40px;
+}
+.form-select {
+    cursor: default;
+    width: 90%;
+}
+button#form-reset {
+    float: left;
+}
+button#form-submit {
+    margin-left: 10px;
+}
+a#clear-btn {
+    top: 2px;
+}
+a.add-new-btn {
+    color: black;
+}
+a#add-new-btn-paragraph, a.clear-btn {
+    color: black;
+}
+a.add-new-btn:hover, a.clear-btn:hover {
+    text-decoration: none;
+    color: gray;
+}
+a#add-new-btn-paragraph:hover {
+    text-decoration: none;
+    color: black;
+    cursor: text;
+}
+p.input-group {
+    margin: 14px 0;
+}
+.form-center {
+    width: 100%;
+    margin-top: 0;
+}
+.form-title {
+    margin-top: 20px;
+    float: left;
+}
+.form-count {
+    width: 45%;
+    margin-top: 20px;
+    float: left;
+    text-align: right;
+}
+.form-date {
+    width: 90%;
+    display: inline-block;
+}
+.post-button {
+    float: left;
+    text-align: right;
+    width: 90%;
+}
+tags-input {
+    width: 100% !important;
+    .autocomplete {
+        .suggestion-item.selected,
+        .suggestion-item.selected em {
+            color: #fff;
+            background-color: #286090;
+        }
+    }
+    .tags {
+        .tag-item {
+            background: #f1f1f1;
+            border-radius: 0;
+            .remove-button {
+                text-decoration: none;
+            }
+            &.selected {
+                color: white;
+                background: @color-red;
+                border: 1px solid @color-red-dark;
+                .remove-button {
+                    color: white;
+                }
+            }
+        }
+    }
+}
+input.experiment {
+    width: 100% !important;
+    height: 34px;
+    border: 1px solid #a9a9a9;
+    outline: 0;
+    padding: 0 0 0 5px;
+    float: left;
+    font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    &:focus {
+        outline: 0;
+        -webkit-box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+        -moz-box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+        box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+    }
+}
+#data-registration-form {
+    section {
+        border-top: 1px solid #eee;
+        margin-top: 20px;
+        padding-top: 20px;
+    }
+    input {
+        width: 100%;
+    }
+    #submit {
+        /*button {
+            border: none;
+            color: white;
+            font-family: @font-family-primary;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 5px 10px;
+            &:hover {
+                color: white;
+            }
+        }
+        button.btn-submit {
+            background: @color-primary;
+            &:hover {
+                background: @color-primary-light;
+            }
+        }
+        button.btn-cancel {
+            background: @color-red;
+            &:hover {
+                background: @color-red-dark;
+            }
+        }*/
+    }
+    label {
+        font-weight: normal;
+    }
+    #releaseDates,
+    #urls {
+        input {
+            border: 1px solid #a9a9a9;
+            box-shadow: 1px 1px 1px 0 #d3d3d3 inset;
+            height: 34px;
+            padding: 6px 12px;
+            &:focus {
+                outline: 0;
+                -webkit-box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+                -moz-box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+                box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+            }
+        }
+    }
+    padding-bottom: 20px;
+}
+.highlight {
+    color: @color-red;
+}
+.modal-content {
+    border-radius: 0;
+}
+.meta-data {
+    display: inline-block;
+    width: 100%;
+}
+table.meta-data-table {
+    width: 90%;
+    float: right;
+    cursor: default;
+}
+h4.meta-header {
+    margin-top: 40px;
+}
+#footer {
+    background: @color-gray-charcoal;
+    bottom: 0;
+    color: white;
+    height: 100px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    a {
+        color: white;
+        &:hover {
+            color: @color-primary-light;
+        }
+    }
+}
+.credit {
+    margin: 20px 0;
+}
+
+.form-control {
+    border-radius: 0;
+}
+
+/* Bootstrap defaults
+ */
+.btn {
+    border-radius: 0;
+    border: none;
+    &:hover,
+    &:active,
+    &:focus {
+        border: transparent;
+    }
+}
+.btn-danger {
+    background-color: @color-red;
+    border-color: none;
+}
+.btn-success,
+.btn-primary {
+    background-color: @color-primary;
+    border-color: none;
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: @color-primary-dark;
+        border-color: none;
+    }
+}
+.btn-info {
+    background-color: @color-yellow;
+    border-color: none;
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: @color-yellow-dark;
+        border-color: none;
+    }
+}
+.normal {
+    font-weight: normal;
+}

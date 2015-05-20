@@ -10,7 +10,7 @@ var express = require('express'),
 var app = express();
 var port = 3001;
 
-var configDB = require('./backend/config/database');
+var configDB = require('./app/backend/config/database');
 
 mongoose.connect(configDB.url);
 
@@ -24,11 +24,11 @@ app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(compress());
 
-var publicDir = __dirname + '/public/';
+var publicDir = __dirname + '/app/public/';
 console.log('Serving static files from ' + publicDir);
-app.use('/', express.static(path.join(publicDir)));
+app.use('/ldr', express.static(path.join(publicDir)));
 
-require('./backend/routes')(app);
+require('./app/backend/routes')(app);
 
 app.get('/', function (req, res) {
     res.sendFile(publicDir + '/index.html');
