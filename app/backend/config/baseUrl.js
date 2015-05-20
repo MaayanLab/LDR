@@ -1,3 +1,3 @@
 module.exports = {
-    'baseUrl': '/MilestonesLanding/'
+    'baseUrl': '/ldr'
 };

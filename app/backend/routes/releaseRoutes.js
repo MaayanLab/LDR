@@ -3,11 +3,12 @@ var jwt = require('express-jwt'),
     Q = require('q'),
     DataRelease = require('../models').DataRelease,
     buildMetadata = require('../models').buildMetadata,
+    baseUrl = require('../config/baseUrl').baseUrl,
     config = require('../config/database');
 
 module.exports = function(app) {
     // Returns empty release for initialization on front-end
-    app.get('/api/releases/form/', function(req, res) {
+    app.get(baseUrl + '/api/releases/form/', function(req, res) {
         var releaseInit = {
             metadata: {
                 assay: [],
@@ -38,7 +39,7 @@ module.exports = function(app) {
     });
 
     // Individual release endpoint. Query id returns form with that id for editing on front end.
-    app.get('/api/releases/form/:id', function(req, res) {
+    app.get(baseUrl + '/api/releases/form/:id', function(req, res) {
         DataRelease
             .findOne({ _id: req.params.id })
             .populate('center')
@@ -61,7 +62,7 @@ module.exports = function(app) {
     });
 
     // Multiple releases endpoint for all releases
-    app.get('/api/releases/', function(req, res) {
+    app.get(baseUrl + '/api/releases/', function(req, res) {
         DataRelease
             .find({})
             .populate('center')
@@ -87,7 +88,7 @@ module.exports = function(app) {
     });
 
     // Multiple releases endpoint for specific center or user
-    app.get('/api/releases/:type(center|user)/:id', function(req, res) {
+    app.get(baseUrl + '/api/releases/:type(center|user)/:id', function(req, res) {
         console.log('REQUEST RECEIVED');
         var query = {};
         if (req.params.type === 'center')
@@ -121,7 +122,7 @@ module.exports = function(app) {
     });
 
     // Post release without id and save it to the database
-    app.post('/api/secure/releases/form/', function(req, res) {
+    app.post(baseUrl + '/api/secure/releases/form/', function(req, res) {
         console.log('CALL TO ENDPOINT: /api/secure/releases/form/');
         var inputData = req.body;
         inputData.dateModified = new Date();
@@ -141,7 +142,7 @@ module.exports = function(app) {
     });
 
     // POST release with id, find it and update. If not, save it to the database.
-    app.post('/api/secure/releases/form/:id', function(req, res) {
+    app.post(baseUrl + '/api/secure/releases/form/:id', function(req, res) {
         console.log('CALL TO ENDPOINT: /api/secure/releases/form/:id');
         var inputData = req.body;
         inputData.dateModified = new Date();
@@ -172,7 +173,7 @@ module.exports = function(app) {
     });
 
     // DELETE individual release
-    app.delete('/api/secure/releases/form/:id', function(req, res) {
+    app.delete(baseUrl + '/api/secure/releases/form/:id', function(req, res) {
         DataRelease.findOne({ _id: req.params.id }).remove(function(err) {
             if (err) {
                 console.log(err);

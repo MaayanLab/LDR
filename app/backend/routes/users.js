@@ -2,6 +2,7 @@ var jsonWT = require('jsonwebtoken'),
     jwt = require('express-jwt'),
     User = require('../models').User,
     config = require('../config/database'),
+    baseUrl = require('../config/baseUrl').baseUrl,
     _ = require('underscore');
 
 function createToken(user) {
@@ -14,7 +15,7 @@ function createToken(user) {
 
 module.exports = function(app) {
     // USERS
-    app.get('/api/users/', function(req, res) {
+    app.get(baseUrl + '/api/users/', function(req, res) {
         User.find({}, function(err, users) {
             if (err) {
                 console.log(err);
@@ -24,12 +25,7 @@ module.exports = function(app) {
         });
     });
 
-    // Not really needed. Just need to delete JWT on client side
-    app.get('/logout', function(req, res) {
-        res.status(200).send('User successfully logged out');
-    });
-
-    app.post('/login', function(req, res) {
+    app.post(baseUrl + '/login', function(req, res) {
         User
             .findOne({ 'username': req.body.username })
             .populate('center')
@@ -55,7 +51,7 @@ module.exports = function(app) {
             });
     });
 
-    app.post('/register', function(req, res) {
+    app.post(baseUrl + '/register', function(req, res) {
         var inputUser = req.body;
         var newUser = new User(inputUser);
         newUser.save(function(err) {
