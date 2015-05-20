@@ -12,7 +12,7 @@ angular.module('milestones.releases.create', [
         $stateProvider.state('releasesCreate', {
             url: '/releases/form/{id:string}',
             controller: 'releases.create.ctrl',
-            templateUrl: '/releases/create/create.html',
+            templateUrl: 'releases/create/create.html',
             data: {
                 requiresLogin: true
             }
