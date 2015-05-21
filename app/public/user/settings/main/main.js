@@ -3,7 +3,7 @@
  * Created on 5/21/15.
  */
 
-angular.module('milestones.user.settings', [
+angular.module('ldr.user.settings', [
     'ui.router',
     'angular-storage'
 ])

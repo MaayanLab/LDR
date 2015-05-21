@@ -1,6 +1,6 @@
 // Home page. Possible implementation of some sort of docent app
 
-angular.module('milestones.home', [
+angular.module('ldr.home', [
     'ui.router',
     'angular-storage'
 ])

@@ -6,7 +6,7 @@
 
 describe('App', function() {
 
-    beforeEach(module('milestones'));
+    beforeEach(module('ldr'));
     var $controller, $http, store, api;
 
     beforeEach(inject(function(_$controller_, _$http_, _api_, _store_) {
@@ -21,7 +21,7 @@ describe('App', function() {
     }));
 
     describe('Milestones', function() {
-        var $scope, milestonesController;
+        var $scope, ldrController;
         beforeEach(inject(function($rootScope) {
             $scope = $rootScope.$new();
             // Just want to test unit. Ignore $scope.$on route changes by replacing $scope.$on with dummy function
@@ -29,11 +29,11 @@ describe('App', function() {
                 return false;
             });
             // Load controller
-            milestonesController = $controller('milestonesCtrl', { api: api, $scope: $scope });
+            ldrController = $controller('ldrCtrl', { api: api, $scope: $scope });
         }));
 
         it('should have a defined controller', function() {
-            milestonesController.should.exist();
+            ldrController.should.exist();
         });
 
         it('should have the correct page title', function() {

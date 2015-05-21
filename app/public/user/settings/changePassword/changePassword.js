@@ -3,10 +3,10 @@
  * Created on 5/20/15.
  */
 
-angular.module('milestones.user.settings.changePassword', [
+angular.module('ldr.user.settings.changePassword', [
     'ui.router',
     'angular-storage',
-    'milestones.api'
+    'ldr.api'
 ])
     .config(function($stateProvider) {
         // UI Router state changePassword

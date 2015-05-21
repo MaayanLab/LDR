@@ -63,11 +63,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://amp.pharm.mssm.edu/gitlab/apps/milestoneslanding.git"
+    "url": "http://amp.pharm.mssm.edu/gitlab/apps/ldrlanding.git"
   },
   "keywords": [
     "forms",
-    "milestones",
+    "ldr",
     "metadata",
     "DCIC",
     "Mount",

@@ -1,20 +1,19 @@
-angular.module('milestones', [
-    'milestones.nav',
-    'milestones.home',
-    'milestones.group.home',
-    'milestones.releases.overview',
-    'milestones.releases.create',
-    'milestones.user.admin',
-    'milestones.user.registration',
-    'milestones.user.settings',
-    'milestones.user.settings.changePassword',
+angular.module('ldr', [
+    'ldr.nav',
+    'ldr.home',
+    'ldr.group.home',
+    'ldr.releases.overview',
+    'ldr.releases.create',
+    'ldr.user.admin',
+    'ldr.user.registration',
+    'ldr.user.settings',
+    'ldr.user.settings.changePassword',
     'ui.router',
     'ui.bootstrap',
     'angular-storage',
     'angular-jwt'
 ])
-
-    .config(function milestonesConfig($urlRouterProvider, jwtInterceptorProvider, $httpProvider) {
+    .config(function ldrConfig($urlRouterProvider, jwtInterceptorProvider, $httpProvider, $locationProvider) {
 
         // Remove the 'X-Requested-With' header from all requests to prevent CORS errors
         // http://stackoverflow.com/questions/16661032/http-get-is-not-allowed-by-access-control-allow-origin-but-ajax-is
@@ -119,11 +118,9 @@ angular.module('milestones', [
             }
         });
     })
-
-    .controller('milestonesCtrl', function milestonesCtrl($scope, store) {
+    .controller('ldrCtrl', function ldrCtrl($scope, store) {
+        $scope.pageTitle = 'LDR';
         $scope.currentUser = store.get('currentUser');
-        $scope.pageTitle = 'Milestones';
-
         // Don't think this works, but should dynamically change title of page
         $scope.$on('$routeChangeSuccess', function(e, nextRoute) {
             if (nextRoute.$$route && angular.isDefined(nextRoute.$$route.pageTitle)) {

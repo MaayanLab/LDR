@@ -1,7 +1,7 @@
-angular.module('milestones.releases.overview', [
+angular.module('ldr.releases.overview', [
         'ui.router',
         'angular-storage',
-        'milestones.api'
+        'ldr.api'
     ])
 
     // UI Router state forms

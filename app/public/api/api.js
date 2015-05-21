@@ -1,4 +1,4 @@
-angular.module('milestones.api', [])
+angular.module('ldr.api', [])
     .factory('api', function($http) {
         
         var BASE = 'api/',

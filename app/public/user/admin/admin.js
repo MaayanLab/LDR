@@ -1,7 +1,7 @@
-angular.module('milestones.user.admin', [
+angular.module('ldr.user.admin', [
     'ui.router',
     'angular-storage',
-    'milestones.api'
+    'ldr.api'
 ])
 
 .config(function($stateProvider) {

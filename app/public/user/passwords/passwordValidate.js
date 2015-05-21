@@ -3,7 +3,7 @@
  * Created on 5/20/15.
  */
 
-angular.module('milestones')
+angular.module('ldr')
     .directive("passwordStrength", function() {
         return {
             restrict: 'A',

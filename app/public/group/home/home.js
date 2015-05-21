@@ -3,10 +3,10 @@
  * Created on 5/21/15.
  */
 
-angular.module('milestones.group.home', [
+angular.module('ldr.group.home', [
     'ui.router',
     'angular-storage',
-    'milestones.api'
+    'ldr.api'
 ])
 
     // UI Router state formCreate

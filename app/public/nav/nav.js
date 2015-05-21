@@ -1,10 +1,9 @@
-angular.module('milestones.nav', [])
-    .directive('mlNav', function($http, $state, $rootScope, store) {
+angular.module('ldr.nav', [])
+    .directive('ldrNav', function($http, $state, $rootScope, store) {
         return {
             restrict: 'E',
             templateUrl: 'nav/nav.html',
             link: function(scope, element, attrs) {
-
                 scope.user = {};
                 scope.showFailMessage = false;
 

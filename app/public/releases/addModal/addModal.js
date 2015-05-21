@@ -1,4 +1,4 @@
-angular.module('milestones')
+angular.module('ldr')
     .controller('ModalInstanceCtrl', function($scope, $modalInstance, config, nameServer) {
         $scope.name = config.name;
         $scope.newTag = config.newTag;

@@ -26,7 +26,7 @@ app.use(compress());
 
 var publicDir = __dirname + '/app/public/';
 console.log('Serving static files from ' + publicDir);
-app.use('/ldr', express.static(path.join(publicDir)));
+app.use('/LDR', express.static(path.join(publicDir)));
 
 require('./app/backend/routes')(app);
 
