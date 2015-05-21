@@ -1,35 +1,60 @@
 var mongoose = require('mongoose'),
-    bcrypt = require('bcrypt-nodejs'),
+    bcrypt = require('bcrypt'),
     http = require('http'),
     Q = require('q'),
-    _ = require('lodash'),
-    nameServerUrl = require('./config/nameServer').url;
+    _ = require('lodash');
 
 http.globalAgent.maxSockets = 100;
 
-var genId = function() {
-    return mongoose.Types.ObjectId();
-};
+var SALT_WORK_FACTOR = 10;
+// Uncomment if we want account locking implemented for unsuccessful logins
+// var MAX_LOGIN_ATTEMPTS = 100;
+// var LOCK_TIME = 2 * 60 * 60 * 1000;
+
 
 // Mongoose Models and Schemas
-var User, Center, DataRelease;
+var User, Group, DataRelease;
 var Schema = mongoose.Schema;
 
 // User
 var userSchema = new Schema({
     username: { type: String, required: true, index: { unique: true } },
     password: { type: String, required: true },
-    email: { type: String, required: true, index: { unique: true } },
-    center: { type: Schema.ObjectId, required: true, ref: 'Center' },
-    admin: { type: Boolean, required: true, default: false }
+    // Make email unique?
+    email: { type: String, required: true/*, index: { unique: true }*/ },
+    group: { type: Schema.ObjectId, required: true, ref: 'Group' },
+    admin: { type: Boolean, required: true, default: false },
+    admitted: { type: Boolean, required: true, default: false }
+    // For checking login attempts and locking account
+    //loginAttempts: { type: Number, required: true, default: 0 },
+    //lockUntil: { type: Number }
 });
 
-userSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
-};
+userSchema.pre('save', function(next) {
+    var user = this;
 
-userSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.password);
+    // only hash the password if it has been modified (or is new)
+    if (!user.isModified('password')) return next();
+
+    // generate a salt
+    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+        if (err) return next(err);
+
+        // hash the password using our new salt
+        bcrypt.hash(user.password, salt, function(err, hash) {
+            if (err) return next(err);
+
+            // override the clear-text password with the hashed one
+            user.password = hash;
+            next();
+        });
+    });
+});
+userSchema.methods.checkPassword = function(candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+        if (err) return cb(err);
+        cb(null, isMatch);
+    });
 };
 
 try {
@@ -38,20 +63,94 @@ try {
     User = mongoose.model('User', userSchema, 'users');
 }
 
-// Center
-var centerSchema = new Schema({
+// UNCOMMENT FOR CHECKING LOGIN ATTEMPTS
+//
+//userSchema.methods.incLoginAttempts = function(cb) {
+//    // if we have a previous lock that has expired, restart at 1
+//    if (this.lockUntil && this.lockUntil < Date.now()) {
+//        return this.update({
+//            $set: { loginAttempts: 1 },
+//            $unset: { lockUntil: 1 }
+//        }, cb);
+//    }
+//    // otherwise we're incrementing
+//    var updates = { $inc: { loginAttempts: 1 } };
+//    // lock the account if we've reached max attempts and it's not locked already
+//    if (this.loginAttempts + 1 >= MAX_LOGIN_ATTEMPTS && !this.isLocked) {
+//        updates.$set = { lockUntil: Date.now() + LOCK_TIME };
+//    }
+//    return this.update(updates, cb);
+//};
+//
+//// expose enum on the model, and provide an internal convenience reference
+//var reasons = userSchema.statics.failedLogin = {
+//    NOT_FOUND: 0,
+//    PASSWORD_INCORRECT: 1,
+//    MAX_ATTEMPTS: 2
+//};
+//
+//userSchema.statics.getAuthenticated = function(username, password, cb) {
+//    this.findOne({ username: username }, function(err, user) {
+//        if (err) return cb(err);
+//
+//        // make sure the user exists
+//        if (!user) {
+//            return cb(null, null, reasons.NOT_FOUND);
+//        }
+//
+//        // check if the account is currently locked
+//        if (user.isLocked) {
+//            // just increment login attempts if account is already locked
+//            return user.incLoginAttempts(function(err) {
+//                if (err) return cb(err);
+//                return cb(null, null, reasons.MAX_ATTEMPTS);
+//            });
+//        }
+//
+//        // test for a matching password
+//        user.checkPassword(password, function(err, isMatch) {
+//            if (err) return cb(err);
+//
+//            // check if the password was a match
+//            if (isMatch) {
+//                // if there's no lock or failed attempts, just return the user
+//                if (!user.loginAttempts && !user.lockUntil) return cb(null, user);
+//                // reset attempts and lock info
+//                var updates = {
+//                    $set: { loginAttempts: 0 },
+//                    $unset: { lockUntil: 1 }
+//                };
+//                return user.update(updates, function(err) {
+//                    if (err) return cb(err);
+//                    return cb(null, user);
+//                });
+//            }
+//
+//            // password is incorrect, so increment login attempts before responding
+//            user.incLoginAttempts(function(err) {
+//                if (err) return cb(err);
+//                return cb(null, null, reasons.PASSWORD_INCORRECT);
+//            });
+//        });
+//    });
+//};
+
+
+
+// Group
+var groupSchema = new Schema({
     name: { type: String, required: true, index: { unique: true } }
 });
 
 try {
-    Center = mongoose.model('Center');
+    Group = mongoose.model('Group');
 } catch (e) {
-    Center = mongoose.model('Center', centerSchema, 'centers');
+    Group = mongoose.model('Group', groupSchema, 'groups');
 }
 
 var dataReleaseSchema = new Schema({
     user: { type: Schema.ObjectId, ref: 'User', required: true },
-    center: { type: Schema.ObjectId, ref: 'Center', required: true },
+    group: { type: Schema.ObjectId, ref: 'Group', required: true },
     approved: { type: Boolean, required: true },
     dateModified: { type: Date, required: true },
     releaseDates: {
@@ -81,69 +180,6 @@ var dataReleaseSchema = new Schema({
     }
 });
 
-/**
- * buildMeta: Make request to name-server and replace arrays of IDs with arrays of JSON data
- * @param releaseData: JSON stored in local database with pointers to Name/Metadata Server
- * @param resultObj: Object to be populated with results upon fulfillment of promises
- */
-var buildMetadata = function(releaseData, resultObj) {
-    var promisesArr = [];
-    var metadataObj = releaseData.metadata.toObject();
-
-    _.forEach(metadataObj, function(valArray, key) {
-        var path;
-        var id = valArray.length === 1 ? valArray[0] : JSON.stringify(valArray);
-
-        //if (key === 'analysisTools')
-        //    path = '/form/tool?_id=' + id;
-        if (key === 'assay')
-            path = '/form/assay?_id=' + id;
-        else if (key === 'cellLines')
-            path = '/form/cell?_id=' + id;
-        else if (key === 'disease')
-            path = '/form/disease?_id=' + id;
-        //else if (key === 'experiment')
-        //    path = '/form/experiment?_id=' + id;
-        //else if (key === 'manipulatedGene')
-        //    path = '/form/gene?_id=' + id;
-        //else if (key === 'organism')
-        //    path = '/form/organism?_id=' + id;
-        else if (key === 'perturbagens')
-            path = '/form/perturbagen?_id=' + id;
-        else if (key === 'readouts')
-            path = '/form/readout?_id=' + id;
-        //else if (key === 'tagsKeywords')
-        //    path = '/form/keyword?_id=' + va
-
-
-        if (path) {
-            var def = Q.defer();
-            http.get(nameServerUrl + path, function(res) {
-                //console.log('HEADERS: ' + JSON.stringify(res.headers));
-                var jsonString = '';
-                res.on('data', function(chunk) {
-                    jsonString += chunk;
-                });
-                res.on('end', function() {
-                    var body = JSON.parse(jsonString);
-                    if (valArray.length === 1) {
-                        resultObj[key] = [body];
-                    }
-                    else {
-                        resultObj[key] = body;
-                    }
-                    def.resolve(resultObj);
-                });
-            }).on('error', function(err) {
-                console.log('Error in request to name server: ' + err.message);
-                def.reject('A server error occurred while populating releases from name server');
-            });
-            promisesArr.push(def.promise);
-        }
-    });
-    return promisesArr;
-};
-
 try {
     DataRelease = mongoose.model('DataRelease');
 } catch (e) {
@@ -151,9 +187,7 @@ try {
 }
 
 module.exports = {
-    genId: genId,
     User: User,
-    Center: Center,
-    DataRelease: DataRelease,
-    buildMetadata: buildMetadata
+    Group: Group,
+    DataRelease: DataRelease
 };

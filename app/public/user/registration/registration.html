@@ -23,11 +23,11 @@
         <div ng-if="userForm.email.$error.email">Email is invalid</div>
     </div>
     <div>
-        <label>Center:</label>
-        <ui-select class="form-select" ng-model="user.center" theme="select2" ng-disabled="disabled" ng-required>
-            <ui-select-match placeholder="Select center...">{{$select.selected.name}}</ui-select-match>
-            <ui-select-choices repeat="center in centers | propsFilter: {name: $select.search}">
-                <div ng-bind-html="center.name | highlight: $select.search"></div>
+        <label>Group:</label>
+        <ui-select class="form-select" ng-model="user.group" theme="select2" ng-disabled="disabled" ng-required>
+            <ui-select-match placeholder="Select group...">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="group in groups | propsFilter: {name: $select.search}">
+                <div ng-bind-html="group.name | highlight: $select.search"></div>
             </ui-select-choices>
         </ui-select>
     </div>

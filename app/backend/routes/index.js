@@ -12,6 +12,7 @@ module.exports = function(app) {
     //app.use('/api/secure', jwtCheck);
 
     require('./users')(app);
+    require('./groups')(app);
     require('./releaseRoutes')(app);
 
 };

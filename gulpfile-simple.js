@@ -2,7 +2,7 @@ var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     less = require('gulp-less'),
     
-    STYLE_SRC = 'public/style/';
+    STYLE_SRC = 'app/public/style/';
 
 gulp.task('less', function() {
     gulp.src(STYLE_SRC + 'less/*.less')

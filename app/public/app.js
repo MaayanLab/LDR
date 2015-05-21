@@ -1,26 +1,24 @@
 angular.module('milestones', [
-        'milestones.nav',
-        'milestones.home',
-        'milestones.releases.overview',
-        'milestones.releases.create',
-        'milestones.user.admin',
-        'milestones.user.registration',
-        'ui.router',
-        'ui.bootstrap',
-        'angular-storage',
-        'angular-jwt'
-    ])
+    'milestones.nav',
+    'milestones.home',
+    'milestones.group.home',
+    'milestones.releases.overview',
+    'milestones.releases.create',
+    'milestones.user.admin',
+    'milestones.user.registration',
+    'milestones.user.settings',
+    'milestones.user.settings.changePassword',
+    'ui.router',
+    'ui.bootstrap',
+    'angular-storage',
+    'angular-jwt'
+])
 
-    .config(function milestonesConfig(
-            $urlRouterProvider, jwtInterceptorProvider, $httpProvider, $locationProvider
-        ) {
+    .config(function milestonesConfig($urlRouterProvider, jwtInterceptorProvider, $httpProvider) {
 
         // Remove the 'X-Requested-With' header from all requests to prevent CORS errors
         // http://stackoverflow.com/questions/16661032/http-get-is-not-allowed-by-access-control-allow-origin-but-ajax-is
         //delete $httpProvider.defaults.headers.common['X-Requested-With'];
-
-        // Remove hash # from URL
-        // $locationProvider.html5Mode(true);
 
         // Reroute to home if URL is not valid
         //$urlRouterProvider.otherwise(base);
@@ -32,28 +30,27 @@ angular.module('milestones', [
         //$httpProvider.interceptors.push('jwtInterceptor');
 
         // For AJAX errors
-        $httpProvider.interceptors.push(function ($q, $location) {
+        $httpProvider.interceptors.push(function($q, $location) {
             return {
-                response: function (response) {
+                response: function(response) {
                     return response;
                 },
-                responseError: function (response) {
+                responseError: function(response) {
                     if (response.status === 401)
-                        //$location.url(base);
-                    return $q.reject(response);
+                    //$location.url(base);
+                        return $q.reject(response);
                 }
             };
         });
     })
 
-    .run(function ($rootScope, $state, store, jwtHelper) {
+    .run(function($rootScope, $state, store, jwtHelper) {
         "use strict";
-        
-        $rootScope.message = '';
+        $rootScope.currentUser = store.get('currentUser');
         // Check status of user on every state change
         // Used for Navbar and blocking pages from unauthorized users
         // Otherwise, just check if the user is logged in
-        $rootScope.$on('$stateChangeStart', function (e, to) {
+        $rootScope.$on('$stateChangeStart', function(e, to) {
             // Get current user
             $rootScope.currentUser = store.get('currentUser');
 
@@ -123,11 +120,12 @@ angular.module('milestones', [
         });
     })
 
-        .controller('milestonesCtrl', function milestonesCtrl($scope) {
-            $scope.pageTitle = 'Milestones';
+    .controller('milestonesCtrl', function milestonesCtrl($scope, store) {
+        $scope.currentUser = store.get('currentUser');
+        $scope.pageTitle = 'Milestones';
 
         // Don't think this works, but should dynamically change title of page
-        $scope.$on('$routeChangeSuccess', function (e, nextRoute) {
+        $scope.$on('$routeChangeSuccess', function(e, nextRoute) {
             if (nextRoute.$$route && angular.isDefined(nextRoute.$$route.pageTitle)) {
                 $scope.pageTitle = nextRoute.$$route.pageTitle + ' | Milestones Landing';
             }

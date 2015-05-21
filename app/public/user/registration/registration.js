@@ -77,9 +77,9 @@ angular.module('milestones.user.registration', [
 })
 
 .controller('RegisterCtrl', function LoginController($scope, $http, store, $state, api) {
-    $scope.centers = [];
-    api('centers').get().success(function(data) {
-        $scope.centers = data;
+    $scope.groups = [];
+    api('groups').get().success(function(data) {
+        $scope.groups = data;
     });
 
     $scope.userList = [];
@@ -90,7 +90,7 @@ angular.module('milestones.user.registration', [
 
     $scope.user = {};
     $scope.createUser = function () {
-        $scope.user.center = $scope.user.center._id;
+        $scope.user.group = $scope.user.group._id;
         console.log($scope.user);
         $http({
             url: '/register',

@@ -1,25 +1,24 @@
 /**
  * @author Michael McDermott
- * Created on 5/20/15.
+ * Created on 5/21/15.
  */
 
 angular.module('milestones.user.settings', [
     'ui.router',
-    'angular-storage',
+    'angular-storage'
 ])
-
     .config(function($stateProvider) {
-        // UI Router state admin
-        $stateProvider.state('admin', {
-            url: '/user/settings',
+        // UI Router state userSettings
+        $stateProvider.state('userSettings', {
+            url: '/user/{id:string}/settings',
             controller: 'UserSettingsCtrl',
-            templateUrl: 'user/settings/settings.html',
+            templateUrl: 'user/settings/main/main.html',
             data: {
                 requiresLogin: true
             }
         });
     })
-    .controller('UserSettingsCtrl', function($scope, $http, store) {
+    .controller('UserSettingsCtrl', function($scope, $stateParams, store) {
         var currentUser = store.get('currentUser');
 
     });

@@ -6,13 +6,14 @@ from datetime import datetime
 import requests
 import json
 
-client = MongoClient('mongodb://mmcdermott:kroyweN@loretta')
+lorettaClient = MongoClient('mongodb://mmcdermott:kroyweN@loretta')
 
-lincsDb = client['LINCS']
+lincsDb = lorettaClient['LINCS']
 lorettaMd = lincsDb['milestones']
 
-milestonesDb = client['Milestones']
-releases = milestonesDb['dataReleases']
+ldrClient = MongoClient('mongodb://elizabeth')
+ldrDb = ldrClient['LDR']
+releases = ldrDb['dataReleases']
 releases.drop()
 
 nsUrl = 'http://146.203.54.165:7078/form'
@@ -50,32 +51,32 @@ for doc in lorettaMd.find({}):
 
     group = ''
     if doc['center'] == 'DTOXS':
-        out['center'] = ObjectId('5519bd94ea7e106fc6784162')
+        out['group'] = ObjectId('5519bd94ea7e106fc6784162')
         out['user'] = ObjectId('5519bd94ea7e106fc678416c')
-        group = 'd'
+        groupAbbrv = 'd'
     elif doc['center'] == 'LINCS Transcriptomics':
-        out['center'] = ObjectId('5519bd94ea7e106fc6784163')
+        out['group'] = ObjectId('5519bd94ea7e106fc6784163')
         out['user'] = ObjectId('5519bd94ea7e106fc678416e')
-        group = 't'
+        groupAbbrv = 't'
     elif doc['center'] == 'HMS LINCS':
-        out['center'] = ObjectId('5519bd94ea7e106fc6784164')
+        out['group'] = ObjectId('5519bd94ea7e106fc6784164')
         out['user'] = ObjectId('5519bd94ea7e106fc6784170')
-        group = 'h'
+        groupAbbrv = 'h'
     elif doc['center'] == 'LINCS PCCSE':
-        out['center'] = ObjectId('5519bd94ea7e106fc6784165')
+        out['group'] = ObjectId('5519bd94ea7e106fc6784165')
         out['user'] = ObjectId('5519bd94ea7e106fc678416b')
-        group = 'p'
+        groupAbbrv = 'p'
     elif doc['center'] == 'NeuroLINCS':
-        out['center'] = ObjectId('5519bd94ea7e106fc6784166')
+        out['group'] = ObjectId('5519bd94ea7e106fc6784166')
         out['user'] = ObjectId('5519bd94ea7e106fc678416a')
-        group = 'n'
+        groupAbbrv = 'n'
     elif doc['center'] == 'MEP LINCS':
-        out['center'] = ObjectId('5519bd94ea7e106fc6784167')
+        out['group'] = ObjectId('5519bd94ea7e106fc6784167')
         out['user'] = ObjectId('5519bd94ea7e106fc678416d')
-        group = 'm'
+        groupAbbrv = 'm'
 
-    print('GROUP: ' + group)
-    gPar = '&group=' + group
+    print('GROUP: ' + groupAbbrv)
+    gPar = '&group=' + groupAbbrv
 
     assay = doc['assay']
     assayName = assay.replace('+', '\%2B').replace('(', '\(').replace(')', '\)')
@@ -84,7 +85,7 @@ for doc in lorettaMd.find({}):
     if len(assayArr) == 0:
         assayData = {
             'name': assayName,
-            'center': group
+            'group': groupAbbrv
         }
         assayReq = requests.post(nsUrl + '/assay', data=json.dumps(assayData), headers=headers)
         assayId = assayReq.json()
@@ -103,7 +104,7 @@ for doc in lorettaMd.find({}):
         print('CELL LINE: ' + cLineName)
         cLineArr = requests.get(nsUrl + '/cell?name=' + cLineName + gPar).json()
         if len(cLineArr) == 0:
-            cLineObj['center'] = group
+            cLineObj['group'] = groupAbbrv
             cLineReq = requests.post(nsUrl + '/cell', data=json.dumps(cLineObj), headers=headers)
             cLineId = cLineReq.json()
         else:
@@ -119,7 +120,7 @@ for doc in lorettaMd.find({}):
             print('PERTURBAGEN: ' + pertName)
             pertArr = requests.get(nsUrl + '/perturbagen?name=' + pertName + gPar).json()
             if len(pertArr) == 0:
-                pertObj['center'] = group
+                pertObj['group'] = groupAbbrv
                 pertReq = requests.post(nsUrl + '/perturbagen', data=json.dumps(pertObj), headers=headers)
                 pertId = pertReq.json()
             else:
@@ -132,7 +133,7 @@ for doc in lorettaMd.find({}):
         print('READOUT: ' + rOutName)
         rOutArr = requests.get(nsUrl + '/readout?name=' + rOutName + gPar).json()
         if len(rOutArr) == 0:
-            rOutObj['center'] = group
+            rOutObj['group'] = groupAbbrv
             rOutReq = requests.post(nsUrl + '/readout', data=json.dumps(rOutObj), headers=headers)
             rOutId = rOutReq.json()
         else:

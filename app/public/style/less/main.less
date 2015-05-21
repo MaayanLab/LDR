@@ -48,9 +48,43 @@ h6 {
     background-color: #b82c28;
     border-color: #67201e;
 }
+
+nav.thin-navbar {
+    height: 24px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 25px;
+    text-align: right;
+    background: @color-gray-charcoal;
+    border-bottom: 1px solid black;
+    overflow: hidden;
+}
+
+nav.thin-navbar {
+    a,
+    p {
+        display: inline-block;
+        line-height: 22px;
+        padding: 0 10px;
+        margin: 0;
+        color: white;
+        text-decoration: none;
+    }
+}
+
+a#group-nav-icon {
+    height: 13px;
+    width: 26px;
+    background: url('../../images/group-icon.png') no-repeat left top;
+    &:hover {
+        background-position: -26px 0;
+    }
+}
+
 .navbar-wrapper {
     background-color: @color-primary;
-    padding: 5px 15px 0px 15px;
+    padding: 5px 15px 0 15px;
 }
 nav {
     a {
@@ -104,10 +138,9 @@ nav {
     margin: 0 auto;
     vertical-align: middle;
 }
-.hello {
+h5.errorMsg {
     margin: 0;
     padding: 15px 15px;
-    line-height: 1.42857143;
     cursor: default;
     color: #d5d5e5;
 }
@@ -389,29 +422,41 @@ h4.meta-header {
 }
 .btn-danger {
     background-color: @color-red;
-    border-color: none;
+    outline: none;
 }
 .btn-success,
 .btn-primary {
     background-color: @color-primary;
-    border-color: none;
+    outline: none;
     &:hover,
     &:active,
     &:focus {
         background-color: @color-primary-dark;
-        border-color: none;
+        outline: none;
     }
 }
+.btn-success[disabled] {
+    background-color: @color-primary;
+    outline: none;
+}
+
 .btn-info {
     background-color: @color-yellow;
-    border-color: none;
+    outline: none;
     &:hover,
     &:active,
     &:focus {
         background-color: @color-yellow-dark;
-        border-color: none;
+        outline: none;
     }
 }
 .normal {
     font-weight: normal;
 }
+
+// Password Strength
+.strong   { color: #060; border-color: #0F0;}
+.medium   { color: #C60; border-color: #FC0;}
+.weak     { color: #900; border-color: #F00;}
+.strength { padding: 1px 10px; border: 2px solid; color: #FFF;}
+// End Password Strength
