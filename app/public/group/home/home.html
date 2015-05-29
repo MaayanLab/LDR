@@ -1,17 +1,21 @@
 <h3 class="text-center">{{currentUser.group.name}}</h3>
 <h4 class="text-center">Statistics</h4>
-<div class="group-statistics">
-    <p>Users: {{statistics.user}}</p>
-
-    <p>Releases: {{statistics.release}}</p>
-
-    <p>Assays: {{statistics.assay}}</p>
-
-    <p>Cell Lines: {{statistics.cell}}</p>
-
-    <p>Perturbagens: {{statistics.perturbagen}}</p>
-
-    <p>Readouts: {{statistics.readout}}</p>
-
-    <p ng-repeat="user in users">{{user.username}}</p>
+<div class="statistics">
+    <ldr-bar group-id="{{currentUser.group._id}}"></ldr-bar>
+</div>
+<h4 class="text-center">Users</h4>
+<div class="user-card col-sm-6" ng-repeat="user in users">
+    <div class="user-card-titles">
+        <h5 class="user-card-name">{{user.username}}</h5>
+        <h5 class="user-card-pending" ng-if="!user.admitted">Would like to
+            join. <a ng-click="acceptUser(user)">Accept</a></h5>
+    </div>
+    <div class="user-card-details">
+        <p>{{user.location}}</p>
+        <p>{{user.fieldOfStudy}}</p>
+        <section>
+            <a ng-href="{{user.homepage}}">Homepage</a>
+            <p>{{user.email}}</p>
+        </section>
+    </div>
 </div>

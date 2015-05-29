@@ -3,11 +3,11 @@ var jsonWT = require('jsonwebtoken'),
     User = require('../models').User,
     config = require('../config/database'),
     baseUrl = require('../config/baseUrl').baseUrl,
-    _ = require('underscore');
+    _ = require('lodash');
 
 function createToken(user) {
     return jsonWT.sign(user, config.secret, {
-        expiresInMinutes: 60,
+        expiresInMinutes: 120,
         issuer: 'http://amp.pharm.mssm.edu/LDR/'
     });
 }
@@ -15,13 +15,24 @@ function createToken(user) {
 module.exports = function(app) {
     // USERS
     app.get(baseUrl + '/api/users/', function(req, res) {
-        User.find({}, function(err, users) {
-            if (err) {
-                console.log(err);
-                res.status(404).send('Error getting users.');
-            }
-            res.status(200).send(users);
-        });
+        User
+            .find({})
+            .populate('group')
+            .lean()
+            .exec(function(err, users) {
+                if (err) {
+                    console.log(err);
+                    res.status(404).send('Error getting users.');
+                }
+                var userList = [];
+                _.each(users, function(user) {
+                    if (user.name === 'NIH') {
+                        return;
+                    }
+                    userList.push(_.omit(user, ['password', 'admin', '__v']));
+                });
+                res.status(200).send(userList);
+            });
     });
 
     app.put(baseUrl + '/api/secure/user/:id/changePassword', function(req, res) {
@@ -36,10 +47,10 @@ module.exports = function(app) {
             .exec(function(err, user) {
                 if (err) {
                     console.log(err);
-                    res.status(404).send('Error: Could not find user with id:' + userId + '.');
+                    res.status(404).send('Error: Could not find user with ' +
+                        'id:' + userId + '.');
                 }
                 else {
-                    console.log(user);
                     user.checkPassword(enteredPassword, function(err, isMatch) {
                         if (err) {
                             console.log(err);
@@ -56,7 +67,7 @@ module.exports = function(app) {
                             res.status(204).send('Password successfully updated');
                         }
                     });
-            }
+                }
             });
     });
 
@@ -78,13 +89,15 @@ module.exports = function(app) {
                             res.status(401).send('Error logging user in.');
                         }
                         else if (isMatch) {
-                            var userWOPassword = _.omit(user.toObject(), ['password', '__v']);
+                            var userWOPassword = _.omit(user.toObject(),
+                                ['password', '__v']);
                             var token = createToken(userWOPassword);
+                            console.log(userWOPassword._id);
                             var userBlob = {
                                 user: userWOPassword,
                                 id_token: token
                             };
-                            res.status(201).send(userBlob);
+                            res.status(200).send(userBlob);
                         }
                     });
                 }
@@ -93,14 +106,26 @@ module.exports = function(app) {
 
     app.post(baseUrl + '/register', function(req, res) {
         var inputUser = req.body;
+        var groupObj = inputUser.group;
+        inputUser.group = groupObj._id;
         inputUser.admin = false;
-        new User(inputUser)
-            .save(function(err) {
+        inputUser.admitted = false;
+        var newUser = new User(inputUser);
+            newUser.save(function(err) {
                 if (err) {
                     console.log('Error creating User: ' + err);
                 }
                 else {
-                    res.status(304).send('User created successfully.');
+                    console.log('User created successfully');
+                    var newUserWOPassword = _.omit(newUser.toObject(),
+                        ['password', 'passwordConfirm',  '__v']);
+                    var token = createToken(newUserWOPassword);
+                    newUserWOPassword.group = groupObj;
+                    var newUserBlob = {
+                        user: newUserWOPassword,
+                        id_token: token
+                    };
+                    res.status(201).send(newUserBlob);
                 }
             });
     })

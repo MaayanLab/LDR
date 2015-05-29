@@ -34,7 +34,7 @@ angular.module('ldr')
                     }
                 });
                 model.$parsers.push(function (value) {
-                    // Mute the nxEqual error if the second ctrl is empty.
+                    // Mute the error if the second ctrl is empty.
                     if (value === undefined || value === '') {
                         model.$setValidity('comparePasswordTo', true);
                         return value;

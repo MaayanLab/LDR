@@ -1,6 +1,7 @@
 angular.module('ldr', [
     'ldr.nav',
     'ldr.home',
+    'ldr.bar',
     'ldr.group.home',
     'ldr.releases.overview',
     'ldr.releases.create',
@@ -14,13 +15,6 @@ angular.module('ldr', [
     'angular-jwt'
 ])
     .config(function ldrConfig($urlRouterProvider, jwtInterceptorProvider, $httpProvider, $locationProvider) {
-
-        // Remove the 'X-Requested-With' header from all requests to prevent CORS errors
-        // http://stackoverflow.com/questions/16661032/http-get-is-not-allowed-by-access-control-allow-origin-but-ajax-is
-        //delete $httpProvider.defaults.headers.common['X-Requested-With'];
-
-        // Reroute to home if URL is not valid
-        //$urlRouterProvider.otherwise(base);
 
         // Add JWT to every request to server
         //jwtInterceptorProvider.tokenGetter = function (store) {
@@ -124,7 +118,7 @@ angular.module('ldr', [
         // Don't think this works, but should dynamically change title of page
         $scope.$on('$routeChangeSuccess', function(e, nextRoute) {
             if (nextRoute.$$route && angular.isDefined(nextRoute.$$route.pageTitle)) {
-                $scope.pageTitle = nextRoute.$$route.pageTitle + ' | Milestones Landing';
+                $scope.pageTitle = nextRoute.$$route.pageTitle + ' | LDR';
             }
         });
     });

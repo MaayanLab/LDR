@@ -1,35 +1,88 @@
-<h3>Register</h3>
-<form name="userForm">
-    <div>
-        <label>
-            Username:
-            <input name="username" type="text" ng-model="user.username" ng-model-options="{ updateOn: 'blur' }" username-available>
-        </label>
-        <div ng-if="userForm.username.$pending.username">Checking...</div>
-        <div ng-if="userForm.username.$error.username">Username exists already</div>
+<h3 class="text-center">Register</h3>
+<em class="col-sm-12 highlight text-center">* Required</em>
+<form name="registerForm" auto-complete="off"
+      class="col-sm-8 col-sm-offset-2">
+    <div class="form-group">
+        <label for="username">Username*</label>
+        <input id="username" name="username" type="text"
+               ng-model="user.username" class="form-control"
+               ng-model-options="{ updateOn: 'blur' }" username-available>
+        <span class="help-inline"
+              data-ng-show='registerForm.username.$pending.username'
+              data-ng-class="strong">Checking availability...</span>
+        <span class="help-inline"
+              data-ng-show='registerForm.username.$error.username'
+              data-ng-class="medium">Username taken. Please try another.</span>
     </div>
-    <div>
-        <label>
-            Password:
-            <input type="text" ng-model="user.password">
-        </label>
+    <div class="form-group">
+        <label for="password">Password*</label>
+        <p class="text-muted">8-20 characters with alphanumeric characters and
+            !@#$% special characters. Must include at least one letter and
+            one numeric digit.</p>
+        <input id="password" type="password" name="password"
+               class="form-control" ng-model="user.password"
+               password-strength="user.password"/>
+        <span class="help-inline"
+              data-ng-show='registerForm.password.$dirty && !passwordIsValid'
+              data-ng-class="medium">Password invalid!</span>
     </div>
-    <div>
-        <label>
-            Email:
-            <input name="email" type="email" ng-model="user.email" email-available>
-        </label>
-        <div ng-if="userForm.email.$pending.email">Validating...</div>
-        <div ng-if="userForm.email.$error.email">Email is invalid</div>
+    <div class="form-group">
+        <label for="passwordConfirm">Confirm Password*</label>
+        <input id="passwordConfirm" type="password"
+               ng-model="user.passwordConfirm"
+               name="passwordConfirm" class="form-control"
+               compare-password-to="user.password" required/>
+        <span data-ng-show="registerForm.passwordConfirm.$error.comparePasswordTo">
+            Passwords do not match!
+        </span>
     </div>
-    <div>
-        <label>Group:</label>
-        <ui-select class="form-select" ng-model="user.group" theme="select2" ng-disabled="disabled" ng-required>
-            <ui-select-match placeholder="Select group...">{{$select.selected.name}}</ui-select-match>
-            <ui-select-choices repeat="group in groups | propsFilter: {name: $select.search}">
-                <div ng-bind-html="group.name | highlight: $select.search"></div>
-            </ui-select-choices>
-        </ui-select>
+    <div class="form-group">
+        <label for="email">Email*</label>
+        <input id="email" name="email" type="email" ng-model="user.email"
+               class="form-control" ng-model-options="{ updateOn: 'blur' }"
+               required>
+        <span class="help-inline"
+              data-ng-show='registerForm.email.$pending.email'
+              data-ng-class="strong">Validating...
+        </span>
+        <span class="help-inline"
+              data-ng-show='registerForm.email.$error.email'
+              data-ng-class="medium">Email is invalid.
+        </span>
     </div>
-    <button ng-click="createUser()">Submit</button>
+    <div class="form-group">
+        <label>Group*</label>
+        <input type="text" ng-model="user.group"
+               placeholder="Please select a group"
+               typeahead="group as group.name for group in groups | filter:$viewValue | limitTo:8"
+               typeahead-editable="false" class="form-control">
+        <i ng-show="loadingGroups" class="glyphicon glyphicon-refresh"></i>
+
+        <p id="create-group-tag">or <a ui-sref="createGroup">
+            Create a new one</a></p>
+    </div>
+    <div class="form-group">
+        <label>Location</label>
+        <input type="text" ng-model="user.location"
+               placeholder="Please select a location"
+               typeahead="location for location in getLocations($viewValue) | filter:$viewValue | limitTo:8"
+               typeahead-editable="false" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="fieldOfStudy">Field of Study</label>
+        <input id="fieldOfStudy" type="text"
+               ng-model="user.fieldOfStudy" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label for="homepage">Homepage</label>
+        <input id="homepage" type="text"
+               ng-model="user.homepage" class="form-control"/>
+    </div>
+    <button class="btn btn-success" type="button"
+            ng-disabled="registerForm.password.$pristine ||
+            registerForm.passwordConfirm.$pristine ||
+            !passwordIsValid ||
+            registerForm.passwordConfirm.$error.comparePasswordTo"
+            ng-click="createUser()">Register
+    </button>
 </form>

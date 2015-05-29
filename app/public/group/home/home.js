@@ -21,30 +21,35 @@ angular.module('ldr.group.home', [
         });
     })
 
-    .controller('GroupHomeCtrl', function($scope, $stateParams, $timeout, store, api) {
+    .controller('GroupHomeCtrl', function($scope, $stateParams, $timeout,
+                                          store, api) {
         var currentUser = store.get('currentUser');
         var groupId = $stateParams.id;
 
-        $scope.statistics = {};
         $scope.users = [];
 
-        api('group/' + groupId + '/statistics').get().success(function(statsObj) {
-            $scope.statistics = statsObj;
-        });
+        api('group/' + groupId + '/users')
+            .get()
+            .success(function(usersArr) {
+                $scope.users = usersArr;
+            });
 
-        api('group/' + groupId + '/users').get().success(function(usersArr) {
-            $scope.users = usersArr;
-        });
+        $scope.acceptUser = function(user) {
+            console.log(user);
+            debugger;
+        };
 
         // Uncomment to poll server and check for new users
         /*
-        var pollServer = function() {
-            api('group/' + groupId + '/users').get().success(function(usersArr) {
-                $scope.users = usersArr;
-                $timeout(pollServer, 1000);
-            });
-        };
-        pollServer();
-        */
+         var pollServer = function() {
+         api('group/' + groupId + '/users')
+         .get()
+         .success(function(usersArr) {
+         $scope.users = usersArr;
+         $timeout(pollServer, 1000);
+         });
+         };
+         pollServer();
+         */
 
     });

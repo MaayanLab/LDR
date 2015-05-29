@@ -196,14 +196,10 @@ angular.module('ldr.releases.create', [
             });
         });
 
-        function getGroup(groupName) {
-            return groupName.slice(0,1).toLowerCase();
-        }
-
         $scope.autocompleteSource = function(textInput, fieldName) {
             var params = {
                 name: textInput,
-                group: getGroup($scope.user.group.name)
+                group: $scope.group.abbr
             };
             return nameServer.get(fieldName, params).then(function(response) {
                 // We build a hash and then convert it to an array of objects
@@ -219,6 +215,7 @@ angular.module('ldr.releases.create', [
                     if (results[item.name]) {
                         return;
                     }
+                    debugger;
                     var obj = {};
                     obj.name = item.name;
                     obj.text = formatText(item.name);
@@ -235,7 +232,6 @@ angular.module('ldr.releases.create', [
 
         $scope.submit = function() {
             console.log($scope.form);
-
             var form = {
                 user: $scope.user._id,
                 group: $scope.user.group,
@@ -243,6 +239,8 @@ angular.module('ldr.releases.create', [
                 releaseDates: {},
                 urls: {}
             };
+
+            debugger;
             lodash.each($scope.form.metadata, function(obj) {
                 form.metadata[obj.name] = lodash.map(obj.model, function(obj) {
                     return obj._id;

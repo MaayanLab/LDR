@@ -14,12 +14,29 @@ var http = require('http'),
 
 module.exports = function(app) {
 
+    app.get(baseUrl + '/api/groups/', function(req, res) {
+        Group
+            .find({})
+            .lean()
+            .exec(function(err, groups) {
+                if (err) {
+                    console.log(err);
+                    res.status(404).send('Could not retrieve groups. ' +
+                        'Please try again.');
+                }
+                else {
+                    res.status(200).send(groups);
+                }
+            })
+    });
+
     app.get(baseUrl + '/api/group/:id/statistics', function(req, res) {
         var groupId = req.params.id;
         getGroupStats(groupId, function(err, statsResponse) {
             if (err) {
                 console.log(err);
-                res.status(404).send('Error getting statistics for group with id: ' + groupId);
+                res.status(404).send('Error getting statistics for ' +
+                    'group with id: ' + groupId);
             }
             else {
                 res.status(200).send(statsResponse);
@@ -36,7 +53,8 @@ module.exports = function(app) {
             .exec(function(err, users) {
                 if (err) {
                     console.log(err);
-                    res.status(404).send('Users for group with id: ' + groupId + ' could not be found')
+                    res.status(404).send('Users for group with id: ' +
+                        groupId + ' could not be found')
                 }
                 else {
                     res.status(200).send(users);

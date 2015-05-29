@@ -4,23 +4,28 @@ angular.module('ldr.nav', [])
             restrict: 'E',
             templateUrl: 'nav/nav.html',
             link: function(scope, element, attrs) {
+
+                scope.setCurrentUser = function(user, token) {
+                    scope.currentUser = user;
+                    store.set('currentUser', user);
+                    store.set('jwt', token);
+                    $rootScope.isLoggedIn = true;
+                    $rootScope.isLoggedInAdmin = user.admin;
+                };
                 scope.user = {};
                 scope.showFailMessage = false;
 
-                scope.login = function() {
+                scope.login = function(user) {
                     $http({
                         url: 'login',
                         method: 'POST',
-                        data: scope.user
+                        data: user || scope.user
                     }).then(function(result) {
                         if (result) {
                             // No error: authentication OK
                             // Set current user and jwt. Then go to forms page
-                            scope.currentUser = result.data.user;
-                            store.set('currentUser', result.data.user);
-                            store.set('jwt', result.data.id_token);
-                            $rootScope.isLoggedIn = true;
-                            $rootScope.isLoggedInAdmin = result.data.user.admin;
+                            scope.setCurrentUser(result.data.user,
+                                result.data.id_token);
                             $state.go('home');
                         }
                         else {
@@ -32,13 +37,20 @@ angular.module('ldr.nav', [])
                 };
 
                 scope.logout = function() {
+                    $rootScope.isLoggedIn = false;
                     $rootScope.isLoggedInAdmin = false;
                     store.remove('currentUser');
                     store.remove('jwt');
                     alert('Successfully logged out');
                     scope.showFailMessage = false;
-                    $rootScope.isLoggedIn = false;
                     $state.go('home');
+                };
+
+                scope.register = function() {
+                    $rootScope.isLoggedIn = false;
+                    $rootScope.isLoggedInAdmin = false;
+                    scope.showFailMessage = false;
+                    $state.go('userRegistration');
                 };
             }
         };

@@ -51,7 +51,10 @@ module.exports = function(groupId, cb) {
             var metadataEndpoints = ['assay', 'cell', 'perturbagen', 'readout'];
             _.each(metadataEndpoints, function(endpoint) {
                 var def = Q.defer();
-                var path = '/form/' + endpoint + '?group=' + group.abbr;
+                // Build path and make limit bigger than any count to get all
+                // statistics
+                var path = '/form/' + endpoint + '?group=' + group.abbr +
+                    '&limit=' + 100000000000000000;
 
                 http.get(nameServerUrl + path, function(res) {
                     var jsonString = '';
@@ -64,8 +67,10 @@ module.exports = function(groupId, cb) {
                         def.resolve(statResponse);
                     });
                 }).on('error', function(err) {
-                    console.log('Error in request to name server: ' + err.message);
-                    def.reject('A server error occurred while populating releases from name server');
+                    console.log('Error in request to name server: ' +
+                        err.message);
+                    def.reject('A server error occurred while populating ' +
+                        'releases from name server');
                 });
                 promisesArr.push(def.promise);
             });

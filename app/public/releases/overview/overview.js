@@ -33,6 +33,7 @@ angular.module('ldr.releases.overview', [
                 });
             });
             $scope.forms = data;
+            debugger;
         });
 
         $scope.editForm = function(form) {

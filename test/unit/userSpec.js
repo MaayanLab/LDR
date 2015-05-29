@@ -15,7 +15,13 @@ describe('User', function() {
         api = _api_;
         // Replace local storage with fake function -- MUST BE ABOVE CONTROLLER INIT
         sinon.stub(store, 'get', function(key) {
-            return { username: 'testUser', center: { name: 'testCenter' } };
+            return {
+                username: 'testUser',
+                group: {
+                    _id: '12345',
+                    name: 'testCenter'
+                }
+            };
         });
     }));
     describe('Admin', function() {

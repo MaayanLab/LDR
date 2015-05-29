@@ -16,11 +16,17 @@ describe('App', function() {
         api = _api_;
         // Replace local storage with fake function -- MUST BE ABOVE CONTROLLER INIT
         sinon.stub(store, 'get', function(key) {
-            return { username: 'testUser', center: { name: 'testCenter' } };
+            return {
+                username: 'testUser',
+                group: {
+                    _id: '12345',
+                    name: 'testCenter'
+                }
+            };
         });
     }));
 
-    describe('Milestones', function() {
+    describe('LDR', function() {
         var $scope, ldrController;
         beforeEach(inject(function($rootScope) {
             $scope = $rootScope.$new();
@@ -38,7 +44,7 @@ describe('App', function() {
 
         it('should have the correct page title', function() {
             $scope.pageTitle.should.be.a('string');
-            $scope.pageTitle.should.equal('Milestones');
+            $scope.pageTitle.should.equal('LDR');
         })
     });
 

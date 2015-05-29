@@ -38,23 +38,28 @@ module.exports = function(app) {
         res.status(200).send(releaseInit);
     });
 
-    // Individual release endpoint. Query id returns form with that id for editing on front end.
+    // Individual release endpoint.
+    // Query id returns form with that id for editing on front end.
     app.get(baseUrl + '/api/releases/form/:id', function(req, res) {
         DataRelease
             .findOne({ _id: req.params.id })
             .populate('group')
+            .lean()
             .exec(function(err, release) {
                 if (err) {
                     console.log(err);
-                    res.status(404).send('Error: Release could not be found. Id may be invalid');
+                    res.status(404).send('Error: Release could not be found. ' +
+                        'Id may be invalid');
                 }
                 if (!release) {
-                    res.status(404).send('Error: Release with given id could not be found.');
+                    res.status(404).send('Error: Release with given id could ' +
+                        'not be found.');
                 }
 
                 getMetadata(release, function(err, finalRelease) {
                     if (err) {
-                        res.status(500).send('There was an error building meta data for this release. Try again.');
+                        res.status(500).send('There was an error building ' +
+                            'meta data for this release. Try again.');
                     }
                     else {
                         res.status(200).send(finalRelease);
@@ -68,6 +73,7 @@ module.exports = function(app) {
         DataRelease
             .find({})
             .populate('group')
+            .lean()
             .exec(function(err, allData) {
                 if (err) {
                     console.log(err);
@@ -77,7 +83,8 @@ module.exports = function(app) {
                 _.each(allData, function(release, i) {
                     getMetadata(release, function(err, finalRelease) {
                         if (err) {
-                            res.status(500).send('There was an error building meta data for these releases. Try again.')
+                            res.status(500).send('There was an error building' +
+                                ' meta data for these releases. Try again.')
                         }
                         else {
                             releasesArr.push(finalRelease);
@@ -101,6 +108,7 @@ module.exports = function(app) {
         DataRelease
             .find(query)
             .populate('group')
+            .lean()
             .exec(function(err, allData) {
                 if (err) {
                     console.log(err);
@@ -110,7 +118,8 @@ module.exports = function(app) {
                 _.each(allData, function(release, i) {
                     getMetadata(release, function(err, finalRelease) {
                         if (err) {
-                            res.status(500).send('There was an error building meta data for these releases. Try again.')
+                            res.status(500).send('There was an error building' +
+                                ' meta data for these releases. Try again.')
                         }
                         else {
                             releasesArr.push(finalRelease);
@@ -133,8 +142,10 @@ module.exports = function(app) {
         form.save(function(err) {
             if (err) {
                 console.log(err);
-                res.status(400).send('A ' + err.name + ' occurred while saving JSON to database. ' +
-                    'Please confirm that your JSON is formatted properly. Visit http://www.jsonlint.com to confirm.');
+                res.status(400).send('A ' + err.name + ' occurred while ' +
+                    'saving JSON to database. Please confirm that your JSON ' +
+                    'is formatted properly. Visit http://www.jsonlint.com ' +
+                    'to confirm.');
             }
             else {
                 res.status(200).send(form);
@@ -153,7 +164,8 @@ module.exports = function(app) {
         DataRelease.update(query, inputData, function(err) {
             if (err) {
                 console.log(err);
-                res.status(400).send('There was an error updating entry with id ' + query._id + '. Please try again')
+                res.status(400).send('There was an error updating entry with ' +
+                    'id ' + query._id + '. Please try again')
             }
             else {
                 DataRelease.findOne(query, function(err, release) {
@@ -175,10 +187,12 @@ module.exports = function(app) {
         DataRelease.findOne({ _id: req.params.id }).remove(function(err) {
             if (err) {
                 console.log(err);
-                res.status(404).send('There was an error deleting the data release with id ' + req.query.formId +
+                res.status(404).send('There was an error deleting the data ' +
+                    'release with id ' + req.query.formId +
                     ' Error: ' + err);
             }
-            res.status(200).send('The data release with id ' + req.params.id + ' was deleted');
+            res.status(200).send('The data release with id ' + req.params.id +
+                ' was deleted');
         });
     });
 };

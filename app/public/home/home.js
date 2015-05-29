@@ -11,3 +11,4 @@ angular.module('ldr.home', [
         templateUrl: 'home/home.html'
     });
 });
+

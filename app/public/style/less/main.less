@@ -27,6 +27,7 @@ body {
 }
 a {
     color: @color-primary;
+    cursor: pointer;
 }
 h1,
 h2,
@@ -56,8 +57,8 @@ nav.thin-navbar {
     font-weight: 600;
     line-height: 25px;
     text-align: right;
-    background: @color-gray-charcoal;
-    border-bottom: 1px solid black;
+    background: @color-primary;
+    border-bottom: 1px solid @color-primary-dark;
     overflow: hidden;
 }
 
@@ -71,6 +72,12 @@ nav.thin-navbar {
         color: white;
         text-decoration: none;
     }
+    a {
+
+        &:hover {
+            color: @color-primary-light;
+        }
+    }
 }
 
 a#group-nav-icon {
@@ -83,14 +90,13 @@ a#group-nav-icon {
 }
 
 .navbar-wrapper {
-    background-color: @color-primary;
+    background-color: @color-gray-light;
+    border-bottom: 1px solid rgba(170, 170, 170, 0.55);
     padding: 5px 15px 0 15px;
-}
-nav {
     a {
-        color: white;
+        color: @color-primary;
         &:focus {
-            color: white;
+            color: @color-primary;
         }
         &:hover {
             color: @color-primary-light;
@@ -102,6 +108,7 @@ nav {
             font-size: 29px;
             &:hover,
             &:focus {
+                color: @color-primary;
                 text-decoration: none;
             }
         }
@@ -110,22 +117,19 @@ nav {
         border: none;
         height: 32px;
     }
-    .btn {
-        border: none;
-    }
 }
 .nav > li > a:focus,
 .nav > li > a:hover {
-    background: @color-primary;
+    background: @color-gray-light;
 }
 .dropdown-menu {
     border-radius: 0;
 }
 
-.nav > li.dropdown.active.open > a, 
-.nav > li.dropdown.open > a, 
+.nav > li.dropdown.active.open > a,
+.nav > li.dropdown.open > a,
 {
-    background: @color-primary;
+    background: @color-gray-light;
     border-color: white;
 }
 .nav-items {
@@ -144,6 +148,25 @@ h5.errorMsg {
     cursor: default;
     color: #d5d5e5;
 }
+
+button.login-btn, button.register-btn {
+    background: transparent;
+    color: @color-primary;
+    border: 1px solid @color-gray-light;
+    border-radius: 5px;
+    &:hover,
+    &:focus {
+        color: @color-primary;
+        text-decoration: none;
+        border: 1px solid @color-primary;
+        border-radius: 5px;
+    }
+}
+
+button.login-btn {
+    margin-right: 5px;
+}
+
 #content {
     margin-top: 20px;
     padding-bottom: 120px;
@@ -386,8 +409,51 @@ table.meta-data-table {
 h4.meta-header {
     margin-top: 40px;
 }
+
+#create-group-tag {
+    margin-left: 12px;
+}
+
+.statistics {
+    border-bottom: 1px solid #eee;
+    margin: 0 auto;
+}
+
+.group-data, .meta-data {
+    border-top: 1px solid #eee;
+}
+
+span.stat-num {
+    color: @color-primary;
+}
+
+.user-card {
+    min-height: 200px;
+    box-shadow: 0 0 6px -2px rgba(0, 0, 0, .52);
+    -webkit-box-shadow: 0 0 6px -2px rgba(0, 0, 0, .52);
+    -moz-box-shadow: 0 0 6px -2px rgba(0, 0, 0, .52);
+}
+
+.user-card-titles {
+    display: inline-block;
+    width: 100%;
+}
+.user-card-name {
+    float: left;
+}
+
+.user-card-pending {
+    float: right;
+    color: @color-red;
+}
+
+.user-card-details {
+    margin-left: 35px;
+}
+
 #footer {
     background: @color-gray-charcoal;
+    border-top: 1px solid black;
     bottom: 0;
     color: white;
     height: 100px;
@@ -453,10 +519,3 @@ h4.meta-header {
 .normal {
     font-weight: normal;
 }
-
-// Password Strength
-.strong   { color: #060; border-color: #0F0;}
-.medium   { color: #C60; border-color: #FC0;}
-.weak     { color: #900; border-color: #F00;}
-.strength { padding: 1px 10px; border: 2px solid; color: #FFF;}
-// End Password Strength

@@ -20,14 +20,14 @@ module.exports = function(config) {
         files: [
             'node_modules/karma-sinon-chai/chai-adapter.js',
             'node_modules/karma-sinon-chai/node_modules/sinon-chai/lib/sinon-chai.js',
-            'public/vendor/angular/angular.js',
-            'public/vendor/angular-mocks/angular-mocks.js',
-            'public/vendor/jquery/dist/jquery.js',
-            'public/vendor/**/*min.js',
-            'public/vendor/ng-lodash/build/ng-lodash.js',
+            'app/public/vendor/angular/angular.js',
+            'app/public/vendor/angular-mocks/angular-mocks.js',
+            'app/public/vendor/jquery/dist/jquery.js',
+            'app/public/vendor/**/*min.js',
+            'app/public/vendor/ng-lodash/build/ng-lodash.js',
             // Load sourcemaps but don't include them --> leads to PhantomJS errors
             { pattern: '**/*.map', included: false },
-            'public/{*.js,!(vendor)/**/*.js}',
+            'app/public/{*.js,!(vendor)/**/*.js}',
             'test/**/*Spec.js'
         ],
 
@@ -35,8 +35,8 @@ module.exports = function(config) {
         // list of files to exclude
         exclude: [
             // Prevent some libraries from loading twice
-            'public/vendor/angular/angular.min.js',
-            'public/vendor/jquery/dist/jquery.min.js'
+            'app/public/vendor/angular/angular.min.js',
+            'app/public/vendor/jquery/dist/jquery.min.js'
         ],
 
 

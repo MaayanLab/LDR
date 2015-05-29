@@ -9,6 +9,7 @@ body {
 }
 a {
   color: #286090;
+  cursor: pointer;
 }
 h1,
 h2,
@@ -39,8 +40,8 @@ nav.thin-navbar {
   font-weight: 600;
   line-height: 25px;
   text-align: right;
-  background: #222222;
-  border-bottom: 1px solid black;
+  background: #286090;
+  border-bottom: 1px solid #08385f;
   overflow: hidden;
 }
 nav.thin-navbar a,
@@ -52,6 +53,9 @@ nav.thin-navbar p {
   color: white;
   text-decoration: none;
 }
+nav.thin-navbar a:hover {
+  color: #8abde8;
+}
 a#group-nav-icon {
   height: 13px;
   width: 26px;
@@ -61,45 +65,44 @@ a#group-nav-icon:hover {
   background-position: -26px 0;
 }
 .navbar-wrapper {
-  background-color: #286090;
+  background-color: #eeeeee;
+  border-bottom: 1px solid rgba(170, 170, 170, 0.55);
   padding: 5px 15px 0 15px;
 }
-nav a {
-  color: white;
+.navbar-wrapper a {
+  color: #286090;
 }
-nav a:focus {
-  color: white;
+.navbar-wrapper a:focus {
+  color: #286090;
 }
-nav a:hover {
+.navbar-wrapper a:hover {
   color: #8abde8;
 }
-nav h1 {
+.navbar-wrapper h1 {
   margin: 0;
 }
-nav h1 a {
+.navbar-wrapper h1 a {
   font-size: 29px;
 }
-nav h1 a:hover,
-nav h1 a:focus {
+.navbar-wrapper h1 a:hover,
+.navbar-wrapper h1 a:focus {
+  color: #286090;
   text-decoration: none;
 }
-nav .form-control {
+.navbar-wrapper .form-control {
   border: none;
   height: 32px;
 }
-nav .btn {
-  border: none;
-}
 .nav > li > a:focus,
 .nav > li > a:hover {
-  background: #286090;
+  background: #eeeeee;
 }
 .dropdown-menu {
   border-radius: 0;
 }
 .nav > li.dropdown.active.open > a,
 .nav > li.dropdown.open > a {
-  background: #286090;
+  background: #eeeeee;
   border-color: white;
 }
 .nav-items {
@@ -117,6 +120,25 @@ h5.errorMsg {
   padding: 15px 15px;
   cursor: default;
   color: #d5d5e5;
+}
+button.login-btn,
+button.register-btn {
+  background: transparent;
+  color: #286090;
+  border: 1px solid #eeeeee;
+  border-radius: 5px;
+}
+button.login-btn:hover,
+button.register-btn:hover,
+button.login-btn:focus,
+button.register-btn:focus {
+  color: #286090;
+  text-decoration: none;
+  border: 1px solid #286090;
+  border-radius: 5px;
+}
+button.login-btn {
+  margin-right: 5px;
 }
 #content {
   margin-top: 20px;
@@ -361,8 +383,43 @@ table.meta-data-table {
 h4.meta-header {
   margin-top: 40px;
 }
+#create-group-tag {
+  margin-left: 12px;
+}
+.statistics {
+  border-bottom: 1px solid #eee;
+  margin: 0 auto;
+}
+.group-data,
+.meta-data {
+  border-top: 1px solid #eee;
+}
+span.stat-num {
+  color: #286090;
+}
+.user-card {
+  min-height: 200px;
+  box-shadow: 0 0 6px -2px rgba(0, 0, 0, 0.52);
+  -webkit-box-shadow: 0 0 6px -2px rgba(0, 0, 0, 0.52);
+  -moz-box-shadow: 0 0 6px -2px rgba(0, 0, 0, 0.52);
+}
+.user-card-titles {
+  display: inline-block;
+  width: 100%;
+}
+.user-card-name {
+  float: left;
+}
+.user-card-pending {
+  float: right;
+  color: #df6632;
+}
+.user-card-details {
+  margin-left: 35px;
+}
 #footer {
   background: #222222;
+  border-top: 1px solid black;
   bottom: 0;
   color: white;
   height: 100px;
@@ -427,21 +484,4 @@ h4.meta-header {
 }
 .normal {
   font-weight: normal;
-}
-.strong {
-  color: #060;
-  border-color: #0F0;
-}
-.medium {
-  color: #C60;
-  border-color: #FC0;
-}
-.weak {
-  color: #900;
-  border-color: #F00;
-}
-.strength {
-  padding: 1px 10px;
-  border: 2px solid;
-  color: #FFF;
 }

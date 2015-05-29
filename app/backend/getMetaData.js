@@ -9,16 +9,18 @@ var _ = require('lodash'),
     nameServerUrl = require('./config/nameServer').url;
 
 /**
- * buildMeta: Make request to name-server and replace arrays of IDs with arrays of JSON data
- * @param releaseData: JSON stored in local database with pointers to Name/Metadata Server
- * @param cb: Callback function given error or releaseData with populated metadata
+ * buildMeta: Make request to name-server and replace arrays of IDs
+ * with arrays of JSON data
+ * @param releaseData: JSON stored in local database with pointers
+ * to Name/Metadata Server
+ * @param cb: Callback function given error or releaseData with populated
+ * metadata
  */
 module.exports = function(releaseData, cb) {
     var resultObj = {};
     var promisesArr = [];
-    var metadataObj = releaseData.metadata.toObject();
 
-    _.each(metadataObj, function(valArray, key) {
+    _.each(releaseData.metadata, function(valArray, key) {
         var path;
         var id = valArray.length === 1 ? valArray[0] : JSON.stringify(valArray);
 
@@ -47,12 +49,16 @@ module.exports = function(releaseData, cb) {
         if (path) {
             var def = Q.defer();
             http.get(nameServerUrl + path, function(res) {
+                debugger;
                 var jsonString = '';
                 res.on('data', function(chunk) {
                     jsonString += chunk;
                 });
                 res.on('end', function() {
-                    var body = JSON.parse(jsonString);
+                    var body = [];
+                    if (jsonString) {
+                        body = JSON.parse(jsonString);
+                    }
                     if (valArray.length === 1) {
                         resultObj[key] = [body];
                     }
@@ -61,11 +67,12 @@ module.exports = function(releaseData, cb) {
                     }
                     def.resolve(resultObj);
                 });
-            }).on('error', function(err) {
-                console.log('Error in request to name server: ' + err.message);
-                def.reject('A server error occurred while populating releases from name server');
-                cb(null, resultObj);
             });
+            /*.on('error', function(err) {
+             console.log('Error in request to name server: ' + err.message);
+             def.reject('A server error occurred while populating releases from name server');
+             cb(null, resultObj);
+             });*/
             promisesArr.push(def.promise);
         }
     });

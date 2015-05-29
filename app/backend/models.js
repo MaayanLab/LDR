@@ -24,7 +24,10 @@ var userSchema = new Schema({
     email: { type: String, required: true/*, index: { unique: true }*/ },
     group: { type: Schema.ObjectId, required: true, ref: 'Group' },
     admin: { type: Boolean, required: true, default: false },
-    admitted: { type: Boolean, required: true, default: false }
+    admitted: { type: Boolean, required: true, default: false },
+    location: { type: String, default: '' },
+    fieldOfStudy: { type: String, default: '' },
+    homepage: { type: String, default: '' }
     // For checking login attempts and locking account
     //loginAttempts: { type: Number, required: true, default: 0 },
     //lockUntil: { type: Number }
@@ -139,7 +142,8 @@ try {
 
 // Group
 var groupSchema = new Schema({
-    name: { type: String, required: true, index: { unique: true } }
+    name: { type: String, required: true, index: { unique: true } },
+    abbr: { type: String, required: true, index: { unique: true } }
 });
 
 try {
@@ -152,7 +156,7 @@ var dataReleaseSchema = new Schema({
     user: { type: Schema.ObjectId, ref: 'User', required: true },
     group: { type: Schema.ObjectId, ref: 'Group', required: true },
     approved: { type: Boolean, required: true },
-    dateModified: { type: Date, required: true },
+    dateModified: { type: String, required: true },
     releaseDates: {
         level1: { type: String, default: "" },
         level2: { type: String, default: "" },

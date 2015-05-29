@@ -40,14 +40,14 @@
         </div>
     </form>
 
-    <form ng-model="modalForm" class="modal-form-input" ng-show="name === 'readout'">
+    <form ng-model="modalForm" class="modal-form-input" ng-show="name === 'readouts'">
         <div class="form-group">
             <label class="control-label">Name</label>
             <input type="text" class="form-control" ng-model="modalForm.name" />
         </div>
         <div class="form-group">
             <label class="control-label">Data Type</label>
-            <input type="text" class="form-control" ng-model="modalForm.name" />
+            <input type="text" class="form-control" ng-model="modalForm.type" />
         </div>
     </form>
 
@@ -63,6 +63,6 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok();">Save</button>
-    <button class="btn btn-danger" ng-click="cancel();">Cancel</button>
+    <button type="submit" class="btn btn-primary" ng-click="ok();">Save</button>
+    <button type="button" class="btn btn-danger" ng-click="cancel();">Cancel</button>
 </div>
