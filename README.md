@@ -2,7 +2,7 @@
 LINCS Data Registry Webpage
 
 ## Develop
-```javascript
+```
 npm install && bower install
 gulp
 ```
