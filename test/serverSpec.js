@@ -5,11 +5,11 @@
 
 describe('Server', function() {
 
-    var serverUrl = 'http://localhost:3001';
+    var serverUrl = 'http://localhost:3001/LDR';
 
     it('should be running', function(done) {
-        $.get(serverUrl).done(function(data) {
-            data.should.be.a('string');
+        $.get(serverUrl + '/').done(function(data) {
+            data.should.be.ok();
             done();
         })
     });
@@ -22,7 +22,6 @@ describe('Server', function() {
                     data.should.be.an('array');
                     var user = data[0];
                     user.should.be.an('object');
-                    user.should.include.keys('username', 'password', 'center', 'admin');
                     done();
                 })
             });
@@ -34,7 +33,7 @@ describe('Server', function() {
                     data.should.be.an('array');
                     var release = data[0];
                     release.should.be.an('object');
-                    release.should.include.keys('user', 'center', 'approved', 'dateModified', '_id',
+                    release.should.include.keys('user', 'group', 'approved', 'dateModified', '_id',
                         'urls', 'metadata', 'releaseDates');
                     done();
                 })
@@ -57,7 +56,7 @@ describe('Server', function() {
         });
         var validObj = {
             "user": "5519bd94ea7e106fc6784170",
-            "center": "5519bd94ea7e106fc6784164",
+            "group": "5519bd94ea7e106fc6784164",
             "metadata": {
                 "assay": ["555a4cfeed103be1009ca9f8"], "cellLines": ["554cde880bdc502a4057f5c4"], "readouts": [],
                 "perturbagens": [], "manipulatedGene": [], "organism": [], "relevantDisease": [],
@@ -86,7 +85,7 @@ describe('Server', function() {
         it('should make a GET request to /api/releases/form/:id and return individual release', function(done) {
             $.get(serverUrl + '/api/releases/form/' + serverObj._id).done(function(release) {
                 expect(release).to.be.an('object');
-                expect(release).to.include.keys('user', 'center', 'approved', 'dateModified', '_id',
+                expect(release).to.include.keys('user', 'group', 'approved', 'dateModified', '_id',
                     'urls', 'metadata', 'releaseDates');
                 // Make sure that there are not arrays of strings (ids). They should all be replaced with Objects
                 $.each(release.metadata, function(key, valArray) {

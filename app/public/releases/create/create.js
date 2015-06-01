@@ -26,7 +26,7 @@ angular.module('ldr.releases.create', [
         var NAME_SERVER = 'http://146.203.54.165:7078/form/';
         
         $scope.user = store.get('currentUser');
-        $scope.center = $scope.user.center;
+        $scope.group = $scope.user.group;
 
         var MAX_TAGS = 100;
         $scope.form = {
@@ -196,14 +196,10 @@ angular.module('ldr.releases.create', [
             });
         });
 
-        function getGroup(centerName) {
-            return centerName.slice(0,1).toLowerCase();
-        }
-
         $scope.autocompleteSource = function(textInput, fieldName) {
             var params = {
                 name: textInput,
-                group: getGroup($scope.user.center.name)
+                group: $scope.group.abbr
             };
             return nameServer.get(fieldName, params).then(function(response) {
                 // We build a hash and then convert it to an array of objects
@@ -219,6 +215,7 @@ angular.module('ldr.releases.create', [
                     if (results[item.name]) {
                         return;
                     }
+                    debugger;
                     var obj = {};
                     obj.name = item.name;
                     obj.text = formatText(item.name);
@@ -235,14 +232,15 @@ angular.module('ldr.releases.create', [
 
         $scope.submit = function() {
             console.log($scope.form);
-
             var form = {
                 user: $scope.user._id,
-                center: $scope.user.center,
+                group: $scope.user.group,
                 metadata: {},
                 releaseDates: {},
                 urls: {}
             };
+
+            debugger;
             lodash.each($scope.form.metadata, function(obj) {
                 form.metadata[obj.name] = lodash.map(obj.model, function(obj) {
                     return obj._id;

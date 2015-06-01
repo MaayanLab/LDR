@@ -4,7 +4,7 @@ angular.module('ldr.api', [])
         var BASE = 'api/',
             SECURE = BASE + 'secure/';
         
-        // The only valid params are "id" and "centerId". Do we want to validate
+        // The only valid params are "id" and "groupId". Do we want to validate
         // before making a request?
         return function(endpoint) {
             return {

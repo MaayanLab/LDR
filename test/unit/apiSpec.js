@@ -16,7 +16,7 @@ describe('API', function() {
             .respond([{
                 _id: "This is an ID string",
                 user: "This is an ID string",
-                center: "This is an ID string",
+                group: "This is an ID string",
                 dateModified: "This is a DATE string",
                 approved: false
             }]);
@@ -25,7 +25,7 @@ describe('API', function() {
                 _id: "This is an ID string",
                 username: "This is a string",
                 password: "This is a string",
-                center: "This is an ID string",
+                group: "This is an ID string",
                 admin: false
             }]);
     }));
@@ -42,7 +42,8 @@ describe('API', function() {
         $httpBackend.expectGET('api/releases');
         api('releases').get().success(function(releases) {
             releases.should.be.an('array');
-            releases[0].should.include.keys('_id', 'user', 'center', 'dateModified', 'approved');
+            releases[0].should.include.keys('_id', 'user', 'group',
+                'dateModified', 'approved');
             done();
         });
         $httpBackend.flush();
@@ -52,7 +53,8 @@ describe('API', function() {
         $httpBackend.expectGET('api/users');
         api('users').get().success(function(users) {
             users.should.be.an('array');
-            users[0].should.include.keys('_id', 'username', 'password', 'center', 'admin');
+            users[0].should.include.keys('_id', 'username',
+                'password', 'group', 'admin');
             done();
         });
         $httpBackend.flush();

@@ -12,9 +12,15 @@ describe('DataReleases', function() {
         $http = _$http_;
         store = _store_;
         api = _api_;
-        // Replace local storage with fake function -- MUST BE ABOVE CONTROLLER INIT
+        // Replace local storage with spy -- MUST BE ABOVE CONTROLLER INIT
         sinon.stub(store, 'get', function(key) {
-            return { username: 'testUser', center: { name: 'testCenter' } };
+            return {
+                username: 'testUser',
+                group: {
+                    _id: '12345',
+                    name: 'testCenter'
+                }
+            };
         });
     }));
     describe('Create', function() {
@@ -23,7 +29,8 @@ describe('DataReleases', function() {
         beforeEach(inject(function() {
             $scope = {};
             // Load controller
-            createController = $controller('releases.create.ctrl', { api: api, $scope: $scope });
+            createController = $controller('releases.create.ctrl',
+                { api: api, $scope: $scope });
         }));
 
         it('should have a defined controller', function() {
@@ -43,7 +50,8 @@ describe('DataReleases', function() {
         beforeEach(inject(function() {
             $scope = {};
             // Load controller
-            overviewController = $controller('releases.overview.ctrl', { api: api, $scope: $scope });
+            overviewController = $controller('releases.overview.ctrl',
+                { api: api, $scope: $scope });
         }));
 
         it('should have a defined controller', function() {

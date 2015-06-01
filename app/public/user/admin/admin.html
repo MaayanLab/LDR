@@ -17,7 +17,7 @@
             <span ng-if="form.approved">Approved</span>
             <span ng-if="!form.approved">Pending approval</span>
         </td>
-        <td id="center">{{form.center.name}}</td>
+        <td id="center">{{form.group.name}}</td>
         <td id="assay-name">{{form.metadata.assay[0].name}}</td>
         <td id="readout-count">{{form.metadata.readouts.length}}</td>
         <td id="release-date">{{form.releaseDates.level1 | date:'MM-dd-yyyy'}}</td>

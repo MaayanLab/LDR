@@ -27,6 +27,7 @@ body {
 }
 a {
     color: @color-primary;
+    cursor: pointer;
 }
 h1,
 h2,
@@ -48,15 +49,54 @@ h6 {
     background-color: #b82c28;
     border-color: #67201e;
 }
-.navbar-wrapper {
-    background-color: @color-primary;
-    padding: 5px 15px 0px 15px;
+
+nav.thin-navbar {
+    height: 24px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 25px;
+    text-align: right;
+    background: @color-primary;
+    border-bottom: 1px solid @color-primary-dark;
+    overflow: hidden;
 }
-nav {
-    a {
+
+nav.thin-navbar {
+    a,
+    p {
+        display: inline-block;
+        line-height: 22px;
+        padding: 0 10px;
+        margin: 0;
         color: white;
+        text-decoration: none;
+    }
+    a {
+
+        &:hover {
+            color: @color-primary-light;
+        }
+    }
+}
+
+a#group-nav-icon {
+    height: 13px;
+    width: 26px;
+    background: url('../images/group-icon.png') no-repeat left top;
+    &:hover {
+        background-position: -26px 0;
+    }
+}
+
+.navbar-wrapper {
+    background-color: @color-gray-light;
+    border-bottom: 1px solid rgba(170, 170, 170, 0.55);
+    padding: 5px 15px 0 15px;
+    a {
+        color: @color-primary;
         &:focus {
-            color: white;
+            color: @color-primary;
         }
         &:hover {
             color: @color-primary-light;
@@ -68,6 +108,7 @@ nav {
             font-size: 29px;
             &:hover,
             &:focus {
+                color: @color-primary;
                 text-decoration: none;
             }
         }
@@ -76,22 +117,19 @@ nav {
         border: none;
         height: 32px;
     }
-    .btn {
-        border: none;
-    }
 }
 .nav > li > a:focus,
 .nav > li > a:hover {
-    background: @color-primary;
+    background: @color-gray-light;
 }
 .dropdown-menu {
     border-radius: 0;
 }
 
-.nav > li.dropdown.active.open > a, 
-.nav > li.dropdown.open > a, 
+.nav > li.dropdown.active.open > a,
+.nav > li.dropdown.open > a,
 {
-    background: @color-primary;
+    background: @color-gray-light;
     border-color: white;
 }
 .nav-items {
@@ -104,13 +142,31 @@ nav {
     margin: 0 auto;
     vertical-align: middle;
 }
-.hello {
+h5.errorMsg {
     margin: 0;
     padding: 15px 15px;
-    line-height: 1.42857143;
     cursor: default;
     color: #d5d5e5;
 }
+
+button.login-btn, button.register-btn {
+    background: transparent;
+    color: @color-primary;
+    border: 1px solid @color-gray-light;
+    border-radius: 5px;
+    &:hover,
+    &:focus {
+        color: @color-primary;
+        text-decoration: none;
+        border: 1px solid @color-primary;
+        border-radius: 5px;
+    }
+}
+
+button.login-btn {
+    margin-right: 5px;
+}
+
 #content {
     margin-top: 20px;
     padding-bottom: 120px;
@@ -118,7 +174,7 @@ nav {
 .content {
     margin: 20px auto;
 }
-.ml-view {
+.ldr-view {
     font-family: @font-family-primary;
     margin: 0 90px;
 }
@@ -353,8 +409,51 @@ table.meta-data-table {
 h4.meta-header {
     margin-top: 40px;
 }
+
+#create-group-tag {
+    margin-left: 12px;
+}
+
+.statistics {
+    border-bottom: 1px solid #eee;
+    margin: 0 auto;
+}
+
+.group-data, .meta-data {
+    border-top: 1px solid #eee;
+}
+
+span.stat-num {
+    color: @color-primary;
+}
+
+.user-card {
+    min-height: 200px;
+    box-shadow: 0 0 6px -2px rgba(0, 0, 0, .52);
+    -webkit-box-shadow: 0 0 6px -2px rgba(0, 0, 0, .52);
+    -moz-box-shadow: 0 0 6px -2px rgba(0, 0, 0, .52);
+}
+
+.user-card-titles {
+    display: inline-block;
+    width: 100%;
+}
+.user-card-name {
+    float: left;
+}
+
+.user-card-pending {
+    float: right;
+    color: @color-red;
+}
+
+.user-card-details {
+    margin-left: 35px;
+}
+
 #footer {
     background: @color-gray-charcoal;
+    border-top: 1px solid black;
     bottom: 0;
     color: white;
     height: 100px;
@@ -389,27 +488,32 @@ h4.meta-header {
 }
 .btn-danger {
     background-color: @color-red;
-    border-color: none;
+    outline: none;
 }
 .btn-success,
 .btn-primary {
     background-color: @color-primary;
-    border-color: none;
+    outline: none;
     &:hover,
     &:active,
     &:focus {
         background-color: @color-primary-dark;
-        border-color: none;
+        outline: none;
     }
 }
+.btn-success[disabled] {
+    background-color: @color-primary;
+    outline: none;
+}
+
 .btn-info {
     background-color: @color-yellow;
-    border-color: none;
+    outline: none;
     &:hover,
     &:active,
     &:focus {
         background-color: @color-yellow-dark;
-        border-color: none;
+        outline: none;
     }
 }
 .normal {

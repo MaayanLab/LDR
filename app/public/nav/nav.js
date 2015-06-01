@@ -1,44 +1,57 @@
 angular.module('ldr.nav', [])
+    .directive('ldrNav', function($http, $state, $rootScope, store) {
+        return {
+            restrict: 'E',
+            templateUrl: 'nav/nav.html',
+            link: function(scope, element, attrs) {
 
-.directive('mlNav', function($http, $state, $rootScope, store) {
-    return {
-        restrict: 'E',
-        templateUrl: 'nav/nav.html',
-        link: function(scope, element, attrs) {
-            
-            scope.user = {};
-
-            scope.login = function () {
-                $http({
-                    url: 'login',
-                    method: 'POST',
-                    data: scope.user
-                }).then(function(result) {
-                    // No error: authentication OK
-                    // Set current user and jwt. Then go to forms page
-                    store.set('currentUser', result.data.user);
-                    store.set('jwt', result.data.id_token);
+                scope.setCurrentUser = function(user, token) {
+                    scope.currentUser = user;
+                    store.set('currentUser', user);
+                    store.set('jwt', token);
                     $rootScope.isLoggedIn = true;
-                    // TODO: This is a hack. Talk to Michael.
-                    $rootScope.isLoggedInAdmin = scope.user.username === 'nihadmin' ? true : false;
-                    $state.go('home');
-                    $rootScope.currentUser = scope.user;
-                }, function (error) {
-                    // Error: authentication failed
-                    store.set('message', 'Authentication failed.');
-                    alert('Login was unsuccessful. Please try again.');
-                });
-            };
+                    $rootScope.isLoggedInAdmin = user.admin;
+                };
+                scope.user = {};
+                scope.showFailMessage = false;
 
-            scope.logout = function () {
-                $rootScope.message = 'Logged out.';
-                $rootScope.isLoggedIn = false;
-                $rootScope.isLoggedInAdmin = false;
-                store.remove('currentUser');
-                store.remove('jwt');
-                alert('Successfully logged out');
-                $state.go('home');
-            };
-        }
-    };
-});
+                scope.login = function(user) {
+                    $http({
+                        url: 'login',
+                        method: 'POST',
+                        data: user || scope.user
+                    }).then(function(result) {
+                        if (result) {
+                            // No error: authentication OK
+                            // Set current user and jwt. Then go to forms page
+                            scope.setCurrentUser(result.data.user,
+                                result.data.id_token);
+                            $state.go('home');
+                        }
+                        else {
+                            scope.showFailMessage = true;
+                        }
+                    }, function(err) {
+                        scope.showFailMessage = true;
+                    });
+                };
+
+                scope.logout = function() {
+                    $rootScope.isLoggedIn = false;
+                    $rootScope.isLoggedInAdmin = false;
+                    store.remove('currentUser');
+                    store.remove('jwt');
+                    alert('Successfully logged out');
+                    scope.showFailMessage = false;
+                    $state.go('home');
+                };
+
+                scope.register = function() {
+                    $rootScope.isLoggedIn = false;
+                    $rootScope.isLoggedInAdmin = false;
+                    scope.showFailMessage = false;
+                    $state.go('userRegistration');
+                };
+            }
+        };
+    });

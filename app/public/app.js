@@ -1,29 +1,20 @@
 angular.module('ldr', [
-        'ldr.nav',
-        'ldr.home',
-        'ldr.releases.overview',
-        'ldr.releases.create',
-        'ldr.user.admin',
-        'ldr.user.registration',
-        'ui.router',
-        'ui.bootstrap',
-        'angular-storage',
-        'angular-jwt'
-    ])
-
-    .config(function ldrConfig(
-            $urlRouterProvider, jwtInterceptorProvider, $httpProvider, $locationProvider
-        ) {
-
-        // Remove the 'X-Requested-With' header from all requests to prevent CORS errors
-        // http://stackoverflow.com/questions/16661032/http-get-is-not-allowed-by-access-control-allow-origin-but-ajax-is
-        //delete $httpProvider.defaults.headers.common['X-Requested-With'];
-
-        // Remove hash # from URL
-        // $locationProvider.html5Mode(true);
-
-        // Reroute to home if URL is not valid
-        //$urlRouterProvider.otherwise(base);
+    'ldr.nav',
+    'ldr.home',
+    'ldr.bar',
+    'ldr.group.home',
+    'ldr.releases.overview',
+    'ldr.releases.create',
+    'ldr.user.admin',
+    'ldr.user.registration',
+    'ldr.user.settings',
+    'ldr.user.settings.changePassword',
+    'ui.router',
+    'ui.bootstrap',
+    'angular-storage',
+    'angular-jwt'
+])
+    .config(function ldrConfig($urlRouterProvider, jwtInterceptorProvider, $httpProvider, $locationProvider) {
 
         // Add JWT to every request to server
         //jwtInterceptorProvider.tokenGetter = function (store) {
@@ -32,28 +23,27 @@ angular.module('ldr', [
         //$httpProvider.interceptors.push('jwtInterceptor');
 
         // For AJAX errors
-        $httpProvider.interceptors.push(function ($q, $location) {
+        $httpProvider.interceptors.push(function($q, $location) {
             return {
-                response: function (response) {
+                response: function(response) {
                     return response;
                 },
-                responseError: function (response) {
+                responseError: function(response) {
                     if (response.status === 401)
-                        //$location.url(base);
-                    return $q.reject(response);
+                    //$location.url(base);
+                        return $q.reject(response);
                 }
             };
         });
     })
 
-    .run(function ($rootScope, $state, store, jwtHelper) {
+    .run(function($rootScope, $state, store, jwtHelper) {
         "use strict";
-        
-        $rootScope.message = '';
+        $rootScope.currentUser = store.get('currentUser');
         // Check status of user on every state change
         // Used for Navbar and blocking pages from unauthorized users
         // Otherwise, just check if the user is logged in
-        $rootScope.$on('$stateChangeStart', function (e, to) {
+        $rootScope.$on('$stateChangeStart', function(e, to) {
             // Get current user
             $rootScope.currentUser = store.get('currentUser');
 
@@ -122,14 +112,13 @@ angular.module('ldr', [
             }
         });
     })
-
-        .controller('ldrCtrl', function ldrCtrl($scope) {
-            $scope.pageTitle = 'Milestones';
-
+    .controller('ldrCtrl', function ldrCtrl($scope, store) {
+        $scope.pageTitle = 'LDR';
+        $scope.currentUser = store.get('currentUser');
         // Don't think this works, but should dynamically change title of page
-        $scope.$on('$routeChangeSuccess', function (e, nextRoute) {
+        $scope.$on('$routeChangeSuccess', function(e, nextRoute) {
             if (nextRoute.$$route && angular.isDefined(nextRoute.$$route.pageTitle)) {
-                $scope.pageTitle = nextRoute.$$route.pageTitle + ' | Milestones Landing';
+                $scope.pageTitle = nextRoute.$$route.pageTitle + ' | LDR';
             }
         });
     });

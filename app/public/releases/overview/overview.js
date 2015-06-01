@@ -23,7 +23,7 @@ angular.module('ldr.releases.overview', [
         $scope.user = currentUser;
         $scope.forms = [];
 
-        api('releases/center/' + $scope.user.center._id).get().success(function(data) {
+        api('releases/group/' + $scope.user.group._id).get().success(function(data) {
             // Convert release date strings to proper date objects so Angular
             // can format them correctly.
             lodash.each(data, function(obj) {
@@ -33,6 +33,7 @@ angular.module('ldr.releases.overview', [
                 });
             });
             $scope.forms = data;
+            debugger;
         });
 
         $scope.editForm = function(form) {
@@ -43,7 +44,7 @@ angular.module('ldr.releases.overview', [
             console.log(form);
             if (confirm('Are you sure you would like to delete this entry?')) {
                 api('releases/form/' + form._id ).del().success(function() {
-                    api('releases/center/' + $scope.user.center._id).get().success(function(data) {
+                    api('releases/group/' + $scope.user.group._id).get().success(function(data) {
                         $scope.forms = data;
                     });
                 });

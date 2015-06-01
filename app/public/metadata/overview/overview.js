@@ -48,7 +48,7 @@ angular.module('ldr.metadata.overview', [
     /*var dataApi = api('data');
     lodash.each($scope.categories, function(obj, i) {
         var name = obj.name;
-        dataApi.get(name, { centerId: $scope.user.center._id }).success(function(serverData) {
+        dataApi.get(name, { groupId: $scope.user.group._id }).success(function(serverData) {
             var obj = lodash.where($scope.categories, { name: name })[0];
             obj.data = serverData;
         });

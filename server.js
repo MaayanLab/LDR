@@ -8,9 +8,10 @@ var express = require('express'),
     compress = require('compression');
 
 var app = express();
-var port = 3001;
+var port = process.env.PORT || 3001;
+app.set('port', port);
 
-var configDB = require('./app/backend/config/database');
+var configDB = require('./backend/config/database');
 
 mongoose.connect(configDB.url);
 
@@ -24,14 +25,14 @@ app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(compress());
 
-var publicDir = __dirname + '/app/public/';
+var publicDir = __dirname + '/';
 console.log('Serving static files from ' + publicDir);
 app.use('/LDR', express.static(path.join(publicDir)));
 
-require('./app/backend/routes')(app);
+require('./backend/routes')(app);
 
 app.get('/', function (req, res) {
-    res.sendFile(publicDir + '/index.html');
+    res.sendFile(publicDir + 'index.html');
 });
 
 app.use(function (err, req, res) {
@@ -47,5 +48,11 @@ function haltOnTimeout(req, res, next) {
     }
 }
 
-app.listen(port);
-console.log('The magic is happening on port ' + port);
+app.listen(app.get('port'), function() {
+    if (process.send) {
+        process.send('online');
+    } else {
+        console.log('The server is running at http://localhost:' +
+            app.get('port'));
+    }
+});

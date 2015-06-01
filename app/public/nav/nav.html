@@ -1,5 +1,14 @@
+<nav class="thin-navbar">
+    <div class="container">
+        <p ng-show="isLoggedIn">{{ currentUser.username }}</p>
+        <a ng-show="isLoggedIn" ui-sref="userSettings({id: currentUser._id})" class="glyphicon glyphicon-cog"></a>
+        <a ng-show="isLoggedIn" ui-sref="groupHome({id: currentUser.group._id})" id="group-nav-icon"></a>
+        <a ng-show="isLoggedIn" ng-click="logout()" class="glyphicon glyphicon-log-out"></a>
+    </div>
+</nav>
 <nav class="navbar-wrapper container-full">
     <div class="container">
+
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="nav navbar-header">
             <h1>
@@ -17,14 +26,15 @@
         <div class=" navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <h5 ng-show="isLoggedIn" class="hello">{{ currentUser.username }}</h5>
+                    <h5 ng-show="!isLoggedIn && showErr && showFailMessage"
+                        class="errorMsg">User/Password Incorrect.</h5>
                 </li>
                 <li ng-show="isLoggedInAdmin">
                     <a ui-sref="admin">Admin</a>
                 </li>
                 <li class="dropdown" ng-show="isLoggedIn && !isLoggedInAdmin">
                     <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                        aria-expanded="false">Data Releases <span class="caret"></span></a>
+                       aria-expanded="false">Data Releases <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li>
                             <a ui-sref="releasesOverview">Overview</a>
@@ -34,21 +44,22 @@
                         </li>
                     </ul>
                 </li>
-                <li ng-show="isLoggedIn">
-                    <a ng-click="logout()">Logout</a>
-                </li>
                 <li ng-show="!isLoggedIn">
-                    <form class="navbar-form navbar-right" role="search">
+                    <form name="loginForm" class="navbar-form navbar-right" role="search">
                         <div class="form-group">
-                            <input type="text" class="form-control" ng-model="user.username" id="username"
-                                    placeholder="Username">
+                            <input ng-focus="showErr=false" ng-blur="showErr=true" name="username"
+                                   type="text" class="form-control" ng-model="user.username"
+                                   id="username" placeholder="Username">
                         </div>
                         <div id="password-group" class="form-group">
-                            <input type="password" class="form-control" id="password" ng-model="user.password"
-                                    placeholder="Password">
+                            <input ng-focus="showErr=false" ng-blur="showErr=true" name="password"
+                                   type="password" class="form-control" id="password"
+                                   ng-model="user.password" placeholder="Password">
                         </div>
-                        <button type="submit" class="btn btn-default pull-right" ng-click="login()">Login
-                        </button>
+                        <button type="button" class="btn pull-right register-btn"
+                                ng-click="register()">Register</button>
+                        <button type="submit" class="btn pull-right login-btn"
+                        ng-click="login()">Login</button>
                     </form>
                 </li>
             </ul>

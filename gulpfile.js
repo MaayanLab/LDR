@@ -12,7 +12,8 @@ var karma = require('karma').server;
 var minifyCss = require('gulp-minify-css');
 var $ = require('gulp-load-plugins')();
 
-var SRC_DIRECTORY = 'public/';
+var SERVER_DIRECTORY = 'app/backend/';
+var SRC_DIRECTORY = 'app/public/';
 var BUILD_DIRECTORY = 'dist/';
 
 var mainBowerFiles = require('main-bower-files');
@@ -25,6 +26,9 @@ var cssFilter = $.filter('**/*.css');
 var htmlFilter = $.filter('**/*.html');
 var fontFilter = $.filter('**/*.{svg,ttf,woff,woff2}');
 
+var src = {};
+var browserSync;
+
 gulp.task('clean', function() {
     return del([BUILD_DIRECTORY + '*'], function(err, deletedFiles) {
         if (err) {
@@ -36,6 +40,7 @@ gulp.task('clean', function() {
 
 gulp.task('html', function() {
     return gulp.src(SRC_DIRECTORY + '**/*')
+        .pipe($.changed(BUILD_DIRECTORY))
         .pipe($.plumber())
         .pipe(htmlFilter)
         .pipe(gulp.dest(BUILD_DIRECTORY));
@@ -57,13 +62,26 @@ gulp.task('fonts', function() {
 gulp.task('images', function() {
     return gulp.src(SRC_DIRECTORY + '/images/**/*.{jpg,jpeg,png,gif,ico}')
         .pipe($.plumber())
-        .pipe($.imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
-        .pipe(gulp.dest(BUILD_DIRECTORY))
+        .pipe($.imagemin({
+            optimizationLevel: 3,
+            progressive: true,
+            interlaced: true
+        }))
+        .pipe(gulp.dest(BUILD_DIRECTORY + 'images/'))
         .pipe($.size());
 });
 
 gulp.task('js', function() {
-    return gulp.src([SRC_DIRECTORY + '**/*.js', '!' + SRC_DIRECTORY + 'vendor/**'])
+    gulp.src(SERVER_DIRECTORY + '**/*')
+        .pipe($.changed(BUILD_DIRECTORY))
+        .pipe(gulp.dest(BUILD_DIRECTORY + 'backend/'));
+    gulp.src('server.js')
+        .pipe($.changed(BUILD_DIRECTORY))
+        .pipe(gulp.dest(BUILD_DIRECTORY));
+    return gulp.src(
+        [SRC_DIRECTORY + '**/*.js', '!' + SRC_DIRECTORY + 'vendor/**']
+    )
+        .pipe($.changed(BUILD_DIRECTORY))
         .pipe($.plumber())
         .pipe($.concat('bundle.js'))
         .pipe(gulp.dest(BUILD_DIRECTORY));
@@ -75,13 +93,13 @@ gulp.task('less', function() {
         .pipe($.order([
             SRC_DIRECTORY + 'style/less/main.less'
         ]))
-        .pipe($.autoprefixer())
         .pipe($.sourcemaps.init())
         .pipe($.less())
+        .pipe($.autoprefixer())
         .pipe(minifyCss())
         .pipe($.sourcemaps.write())
         .pipe($.concat('bundle.min.css'))
-        .pipe(gulp.dest(BUILD_DIRECTORY));
+        .pipe(gulp.dest(BUILD_DIRECTORY + 'style/'));
 });
 
 gulp.task('karma', function(callback) {
@@ -107,6 +125,7 @@ gulp.task('vendor', function() {
             bowerJson: BOWER_JSON_DIRECTORY
         }
     }))
+        .pipe($.changed(BUILD_DIRECTORY))
         .pipe($.plumber())
         .pipe(jsFilter)
         .pipe($.concat('vendor.js'))
@@ -121,35 +140,89 @@ gulp.task('vendor', function() {
         .pipe(minifyCss())
         .pipe($.sourcemaps.write())
         .pipe($.size())
-        .pipe(gulp.dest(BUILD_DIRECTORY));
+        .pipe(gulp.dest(BUILD_DIRECTORY + 'style/'));
 });
 
-gulp.task('build:dev', function(callback) {
-    runSequence('clean', 'vendor', 'html', 'less', 'js', 'fonts',
-        'images', 'copyFavIconInfo', 'node:dev', callback)
+gulp.task('build', ['clean'], function(callback) {
+    runSequence('vendor', 'html', 'less', 'js', 'fonts',
+        'images', 'copyFavIconInfo', callback)
 });
 
-gulp.task('build:prod', function(callback) {
-    runSequence('clean', 'vendor', 'html', 'less', 'js', 'fonts',
-        'images', 'copyFavIconInfo', 'jshint', 'node:prod', 'karma', callback)
-});
-
-gulp.task('node:dev', function() {
-    $.nodemon({
-        script: 'server.js',
-        ext: 'js less html',
-        env: { 'NODE_ENV': 'development' },
-        ignore: ['node_modules', 'public/vendor', 'dist', '.git', '.idea', '.DS_Store', '.bowerrc', 'gulpfile.js'],
-        tasks: function(changedFiles) {
-            var tasks = [];
-            changedFiles.forEach(function(file) {
-                if (path.extname(file) === '.js' && !~tasks.indexOf('js')) tasks.push('js');
-                if (path.extname(file) === '.less' && !~tasks.indexOf('less')) tasks.push('less');
-                if (path.extname(file) === '.html' && !~tasks.indexOf('html')) tasks.push('html');
-            });
-            return tasks
-        }
+gulp.task('build:watch', function(callback) {
+    runSequence('build', function() {
+        gulp.watch(SRC_DIRECTORY + '**.js', ['js']);
+        gulp.watch(SRC_DIRECTORY + '**.less', ['less']);
+        gulp.watch(SRC_DIRECTORY + '**.html', ['html']);
+        callback()
     })
 });
 
-gulp.task('default', ['build:dev']);
+// Launch a Node.js/Express server
+gulp.task('serve', ['build:watch'], function(cb) {
+    src.server = [
+        BUILD_DIRECTORY + 'server.js',
+        BUILD_DIRECTORY + ''
+    ];
+
+    var started = false;
+    var cp = require('child_process');
+    var assign = require('object-assign');
+
+    var server = (function startup() {
+        var child = cp.fork(BUILD_DIRECTORY + 'server.js', {
+            env: assign({ NODE_ENV: 'development' }, process.env)
+        });
+        child.once('message', function(message) {
+            if (message.match(/^online$/)) {
+                if (browserSync) {
+                    browserSync.reload();
+                }
+                if (!started) {
+                    started = true;
+                    gulp.watch(src.server, function() {
+                        $.util.log('Restarting development server.');
+                        server.kill('SIGTERM');
+                        server = startup();
+                    });
+                    cb();
+                }
+            }
+        });
+        return child;
+    })();
+
+    process.on('exit', function() {
+        server.kill('SIGTERM');
+    });
+});
+
+// Launch BrowserSync development server
+gulp.task('sync', ['serve'], function(cb) {
+    browserSync = require('browser-sync');
+
+    browserSync({
+        logPrefix: 'LDR',
+        notify: true,
+        // Run as an https by setting 'https: true'
+        // Note: this uses an unsigned certificate which on first access
+        //       will present a certificate warning in the browser.
+        https: false,
+        // Informs browser-sync to proxy our Express app which would run
+        // at the following location
+        proxy: 'localhost:3001/LDR/'
+    }, cb);
+
+    process.on('exit', function() {
+        browserSync.exit();
+    });
+
+    gulp.watch([BUILD_DIRECTORY + '/**/*.*'].concat(
+        src.server.map(function(file) {
+            return '!' + file;
+        })
+    ), function(file) {
+        browserSync.reload(path.relative(__dirname, file.path));
+    });
+});
+
+gulp.task('default', ['sync']);
