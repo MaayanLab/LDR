@@ -8,8 +8,7 @@ var express = require('express'),
     compress = require('compression');
 
 var app = express();
-var port = process.env.PORT || 3001;
-app.set('port', port);
+var port = 3001;
 
 var configDB = require('./backend/config/database');
 
@@ -20,7 +19,9 @@ mongoose.connect(configDB.url);
 
 app.use(cors());
 app.use(timeout('20s'));
-app.use(morgan('dev')); // log every request to the console
+if (process.env.NODE_ENV != 'production') {
+    app.use(morgan('dev')); // log every request to the console if not prod.
+}
 app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(compress());
@@ -48,11 +49,10 @@ function haltOnTimeout(req, res, next) {
     }
 }
 
-app.listen(app.get('port'), function() {
+app.listen(3001, function() {
     if (process.send) {
         process.send('online');
     } else {
-        console.log('The server is running at http://localhost:' +
-            app.get('port'));
+        console.log('The server is running on port ' + 3001);
     }
 });

@@ -55,7 +55,6 @@ module.exports = function(groupId, cb) {
                 // statistics
                 var path = '/form/' + endpoint + '?group=' + group.abbr +
                     '&limit=' + 100000000000000000;
-
                 http.get(nameServerUrl + path, function(res) {
                     var jsonString = '';
                     res.on('data', function(chunk) {
@@ -63,6 +62,9 @@ module.exports = function(groupId, cb) {
                     });
                     res.on('end', function() {
                         var body = JSON.parse(jsonString);
+                        // TODO: Filter only results with source: form
+                        // Implemented before, but was very slow.
+                        // Qiaonan should implement on server side.
                         statResponse[endpoint] = body.length;
                         def.resolve(statResponse);
                     });

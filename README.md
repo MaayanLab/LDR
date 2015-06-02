@@ -2,6 +2,7 @@
 LINCS Data Registry Webpage
 
 ## Develop
+Note that gulp is required to build: `npm install -g gulp`
 ```
 npm install && bower install
 gulp

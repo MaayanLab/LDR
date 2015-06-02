@@ -215,7 +215,6 @@ angular.module('ldr.releases.create', [
                     if (results[item.name]) {
                         return;
                     }
-                    debugger;
                     var obj = {};
                     obj.name = item.name;
                     obj.text = formatText(item.name);
@@ -240,7 +239,6 @@ angular.module('ldr.releases.create', [
                 urls: {}
             };
 
-            debugger;
             lodash.each($scope.form.metadata, function(obj) {
                 form.metadata[obj.name] = lodash.map(obj.model, function(obj) {
                     return obj._id;

@@ -157,11 +157,13 @@ var dataReleaseSchema = new Schema({
     group: { type: Schema.ObjectId, ref: 'Group', required: true },
     approved: { type: Boolean, required: true },
     dateModified: { type: String, required: true },
+    needsEdit: { type: Boolean, default: false },
+    message: { type: String, default: '' },
     releaseDates: {
-        level1: { type: String, default: "" },
-        level2: { type: String, default: "" },
-        level3: { type: String, default: "" },
-        level4: { type: String, default: "" }
+        level1: { type: String, default: '' },
+        level2: { type: String, default: '' },
+        level3: { type: String, default: '' },
+        level4: { type: String, default: '' }
     },
     metadata: {
         // These are arrays of IDs pointing to the name-metadata server
@@ -177,10 +179,10 @@ var dataReleaseSchema = new Schema({
         tagsKeywords: { type: [], default: [] }
     },
     urls: {
-        dataUrl: { type: String, default: "" },
-        metadataUrl: { type: String, default: "" },
-        pubMedUrl: { type: String, default: "" },
-        qcDocumentUrl: { type: String, default: "" }
+        dataUrl: { type: String, default: '' },
+        metadataUrl: { type: String, default: '' },
+        pubMedUrl: { type: String, default: '' },
+        qcDocumentUrl: { type: String, default: '' }
     }
 });
 

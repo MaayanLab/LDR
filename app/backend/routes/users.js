@@ -26,50 +26,59 @@ module.exports = function(app) {
                 }
                 var userList = [];
                 _.each(users, function(user) {
-                    if (user.name === 'NIH') {
-                        return;
-                    }
                     userList.push(_.omit(user, ['password', 'admin', '__v']));
                 });
                 res.status(200).send(userList);
-            });
+            }
+        );
     });
 
-    app.put(baseUrl + '/api/secure/user/:id/changePassword', function(req, res) {
+    app.put(baseUrl + '/api/secure/user/:id/changePassword',
+        function(req, res) {
 
-        var userId = req.params.id;
-        var enteredPassword = req.body.old;
-        var newPassword = req.body.new;
+            var userId = req.params.id;
+            var enteredPassword = req.body.old;
+            var newPassword = req.body.new;
 
-        var query = { _id: userId };
-        User
-            .findOne(query)
-            .exec(function(err, user) {
-                if (err) {
-                    console.log(err);
-                    res.status(404).send('Error: Could not find user with ' +
-                        'id:' + userId + '.');
-                }
-                else {
-                    user.checkPassword(enteredPassword, function(err, isMatch) {
-                        if (err) {
-                            console.log(err);
-                            res.status(404).send('Error changing password.');
-                        }
-                        else if (isMatch) {
-                            user.password = newPassword;
-                            console.log(user);
-                            user.save(function(err) {
+            var query = { _id: userId };
+            User
+                .findOne(query)
+                .exec(function(err, user) {
+                    if (err) {
+                        console.log(err);
+                        res.status(404).send('Error: Could not find user ' +
+                            'with id:' + userId + '.');
+                    }
+                    else if (enteredPassword) {
+                        user.checkPassword(enteredPassword,
+                            function(err, isMatch) {
                                 if (err) {
                                     console.log(err);
+                                    res.status(404).send('Error ' +
+                                        'changing password.');
                                 }
-                            });
-                            res.status(204).send('Password successfully updated');
-                        }
-                    });
+                                else if (isMatch && newPassword) {
+                                    user.password = newPassword;
+                                    console.log(user);
+                                    user.save(function(err) {
+                                        if (err) {
+                                            console.log(err);
+                                        }
+                                    });
+                                    res.status(204).send('Password ' +
+                                        'successfully updated');
+                                }
+                            }
+                        );
+                    }
+                    else {
+                        res.status(404).send('There was an error changing the' +
+                            'user\'s password.')
+                    }
                 }
-            });
-    });
+            );
+        }
+    );
 
     app.post(baseUrl + '/login', function(req, res) {
         User
@@ -82,26 +91,33 @@ module.exports = function(app) {
                 }
                 else if (!user)
                     res.status(404).send('User not found.');
-                else {
-                    user.checkPassword(req.body.password, function(err, isMatch) {
-                        if (err) {
-                            console.log(err);
-                            res.status(401).send('Error logging user in.');
+                else if (req.body.password) {
+                    user.checkPassword(req.body.password,
+                        function(err, isMatch) {
+                            if (err) {
+                                console.log(err);
+                                res.status(401).send('Error logging user in.');
+                            }
+                            else if (isMatch) {
+                                var userWOPassword = _.omit(user.toObject(),
+                                    ['password', '__v']);
+                                var token = createToken(userWOPassword);
+                                console.log(userWOPassword._id);
+                                var userBlob = {
+                                    user: userWOPassword,
+                                    id_token: token
+                                };
+                                res.status(200).send(userBlob);
+                            }
                         }
-                        else if (isMatch) {
-                            var userWOPassword = _.omit(user.toObject(),
-                                ['password', '__v']);
-                            var token = createToken(userWOPassword);
-                            console.log(userWOPassword._id);
-                            var userBlob = {
-                                user: userWOPassword,
-                                id_token: token
-                            };
-                            res.status(200).send(userBlob);
-                        }
-                    });
+                    );
                 }
-            });
+                else {
+                    res.status(404).send('There was an error logging in. ' +
+                        'Please try again.');
+                }
+            }
+        );
     });
 
     app.post(baseUrl + '/register', function(req, res) {
@@ -111,22 +127,22 @@ module.exports = function(app) {
         inputUser.admin = false;
         inputUser.admitted = false;
         var newUser = new User(inputUser);
-            newUser.save(function(err) {
-                if (err) {
-                    console.log('Error creating User: ' + err);
-                }
-                else {
-                    console.log('User created successfully');
-                    var newUserWOPassword = _.omit(newUser.toObject(),
-                        ['password', 'passwordConfirm',  '__v']);
-                    var token = createToken(newUserWOPassword);
-                    newUserWOPassword.group = groupObj;
-                    var newUserBlob = {
-                        user: newUserWOPassword,
-                        id_token: token
-                    };
-                    res.status(201).send(newUserBlob);
-                }
-            });
-    })
+        newUser.save(function(err) {
+            if (err) {
+                console.log('Error creating User: ' + err);
+            }
+            else {
+                console.log('User created successfully');
+                var newUserWOPassword = _.omit(newUser.toObject(),
+                    ['password', 'passwordConfirm', '__v']);
+                var token = createToken(newUserWOPassword);
+                newUserWOPassword.group = groupObj;
+                var newUserBlob = {
+                    user: newUserWOPassword,
+                    id_token: token
+                };
+                res.status(201).send(newUserBlob);
+            }
+        });
+    });
 };

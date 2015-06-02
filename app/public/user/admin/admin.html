@@ -1,43 +1,55 @@
 <h3 class="text-center">NIH Approval Interface</h3>
-<table class="table">
+<table class="table release-table">
     <thead>
-        <tr>
-            <th>Status</th>
-            <th>DSGC</th>
-            <th>Assay</th>
-            <th>Readout Count</th>
-            <th>Level 1 Release Date</th>
-            <!--<th></th>-->
-            <th></th>
-        </tr>
+    <tr>
+        <th>Status</th>
+        <th>DSGC</th>
+        <th>Assay</th>
+        <th>Readouts</th>
+        <th>Level 1 Release Date</th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="form in allForms" class="form-table-data">
+    <tr ng-repeat="form in allForms |
+    orderBy: ['approved', 'group.name'] : true"
+        class="form-table-data">
         <td id="status">
             <span ng-if="form.approved">Approved</span>
             <span ng-if="!form.approved">Pending approval</span>
         </td>
         <td id="center">{{form.group.name}}</td>
         <td id="assay-name">{{form.metadata.assay[0].name}}</td>
-        <td id="readout-count">{{form.metadata.readouts.length}}</td>
-        <td id="release-date">{{form.releaseDates.level1 | date:'MM-dd-yyyy'}}</td>
-        <!--<td><button type="button" class="btn btn-default" ng-click="editForm(form)">Edit Form</button></td>-->
+        <td id="readout-count">
+            {{form.metadata.readouts.length}}
+        </td>
+        <td class="col-sm-2" id="release-date">
+            {{form.releaseDates.level1 | date:'MM-dd-yyyy'}}
+        </td>
         <td>
             <div class="btn-group">
-                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-href="">
-                    Action
-                    <span class="caret"></span>
+                <a class="btn btn-default dropdown-toggle"
+                   data-toggle="dropdown" ng-href="">
+                    Action<span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a ng-click="approveForm(form)">Approve</a></li>
-                    <li><a ng-click="returnForm(form)">Return To Center</a></li>
+                    <li ng-if="!form.approved">
+                        <a ng-click="approveForm(form)">Approve</a>
+                    </li>
+                    <li ng-if="form.approved">
+                        <a ng-click="unapproveForm(form)">Unapprove</a>
+                    </li>
+                    <li ng-if="!form.approved">
+                        <a ng-click="returnForm(form)">Return To Center</a>
+                    </li>
                 </ul>
             </div>
         </td>
     </tr>
     <tr ng-if="allForms.length === 0">
-        <td colspan="5" class="col-md-12">There are no forms to display. Please try again later.</td>
+        <td colspan="5" class="col-md-12">
+            There are no forms to display. Please try again later.
+        </td>
     </tr>
-
     </tbody>
 </table>

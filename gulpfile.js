@@ -67,13 +67,16 @@ gulp.task('images', function() {
         .pipe(gulp.dest(BUILD_DIRECTORY + 'images/'));
 });
 
-gulp.task('js', function() {
+gulp.task('serverJs', function() {
     gulp.src(SERVER_DIRECTORY + '**/*')
         .pipe($.changed(BUILD_DIRECTORY))
         .pipe(gulp.dest(BUILD_DIRECTORY + 'backend/'));
-    gulp.src('server.js')
+    return gulp.src('server.js')
         .pipe($.changed(BUILD_DIRECTORY))
         .pipe(gulp.dest(BUILD_DIRECTORY));
+});
+
+gulp.task('js', function() {
     return gulp.src([
         SRC_DIRECTORY + '**/*.js',
         '!' + SRC_DIRECTORY + 'vendor/**'
@@ -140,12 +143,14 @@ gulp.task('vendor', function() {
 
 gulp.task('build', ['clean'], function(callback) {
     runSequence(['vendor', 'fonts', 'images', 'copyFavIconInfo', 'html',
-        'less', 'js'], callback)
+        'less', 'js', 'serverJs'], callback)
 });
 
 gulp.task('build:watch', function(callback) {
     runSequence('build', function() {
         gulp.watch(SRC_DIRECTORY + '**/*.js', ['js']);
+        gulp.watch(SERVER_DIRECTORY + '**/*.js', ['serverJs']);
+        gulp.watch('./server.js', ['serverJs']);
         gulp.watch(SRC_DIRECTORY + '**/*.less', ['less']);
         gulp.watch(SRC_DIRECTORY + '**/*.html', ['html']);
         callback()

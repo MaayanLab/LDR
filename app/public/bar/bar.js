@@ -3,8 +3,8 @@
  * Created on 5/27/15.
  */
 
-angular.module('ldr.bar', ['chart.js', 'ldr.api', 'ngLodash'])
-    .directive('ldrBar', function(api, lodash) {
+angular.module('ldr.bar', ['chart.js', 'ldr.api'])
+    .directive('ldrBar', function(api) {
         return {
             restrict: 'E',
             templateUrl: 'bar/bar.html',
@@ -37,7 +37,7 @@ angular.module('ldr.bar', ['chart.js', 'ldr.api', 'ngLodash'])
                         // Chart takes an array of arrays for multiple bars
                         // in the same chart
                         var seriesOneValues = [];
-                        lodash.each(statsObj, function(value, key) {
+                        angular.forEach(statsObj, function(value, key) {
                             // All fields are singular. Add an s to the chart
                             scope.labels.push(toTitleCase(key + 's'));
                             seriesOneValues.push(value);

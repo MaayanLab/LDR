@@ -17,10 +17,8 @@ angular.module('ldr.releases.overview', [
     })
 
     .controller('releases.overview.ctrl', function($scope, $http, store, $state, lodash, api) {
-        var currentUser = store.get('currentUser'),
-            dataApi = api('releases/form/');
 
-        $scope.user = currentUser;
+        $scope.user = store.get('currentUser');
         $scope.forms = [];
 
         api('releases/group/' + $scope.user.group._id).get().success(function(data) {
@@ -33,7 +31,6 @@ angular.module('ldr.releases.overview', [
                 });
             });
             $scope.forms = data;
-            debugger;
         });
 
         $scope.editForm = function(form) {

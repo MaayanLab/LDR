@@ -68,11 +68,6 @@ module.exports = function(releaseData, cb) {
                     def.resolve(resultObj);
                 });
             });
-            /*.on('error', function(err) {
-             console.log('Error in request to name server: ' + err.message);
-             def.reject('A server error occurred while populating releases from name server');
-             cb(null, resultObj);
-             });*/
             promisesArr.push(def.promise);
         }
     });

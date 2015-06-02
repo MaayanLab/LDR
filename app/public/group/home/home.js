@@ -36,7 +36,6 @@ angular.module('ldr.group.home', [
 
         $scope.acceptUser = function(user) {
             console.log(user);
-            debugger;
         };
 
         // Uncomment to poll server and check for new users
