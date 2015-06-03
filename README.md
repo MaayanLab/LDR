@@ -31,4 +31,4 @@ Try running `docker run -p 80:3001 -d <container ID>` using the container ID giv
 
 Running `npm run deploy` will push the previously built Dockerfile to [Docker Hub](https://hub.docker.com/account/signup/) and make a post to Marathon telling it to restart the application.
 
-On restart, the Marathon application will pull the latest Docker container from Docker Hub and host it at (http://www.amp.pharm.mssm.edu/LDR/).
+On restart, the Marathon application will pull the latest Docker container from Docker Hub and host it at http://www.amp.pharm.mssm.edu/LDR/.
