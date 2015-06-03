@@ -143,7 +143,8 @@ try {
 // Group
 var groupSchema = new Schema({
     name: { type: String, required: true, index: { unique: true } },
-    abbr: { type: String, required: true, index: { unique: true } }
+    abbr: { type: String, required: true, index: { unique: true } },
+    homepage: { type: String, required: true, default: '' }
 });
 
 try {

@@ -410,6 +410,19 @@ h4.meta-header {
     margin-top: 40px;
 }
 
+.animate.ng-enter, .animate.ng-leave {
+    transition: 500ms ease-in all;
+    position: relative;
+    display: block;
+}
+
+.animate.ng-enter.ng-enter-active, .animate.ng-leave {
+    left: 0;
+}
+.animate.ng-leave.ng-leave-active, .animate.ng-enter {
+    left: 500px;
+}
+
 .release-table {
     width: 95%;
     margin: 0 auto;
@@ -527,4 +540,10 @@ span.stat-num {
 }
 .normal {
     font-weight: normal;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th,
+.table>tfoot>tr>td, .table>tfoot>tr>th,
+.table>thead>tr>td, .table>thead>tr>th {
+    vertical-align: inherit;
 }

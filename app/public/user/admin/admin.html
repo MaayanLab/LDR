@@ -2,25 +2,72 @@
 <table class="table release-table">
     <thead>
     <tr>
-        <th>Status</th>
-        <th>DSGC</th>
-        <th>Assay</th>
-        <th>Readouts</th>
-        <th>Level 1 Release Date</th>
+        <th>
+            <a href=""
+               ng-click="sortType = 'approved'; sortReverse = !sortReverse">
+                Status
+                    <span ng-show="sortType == 'approved' && sortReverse"
+                          class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'approved' && !sortReverse"
+                          class="fa fa-caret-up"></span>
+            </a>
+        </th>
+        <th>
+            <a href=""
+               ng-click="sortType = 'group.name'; sortReverse = !sortReverse">
+                DSGC
+                    <span ng-show="sortType == 'group.name' && sortReverse"
+                          class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'group.name' && !sortReverse"
+                          class="fa fa-caret-up"></span>
+            </a>
+        </th>
+        <th>
+            <a href=""
+               ng-click="sortType = 'metadata.assay[0].name'; sortReverse = !sortReverse">
+                Assay
+                    <span ng-show="sortType == 'metadata.assay[0].name' && sortReverse"
+                          class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'metadata.assay[0].name' && !sortReverse"
+                          class="fa fa-caret-up"></span>
+            </a>
+        </th>
+        <th>
+            <a href=""
+               ng-click="sortType = 'metadata.readouts.length'; sortReverse = !sortReverse">
+                Readouts
+                    <span ng-show="sortType == 'metadata.readouts.length' && sortReverse"
+                          class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'metadata.readouts.length' && !sortReverse"
+                          class="fa fa-caret-up"></span>
+            </a>
+        </th>
+        <th>
+            <a href=""
+               ng-click="sortType = 'metadata.releaseDates.level1'; sortReverse = !sortReverse">
+                Level 1 Release Date
+                    <span ng-show="sortType == 'metadata.releaseDates.level1' && sortReverse"
+                          class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'metadata.releaseDates.level1' && !sortReverse"
+                          class="fa fa-caret-up"></span>
+            </a>
+        </th>
+        <th></th>
         <th></th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="form in allForms |
-    orderBy: ['approved', 'group.name'] : true"
+    <tr ng-repeat-start="form in allForms | orderBy: sortType : sortReverse"
         class="form-table-data">
-        <td id="status">
+        <td class="col-sm-1" id="status">
             <span ng-if="form.approved">Approved</span>
             <span ng-if="!form.approved">Pending approval</span>
         </td>
-        <td id="center">{{form.group.name}}</td>
+        <td id="center">
+            <a ng-href="{{form.group.homepage}}">{{form.group.name}}</a>
+        </td>
         <td id="assay-name">{{form.metadata.assay[0].name}}</td>
-        <td id="readout-count">
+        <td class="col-sm-2" id="readout-count">
             {{form.metadata.readouts.length}}
         </td>
         <td class="col-sm-2" id="release-date">
@@ -45,9 +92,58 @@
                 </ul>
             </div>
         </td>
+        <td>
+            <a ng-click="form.collapsed = !form.collapsed">
+                <span ng-if="!form.collapsed" class="glyphicon glyphicon-plus">
+                </span>
+                <span ng-if="form.collapsed" class="glyphicon glyphicon-minus">
+                </span>
+            </a>
+        </td>
     </tr>
-    <tr ng-if="allForms.length === 0">
-        <td colspan="5" class="col-md-12">
+    <tr class="animate" ng-show="form.collapsed">
+        <td colspan="7" class="col-sm-12">
+            <h4 class="text-center">{{form.metadata.assay[0].name}}</h4>
+            <h5 class="text-center">
+                <a ng-href="{{form.group.homepage}}">{{form.group.name}}</a>
+            </h5>
+
+            <div class="col-sm-12">
+                <h5>Cell Lines</h5>
+                <ul class="list-inline">
+                    <li ng-repeat="line in form.metadata.cellLines">
+                        {{line.name}}
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-12">
+                <h5>Perturbagens</h5>
+                <ul class="list-inline">
+                    <li ng-repeat="pert in form.metadata.perturbagens">
+                        {{pert.name}}
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-12">
+                <h5>Readouts</h5>
+                <ul class="list-inline">
+                    <li ng-repeat="rOut in form.metadata.readouts">
+                        {{rOut.name}}
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-12">
+                <h5>Release Dates</h5>
+                <ul class="list-inline">
+                    <li ng-repeat="(level,date) in form.releaseDates">
+                        <strong>{{level}}: </strong>{{date | date:'MM-dd-yyyy'}}
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    <tr ng-repeat-end="" ng-if="allForms.length === 0">
+        <td colspan="7" class="col-sm-12">
             There are no forms to display. Please try again later.
         </td>
     </tr>

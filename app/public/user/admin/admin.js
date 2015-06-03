@@ -1,7 +1,8 @@
 angular.module('ldr.user.admin', [
     'ui.router',
     'angular-storage',
-    'ldr.api'
+    'ldr.api',
+    'ui.bootstrap'
 ])
 
     .config(function($stateProvider) {
@@ -20,9 +21,11 @@ angular.module('ldr.user.admin', [
     .controller('AdminCtrl', function($scope, $http,
                                       store, $state, api, $modal) {
         var currentUser = store.get('currentUser');
-        $scope.allForms = [];
-
         var releaseApi = api('releases');
+
+        $scope.allForms = [];
+        $scope.sortType = ['accepted', 'group.name'];
+        $scope.sortReverse = false;
 
         releaseApi.get().success(function(forms) {
             console.log(forms);
