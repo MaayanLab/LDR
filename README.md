@@ -17,11 +17,12 @@ This application is deployed using [Docker](https://www.docker.com/ "Docker Home
 Running `npm run build` will build the container using the Dockerfile found in the root folder using the tag maayanlab/ldr:1.5.
 
 The Dockerfile will perform the following actions:
-*. `gulp build` to build the production-ready folder
-*. Copy that folder into the container
-*. Set NODE_ENV=production
-*. Run `npm install`
-*. Set `npm start` as the command to run the container.
+
+- `gulp build` to build the production-ready folder
+- Copy that folder into the container
+- Set NODE_ENV=production
+- Run `npm install`
+- Set `npm start` as the command to run the container.
 
 *It is important to test the docker container before deploying*
 

@@ -21,7 +21,7 @@ headers = {'Content-Type': 'application/json'}
 
 for doc in lorettaMd.find({}):
     out = {
-        'approved': False,
+        'approved': True,
         'dateModified': datetime.now().isoformat(),
         'metadata': {
             'assay': [],
