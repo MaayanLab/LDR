@@ -93,4 +93,5 @@ app/public/vendor/
 # Build directory
 dist/
 
-ignore/
+# Temporary Excel Files
+~$*.xlsx
