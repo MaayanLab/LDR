@@ -13,7 +13,7 @@ var SALT_WORK_FACTOR = 10;
 
 
 // Mongoose Models and Schemas
-var User, Group, DataRelease;
+var User, AnalysisTool, Group, DataRelease;
 var Schema = mongoose.Schema;
 
 // User
@@ -138,7 +138,18 @@ try {
 //    });
 //};
 
+// Analysis Tools
+var toolSchema = new Schema({
+    title: { type: String, index: { unique: true} },
+    description: String,
+    url: String
+});
 
+try {
+    AnalysisTool = mongoose.model('AnalysisTool');
+} catch (e) {
+    AnalysisTool = mongoose.model('AnalysisTool', toolSchema, 'analysisTools');
+}
 
 // Group
 var groupSchema = new Schema({
@@ -195,6 +206,7 @@ try {
 
 module.exports = {
     User: User,
+    AnalysisTool: AnalysisTool,
     Group: Group,
     DataRelease: DataRelease
 };

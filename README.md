@@ -14,7 +14,7 @@ After installing, run `karma start` or `gulp karma` to run karma tests
 ## Deploy ##
 This application is deployed using [Docker](https://www.docker.com/ "Docker Homepage"), [Mesos](http://mesos.apache.org/ "Mesos Homepage"), and [Marathon](https://mesosphere.github.io/marathon/ "Mesos Homepage").
 
-Running `npm run build` will build the container using the Dockerfile found in the root folder using the tag maayanlab/ldr:1.5.
+Running `npm run build` will build the container using the Dockerfile found in the root folder using the tag **maayanlab/ldr:1.5**.
 
 The Dockerfile will perform the following actions:
 

@@ -4,7 +4,7 @@
         <thead>
         <tr>
             <!--<th>Dataset ID</th>-->
-            <th>
+            <th class="text-center">
                 <a href=""
                    ng-click="sortType = 'metadata.assay[0].name'; sortReverse = !sortReverse">
                     Assay
@@ -14,7 +14,7 @@
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
-            <th>
+            <th class="text-center">
                 <a href=""
                    ng-click="sortType = 'metadata.perturbagens.length'; sortReverse = !sortReverse">
                     Perturbagens
@@ -24,7 +24,7 @@
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
-            <th>
+            <th class="text-center">
                 <a href=""
                    ng-click="sortType = 'metadata.cellLines.length'; sortReverse = !sortReverse">
                     Cells
@@ -34,7 +34,7 @@
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
-            <th>
+            <th class="text-center">
                 <a href=""
                    ng-click="sortType = 'metadata.readouts.length'; sortReverse = !sortReverse">
                     Readouts
@@ -44,20 +44,22 @@
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
-            <th>
-                <a href=""
+            <th class="text-center">
+                Release Date
+                <!--TODO: Implement sorting by release date (Need to sort through different variables unknown at this point in markup)-->
+                <!--<a href=""
                    ng-click="sortType = 'metadata.releaseDates.level1'; sortReverse = !sortReverse">
                     Release Date
                     <span ng-show="sortType == 'metadata.releaseDates.level1' && sortReverse"
                           class="fa fa-caret-down"></span>
                     <span ng-show="sortType == 'metadata.releaseDates.level1' && !sortReverse"
                           class="fa fa-caret-up"></span>
-                </a>
+                </a>-->
             </th>
-            <th>
+            <th class="text-center">
                 Level
             </th>
-            <th>
+            <th class="text-center">
                 <a href=""
                    ng-click="sortType = 'approved'; sortReverse = !sortReverse">
                     Status
@@ -68,29 +70,46 @@
                 </a>
             </th>
             <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat-start="form in forms | orderBy: sortType : sortReverse"
-            class="form-table-data">
+            ng-class="form.approved ? 'tr-approved' : 'tr-unapproved'"
+            class="form-table-data text-center">
             <!--<td id="id">{{form._id}}</td>-->
-            <td id="assay-name">{{form.metadata.assay[0].name}}</td>
+            <td class="text-left" id="assay-name">
+                {{form.metadata.assay[0].name}}
+            </td>
             <td class="col-sm-2" id="pert-count">
                 {{form.metadata.perturbagens.length}}
             </td>
             <td class="col-sm-1" id="cell-count">
                 {{form.metadata.cellLines.length}}
             </td>
-            <td class="col-sm-2" id="readout-count">
+            <td class="col-sm-1" id="readout-count">
                 {{form.metadata.readouts.length}}
             </td>
 
-            <!-- TODO: Show most recent release date and provide level -->
-            <td class="col-sm-1" id="release-date">{{form.releaseDates.level1 |
-                date:'MM-dd-yyyy'}}
+            <td class="col-sm-2" id="release-date">
+                {{
+                form.releaseDates.level1 !== '' ?
+                form.releaseDates.level1 : form.releaseDates.level2 !== '' ?
+                form.releaseDates.level2 : form.releaseDates.level3 !== '' ?
+                form.releaseDates.level3 : form.releaseDates.level4 !== '' ?
+                form.releaseDates.level4 : 'No Date Available'
+                | date:'MM-dd-yyyy'
+                }}
             </td>
-            <td id="release-level">1</td>
-            <td id="status">
+            <td class="col-sm-1" id="release-level">
+                {{
+                form.releaseDates.level1 !== '' ? 1 :
+                form.releaseDates.level2 !== '' ? 2 :
+                form.releaseDates.level3 !== '' ? 3 :
+                form.releaseDates.level4 !== '' ? 4 : 'NA'
+                }}
+            </td>
+            <td class="col-sm-1" id="status">
                     <span ng-if="form.approved">
                         Approved
                     </span>
@@ -123,9 +142,13 @@
                 </a>
             </td>
         </tr>
-        <tr class="animate" ng-show="form.collapsed">
-            <td colspan="7" class="col-sm-12">
-                <h4 class="text-center">{{form.metadata.assay[0].name}}</h4>
+        <tr class="release-details animate" ng-show="form.collapsed">
+            <td colspan="9" class="col-sm-12">
+                <h4 class="text-center assay-title">
+                    {{form.metadata.assay[0].name}}
+                </h4>
+
+                <p class="col-sm-12">{{form.metadata.assay[0].info}}</p>
 
                 <div class="col-sm-12">
                     <h5>Cell Lines</h5>
@@ -154,9 +177,12 @@
                 <div class="col-sm-12">
                     <h5>Release Dates</h5>
                     <ul class="list-inline">
-                        <li ng-repeat="(level,date) in form.releaseDates">
-                            <strong>{{level}}: </strong>{{date |
-                            date:'MM-dd-yyyy'}}
+                        <li ng-repeat="(level,date) in form.releaseDates"
+                            ng-if="date !== ''">
+                            <strong class="info-release-lvl">
+                                {{level}}:
+                            </strong>
+                            {{date | date:'MM-dd-yyyy'}}
                         </li>
                     </ul>
                 </div>

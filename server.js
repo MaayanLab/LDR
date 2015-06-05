@@ -15,7 +15,7 @@ var configDB = require('./backend/config/database');
 mongoose.connect(configDB.url);
 
 // Uncomment to view mongoose more verbose console logging
-//mongoose.set('debug', true);
+mongoose.set('debug', true);
 
 app.use(cors());
 app.use(timeout('20s'));
