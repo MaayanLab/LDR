@@ -11,6 +11,7 @@ angular.module('ldr.nav', [])
                     store.set('jwt', token);
                     $rootScope.isLoggedIn = true;
                     $rootScope.isLoggedInAdmin = user.admin;
+                    $rootScope.isAdmitted = user.admitted;
                 };
                 scope.user = {};
                 scope.showFailMessage = false;
@@ -39,9 +40,9 @@ angular.module('ldr.nav', [])
                 scope.logout = function() {
                     $rootScope.isLoggedIn = false;
                     $rootScope.isLoggedInAdmin = false;
+                    $rootScope.isAdmitted = false;
                     store.remove('currentUser');
                     store.remove('jwt');
-                    alert('Successfully logged out');
                     scope.showFailMessage = false;
                     $state.go('home');
                 };
@@ -49,6 +50,7 @@ angular.module('ldr.nav', [])
                 scope.register = function() {
                     $rootScope.isLoggedIn = false;
                     $rootScope.isLoggedInAdmin = false;
+                    $rootScope.isAdmitted = false;
                     scope.showFailMessage = false;
                     $state.go('userRegistration');
                 };

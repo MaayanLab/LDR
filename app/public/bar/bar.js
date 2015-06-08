@@ -31,7 +31,7 @@ angular.module('ldr.bar', ['chart.js', 'ldr.api'])
                     });
                 };
 
-                api('group/' + groupId + '/statistics')
+                api('group/' + groupId + '/statistics/')
                     .get()
                     .success(function(statsObj) {
                         // Chart takes an array of arrays for multiple bars
@@ -39,6 +39,7 @@ angular.module('ldr.bar', ['chart.js', 'ldr.api'])
                         var seriesOneValues = [];
                         angular.forEach(statsObj, function(value, key) {
                             // All fields are singular. Add an s to the chart
+                            // and capitalize first letter
                             scope.labels.push(toTitleCase(key + 's'));
                             seriesOneValues.push(value);
                         });

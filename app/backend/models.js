@@ -20,6 +20,7 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
     username: { type: String, required: true, index: { unique: true } },
     password: { type: String, required: true },
+    name: { type: String, required: true },
     // Make email unique?
     email: { type: String, required: true/*, index: { unique: true }*/ },
     group: { type: Schema.ObjectId, required: true, ref: 'Group' },
@@ -140,7 +141,7 @@ try {
 
 // Analysis Tools
 var toolSchema = new Schema({
-    title: { type: String, index: { unique: true} },
+    title: { type: String, index: { unique: true } },
     description: String,
     url: String
 });

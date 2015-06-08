@@ -102,7 +102,7 @@ module.exports = function(app) {
                                 var userWOPassword = _.omit(user.toObject(),
                                     ['password', '__v']);
                                 var token = createToken(userWOPassword);
-                                console.log(userWOPassword._id);
+
                                 var userBlob = {
                                     user: userWOPassword,
                                     id_token: token

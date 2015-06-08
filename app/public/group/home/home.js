@@ -16,7 +16,8 @@ angular.module('ldr.group.home', [
             controller: 'GroupHomeCtrl',
             templateUrl: 'group/home/home.html',
             data: {
-                requiresLogin: true
+                requiresLogin: true,
+                requiresAdmitted: true
             }
         });
     })
@@ -28,14 +29,28 @@ angular.module('ldr.group.home', [
 
         $scope.users = [];
 
-        api('group/' + groupId + '/users')
+        api('group/' + groupId + '/users/')
             .get()
             .success(function(usersArr) {
                 $scope.users = usersArr;
             });
 
         $scope.acceptUser = function(user) {
-            console.log(user);
+            if (confirm('Are you sure you would like to admit this user? This' +
+                    ' can not be undone.')) {
+                api('group/' + groupId + '/users/' + user._id + '/approve/')
+                    .put()
+                    .success(function() {
+                        api('group/' + groupId + '/users/')
+                            .get()
+                            .success(function(usersArr) {
+                                debugger;
+                                $scope.users = usersArr;
+                                $scope.showAdmitted = true;
+                                $timeout($scope.showAdmitted = false, 5000);
+                            });
+                    })
+            }
         };
 
         // Uncomment to poll server and check for new users

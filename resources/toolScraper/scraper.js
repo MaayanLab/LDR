@@ -15,58 +15,43 @@ phantom.create(function(ph) {
     var tools = [];
     var promisesArr = [];
 
-    var getToolData = function(url, cb) {
-        ph.createPage(function(page) {
-            page.open(url, function(status) {
-                console.log('Opening ' + url + ' was a ' + status);
-                page.evaluate(function() {
+    //_.each(_.range(1,200), function(searchPNum) {
+    var searchPNum = 1;
+    ph.createPage(function getToolData(page) {
+        page.open(searchUrl + searchPNum.toString(), function(status) {
+            console.log('Opening ' + url + ' was a ' + status);
+            page.evaluate(function() {
+                if (document.querySelector('#main > article > div > header > h3 > a')) {
                     return [].map.call(document.querySelectorAll('#main > article > div > header > h3 > a'), function(link) {
                         return link.getAttribute('href');
                     });
-                }, function(result) {
-                    var resultUrls = [];
-                    _.each(result, function(endpoint) {
-                        resultUrls.push(baseUrl + endpoint);
-                    });
-                    cb(resultUrls);
-                });
-            });
-        });
-    };
-
-    var saveTool = function(url) {
-        ph.createPage(function(toolPage) {
-            toolPage.open(url, function(status) {
-                console.log('Opening ' + url + ' was a ' + status);
-                toolPage.evaluate(function() {
+                }
+                else {
                     return {
                         title: document.querySelector('#main > article > header > h1').innerHTML,
-                        description: document.querySelector('#main > article > div > div > div:nth-child(1)').innerHTML.replace(/(\r\n|\n|\r)/gm, ""),
+                        description: document.querySelector('#main > article > div > div > div:nth-child(1)').innerHTML.replace(/(\r\n|\n|\r)/gm, ''),
                         url: document.querySelector('#main > article > div > div > div:nth-child(2) > a').getAttribute('href')
                     };
-                }, function(result) {
-                    console.log(result);
+                }
+            }, function(result) {
+                console.log(result);
+                var def = Q.defer();
+                if (result.title) {
                     tools.push(result);
-                    var newTool = new AnalysisTool(result);
-                    newTool.save(function(err) {
-                        if (err) {
-                            console.log(err);
-                        }
-                    })
-                });
+                    def.resolve(result);
+                    promisesArr.push(def.promise);
+                }
+                else {
+                    _.each(result, function(endpoint) {
+                        getToolData(baseUrl + endpoint);
+                    });
+                }
             });
         });
-    };
-
-    _.each(_.range(1, 200), function(pageNumber) {
-        getToolData(searchUrl + pageNumber.toString(), function(resultUrls) {
-            console.log('Saving tools...');
-            _.each(resultUrls, function(url) {
-                saveTool(url);
-            })
-        });
     });
-    setTimeout(function() {
+    //});
+    Q.all(promisesArr).then(function() {
         ph.exit();
-    }, 50000);
+    });
+
 });

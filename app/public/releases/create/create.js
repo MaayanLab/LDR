@@ -14,7 +14,8 @@ angular.module('ldr.releases.create', [
             controller: 'releases.create.ctrl',
             templateUrl: 'releases/create/create.html',
             data: {
-                requiresLogin: true
+                requiresLogin: true,
+                requiresAdmitted: true
             }
         });
     })
@@ -77,7 +78,7 @@ angular.module('ldr.releases.create', [
                     modalTitle: 'Manipulated Gene',
                     placeholder: 'Select one manipulated gene...',
                     maxTags: 1,
-                    autocompleteEndpoint: '',
+                    autocompleteEndpoint: 'gene',
                     model: []
                 },
                 {
@@ -86,7 +87,7 @@ angular.module('ldr.releases.create', [
                     modalTitle: 'Organism',
                     placeholder: 'Select Organism...',
                     maxTags: 1,
-                    autocompleteEndpoint: '',
+                    autocompleteEndpoint: 'organism',
                     model: []
                 },
                 {
@@ -104,7 +105,7 @@ angular.module('ldr.releases.create', [
                     modalTitle: 'Analysis Tool',
                     placeholder: 'Select Analysis Tools...',
                     maxTags: MAX_TAGS,
-                    autocompleteEndpoint: '',
+                    autocompleteEndpoint: 'tool',
                     model: []
                 },
                 {
@@ -168,12 +169,11 @@ angular.module('ldr.releases.create', [
         };
 
         function formatText(name) {
-            /*var MAX = 40;
+            var MAX = 40;
             if (name.length < MAX) {
                 return name;
             }
-            return name.slice(0, MAX) + '...';*/
-            return name;
+            return name.slice(0, MAX) + '...';
         }
 
         api('releases/form/' + $stateParams.id).get().success(function(form) {

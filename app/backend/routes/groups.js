@@ -5,6 +5,8 @@
 
 var http = require('http'),
     Q = require('q'),
+    jwt = require('jsonwebtoken'),
+    secret = require('../config/database').secret,
     getGroupStats = require('../getGroupStats'),
     baseUrl = require('../config/baseUrl').baseUrl,
     Models = require('../models'),
@@ -30,7 +32,7 @@ module.exports = function(app) {
             })
     });
 
-    app.get(baseUrl + '/api/group/:id/statistics', function(req, res) {
+    app.get(baseUrl + '/api/group/:id/statistics/', function(req, res) {
         var groupId = req.params.id;
         getGroupStats(groupId, function(err, statsResponse) {
             if (err) {
@@ -44,7 +46,7 @@ module.exports = function(app) {
         });
     });
 
-    app.get(baseUrl + '/api/group/:id/users', function(req, res) {
+    app.get(baseUrl + '/api/group/:id/users/', function(req, res) {
         var groupId = req.params.id;
         var query = { group: groupId };
         User
@@ -61,4 +63,43 @@ module.exports = function(app) {
                 }
             })
     });
+
+    app.put(baseUrl + '/api/secure/group/:groupId/users/:userId/approve/',
+        function(req, res) {
+            var groupId = req.params.groupId;
+            var userId = req.params.userId;
+            var token, user;
+            if (req.headers.authorization &&
+                req.headers.authorization.split(' ')[0] === 'Bearer') {
+                token = req.headers.authorization.split(' ')[1];
+            }
+            if (token) {
+                user = jwt.verify(token, secret, {
+                    issuer: 'http://amp.pharm.mssm.edu/LDR/'
+                });
+                if (user.admitted && user.group._id === groupId) {
+                    User
+                        .update({ _id: userId }, { admitted: true },
+                        function(err, user) {
+                            if (err) {
+                                res.status(404).send('There was an error ' +
+                                    'admitting this user. Please try again.')
+                            }
+                            else {
+                                res.status(204).send('User successfully ' +
+                                    'updated');
+                            }
+                        }
+                    )
+                }
+                else {
+                    res.status(401).send('You are not authorized to access ' +
+                        'this URL.')
+                }
+            }
+            else {
+                res.status(401).send('Token or URL are invalid. Try again.')
+            }
+        }
+    );
 };

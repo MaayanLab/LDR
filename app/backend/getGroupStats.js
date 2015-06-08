@@ -54,7 +54,7 @@ module.exports = function(groupId, cb) {
                 // Build path and make limit bigger than any count to get all
                 // statistics
                 var path = '/form/' + endpoint + '?group=' + group.abbr +
-                    '&limit=' + 100000000000000000;
+                    '&limit=' + 1000000000 + '&source=form';
                 http.get(nameServerUrl + path, function(res) {
                     var jsonString = '';
                     res.on('data', function(chunk) {

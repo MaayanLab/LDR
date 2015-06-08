@@ -14,10 +14,11 @@ angular.module('ldr', [
     'angular-storage',
     'angular-jwt'
 ])
-    .config(function ldrConfig($urlRouterProvider, jwtInterceptorProvider, $httpProvider, $locationProvider) {
+    .config(function ldrConfig($urlRouterProvider, jwtInterceptorProvider,
+                               $httpProvider) {
 
         // Add JWT to every request to server
-        jwtInterceptorProvider.tokenGetter = function (store) {
+        jwtInterceptorProvider.tokenGetter = function(store) {
             return store.get('jwt');
         };
         $httpProvider.interceptors.push('jwtInterceptor');
@@ -30,7 +31,6 @@ angular.module('ldr', [
                 },
                 responseError: function(response) {
                     if (response.status === 401)
-                    //$location.url(base);
                         return $q.reject(response);
                 }
             };
@@ -38,7 +38,7 @@ angular.module('ldr', [
     })
 
     .run(function($rootScope, $state, store, jwtHelper) {
-        "use strict";
+
         $rootScope.currentUser = store.get('currentUser');
         // Check status of user on every state change
         // Used for Navbar and blocking pages from unauthorized users
@@ -49,6 +49,27 @@ angular.module('ldr', [
 
             // Check if the state requires login or admin privileges
             if (to.data) {
+                if (to.data.requiresAdmitted) {
+                    // User not logged in
+                    if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
+                        $rootScope.isLoggedIn = false;
+                        $rootScope.isLoggedInAdmin = false;
+                        e.preventDefault();
+                        alert('You must be logged in to access this page.');
+                        $state.go('home');
+                    }
+                    // Logged in but not admitted to group
+                    if ($rootScope.currentUser.admitted !== true) {
+                        $rootScope.isLoggedIn = true;
+                        $rootScope.isLoggedInAdmin = false;
+                        $rootScope.isAdmitted = false;
+                        e.preventDefault();
+                        alert('You have not yet been admitted to this group! ' +
+                            'Someone must accept you before you can view ' +
+                            'releases and submit new ones.');
+                        $state.go('home');
+                    }
+                }
                 if (to.data.requiresAdmin) {
                     // Check if user is logged in by checking if there is a valid JWT
 
@@ -104,6 +125,11 @@ angular.module('ldr', [
                 if ($rootScope.currentUser.admin) {
                     $rootScope.isLoggedIn = true;
                     $rootScope.isLoggedInAdmin = true;
+                    $rootScope.isAdmitted = true;
+                }
+                else if ($rootScope.currentUser.admitted) {
+                    $rootScope.isLoggedIn = true;
+                    $rootScope.isAdmitted = true;
                 }
                 else {
                     $rootScope.isLoggedIn = true;
@@ -117,7 +143,8 @@ angular.module('ldr', [
         $scope.currentUser = store.get('currentUser');
         // Don't think this works, but should dynamically change title of page
         $scope.$on('$routeChangeSuccess', function(e, nextRoute) {
-            if (nextRoute.$$route && angular.isDefined(nextRoute.$$route.pageTitle)) {
+            if (nextRoute.$$route &&
+                angular.isDefined(nextRoute.$$route.pageTitle)) {
                 $scope.pageTitle = nextRoute.$$route.pageTitle + ' | LDR';
             }
         });

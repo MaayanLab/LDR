@@ -11,7 +11,8 @@ angular.module('ldr.releases.overview', [
             templateUrl: 'releases/overview/overview.html',
             controller: 'releases.overview.ctrl',
             data: {
-                requiresLogin: true
+                requiresLogin: true,
+                requiresAdmitted: true
             }
         });
     })
@@ -22,6 +23,7 @@ angular.module('ldr.releases.overview', [
         $scope.forms = [];
         $scope.sortType = ['accepted', 'metadata.assay[0].name'];
         $scope.sortReverse = false;
+        $scope.showAdmitted = false;
 
         api('releases/group/' + $scope.user.group._id).get().success(function(data) {
             // Convert release date strings to proper date objects so Angular

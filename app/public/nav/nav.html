@@ -2,7 +2,7 @@
     <div class="container">
         <p ng-show="isLoggedIn">{{ currentUser.username }}</p>
         <a ng-show="isLoggedIn" ui-sref="userSettings({id: currentUser._id})" class="glyphicon glyphicon-cog"></a>
-        <a ng-show="isLoggedIn" ui-sref="groupHome({id: currentUser.group._id})" id="group-nav-icon"></a>
+        <a ng-show="isLoggedIn && isAdmitted" ui-sref="groupHome({id: currentUser.group._id})" id="group-nav-icon"></a>
         <a ng-show="isLoggedIn" ng-click="logout()" class="glyphicon glyphicon-log-out"></a>
     </div>
 </nav>
@@ -33,19 +33,21 @@
                     <a ui-sref="admin">Admin</a>
                 </li>
                 <li class="dropdown" ng-show="isLoggedIn && !isLoggedInAdmin">
-                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-expanded="false">Data Releases <span class="caret"></span></a>
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown"
+                       role="button" aria-expanded="false">
+                        Data Releases <span class="caret"></span>
+                    </a>
                     <ul class="dropdown-menu" role="menu">
                         <li>
                             <a ui-sref="releasesOverview">Overview</a>
                         </li>
                         <li>
-                            <a ui-sref="releasesCreate">Add New</a>
+                            <a ui-sref="releasesCreate({id: ''})">Add New</a>
                         </li>
                     </ul>
                 </li>
                 <li ng-show="!isLoggedIn">
-                    <form name="loginForm" class="navbar-form navbar-right" role="search">
+                    <form name="loginForm" class="navbar-form navbar-right">
                         <div class="form-group">
                             <input ng-focus="showErr=false" ng-blur="showErr=true" name="username"
                                    type="text" class="form-control" ng-model="user.username"
