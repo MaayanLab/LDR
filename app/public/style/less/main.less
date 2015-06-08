@@ -12,6 +12,11 @@
 @color-gray: #aaa;
 @color-gray-light: #eee;
 @color-gray-charcoal: #222;
+@color-approved: #A9D6A7;
+@color-approved-hover: #95BA93;
+@color-unapproved: #D6A7A7;
+@color-unapproved-hover: #BA8F8F;
+
 
 @font-family-base: arial, sans-serif;
 @font-family-primary: 'Roboto', sans-serif;
@@ -410,6 +415,72 @@ h4.meta-header {
     margin-top: 40px;
 }
 
+.tr-approved {
+    background-color: @color-approved;
+}
+
+.tr-unapproved {
+    background-color: @color-unapproved;
+}
+
+div.btn-group >.tr-approved-btn,
+div.btn-group.open > .tr-approved-btn {
+    background-color: @color-approved;
+    &:hover, &:active, &:focus {
+        background-color: @color-approved-hover;
+    }
+}
+
+div.btn-group >.tr-unapproved-btn {
+    background-color: @color-unapproved;
+    &:hover, &:active, &:focus {
+        background-color: @color-unapproved-hover;
+    }
+}
+
+div.btn-group.open > .tr-approved-btn {
+  background-color: @color-approved-hover;
+}
+
+
+div.btn-group.open > .tr-unapproved-btn {
+    background-color: @color-unapproved-hover;
+}
+
+.release-details {
+    border: 1px solid #ccc;
+}
+
+.animate.ng-enter, .animate.ng-leave {
+    transition: 500ms ease-in all;
+    position: relative;
+    display: block;
+}
+
+.animate.ng-enter.ng-enter-active, .animate.ng-leave {
+    left: 0;
+}
+.animate.ng-leave.ng-leave-active, .animate.ng-enter {
+    left: 500px;
+}
+
+.assay-title {
+    margin: 20px 0;
+}
+
+.info-release-lvl {
+    text-transform: capitalize;
+}
+
+.release-table {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.return-textarea {
+    resize: vertical;
+}
+
 #create-group-tag {
     margin-left: 12px;
 }
@@ -518,4 +589,10 @@ span.stat-num {
 }
 .normal {
     font-weight: normal;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th,
+.table>tfoot>tr>td, .table>tfoot>tr>th,
+.table>thead>tr>td, .table>thead>tr>th {
+    vertical-align: inherit;
 }

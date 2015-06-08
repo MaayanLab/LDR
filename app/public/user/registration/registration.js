@@ -51,7 +51,7 @@ angular.module('ldr.user.registration', [
         });
 
         api('users/').get().success(function(data) {
-            $scope.userList = lodash.map(data, 'username')
+            $scope.userList = lodash.map(data, 'username');
         });
 
         var reset = function() {
@@ -75,19 +75,6 @@ angular.module('ldr.user.registration', [
                     alert('User created successfully');
                     $scope.setCurrentUser(response.user, response.id_token);
                     $state.go('home');
-                });
-        };
-
-        $scope.getLocations = function(address) {
-            var params = {address: address, sensor: false};
-            return $http.get(
-                'http://maps.googleapis.com/maps/api/geocode/json',
-                {params: params}
-            ).then(function(response) {
-                    return response.data.results.map(function(result){
-                        return result.formatted_address;
-                    });
-
                 });
         };
 

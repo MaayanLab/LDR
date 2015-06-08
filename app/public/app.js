@@ -17,13 +17,13 @@ angular.module('ldr', [
     .config(function ldrConfig($urlRouterProvider, jwtInterceptorProvider, $httpProvider, $locationProvider) {
 
         // Add JWT to every request to server
-        //jwtInterceptorProvider.tokenGetter = function (store) {
-        //    return store.get('jwt');
-        //};
-        //$httpProvider.interceptors.push('jwtInterceptor');
+        jwtInterceptorProvider.tokenGetter = function (store) {
+            return store.get('jwt');
+        };
+        $httpProvider.interceptors.push('jwtInterceptor');
 
         // For AJAX errors
-        $httpProvider.interceptors.push(function($q, $location) {
+        $httpProvider.interceptors.push(function($q) {
             return {
                 response: function(response) {
                     return response;

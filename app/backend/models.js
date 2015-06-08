@@ -13,7 +13,7 @@ var SALT_WORK_FACTOR = 10;
 
 
 // Mongoose Models and Schemas
-var User, Group, DataRelease;
+var User, AnalysisTool, Group, DataRelease;
 var Schema = mongoose.Schema;
 
 // User
@@ -138,12 +138,24 @@ try {
 //    });
 //};
 
+// Analysis Tools
+var toolSchema = new Schema({
+    title: { type: String, index: { unique: true} },
+    description: String,
+    url: String
+});
 
+try {
+    AnalysisTool = mongoose.model('AnalysisTool');
+} catch (e) {
+    AnalysisTool = mongoose.model('AnalysisTool', toolSchema, 'analysisTools');
+}
 
 // Group
 var groupSchema = new Schema({
     name: { type: String, required: true, index: { unique: true } },
-    abbr: { type: String, required: true, index: { unique: true } }
+    abbr: { type: String, required: true, index: { unique: true } },
+    homepage: { type: String, required: true, default: '' }
 });
 
 try {
@@ -157,11 +169,13 @@ var dataReleaseSchema = new Schema({
     group: { type: Schema.ObjectId, ref: 'Group', required: true },
     approved: { type: Boolean, required: true },
     dateModified: { type: String, required: true },
+    needsEdit: { type: Boolean, default: false },
+    message: { type: String, default: '' },
     releaseDates: {
-        level1: { type: String, default: "" },
-        level2: { type: String, default: "" },
-        level3: { type: String, default: "" },
-        level4: { type: String, default: "" }
+        level1: { type: String, default: '' },
+        level2: { type: String, default: '' },
+        level3: { type: String, default: '' },
+        level4: { type: String, default: '' }
     },
     metadata: {
         // These are arrays of IDs pointing to the name-metadata server
@@ -177,10 +191,10 @@ var dataReleaseSchema = new Schema({
         tagsKeywords: { type: [], default: [] }
     },
     urls: {
-        dataUrl: { type: String, default: "" },
-        metadataUrl: { type: String, default: "" },
-        pubMedUrl: { type: String, default: "" },
-        qcDocumentUrl: { type: String, default: "" }
+        dataUrl: { type: String, default: '' },
+        metadataUrl: { type: String, default: '' },
+        pubMedUrl: { type: String, default: '' },
+        qcDocumentUrl: { type: String, default: '' }
     }
 });
 
@@ -192,6 +206,7 @@ try {
 
 module.exports = {
     User: User,
+    AnalysisTool: AnalysisTool,
     Group: Group,
     DataRelease: DataRelease
 };

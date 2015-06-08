@@ -33,15 +33,10 @@
 
 </head>
     <body class="ng-cloak">
-        <div id="wrap">
-            <ldr-nav></ldr-nav>
-            <div id="page" class="container" ui-view></div>
-        </div>
-        <div id="push"></div>
-        <div id="footer">
-            <div class="container">
-                <p class="text-center credit">DCIC: Created at the Maayan Lab at Mount Sinai</p>
-            </div>
-        </div>
+    <div id="wrapper">
+        <ldr-nav></ldr-nav>
+        <div id="content" class="container" ui-view></div>
+        <div ng-include="'footer/footer.html'"></div>
+    </div>
     </body>
 </html>

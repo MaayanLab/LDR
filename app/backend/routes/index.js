@@ -1,5 +1,4 @@
 var jwt = require('express-jwt'),
-    Models = require('../models'),
     config = require('../config/database');
 
 var jwtCheck = jwt({
@@ -8,11 +7,12 @@ var jwtCheck = jwt({
 
 module.exports = function(app) {
 
-    // TODO: Uncomment to require token on request to /api/secure
-    //app.use('/api/secure', jwtCheck);
+    app.use('/api/secure', jwtCheck);
 
     require('./users')(app);
+    require('./admin')(app);
     require('./groups')(app);
+    require('./tools')(app);
     require('./releaseRoutes')(app);
 
 };

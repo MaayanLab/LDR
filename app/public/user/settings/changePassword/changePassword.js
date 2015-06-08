@@ -31,12 +31,12 @@ angular.module('ldr.user.settings.changePassword', [
 
         $scope.changePassword = function() {
             console.log($scope);
-            debugger;
             api('user/' + id + '/changePassword').put($scope.passwords)
                 .then(function() {
                     alert('Password successfully changed');
                 }, function(error) {
-                    alert('An error occurred while changing your password. Please try again.');
+                    alert('An error occurred while changing your password. ' +
+                        'Please try again.');
                 });
         };
     });

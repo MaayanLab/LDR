@@ -23,26 +23,21 @@ var BOWER_RC_DIRECTORY = './.bowerrc';
 
 var jsFilter = $.filter('**/*.js');
 var cssFilter = $.filter('**/*.css');
-var htmlFilter = $.filter('**/*.html');
-var fontFilter = $.filter('**/*.{svg,ttf,woff,woff2}');
 
 var src = {};
 var browserSync;
 
-gulp.task('clean', function() {
-    return del([BUILD_DIRECTORY + '*'], function(err, deletedFiles) {
-        if (err) {
-            console.log(err);
-        }
-        console.log('Files deleted:', deletedFiles.join(', '));
-    });
-});
+// Clean output directory
+gulp.task('clean', del.bind(
+    null, ['.tmp', BUILD_DIRECTORY + '*'], { dot: true }
+));
 
 gulp.task('html', function() {
-    return gulp.src(SRC_DIRECTORY + '**/*')
-        .pipe($.changed(BUILD_DIRECTORY))
+    return gulp.src([
+        SRC_DIRECTORY + '*.html',
+        SRC_DIRECTORY + '**/*.html'
+    ])
         .pipe($.plumber())
-        .pipe(htmlFilter)
         .pipe(gulp.dest(BUILD_DIRECTORY));
 });
 
@@ -52,36 +47,40 @@ gulp.task('copyFavIconInfo', function() {
 });
 
 gulp.task('fonts', function() {
-    return gulp.src(SRC_DIRECTORY + '**/*')
+    return gulp.src(SRC_DIRECTORY + '**/*.{svg,ttf,woff,woff2}')
         .pipe($.plumber())
-        .pipe(fontFilter)
+        .pipe($.changed(BUILD_DIRECTORY + 'fonts/'))
         .pipe($.flatten())
         .pipe(gulp.dest(BUILD_DIRECTORY + 'fonts/'));
 });
 
 gulp.task('images', function() {
-    return gulp.src(SRC_DIRECTORY + '/images/**/*.{jpg,jpeg,png,gif,ico}')
+    return gulp.src(SRC_DIRECTORY + 'images/**/*.{jpg,jpeg,png,gif,ico}')
         .pipe($.plumber())
+        .pipe($.changed(BUILD_DIRECTORY + 'images/'))
         .pipe($.imagemin({
             optimizationLevel: 3,
             progressive: true,
             interlaced: true
         }))
-        .pipe(gulp.dest(BUILD_DIRECTORY + 'images/'))
-        .pipe($.size());
+        .pipe($.size({ title: 'images' }))
+        .pipe(gulp.dest(BUILD_DIRECTORY + 'images/'));
 });
 
-gulp.task('js', function() {
+gulp.task('serverJs', function() {
     gulp.src(SERVER_DIRECTORY + '**/*')
         .pipe($.changed(BUILD_DIRECTORY))
         .pipe(gulp.dest(BUILD_DIRECTORY + 'backend/'));
-    gulp.src('server.js')
+    return gulp.src('server.js')
         .pipe($.changed(BUILD_DIRECTORY))
         .pipe(gulp.dest(BUILD_DIRECTORY));
-    return gulp.src(
-        [SRC_DIRECTORY + '**/*.js', '!' + SRC_DIRECTORY + 'vendor/**']
-    )
-        .pipe($.changed(BUILD_DIRECTORY))
+});
+
+gulp.task('js', function() {
+    return gulp.src([
+        SRC_DIRECTORY + '**/*.js',
+        '!' + SRC_DIRECTORY + 'vendor/**'
+    ])
         .pipe($.plumber())
         .pipe($.concat('bundle.js'))
         .pipe(gulp.dest(BUILD_DIRECTORY));
@@ -125,43 +124,44 @@ gulp.task('vendor', function() {
             bowerJson: BOWER_JSON_DIRECTORY
         }
     }))
-        .pipe($.changed(BUILD_DIRECTORY))
         .pipe($.plumber())
         .pipe(jsFilter)
         .pipe($.concat('vendor.js'))
-        .pipe($.size())
+        .pipe($.size({ title: 'vendor.js' }))
         .pipe(gulp.dest(BUILD_DIRECTORY))
         .pipe(jsFilter.restore())
 
         .pipe(cssFilter)
-        .pipe($.concat('vendor.min.css'))
-        .pipe($.autoprefixer())
         .pipe($.sourcemaps.init())
+        .pipe($.autoprefixer())
         .pipe(minifyCss())
+        .pipe($.concat('vendor.min.css'))
         .pipe($.sourcemaps.write())
-        .pipe($.size())
+        .pipe($.size({ title: 'vendor.min.css' }))
         .pipe(gulp.dest(BUILD_DIRECTORY + 'style/'));
 });
 
 gulp.task('build', ['clean'], function(callback) {
-    runSequence('vendor', 'html', 'less', 'js', 'fonts',
-        'images', 'copyFavIconInfo', callback)
+    runSequence(['vendor', 'fonts', 'images', 'copyFavIconInfo', 'html',
+        'less', 'js', 'serverJs'], callback)
 });
 
 gulp.task('build:watch', function(callback) {
     runSequence('build', function() {
-        gulp.watch(SRC_DIRECTORY + '**.js', ['js']);
-        gulp.watch(SRC_DIRECTORY + '**.less', ['less']);
-        gulp.watch(SRC_DIRECTORY + '**.html', ['html']);
+        gulp.watch(SRC_DIRECTORY + '**/*.js', ['js']);
+        gulp.watch(SERVER_DIRECTORY + '**/*.js', ['serverJs']);
+        gulp.watch('./server.js', ['serverJs']);
+        gulp.watch(SRC_DIRECTORY + '**/*.less', ['less']);
+        gulp.watch(SRC_DIRECTORY + '**/*.html', ['html']);
         callback()
     })
 });
 
-// Launch a Node.js/Express server
+// Run node
 gulp.task('serve', ['build:watch'], function(cb) {
     src.server = [
         BUILD_DIRECTORY + 'server.js',
-        BUILD_DIRECTORY + ''
+        BUILD_DIRECTORY + 'backend/**/*'
     ];
 
     var started = false;
@@ -196,13 +196,13 @@ gulp.task('serve', ['build:watch'], function(cb) {
     });
 });
 
-// Launch BrowserSync development server
+// Launch BrowserSync server
 gulp.task('sync', ['serve'], function(cb) {
     browserSync = require('browser-sync');
 
     browserSync({
         logPrefix: 'LDR',
-        notify: true,
+        notify: false,
         // Run as an https by setting 'https: true'
         // Note: this uses an unsigned certificate which on first access
         //       will present a certificate warning in the browser.

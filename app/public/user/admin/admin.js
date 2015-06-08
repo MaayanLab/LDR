@@ -1,64 +1,63 @@
 angular.module('ldr.user.admin', [
     'ui.router',
     'angular-storage',
-    'ldr.api'
+    'ldr.api',
+    'ui.bootstrap'
 ])
 
-.config(function($stateProvider) {
-    // UI Router state admin
-    $stateProvider.state('admin', {
-        url: '/user/admin',
-        controller: 'AdminCtrl',
-        templateUrl: 'user/admin/admin.html',
-        data: {
-            requiresLogin: true,
-            requiresAdmin: true
-        }
-    });
-})
-
-.controller('AdminCtrl', function($scope, $http, store, $state, api) {
-    var currentUser = store.get('currentUser');
-    $scope.allForms = [];
-
-    var dataApi = api('releases');
-
-    dataApi.get().success(function(forms) {
-        console.log(forms);
-        $scope.allForms = forms;
-    });
-
-    $scope.approveForm = function(form) {
-        form.status = 'approved';
-        dataApi.put({ data: form }).success(function(err, result) {
-            if (err)
-                console.log(err);
+    .config(function($stateProvider) {
+        // UI Router state admin
+        $stateProvider.state('admin', {
+            url: '/user/admin',
+            controller: 'AdminCtrl',
+            templateUrl: 'user/admin/admin.html',
+            data: {
+                requiresLogin: true,
+                requiresAdmin: true
+            }
         });
-        FormGets.getAllForms().success(function(forms) {
+    })
+
+    .controller('AdminCtrl', function($scope, $http,
+                                      store, $state, api, $modal) {
+        var currentUser = store.get('currentUser');
+        var releaseApi = api('releases');
+
+        $scope.allForms = [];
+        $scope.sortType = ['accepted', 'group.name'];
+        $scope.sortReverse = false;
+
+        releaseApi.get().success(function(forms) {
+            console.log(forms);
             $scope.allForms = forms;
         });
-    };
 
-    $scope.returnForm = function (form) {
-        form.status = 'needs re-edit';
-        dataApi.put({ data: form }).success(function(err, result) {
-            if (err)
-                console.log(err);
-        });
-        dataApi.get().success(function(forms) {
-            $scope.allForms = forms;
-        });
-    };
+        $scope.approveForm = function(form) {
+            api('admin/' + form._id + '/approve').post().success(function() {
+                releaseApi.get().success(function(forms) {
+                    $scope.allForms = forms;
+                });
+            })
+        };
 
-    $scope.deleteForm = function (form) {
-        if (confirm('Are you sure you would like to delete this entry?')) {
-            AdminFactory.deleteForm(form._id).success(function(data) {
-                console.log(data);
+        $scope.unapproveForm = function(form) {
+            api('admin/' + form._id + '/unapprove').post().success(function() {
+                releaseApi.get().success(function(forms) {
+                    $scope.allForms = forms;
+                });
+            })
+        };
+
+        $scope.returnForm = function(formToReturn) {
+            $modal.open({
+                templateUrl: 'user/admin/returnModal/returnModal.html',
+                controller: 'ReturnModalInstanceCtrl',
+                resolve: {
+                    form: formToReturn
+                }
             });
-            dataApi.getUserForms(currentUser._id).success(function(data) {
-                $scope.forms = data;
+            releaseApi.get().success(function(forms) {
+                $scope.allForms = forms;
             });
-        }
-    };
-
-});
+        };
+    });

@@ -17,11 +17,11 @@ angular.module('ldr.releases.overview', [
     })
 
     .controller('releases.overview.ctrl', function($scope, $http, store, $state, lodash, api) {
-        var currentUser = store.get('currentUser'),
-            dataApi = api('releases/form/');
 
-        $scope.user = currentUser;
+        $scope.user = store.get('currentUser');
         $scope.forms = [];
+        $scope.sortType = ['accepted', 'metadata.assay[0].name'];
+        $scope.sortReverse = false;
 
         api('releases/group/' + $scope.user.group._id).get().success(function(data) {
             // Convert release date strings to proper date objects so Angular
@@ -33,7 +33,6 @@ angular.module('ldr.releases.overview', [
                 });
             });
             $scope.forms = data;
-            debugger;
         });
 
         $scope.editForm = function(form) {
