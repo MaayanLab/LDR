@@ -9,7 +9,7 @@ var _ = require('lodash'),
     nameServerUrl = require('./config/nameServer').url;
 
 /**
- * buildMeta: Make request to name-server and replace arrays of IDs
+ * buildMetadata: Make request to name-server and replace arrays of IDs
  * with arrays of JSON data
  * @param releaseData: JSON stored in local database with pointers
  * to Name/Metadata Server
