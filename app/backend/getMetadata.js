@@ -45,7 +45,6 @@ module.exports = function(releaseData, cb) {
         //else if (key === 'tagsKeywords')
         //    path = '/form/keyword?_id=' + va
 
-
         if (path) {
             var def = Q.defer();
             http.get(nameServerUrl + path, function(res) {
