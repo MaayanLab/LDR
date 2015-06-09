@@ -4,3 +4,13 @@ Forms -> Data Releases
 Change form to be more descriptive: 
 
 - Readout Count --> Readouts
+
+Color if approved but not available yet
+Color if available/released
+Add status released. i.e. HMS datasets from 2014
+Need URL if status is released
+Some parts of released dataset should not be edited
+
+Release button --> Has to be approved and have Data URL and QC URL
+
+Release controlled by center.

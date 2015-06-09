@@ -16,5 +16,8 @@
                 }
             ]
         }
+    },
+    "upgradeStrategy": {
+        "minimumHealthCapacity": 0
     }
 }

@@ -7,7 +7,7 @@
             <th class="text-center">
                 <a href=""
                    ng-click="sortType = 'metadata.assay[0].name'; sortReverse = !sortReverse">
-                    Assay
+                    Center Assay Name
                     <span ng-show="sortType == 'metadata.assay[0].name' && sortReverse"
                           class="fa fa-caret-down"></span>
                     <span ng-show="sortType == 'metadata.assay[0].name' && !sortReverse"
@@ -15,6 +15,16 @@
                 </a>
             </th>
             <th class="text-center">
+                <a href=""
+                   ng-click="sortType = 'metadata.assay[0].dcicName'; sortReverse = !sortReverse">
+                    DCIC Assay Name
+                    <span ng-show="sortType == 'metadata.assay[0].dcicName' && sortReverse"
+                          class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'metadata.assay[0].dcicName' && !sortReverse"
+                          class="fa fa-caret-up"></span>
+                </a>
+            </th>
+            <!--<th class="text-center">
                 <a href=""
                    ng-click="sortType = 'metadata.perturbagens.length'; sortReverse = !sortReverse">
                     Perturbagens
@@ -43,18 +53,17 @@
                     <span ng-show="sortType == 'metadata.readouts.length' && !sortReverse"
                           class="fa fa-caret-up"></span>
                 </a>
-            </th>
+            </th>-->
             <th class="text-center">
-                Release Date
                 <!--TODO: Implement sorting by release date (Need to sort through different variables unknown at this point in markup)-->
-                <!--<a href=""
-                   ng-click="sortType = 'metadata.releaseDates.level1'; sortReverse = !sortReverse">
+                <a href=""
+                   ng-click="sortType = 'releaseDates.level1'; sortReverse = !sortReverse">
                     Release Date
-                    <span ng-show="sortType == 'metadata.releaseDates.level1' && sortReverse"
+                    <span ng-show="sortType == 'releaseDates.level1' && sortReverse"
                           class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'metadata.releaseDates.level1' && !sortReverse"
+                    <span ng-show="sortType == 'releaseDates.level1' && !sortReverse"
                           class="fa fa-caret-up"></span>
-                </a>-->
+                </a>
             </th>
             <th class="text-center">
                 Level
@@ -81,7 +90,10 @@
             <td class="text-left" id="assay-name">
                 {{form.metadata.assay[0].name}}
             </td>
-            <td class="col-sm-2" id="pert-count">
+            <td class="text-left" id="dcic-assay-name">
+                {{form.metadata.assay[0].dcicName}}
+            </td>
+            <!--<td class="col-sm-2" id="pert-count">
                 {{form.metadata.perturbagens.length}}
             </td>
             <td class="col-sm-1" id="cell-count">
@@ -89,7 +101,7 @@
             </td>
             <td class="col-sm-1" id="readout-count">
                 {{form.metadata.readouts.length}}
-            </td>
+            </td>-->
 
             <td class="col-sm-2" id="release-date">
                 {{
@@ -145,7 +157,7 @@
             </td>
         </tr>
         <tr class="release-details animate" ng-show="form.collapsed">
-            <td colspan="9" class="col-sm-12">
+            <td colspan="10" class="col-sm-12">
                 <h4 class="text-center assay-title">
                     {{form.metadata.assay[0].name}}
                 </h4>

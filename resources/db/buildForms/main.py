@@ -78,13 +78,15 @@ for doc in lorettaMd.find({}):
     print('GROUP: ' + groupAbbr)
     gPar = '&group=' + groupAbbr
 
-    assay = doc['assay']
-    assayName = assay.replace('+', '\%2B').replace('(', '\(').replace(')', '\)')
+    assayName = doc['assay']
+    dcicName = doc['dcic-assay-name']
+    assayQuery = assayName.replace('+', '\%2B').replace('(', '\(').replace(')', '\)')
     print('ASSAY: ' + assayName)
-    assayArr = requests.get(nsUrl + '/assay?name=' + assayName + gPar).json()
+    assayArr = requests.get(nsUrl + '/assay?name=' + assayQuery + gPar).json()
     if len(assayArr) == 0:
         assayData = {
             'name': assayName,
+            'dcicName': dcicName,
             'info': doc['assay-info'],
             'group': groupAbbr
         }
@@ -101,7 +103,7 @@ for doc in lorettaMd.find({}):
         cLineName = cLineObj['name'].replace('+', '\%2B').replace('(', '\(').replace(')', '\)')
         if 'Which four?' in cLineName:
             continue
-        print('CELL LINE: ' + cLineName)
+        # print('CELL LINE: ' + cLineName)
         cLineArr = requests.get(nsUrl + '/cell?name=' + cLineName + gPar).json()
         if len(cLineArr) == 0:
             cLineObj['group'] = groupAbbr
@@ -117,7 +119,7 @@ for doc in lorettaMd.find({}):
             if 'name' not in pertObj:
                 continue
             pertName = pertObj['name'].replace('+', '\%2B').replace('(', '\(').replace(')', '\)')
-            print('PERTURBAGEN: ' + pertName)
+            # print('PERTURBAGEN: ' + pertName)
             pertArr = requests.get(nsUrl + '/perturbagen?name=' + pertName + gPar).json()
             if len(pertArr) == 0:
                 pertObj['group'] = groupAbbr
@@ -130,7 +132,7 @@ for doc in lorettaMd.find({}):
 
     for rOutObj in doc['readouts']:
         rOutName = rOutObj['name'].replace('+', '\%2B').replace('(', '\(').replace(')', '\)')
-        print('READOUT: ' + rOutName)
+        # print('READOUT: ' + rOutName)
         rOutArr = requests.get(nsUrl + '/readout?name=' + rOutName + gPar).json()
         if len(rOutArr) == 0:
             rOutObj['group'] = groupAbbr

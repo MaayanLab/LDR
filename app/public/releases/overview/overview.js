@@ -1,11 +1,11 @@
 angular.module('ldr.releases.overview', [
-        'ui.router',
-        'angular-storage',
-        'ldr.api'
-    ])
+    'ui.router',
+    'angular-storage',
+    'ldr.api'
+])
 
     // UI Router state forms
-    .config(function ($stateProvider) {
+    .config(function($stateProvider) {
         $stateProvider.state('releasesOverview', {
             url: '/releases/overview',
             templateUrl: 'releases/overview/overview.html',
@@ -17,7 +17,9 @@ angular.module('ldr.releases.overview', [
         });
     })
 
-    .controller('releases.overview.ctrl', function($scope, $http, store, $state, lodash, api) {
+    .controller('releases.overview.ctrl', function($scope, $http, store,
+                                                   $filter, $state,
+                                                   lodash, api) {
 
         $scope.user = store.get('currentUser');
         $scope.forms = [];
@@ -25,17 +27,21 @@ angular.module('ldr.releases.overview', [
         $scope.sortReverse = false;
         $scope.showAdmitted = false;
 
-        api('releases/group/' + $scope.user.group._id).get().success(function(data) {
-            // Convert release date strings to proper date objects so Angular
-            // can format them correctly.
-            lodash.each(data, function(obj) {
-                lodash.each(obj.releaseDates, function(level, key) {
-                    if (level === '') { return; }
-                    obj.releaseDates[key] = new Date(level);
+        api('releases/group/' + $scope.user.group._id)
+            .get()
+            .success(function(data) {
+                // Convert release date strings to proper date objects
+                // so Angular can format them correctly.
+                lodash.each(data, function(obj) {
+                    lodash.each(obj.releaseDates, function(level, key) {
+                        if (level === '') {
+                            return;
+                        }
+                        obj.releaseDates[key] = new Date(level);
+                    });
                 });
+                $scope.forms = data;
             });
-            $scope.forms = data;
-        });
 
         $scope.editForm = function(form) {
             $state.go('releasesCreate', { id: form._id });
@@ -44,8 +50,10 @@ angular.module('ldr.releases.overview', [
         $scope.deleteForm = function(form) {
             console.log(form);
             if (confirm('Are you sure you would like to delete this entry?')) {
-                api('releases/form/' + form._id ).del().success(function() {
-                    api('releases/group/' + $scope.user.group._id).get().success(function(data) {
+                api('releases/form/' + form._id).del().success(function() {
+                    api('releases/group/' + $scope.user.group._id)
+                        .get()
+                        .success(function(data) {
                         $scope.forms = data;
                     });
                 });
