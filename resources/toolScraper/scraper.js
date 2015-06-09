@@ -74,7 +74,7 @@ phantom.create(function(ph) {
         var finished = function() {
             var request = require('superagent');
             request
-                .post('http://localhost:3001/LDR/api/tools/')
+                .post('http://146.203.54.165:3001/LDR/api/tools/')
                 .send({ data: tools })
                 .end(function(err, res){
                     if (res.ok) {
