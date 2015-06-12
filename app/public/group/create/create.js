@@ -94,7 +94,7 @@ angular.module('ldr.group.create', [
                             .put()
                             .success(function() {
                                 $state.go('groupHome');
-                            })
+                            });
                     }
                     else if(store.get('userReg')) {
                         // If locally stored userReg, then the

@@ -40,13 +40,12 @@ module.exports = function(releaseData, cb) {
             path = '/form/perturbagen?_id=' + id;
         else if (key === 'readouts')
             path = '/form/readout?_id=' + id;
-        //else if (key === 'tagsKeywords')
-        //    path = '/form/keyword?_id=' + va
+        else if (key === 'tagsKeywords')
+            resultObj[key] = valArray;
 
         if (path) {
             var def = Q.defer();
             http.get(nameServerUrl + path, function(res) {
-                debugger;
                 var jsonString = '';
                 res.on('data', function(chunk) {
                     jsonString += chunk;

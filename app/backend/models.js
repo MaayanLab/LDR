@@ -215,6 +215,18 @@ try {
 }
 
 dataReleaseSchema.pre('save', function(next) {
+
+    // Generate 'upcoming' field with closest release date
+    this.releaseDates.upcoming =
+        this.releaseDates.level1 !== '' ?
+            this.releaseDates.level1 :
+            this.releaseDates.level2 !== '' ?
+                this.releaseDates.level2 :
+                this.releaseDates.level3 !== '' ?
+                    this.releaseDates.level3 :
+                    this.releaseDates.level4 !== '' ?
+                        this.releaseDates.level4 : 'NA';
+
     // Check if any ids are null. If they are, throw an error
     _.each(this.metadata, function(arr, key) {
         _.each(arr, function(id) {

@@ -44,12 +44,11 @@ angular.module('ldr.group.home', [
                         api('group/' + groupId + '/users/')
                             .get()
                             .success(function(usersArr) {
-                                debugger;
                                 $scope.users = usersArr;
                                 $scope.showAdmitted = true;
                                 $timeout($scope.showAdmitted = false, 5000);
                             });
-                    })
+                    });
             }
         };
 

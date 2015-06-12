@@ -43,19 +43,14 @@
             </a>
         </th>
         <th class="text-center">
-            Release Date
-            <!--TODO: Implement sorting by release date (Need to sort through different variables unknown at this point in markup)-->
-            <!--<a href=""
-               ng-click="sortType = 'metadata.releaseDates.level1'; sortReverse = !sortReverse">
-                Release Date
-                <span ng-show="sortType == 'metadata.releaseDates.level1' && sortReverse"
-                      class="fa fa-caret-down"></span>
-                <span ng-show="sortType == 'metadata.releaseDates.level1' && !sortReverse"
-                      class="fa fa-caret-up"></span>
-            </a>-->
-        </th>
-        <th class="text-center">
-            Level
+            <a href=""
+               ng-click="sortType = 'releaseDates.upcoming'; sortReverse = !sortReverse">
+                Upcoming Release Date
+                    <span ng-show="sortType == 'releaseDates.upcoming' && sortReverse"
+                          class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'releaseDates.upcoming' && !sortReverse"
+                          class="fa fa-caret-up"></span>
+            </a>
         </th>
         <th></th>
         <th></th>
@@ -82,22 +77,7 @@
             {{form.metadata.readouts.length}}
         </td>
         <td class="col-sm-2" id="release-date">
-            {{
-            form.releaseDates.level1 !== '' ?
-            form.releaseDates.level1 : form.releaseDates.level2 !== '' ?
-            form.releaseDates.level2 : form.releaseDates.level3 !== '' ?
-            form.releaseDates.level3 : form.releaseDates.level4 !== '' ?
-            form.releaseDates.level4 : 'No Date Available'
-            | date:'MM-dd-yyyy'
-            }}
-        </td>
-        <td class="col-sm-1" id="release-level">
-            {{
-            form.releaseDates.level1 !== '' ? 1 :
-            form.releaseDates.level2 !== '' ? 2 :
-            form.releaseDates.level3 !== '' ? 3 :
-            form.releaseDates.level4 !== '' ? 4 : 'NA'
-            }}
+            {{ form.releaseDates.upcoming | date:'MM-dd-yyyy' }}
         </td>
         <td>
             <div class="btn-group">
@@ -129,7 +109,7 @@
         </td>
     </tr>
     <tr class="release-details animate" ng-show="form.collapsed">
-        <td colspan="9" class="col-sm-12">
+        <td colspan="7" class="col-sm-12">
             <h4 class="text-center">
                 {{form.metadata.assay[0].name}}
             </h4>

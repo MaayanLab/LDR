@@ -18,7 +18,7 @@ angular.module('ldr.user.admin', [
         });
     })
 
-    .controller('AdminCtrl', function($scope, $http,
+    .controller('AdminCtrl', function($scope, $http, lodash,
                                       store, $state, api, $modal) {
         var currentUser = store.get('currentUser');
         var releaseApi = api('releases');
@@ -28,7 +28,6 @@ angular.module('ldr.user.admin', [
         $scope.sortReverse = false;
 
         releaseApi.get().success(function(forms) {
-            console.log(forms);
             $scope.allForms = forms;
         });
 
@@ -37,7 +36,7 @@ angular.module('ldr.user.admin', [
                 releaseApi.get().success(function(forms) {
                     $scope.allForms = forms;
                 });
-            })
+            });
         };
 
         $scope.unapproveForm = function(form) {
@@ -45,7 +44,7 @@ angular.module('ldr.user.admin', [
                 releaseApi.get().success(function(forms) {
                     $scope.allForms = forms;
                 });
-            })
+            });
         };
 
         $scope.returnForm = function(formToReturn) {

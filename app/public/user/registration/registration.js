@@ -71,7 +71,7 @@ angular.module('ldr.user.registration', [
             .get()
             .success(function(data) {
             $scope.groups = lodash.filter(data, function(obj) {
-                return obj.name !== 'NIH'
+                return obj.name !== 'NIH';
             });
         });
 

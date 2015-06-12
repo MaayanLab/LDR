@@ -214,7 +214,6 @@ angular.module('ldr.releases.create', [
             lodash.each($scope.form.metadata, function(obj) {
                 var newData = form.metadata[obj.name];
                 lodash.each(newData, function(newObj) {
-                    debugger;
                     if (newObj.name) {
                         newObj.text = formatText(newObj.name);
                     }
@@ -275,7 +274,6 @@ angular.module('ldr.releases.create', [
                 lodash.each($scope.form.metadata, function(metadataObj) {
                     lodash.each(metadataObj.model, function(modelObj) {
                         if (!modelObj._id && modelObj.endpoint) {
-                            debugger;
                             // Id doesn't exist but omit it anyway
                             // Add group abbr (will be name eventually)
                             modelObj.group = $scope.group.abbr;
@@ -299,16 +297,11 @@ angular.module('ldr.releases.create', [
             buildIds().then(function() {
                 lodash.each($scope.form.metadata, function(obj) {
                     form.metadata[obj.name] = lodash.map(obj.model, function(obj) {
-                        debugger;
                         if (Object.keys(obj).length === 1 && obj.text) {
                             return obj.text;
                         }
-                        else if (obj._id) {
+                        if (obj._id) {
                             return obj._id;
-                        }
-                        else {
-                            throw new Error('Object should have id ' +
-                                'and does not!')
                         }
                     });
                 });

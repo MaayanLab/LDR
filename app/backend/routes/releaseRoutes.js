@@ -62,6 +62,16 @@ module.exports = function(app) {
                             'meta data for this release. Try again.');
                     }
                     else {
+                        var dates = finalRelease.releaseDates;
+                        var up = dates.upcoming;
+                        if (up === '' || !up) {
+                            finalRelease.releaseDates.upcoming =
+                                dates.level1 !== '' ? dates.level1 :
+                                    dates.level2 !== '' ? dates.level2 :
+                                        dates.level3 !== '' ? dates.level3 :
+                                            dates.level4 !== '' ?
+                                                dates.level4 : 'NA';
+                        }
                         res.status(200).send(finalRelease);
                     }
                 })
@@ -87,6 +97,16 @@ module.exports = function(app) {
                                 ' meta data for these releases. Try again.')
                         }
                         else {
+                            var dates = finalRelease.releaseDates;
+                            var up = dates.upcoming;
+                            if (up === '' || !up) {
+                                finalRelease.releaseDates.upcoming =
+                                    dates.level1 !== '' ? dates.level1 :
+                                        dates.level2 !== '' ? dates.level2 :
+                                            dates.level3 !== '' ? dates.level3 :
+                                                dates.level4 !== '' ?
+                                                    dates.level4 : 'NA';
+                            }
                             releasesArr.push(finalRelease);
                             if (i === allData.length - 1) {
                                 res.status(200).send(releasesArr);
@@ -124,6 +144,16 @@ module.exports = function(app) {
                                     'Try again.')
                             }
                             else {
+                                var dates = finalRelease.releaseDates;
+                                var up = dates.upcoming;
+                                if (up === '' || !up) {
+                                    finalRelease.releaseDates.upcoming =
+                                        dates.level1 !== '' ? dates.level1 :
+                                        dates.level2 !== '' ? dates.level2 :
+                                            dates.level3 !== '' ? dates.level3 :
+                                                dates.level4 !== '' ?
+                                                    dates.level4 : 'NA';
+                                }
                                 releasesArr.push(finalRelease);
                                 if (i === allData.length - 1) {
                                     res.status(200).send(releasesArr);
