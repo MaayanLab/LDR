@@ -5,6 +5,7 @@
 
 var http = require('http'),
     Q = require('q'),
+    _ = require('lodash'),
     jwt = require('jsonwebtoken'),
     secret = require('../config/database').secret,
     getGroupStats = require('../getGroupStats'),
@@ -30,6 +31,22 @@ module.exports = function(app) {
                     res.status(200).send(groups);
                 }
             })
+    });
+
+    app.get(baseUrl + '/api/group/:id/', function(req, res) {
+        var groupId = req.params.id;
+        Group
+            .findOne({ _id: groupId })
+            .lean()
+            .exec(function(err, group) {
+                if (err) {
+                    console.log(err);
+                    res.status(404).send('Error getting group with id: ' + groupId);
+                }
+                else {
+                    res.status(200).send(group);
+                }
+            });
     });
 
     app.get(baseUrl + '/api/group/:id/statistics/', function(req, res) {
@@ -69,37 +86,75 @@ module.exports = function(app) {
             var groupId = req.params.groupId;
             var userId = req.params.userId;
             var token, user;
-            if (req.headers.authorization &&
-                req.headers.authorization.split(' ')[0] === 'Bearer') {
-                token = req.headers.authorization.split(' ')[1];
-            }
-            if (token) {
-                user = jwt.verify(token, secret, {
-                    issuer: 'http://amp.pharm.mssm.edu/LDR/'
-                });
-                if (user.admitted && user.group._id === groupId) {
-                    User
-                        .update({ _id: userId }, { admitted: true },
-                        function(err, user) {
-                            if (err) {
-                                res.status(404).send('There was an error ' +
-                                    'admitting this user. Please try again.')
-                            }
-                            else {
-                                res.status(204).send('User successfully ' +
-                                    'updated');
-                            }
-                        }
-                    )
+
+            // Automatically admit the user if there is no one in the group
+            User
+                .find({ group: groupId })
+                .lean()
+                .exec(function(err, users) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    if (users.length) {
+                        checkForApproval();
+                    }
+                    else {
+                        approveUser();
+                    }
+                }
+            );
+
+            var checkForApproval = function() {
+                if (req.headers.authorization &&
+                    req.headers.authorization.split(' ')[0] === 'Bearer') {
+                    token = req.headers.authorization.split(' ')[1];
+                }
+                if (token) {
+                    user = jwt.verify(token, secret, {
+                        issuer: 'http://amp.pharm.mssm.edu/LDR/'
+                    });
+                    if (user.admitted && user.group._id === groupId) {
+                        approveUser();
+                    }
+                    else {
+                        res.status(401).send('You are not authorized ' +
+                            'to access this URL.')
+                    }
                 }
                 else {
-                    res.status(401).send('You are not authorized to access ' +
-                        'this URL.')
+                    res.status(401).send('Token or URL are invalid. Try again.')
                 }
-            }
-            else {
-                res.status(401).send('Token or URL are invalid. Try again.')
-            }
+            };
+
+            var approveUser = function() {
+                User.update({ _id: userId }, { admitted: true },
+                    function(err, user) {
+                        if (err) {
+                            res.status(404).send('There was an error ' +
+                                'admitting this user. Please try again.')
+                        }
+                        else {
+                            res.status(204).send('User successfully ' +
+                                'updated');
+                        }
+                    }
+                )
+            };
         }
     );
+
+    app.post(baseUrl + '/api/group/create/', function(req, res) {
+
+        console.log(req.body);
+        Group.create(req.body, function(err, group) {
+            if (err) {
+                console.log(err);
+                res.status(404).send('Error creating group');
+            }
+            else {
+                console.log(group);
+                res.status(201).send(_.omit(group, ['__v']));
+            }
+        })
+    });
 };

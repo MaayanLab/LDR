@@ -332,20 +332,33 @@ tags-input {
         }
     }
 }
-input.experiment {
-    width: 100% !important;
-    height: 34px;
-    border: 1px solid #a9a9a9;
-    outline: 0;
-    padding: 0 0 0 5px;
-    float: left;
-    font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+.assay-input {
+    padding: 0 15px 0 0;
+}
+
+textarea.experiment {
     &:focus {
-        outline: 0;
         -webkit-box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
         -moz-box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
         box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
     }
+    -webkit-appearance: textfield;
+    overflow: hidden;
+    word-wrap: break-word;
+    cursor: text;
+    border: 1px solid rgb(169, 169, 169);
+    box-shadow: rgb(211, 211, 211) 1px 1px 1px 0 inset;
+    margin: 0;
+    min-height: 100px;
+    background-color: rgb(255, 255, 255);
+    width: 100% !important;
+    height: 100px;
+    outline: 0;
+    padding: 7px;
+    float: left;
+    font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+
 }
 #data-registration-form {
     section {

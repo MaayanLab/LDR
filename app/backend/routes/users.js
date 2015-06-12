@@ -121,24 +121,27 @@ module.exports = function(app) {
     });
 
     app.post(baseUrl + '/register', function(req, res) {
+        // Store the group id in the database, but return the user with
+        // a populated group
         var inputUser = req.body;
         var groupObj = inputUser.group;
         inputUser.group = groupObj._id;
         inputUser.admin = false;
-        inputUser.admitted = false;
-        var newUser = new User(inputUser);
-        newUser.save(function(err) {
+        if (!inputUser.admitted) {
+            inputUser.admitted = false;
+        }
+        User.create(inputUser, function(err, user) {
             if (err) {
                 console.log('Error creating User: ' + err);
             }
             else {
                 console.log('User created successfully');
-                var newUserWOPassword = _.omit(newUser.toObject(),
+                var userWOPass = _.omit(user,
                     ['password', 'passwordConfirm', '__v']);
-                var token = createToken(newUserWOPassword);
-                newUserWOPassword.group = groupObj;
+                var token = createToken(userWOPass);
+                userWOPass.group = groupObj;
                 var newUserBlob = {
-                    user: newUserWOPassword,
+                    user: userWOPass,
                     id_token: token
                 };
                 res.status(201).send(newUserBlob);

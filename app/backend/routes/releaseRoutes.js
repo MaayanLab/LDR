@@ -10,15 +10,15 @@ module.exports = function(app) {
     // Returns empty release for initialization on front-end
     app.get(baseUrl + '/api/releases/form/', function(req, res) {
         var releaseInit = {
+            description: '',
             metadata: {
                 assay: [],
                 cellLines: [],
-                readouts: [],
                 perturbagens: [],
+                readouts: [],
                 manipulatedGene: [],
                 organism: [],
                 relevantDisease: [],
-                experiment: [],
                 analysisTools: [],
                 tagsKeywords: []
             },
@@ -98,39 +98,41 @@ module.exports = function(app) {
     });
 
     // Multiple releases endpoint for specific group or user
-    app.get(baseUrl + '/api/releases/:type(group|user)/:id', function(req, res) {
-        var query = {};
-        if (req.params.type === 'group')
-            query = { group: req.params.id };
-        if (req.params.type === 'user')
-            query = { user: req.params.id };
+    app.get(baseUrl + '/api/releases/:type(group|user)/:id',
+        function(req, res) {
+            var query = {};
+            if (req.params.type === 'group')
+                query = { group: req.params.id };
+            if (req.params.type === 'user')
+                query = { user: req.params.id };
 
-        DataRelease
-            .find(query)
-            .populate('group')
-            .lean()
-            .exec(function(err, allData) {
-                if (err) {
-                    console.log(err);
-                    res.status(404).send('Releases could not be found.');
-                }
-                var releasesArr = [];
-                _.each(allData, function(release, i) {
-                    getMetadata(release, function(err, finalRelease) {
-                        if (err) {
-                            res.status(500).send('There was an error building' +
-                                ' meta data for these releases. Try again.')
-                        }
-                        else {
-                            releasesArr.push(finalRelease);
-                            if (i === allData.length - 1) {
-                                res.status(200).send(releasesArr);
+            DataRelease
+                .find(query)
+                .populate('group')
+                .lean()
+                .exec(function(err, allData) {
+                    if (err) {
+                        console.log(err);
+                        res.status(404).send('Releases could not be found.');
+                    }
+                    var releasesArr = [];
+                    _.each(allData, function(release, i) {
+                        getMetadata(release, function(err, finalRelease) {
+                            if (err) {
+                                res.status(500).send('There was an error ' +
+                                    'building meta data for these releases. ' +
+                                    'Try again.')
                             }
-                        }
+                            else {
+                                releasesArr.push(finalRelease);
+                                if (i === allData.length - 1) {
+                                    res.status(200).send(releasesArr);
+                                }
+                            }
+                        });
                     });
                 });
-            });
-    });
+        });
 
     // Post release without id and save it to the database
     app.post(baseUrl + '/api/secure/releases/form/', function(req, res) {
@@ -138,8 +140,7 @@ module.exports = function(app) {
         inputData.dateModified = new Date();
         inputData.approved = false;
 
-        var form = new DataRelease(inputData);
-        form.save(function(err) {
+        DataRelease.create(inputData, function(err, form) {
             if (err) {
                 console.log(err);
                 res.status(400).send('A ' + err.name + ' occurred while ' +
@@ -153,9 +154,11 @@ module.exports = function(app) {
         });
     });
 
-    // POST release with id, find it and update. If not, save it to the database.
+    // POST release with id, find it and update. If not, save it to the
+    // database.
     app.post(baseUrl + '/api/secure/releases/form/:id', function(req, res) {
         var inputData = req.body;
+        console.log(inputData);
         inputData.dateModified = new Date();
         inputData.approved = false;
 

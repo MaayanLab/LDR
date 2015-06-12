@@ -39,6 +39,18 @@ angular.module('ldr.releases.overview', [
                         }
                         obj.releaseDates[key] = new Date(level);
                     });
+                    // Check in order if level 1,2,3,4 exist and set the
+                    // earliest one to an 'upcoming' variable
+                    // TODO: Check functionality
+                    obj.releaseDates.upcoming =
+                        obj.releaseDates.level1 !== '' ?
+                            obj.releaseDates.level1 :
+                            obj.releaseDates.level2 !== '' ?
+                                obj.releaseDates.level2 :
+                                obj.releaseDates.level3 !== '' ?
+                                    obj.releaseDates.level3 :
+                                    obj.releaseDates.level4 !== '' ?
+                                        obj.releaseDates.level4 : 'NA';
                 });
                 $scope.forms = data;
             });

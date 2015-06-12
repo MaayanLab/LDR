@@ -6,7 +6,7 @@ angular.module('ldr.user.registration', [
 
     .config(function($stateProvider) {
         $stateProvider.state('userRegistration', {
-            url: '/user/registration',
+            url: '/user/registration/',
             controller: 'RegisterCtrl',
             templateUrl: 'user/registration/registration.html',
             data: {
@@ -24,6 +24,7 @@ angular.module('ldr.user.registration', [
                         return $q.when();
                     }
 
+                    var DISALLOWED_USER_NAMES = [];
                     var def = $q.defer();
                     $timeout(function() {
                         // Mock a delayed response
@@ -32,6 +33,10 @@ angular.module('ldr.user.registration', [
                             function(name) {
                                 return name.toLowerCase();
                             });
+
+                        // Add all disallowed user names as if they are taken
+                        lcUsers.push.apply(lcUsers, DISALLOWED_USER_NAMES);
+
                         if (lcUsers.indexOf(modelValue.toLowerCase()) === -1) {
                             // The username is available
                             def.resolve();
@@ -45,19 +50,34 @@ angular.module('ldr.user.registration', [
         };
     })
 
-    .controller('RegisterCtrl', function LoginController($rootScope, $scope, $http, store, $state, api, lodash) {
+    .controller('RegisterCtrl', function($rootScope, $scope, $http,
+                                         store, $state, api, lodash) {
 
-        // TODO: Validation of registration form (Partially there)
         $scope.groups = [];
         $scope.userList = [];
 
-        api('groups/').get().success(function(data) {
+        // Check if userReg is stored locally. If it is, populate the form
+        var init = function() {
+            var user = store.get('userReg');
+            if (user) {
+                $scope.user = user;
+            }
+            else {
+                $scope.reset();
+            }
+        };
+
+        api('groups/')
+            .get()
+            .success(function(data) {
             $scope.groups = lodash.filter(data, function(obj) {
                 return obj.name !== 'NIH'
             });
         });
 
-        api('users/').get().success(function(data) {
+        api('users/')
+            .get()
+            .success(function(data) {
             $scope.userList = lodash.map(data, 'username');
         });
 
@@ -82,6 +102,12 @@ angular.module('ldr.user.registration', [
             };
         };
 
+        $scope.createGroup = function() {
+            // Store user locally so he may return and fill out form
+            store.set('userReg', $scope.user);
+            $state.go('groupCreate');
+        };
+
         $scope.createUser = function() {
             // Combine first and last name into one name field
             $scope.user.name = $scope.user.firstName + ' ' +
@@ -90,9 +116,10 @@ angular.module('ldr.user.registration', [
                 .success(function(response) {
                     alert('User created successfully');
                     $scope.setCurrentUser(response.user, response.id_token);
+                    store.remove('userReg');
                     $state.go('home');
                 });
         };
 
-        $scope.reset();
+        init();
     });

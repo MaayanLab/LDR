@@ -1,10 +1,70 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<h3 class="text-center">Register</h3>
+<em class="col-sm-12 highlight text-center">* Required</em>
+<form name="groupForm" class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2"
+      ng-submit="groupForm.$valid && createGroup()" novalidate>
+    <div class="form-group">
+        <label for="groupName">Group Name*</label>
 
-</body>
-</html>
+        <p class="text-muted">
+            Must be at least 5 characters long.
+        </p>
+        <input id="groupName" name="groupName" type="text" ng-minlength="5"
+               ng-model="group.name" class="form-control" ng-trim="false"
+               ng-model-options="{ updateOn: 'blur' }" group-name-available
+               required/>
+
+        <div ng-show="groupForm.$submitted || groupForm.groupName.$touched">
+            <span class="help-inline"
+                  data-ng-show='groupForm.groupName.$pending.groupName'
+                  data-ng-class="strong">
+                Checking availability...
+            </span>
+            <span class="help-inline error-msg"
+                  data-ng-show='groupForm.groupName.$error.groupName'
+                  data-ng-class="medium">
+                Username taken. Please try another.
+            </span>
+            <span class="help-inline error-msg"
+                  ng-show="groupForm.groupName.$error.minlength">
+                Please enter a groupName at least 5 characters long.
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" ng-model="group.email"
+               class="form-control" ng-model-options="{ updateOn: 'blur' }" />
+        <span class="help-inline error-msg"
+              data-ng-show='groupForm.email.$pending.email'
+              data-ng-class="strong">
+            Validating...
+        </span>
+        <span class="help-inline error-msg"
+              data-ng-show='groupForm.email.$error.email'
+              data-ng-class="medium">
+            Email is invalid.
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="location">Location</label>
+        <input id="location" type="text"
+               ng-model="group.location" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="homepage">Homepage</label>
+        <input id="homepage" type="text"
+               ng-model="group.homepage" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <input id="description" type="text"
+               ng-model="group.description" class="form-control"/>
+    </div>
+
+    <div class="form-group">
+        <br>
+        <input class="btn btn-success" type="submit" value="Create"/>
+        <input class="btn btn-danger" type="button"
+               ng-click="reset(groupForm)" value="Reset"/>
+    </div>
+</form>

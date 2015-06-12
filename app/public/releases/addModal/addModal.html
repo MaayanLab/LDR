@@ -1,68 +1,129 @@
 <div class="modal-body">
-    <form ng-model="modalForm" class="modal-form-input" ng-show="name === 'assay'">
+    <form ng-model="modalForm" class="modal-form-input"
+          ng-show="name === 'assay'">
         <div class="form-group">
-            <label class="control-label">Name</label>
-            <input type="text" class="form-control" ng-model="newTag.name" />
+            <label for="assay-name" class="control-label">
+                Name
+            </label>
+            <input id="assay-name" type="text" class="form-control"
+                   ng-model="newTag.name"/>
         </div>
         <div class="form-group">
-            <label class="control-label">Information</label>
-            <input type="text" class="form-control" ng-model="newTag.info" />
-        </div>
-    </form>
-
-    <form ng-model="modalForm" class="modal-form-input" ng-show="name === 'cellLines'">
-        <div class="form-group">
-            <label class="control-label">Name</label>
-            <input type="text" class="form-control" ng-model="newTag.name" />
-        </div>
-        <div class="form-group">
-            <label class="control-label">Type (Cell line or Cancer line)</label>
-            <input type="text" class="form-control" ng-model="newTag.type" />
-        </div>
-        <div class="form-group">
-            <label class="control-label">Class (Normal or iPSC-differentiated)</label>
-            <input type="text" class="form-control" ng-model="newTag.class" />
-        </div>
-        <div class="form-group">
-            <label class="control-label">Tissue</label>
-            <input type="text" class="form-control" ng-model="newTag.tissue" />
+            <label for="assay-info" class="control-label">
+                Information
+            </label>
+            <input id="assay-info" type="text" class="form-control"
+                   ng-model="newTag.info"/>
         </div>
     </form>
 
-    <form ng-model="modalForm" class="modal-form-input" ng-show="name === 'perturbagens'">
+    <form ng-model="modalForm" class="modal-form-input"
+          ng-show="name === 'cellLines'">
         <div class="form-group">
-            <label class="control-label">Name</label>
-            <input type="text" class="form-control" ng-model="modalForm.name" />
+            <label for="cell-name" class="control-label">
+                Name
+            </label>
+            <input id="cell-name" type="text" class="form-control"
+                   ng-model="newTag.name"/>
         </div>
         <div class="form-group">
-            <label class="control-label">Type</label>
-            <input type="text" class="form-control" ng-model="modalForm.type" />
+            <label for="cell-type" class="control-label">
+                Type (Cell line or Cancer line)
+            </label>
+            <input id="cell-type" type="text" class="form-control"
+                   ng-model="newTag.type"/>
+        </div>
+        <div class="form-group">
+            <label for="cell-class" class="control-label">
+                Class (Normal or iPSC-differentiated)
+            </label>
+            <input id="cell-class" type="text" class="form-control"
+                   ng-model="newTag.class"/>
+        </div>
+        <div class="form-group">
+            <label for="cell-tissue" class="control-label">
+                Tissue
+            </label>
+            <input id="cell-tissue" type="text" class="form-control"
+                   ng-model="newTag.tissue"/>
         </div>
     </form>
 
-    <form ng-model="modalForm" class="modal-form-input" ng-show="name === 'readouts'">
+    <form ng-model="modalForm" class="modal-form-input"
+          ng-show="name === 'perturbagens'">
         <div class="form-group">
-            <label class="control-label">Name</label>
-            <input type="text" class="form-control" ng-model="modalForm.name" />
+            <label for="pert-name" class="control-label">
+                Name
+            </label>
+            <input id="pert-name" type="text" class="form-control"
+                   ng-model="modalForm.name"/>
         </div>
         <div class="form-group">
-            <label class="control-label">Data Type</label>
-            <input type="text" class="form-control" ng-model="modalForm.type" />
+            <label for="pert-type" class="control-label">
+                Type
+            </label>
+            <input id="pert-type" type="text" class="form-control"
+                   ng-model="modalForm.type"/>
         </div>
     </form>
 
-    <form ng-model="modalForm" class="modal-form-input" ng-show="name === 'relevantDisease'">
+    <form ng-model="modalForm" class="modal-form-input"
+          ng-show="name === 'readouts'">
         <div class="form-group">
-            <label class="control-label">Name</label>
-            <input type="text" class="form-control" ng-model="modalForm.name" />
+            <label for="readout-name" class="control-label">Name</label>
+            <input id="readout-name" type="text" class="form-control"
+                   ng-model="modalForm.name"/>
         </div>
         <div class="form-group">
-            <label class="control-label">Information</label>
-            <input type="text" class="form-control" ng-model="modalForm.info" />
+            <label class="control-label">
+                Data Type
+            </label>
+            <input type="text" class="form-control"
+                   ng-model="modalForm.type"/>
+        </div>
+    </form>
+
+    <form ng-model="modalForm" class="modal-form-input"
+          ng-show="name === 'relevantDisease'">
+        <div class="form-group">
+            <label for="org-sci-name" class="control-label">
+                Scientific Name
+            </label>
+            <input id="org-sci-name" type="text" class="form-control"
+                   ng-model="modalForm.name"/>
+        </div>
+        <div class="form-group">
+            <label for="org-com-name" class="control-label">
+                Common Name
+            </label>
+            <input id="org-com-name" type="text" class="form-control"
+                   ng-model="modalForm.commonName"/>
+        </div>
+    </form>
+
+    <form ng-model="modalForm" class="modal-form-input"
+          ng-show="name === 'relevantDisease'">
+        <div class="form-group">
+            <label for="disease-name" class="control-label">
+                Name
+            </label>
+            <input id="disease-name" type="text" class="form-control"
+                   ng-model="modalForm.name"/>
+        </div>
+        <div class="form-group">
+            <label for="disease-info" class="control-label">
+                Information
+            </label>
+            <input id="disease-info" type="text" class="form-control"
+                   ng-model="modalForm.info"/>
         </div>
     </form>
 </div>
 <div class="modal-footer">
-    <button type="submit" class="btn btn-primary" ng-click="ok();">Save</button>
-    <button type="button" class="btn btn-danger" ng-click="cancel();">Cancel</button>
+    <button type="submit" class="btn btn-primary" ng-click="ok();">
+        Save
+    </button>
+    <button type="button" class="btn btn-danger" ng-click="cancel();">
+        Cancel
+    </button>
 </div>

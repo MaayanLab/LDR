@@ -55,18 +55,14 @@
                 </a>
             </th>-->
             <th class="text-center">
-                <!--TODO: Implement sorting by release date (Need to sort through different variables unknown at this point in markup)-->
                 <a href=""
-                   ng-click="sortType = 'releaseDates.level1'; sortReverse = !sortReverse">
-                    Release Date
-                    <span ng-show="sortType == 'releaseDates.level1' && sortReverse"
+                   ng-click="sortType = 'releaseDates.upcoming'; sortReverse = !sortReverse">
+                    Upcoming Release Date
+                    <span ng-show="sortType == 'releaseDates.upcoming' && sortReverse"
                           class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'releaseDates.level1' && !sortReverse"
+                    <span ng-show="sortType == 'releaseDates.upcoming' && !sortReverse"
                           class="fa fa-caret-up"></span>
                 </a>
-            </th>
-            <th class="text-center">
-                Level
             </th>
             <th class="text-center">
                 <a href=""
@@ -104,22 +100,7 @@
             </td>-->
 
             <td class="col-sm-2" id="release-date">
-                {{
-                form.releaseDates.level1 !== '' ?
-                form.releaseDates.level1 : form.releaseDates.level2 !== '' ?
-                form.releaseDates.level2 : form.releaseDates.level3 !== '' ?
-                form.releaseDates.level3 : form.releaseDates.level4 !== '' ?
-                form.releaseDates.level4 : 'No Date Available'
-                | date:'MM-dd-yyyy'
-                }}
-            </td>
-            <td class="col-sm-1" id="release-level">
-                {{
-                form.releaseDates.level1 !== '' ? 1 :
-                form.releaseDates.level2 !== '' ? 2 :
-                form.releaseDates.level3 !== '' ? 3 :
-                form.releaseDates.level4 !== '' ? 4 : 'NA'
-                }}
+                {{form.releaseDates.upcoming | date: 'MM-dd-yyyy'}}
             </td>
             <td class="col-sm-1" id="status">
                     <span ng-if="form.approved">
@@ -192,7 +173,7 @@
                     <h5>Release Dates</h5>
                     <ul class="list-inline">
                         <li ng-repeat="(level,date) in form.releaseDates"
-                            ng-if="date !== ''">
+                            ng-if="date !== '' && level !== 'upcoming'">
                             <strong class="info-release-lvl">
                                 {{level}}:
                             </strong>
@@ -203,9 +184,9 @@
             </td>
         </tr>
         <tr ng-repeat-end="" ng-if="forms.length === 0">
-            <td colspan="5" class="col-md-12">There are no releases to
-                display. Please <a ui-sref="releasesCreate">add data here
-                </a>.
+            <td colspan="5" class="col-md-12">
+                There are no releases to display.
+                Please <a ui-sref="releasesCreate">add data here</a>.
             </td>
         </tr>
         </tbody>

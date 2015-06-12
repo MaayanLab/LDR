@@ -3,6 +3,7 @@ angular.module('ldr', [
     'ldr.home',
     'ldr.bar',
     'ldr.group.home',
+    'ldr.group.create',
     'ldr.releases.overview',
     'ldr.releases.create',
     'ldr.user.admin',
@@ -50,14 +51,6 @@ angular.module('ldr', [
             // Check if the state requires login or admin privileges
             if (to.data) {
                 if (to.data.requiresAdmitted) {
-                    // User not logged in
-                    if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
-                        $rootScope.isLoggedIn = false;
-                        $rootScope.isLoggedInAdmin = false;
-                        e.preventDefault();
-                        alert('You must be logged in to access this page.');
-                        $state.go('home');
-                    }
                     // Logged in but not admitted to group
                     if ($rootScope.currentUser.admitted !== true) {
                         $rootScope.isLoggedIn = true;

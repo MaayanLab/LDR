@@ -202,7 +202,7 @@ gulp.task('sync', ['serve'], function(cb) {
 
     browserSync({
         logPrefix: 'LDR',
-        notify: false,
+        notify: true,
         // Run as an https by setting 'https: true'
         // Note: this uses an unsigned certificate which on first access
         //       will present a certificate warning in the browser.

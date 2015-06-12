@@ -1,6 +1,6 @@
 angular.module('ldr')
 
-.directive('lmDatePicker', function() {
+.directive('ldrDatePicker', function() {
     return {
         restrict: 'E',
         required: 'ngModel',

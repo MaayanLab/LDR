@@ -23,6 +23,7 @@ for doc in lorettaMd.find({}):
     out = {
         'approved': True,
         'dateModified': datetime.now().isoformat(),
+        'description': '',
         'metadata': {
             'assay': [],
             'cellLines': [],
@@ -32,8 +33,7 @@ for doc in lorettaMd.find({}):
             'organism': [],
             'relevantDisease': [],
             'analysisTools': [],
-            'tagsKeywords': [],
-            'experiment': ''
+            'tagsKeywords': []
         },
         'releaseDates': {
             'level1': '',

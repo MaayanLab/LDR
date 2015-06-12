@@ -5,35 +5,41 @@
         <section class="row">
             <em class="col-sm-12 highlight text-center">* Required</em>
             <h4 class="col-sm-12 text-center">Data Release Instance</h4>
-            <lm-form-field ng-repeat="field in form.metadata"
-                title="{{field.title}}"
-                name="{{field.name}}"
-                autocomplete-endpoint="{{field.autocompleteEndpoint}}"
-                max-tags="{{field.maxTags}}"
-                placeholder="{{field.placeholder}}"
-                ng-model="field.model"
-                autocomplete-source="autocompleteSource"
-                is-required="{{field.isRequired}}">
-            </lm-form-field>
-            <div class="col-sm-6">
+            <ldr-form-field
+                    ng-repeat="field in form.metadata"
+                    title="{{field.title}}"
+                    name="{{field.name}}"
+                    autocomplete-endpoint="{{field.autocompleteEndpoint}}"
+                    max-tags="{{field.maxTags}}"
+                    placeholder="{{field.placeholder}}"
+                    ng-model="field.model"
+                    use-autocomplete="{{field.useAutocomplete}}"
+                    autocomplete-source="autocompleteSource"
+                    is-required="{{field.isRequired}}">
+            </ldr-form-field>
+            <p>{{form.metadata[form.metadata.length - 1]}}</p>
+            <div class="col-sm-12">
                 <!--<a class="glyphicon glyphicon-plus add-new-btn" ng-click="openModal()"></a>-->
                 <h5>{{form.experiment.title}}</h5>
-                <input placeholder="{{form.experiment.placeholder}}"
-                       class="experiment"
-                       type="text"
-                       ng-model="form.experiment.model">
+                <textarea
+                        placeholder="{{form.experiment.placeholder}}"
+                        class="experiment"
+                        ng-model="form.experiment.model">
+                </textarea>
             </div>
         </section>
         <section id="releaseDates" class="row">
             <h4 class="col-sm-12 text-center">Release Dates</h4>
-            <lm-date-picker ng-repeat="date in form.releaseDates track by $index"
-                            level="{{date.level}}"
-                            ng-model="form.releaseDates[$index].model"
-                            is-required="{{form.isRequired}}">
-            </lm-date-picker>
+            <ldr-date-picker
+                    ng-repeat="date in form.releaseDates track by $index"
+                    level="{{date.level}}"
+                    ng-model="form.releaseDates[$index].model"
+                    is-required="{{form.isRequired}}">
+            </ldr-date-picker>
         </section>
         <section id="urls" class="row">
             <h4 class="col-sm-12 text-center">URLs</h4>
+
             <div ng-repeat="url in form.urls track by $index" class="col-sm-12">
                 <h5>{{url.title}}</h5>
                 <input type="text" ng-model="form.urls[$index].model">
@@ -44,7 +50,9 @@
                 <span ng-if="form._id">Update</span>
                 <span ng-if="!form._id">Submit</span>
             </button>
-            <button class="btn btn-danger" type="button" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-danger" type="button" ng-click="cancel()">
+                Cancel
+            </button>
         </section>
     </form>
 </div>

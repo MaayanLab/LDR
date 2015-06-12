@@ -14,5 +14,6 @@ module.exports = function(app) {
     require('./groups')(app);
     require('./tools')(app);
     require('./releaseRoutes')(app);
+    require('./uploads')(app);
 
 };

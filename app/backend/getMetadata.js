@@ -32,12 +32,10 @@ module.exports = function(releaseData, cb) {
             path = '/form/cell?_id=' + id;
         else if (key === 'disease')
             path = '/form/disease?_id=' + id;
-        //else if (key === 'experiment')
-        //    path = '/form/experiment?_id=' + id;
-        //else if (key === 'manipulatedGene')
-        //    path = '/form/gene?_id=' + id;
-        //else if (key === 'organism')
-        //    path = '/form/organism?_id=' + id;
+        else if (key === 'manipulatedGene')
+            path = '/form/gene?_id=' + id;
+        else if (key === 'organism')
+            path = '/form/organism?_id=' + id;
         else if (key === 'perturbagens')
             path = '/form/perturbagen?_id=' + id;
         else if (key === 'readouts')

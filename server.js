@@ -5,7 +5,8 @@ var express = require('express'),
     path = require('path'),
     bodyParser = require('body-parser'),
     timeout = require('connect-timeout'),
-    compress = require('compression');
+    compress = require('compression'),
+    multer = require('multer');
 
 var app = express();
 var port = 3001;
@@ -14,16 +15,15 @@ var configDB = require('./backend/config/database');
 
 mongoose.connect(configDB.url);
 
-// Uncomment to view mongoose more verbose console logging
-mongoose.set('debug', true);
-
 app.use(cors());
 app.use(timeout('20s'));
-if (process.env.NODE_ENV != 'production') {
-    app.use(morgan('dev')); // log every request to the console if not prod.
+if (process.env.NODE_ENV != 'production') { // if production
+    app.use(morgan('dev')); // log every request to console
+    mongoose.set('debug', true); // More verbose mongoose queries
 }
-app.use(bodyParser.json()); // get information from html forms
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(multer({ dest: './backend/uploads/' }));
 app.use(compress());
 
 var publicDir = __dirname + '/';

@@ -1,5 +1,5 @@
 angular.module('ldr')
-    .directive('lmFormField', function($modal, lodash) {
+    .directive('ldrFormField', function($modal) {
         return {
             restrict: 'E',
             required: 'ngModel',
@@ -8,13 +8,15 @@ angular.module('ldr')
                 name: '@',
                 maxTags: '@',
                 placeholder: '@',
+                useAutocomplete: '@',
+                autocompleteOnly: '@',
                 autocompleteEndpoint: '@',
                 autocompleteSource: '=',
                 ngModel: '=',
                 isRequired: '@'
             },
             templateUrl: 'releases/formField/formField.html',
-            link: function(scope, element, attrs) {
+            link: function(scope, element) {
                 scope.addNew = function(newTag) {
                     if (!newTag.newField) {
                         return true;

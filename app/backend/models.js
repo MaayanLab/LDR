@@ -159,8 +159,10 @@ try {
 // Group
 var groupSchema = new Schema({
     name: { type: String, required: true, index: { unique: true } },
-    abbr: { type: String, required: true, index: { unique: true } },
-    homepage: { type: String, required: true, default: '' }
+    homepage: { type: String, default: '' },
+    email: String,
+    description: String,
+    location: String
 });
 
 try {
@@ -172,27 +174,30 @@ try {
 var dataReleaseSchema = new Schema({
     user: { type: Schema.ObjectId, ref: 'User', required: true },
     group: { type: Schema.ObjectId, ref: 'Group', required: true },
-    approved: { type: Boolean, required: true },
+    approved: { type: Boolean, required: true, default: false },
+    released: { type: Boolean, required: true, default: false },
     dateModified: { type: String, required: true },
     needsEdit: { type: Boolean, default: false },
-    message: { type: String, default: '' },
+    message: { type: String, default: '' }, // Message for returning from NIH
+    description: { type: String, default: '' }, // Brief description of exp.
     releaseDates: {
+        upcoming: { type: String, default: '' },
         level1: { type: String, default: '' },
         level2: { type: String, default: '' },
         level3: { type: String, default: '' },
         level4: { type: String, default: '' }
     },
+    // These are arrays of IDs pointing to the name-metadata server
     metadata: {
-        // These are arrays of IDs pointing to the name-metadata server
-        analysisTools: { type: [], default: [] },
         assay: { type: [], default: [] }, // Always length 1
         cellLines: { type: [], default: [] },
-        disease: { type: [], default: [] }, // Always length 1
-        experiment: { type: [], default: [] }, // Always length 1
-        manipulatedGene: { type: [], default: [] }, // Always length 1
-        organism: { type: [], default: [] }, // Always length 1
         perturbagens: { type: [], default: [] },
         readouts: { type: [], default: [] },
+        manipulatedGene: { type: [], default: [] }, // Always length 1
+        organism: { type: [], default: [] }, // Always length 1
+        relevantDisease: { type: [], default: [] }, // Always length 1
+        disease: { type: [], default: [] }, // Always length 1
+        analysisTools: { type: [], default: [] },
         tagsKeywords: { type: [], default: [] }
     },
     urls: {
@@ -208,6 +213,18 @@ try {
 } catch (e) {
     DataRelease = mongoose.model('DataRelease', dataReleaseSchema, 'dataReleases');
 }
+
+dataReleaseSchema.pre('save', function(next) {
+    // Check if any ids are null. If they are, throw an error
+    _.each(this.metadata, function(arr, key) {
+        _.each(arr, function(id) {
+            if (id === null) {
+                next(new Error('An id in the ' + key + ' array was null!'));
+            }
+        })
+    });
+    next();
+});
 
 module.exports = {
     User: User,
