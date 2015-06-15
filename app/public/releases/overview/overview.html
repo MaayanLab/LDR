@@ -1,12 +1,12 @@
-<h3 class="text-center">Data Releases</h3>
+<h3 class="text-center">Dataset Releases</h3>
 <p>
     Below are all data releases for {{currentUser.group.name}}. You may release,
     edit, or delete entries by clicking the Action button on the right.
     Clicking the plus button will expand entries, making visible all relevant
     meta-data. Please note that <em>in order to release an entry, it must
-    have data and QC document URLs provided and it must be approved.</em>
+    have a data URL provided and it must be approved.</em>
 </p>
-<table class="text-center legend">
+<table class="text-center legend col-sm-6 col-sm-offset-3 col-xs-12">
     <tr>
         <td class="legend-color" id="awaiting-approval"></td>
         <td class="legend-color" id="approved"></td>
@@ -20,28 +20,27 @@
         <td>Released</td>
     </tr>
 </table>
-<div class="content">
+<div class="content col-xs-12">
     <table class="table">
         <thead>
         <tr>
-            <!--<th>Dataset ID</th>-->
             <th class="text-center">
                 <a href=""
-                   ng-click="sortType = 'metadata.assay[0].name'; sortReverse = !sortReverse">
-                    Center Assay Name
-                    <span ng-show="sortType == 'metadata.assay[0].name' && sortReverse"
+                   ng-click="sortType = 'metadata.assay[0].dcicName'; sortReverse = !sortReverse">
+                    Dataset
+                    <span ng-show="sortType == 'metadata.assay[0].dcicName' && sortReverse"
                           class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'metadata.assay[0].name' && !sortReverse"
+                    <span ng-show="sortType == 'metadata.assay[0].dcicName' && !sortReverse"
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
             <th class="text-center">
                 <a href=""
-                   ng-click="sortType = 'metadata.assay[0].dcicName'; sortReverse = !sortReverse">
-                    DCIC Assay Name
-                    <span ng-show="sortType == 'metadata.assay[0].dcicName' && sortReverse"
+                   ng-click="sortType = 'metadata.assay[0].name'; sortReverse = !sortReverse">
+                    Assay
+                    <span ng-show="sortType == 'metadata.assay[0].name' && sortReverse"
                           class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'metadata.assay[0].dcicName' && !sortReverse"
+                    <span ng-show="sortType == 'metadata.assay[0].name' && !sortReverse"
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
@@ -78,7 +77,7 @@
             <th class="text-center">
                 <a href=""
                    ng-click="sortType = 'releaseDates.upcoming'; sortReverse = !sortReverse">
-                    Upcoming Release Date
+                    Release Date
                     <span ng-show="sortType == 'releaseDates.upcoming' && sortReverse"
                           class="fa fa-caret-down"></span>
                     <span ng-show="sortType == 'releaseDates.upcoming' && !sortReverse"
@@ -106,11 +105,11 @@
             form.released ? 'tr-released' : form.needsEdit ? 'tr-needs-edit' : ''"
             class="form-table-data text-center">
             <!--<td id="id">{{form._id}}</td>-->
+            <td class="text-left" id="dcic-assay-name">
+            {{form.metadata.assay[0].dcicName}}
+            </td>
             <td class="text-left" id="assay-name">
                 {{form.metadata.assay[0].name}}
-            </td>
-            <td class="text-left" id="dcic-assay-name">
-                {{form.metadata.assay[0].dcicName}}
             </td>
             <!--<td class="col-sm-2" id="pert-count">
                 {{form.metadata.perturbagens.length}}

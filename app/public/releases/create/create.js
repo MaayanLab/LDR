@@ -29,6 +29,12 @@ angular.module('ldr.releases.create', [
 
         var MAX_TAGS = 100;
         $scope.form = {
+            datasetName: {
+                name: 'datasetName',
+                title: 'Dataset Name',
+                placeholder: 'Enter a name for your dataset...',
+                model: ''
+            },
             metadata: [
                 // DO NOT MOVE ASSAY OUTSIDE OF FIRST [0] POSITION
                 {
@@ -81,10 +87,10 @@ angular.module('ldr.releases.create', [
                 },
                 {
                     name: 'manipulatedGene',
-                    title: 'Manipulated Gene',
+                    title: 'Manipulated Gene(s)',
                     modalTitle: 'Manipulated Gene',
-                    placeholder: 'Select one manipulated gene...',
-                    maxTags: 1,
+                    placeholder: 'Select manipulated gene(s)...',
+                    maxTags: 100,
                     autocompleteEndpoint: 'gene',
                     useAutocomplete: true,
                     autocompleteOnly: true,
@@ -133,9 +139,9 @@ angular.module('ldr.releases.create', [
                     model: []
                 }
             ],
-            experiment: {
-                name: 'experiment',
-                title: 'Description of Experiment',
+            description: {
+                name: 'description',
+                title: 'Description of Dataset',
                 placeholder: 'Enter description...',
                 model: ''
             },
@@ -184,12 +190,12 @@ angular.module('ldr.releases.create', [
 
         // Watch assay description and change experiment description if that
         // is changed
-        $scope.$watch('form.metadata[0].model[0]', function() {
-            if ($scope.form.metadata[0].model.length) {
-                $scope.form.experiment.model =
-                    $scope.form.metadata[0].model[0].info;
-            }
-        });
+        //$scope.$watch('form.metadata[0].model[0]', function() {
+        //    if ($scope.form.metadata[0].model.length) {
+        //        $scope.form.experiment.model =
+        //            $scope.form.metadata[0].model[0].info;
+        //    }
+        //});
 
         function formatText(name) {
             var MAX = 40;
@@ -199,58 +205,63 @@ angular.module('ldr.releases.create', [
             return name.slice(0, MAX) + '...';
         }
 
-        api('releases/form/' + $stateParams.id).get().success(function(form) {
-            if (form._id) {
-                $scope.form._id = form._id;
-            }
-            lodash.each($scope.form.releaseDates, function(obj) {
-                var date = form.releaseDates['level' + obj.level];
-                obj.model = (date === null || date === '') ?
-                    null : new Date(date);
-            });
-            lodash.each($scope.form.urls, function(obj) {
-                obj.model = form.urls[obj.name];
-            });
-            lodash.each($scope.form.metadata, function(obj) {
-                var newData = form.metadata[obj.name];
-                lodash.each(newData, function(newObj) {
-                    if (newObj.name) {
-                        newObj.text = formatText(newObj.name);
-                    }
+        api('releases/form/' + $stateParams.id)
+            .get()
+            .success(function(form) {
+                if (form._id) {
+                    $scope.form._id = form._id;
+                }
+                lodash.each($scope.form.releaseDates, function(obj) {
+                    var date = form.releaseDates['level' + obj.level];
+                    obj.model = (date === null || date === '') ?
+                        null : new Date(date);
                 });
-                obj.model = newData;
-            });
-        });
+                lodash.each($scope.form.urls, function(obj) {
+                    obj.model = form.urls[obj.name];
+                });
+                lodash.each($scope.form.metadata, function(obj) {
+                    var newData = form.metadata[obj.name];
+                    lodash.each(newData, function(newObj) {
+                        if (newObj.name) {
+                            newObj.text = formatText(newObj.name);
+                        }
+                    });
+                    obj.model = newData;
+                });
+            }
+        );
 
         $scope.autocompleteSource = function(textInput, fieldName) {
             var params = {
-                name: textInput,
-                group: $scope.group.abbr
+                name: textInput//,
+                //group: $scope.group.abbr
             };
-            return nameServer.get(fieldName, params).then(function(response) {
-                // We build a hash and then convert it to an array of objects
-                // in order to prevent duplicates being returned to
-                // NgTagsInput.
-                var results = {
-                    newField: {
-                        text: 'New field',
-                        newField: true
-                    }
-                };
-                response.data.map(function(item) {
-                    if (results[item.name]) {
-                        return;
-                    }
-                    var obj = {};
-                    obj.endpoint = fieldName;
-                    obj.name = item.name;
-                    obj.info = item.info;
-                    obj.text = formatText(item.name);
-                    obj._id = item._id;
-                    results[item.name] = obj;
+            return nameServer
+                .get(fieldName, params)
+                .then(function(response) {
+                    // We build a hash and then convert it to an array of
+                    // objects in order to prevent duplicates being returned
+                    // to NgTagsInput.
+                    var results = {
+                        newField: {
+                            text: 'New field',
+                            newField: true
+                        }
+                    };
+                    response.data.map(function(item) {
+                        if (results[item.name]) {
+                            return;
+                        }
+                        var obj = {};
+                        obj.endpoint = fieldName;
+                        obj.name = item.name;
+                        obj.info = item.info;
+                        obj.text = formatText(item.name);
+                        obj._id = item._id;
+                        results[item.name] = obj;
+                    });
+                    return lodash.values(results);
                 });
-                return lodash.values(results);
-            });
         };
 
         $scope.cancel = function() {
@@ -267,7 +278,8 @@ angular.module('ldr.releases.create', [
                 urls: {}
             };
 
-            form.description = $scope.form.experiment.model;
+            form.datasetName = $scope.form.datasetName.model;
+            form.description = $scope.form.description.model;
 
             var buildIds = function() {
                 var promises = [];

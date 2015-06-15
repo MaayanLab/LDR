@@ -1,10 +1,24 @@
-<h3 class="text-center">Data Registration Form</h3>
+<h3 class="text-center">Dataset Registration Form</h3>
 <h4 class="text-center">Center: {{group.name}}</h4>
 <div id="data-registration-form">
-    <form>
+    <form name="datasetRegForm">
         <section class="row">
             <em class="col-sm-12 highlight text-center">* Required</em>
-            <h4 class="col-sm-12 text-center">Data Release Instance</h4>
+            <h4 class="col-sm-12 text-center">Dataset Release Instance</h4>
+
+            <div class="col-sm-6">
+                <!--<a class="glyphicon glyphicon-plus add-new-btn" ng-click="openModal()"></a>-->
+                <h5 class="dataset-title">{{form.datasetName.title}}*</h5>
+                <span class="dataset-error-msg"
+                      ng-show="datasetRegForm.datasetName.$error.maxlength">
+                    Please enter a dataset name that is less than 50 characters.
+                </span>
+                <input name="datasetName"
+                       placeholder="{{form.datasetName.placeholder}}"
+                       class="dataset-name"
+                       ng-model="form.datasetName.model"
+                       ng-maxlength="50"/>
+            </div>
             <ldr-form-field
                     ng-repeat="field in form.metadata"
                     title="{{field.title}}"
@@ -19,11 +33,11 @@
             </ldr-form-field>
             <div class="col-sm-12">
                 <!--<a class="glyphicon glyphicon-plus add-new-btn" ng-click="openModal()"></a>-->
-                <h5>{{form.experiment.title}}</h5>
+                <h5>{{form.description.title}}</h5>
                 <textarea
-                        placeholder="{{form.experiment.placeholder}}"
+                        placeholder="{{form.description.placeholder}}"
                         class="experiment"
-                        ng-model="form.experiment.model">
+                        ng-model="form.description.model">
                 </textarea>
             </div>
         </section>

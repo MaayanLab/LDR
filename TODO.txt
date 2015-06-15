@@ -5,8 +5,8 @@ NeuroLINCS Datasets
   All datasets have Homo Sapiens as Organism ---- DONE
 Get list of organisms ----- DONE
 Confirm functionality of ALL fields ------ DONE
-Color if approved but not available yet
-Color if available/released
+Color if approved but not available yet ------ DONE
+Color if available/released ------ DONE
 Add status released. i.e. HMS datasets from 2014
 Need URL if status is released
 Some parts of released dataset should not be edited

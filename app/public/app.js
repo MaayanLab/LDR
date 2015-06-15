@@ -15,6 +15,24 @@ angular.module('ldr', [
     'angular-storage',
     'angular-jwt'
 ])
+    .directive('title', ['$rootScope', '$timeout',
+        function($rootScope, $timeout) {
+            return {
+                link: function() {
+                    var listener = function(event, toState) {
+                        $timeout(function() {
+                            $rootScope.title =
+                                (toState.data && toState.data.pagetitle) ?
+                                    toState.data.pageTitle :
+                                    'LINCS Data Registry'
+                        })
+                    };
+                    $rootScope.$on('$stateChangeSuccess', listener);
+                }
+            };
+        }
+    ])
+
     .config(function ldrConfig($urlRouterProvider, jwtInterceptorProvider,
                                $httpProvider) {
 
@@ -25,19 +43,19 @@ angular.module('ldr', [
         $httpProvider.interceptors.push('jwtInterceptor');
 
         /*
-        // For AJAX errors
-        $httpProvider.interceptors.push(function($q) {
-            return {
-                response: function(response) {
-                    return response;
-                },
-                responseError: function(response) {
-                    if (response.status === 401)
-                        return $q.reject(response);
-                }
-            };
-        });
-        */
+         // For AJAX errors
+         $httpProvider.interceptors.push(function($q) {
+         return {
+         response: function(response) {
+         return response;
+         },
+         responseError: function(response) {
+         if (response.status === 401)
+         return $q.reject(response);
+         }
+         };
+         });
+         */
     })
 
     .run(function($rootScope, $state, store, jwtHelper) {
@@ -132,15 +150,14 @@ angular.module('ldr', [
                 }
             }
         });
-    })
-    .controller('ldrCtrl', function ldrCtrl($scope, store) {
-        $scope.pageTitle = 'LDR';
-        $scope.currentUser = store.get('currentUser');
-        // Don't think this works, but should dynamically change title of page
-        $scope.$on('$routeChangeSuccess', function(e, nextRoute) {
-            if (nextRoute.$$route &&
-                angular.isDefined(nextRoute.$$route.pageTitle)) {
-                $scope.pageTitle = nextRoute.$$route.pageTitle + ' | LDR';
+
+        $rootScope.$on('$routeChangeSuccess', function(event, current, previous) {
+            if (current.hasOwnProperty('$$route')) {
+                $rootScope.title = current.$$route.title;
             }
         });
+    })
+    .controller('ldrCtrl', function($scope, store) {
+        $scope.pageTitle = 'LINCS Dataset Registry';
+        $scope.currentUser = store.get('currentUser');
     });

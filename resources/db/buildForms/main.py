@@ -22,7 +22,9 @@ headers = {'Content-Type': 'application/json'}
 for doc in lorettaMd.find({}):
     out = {
         'approved': True,
+        'released': False,
         'dateModified': datetime.now().isoformat(),
+        'datasetName': doc['dcic-assay-name'],
         'description': '',
         'metadata': {
             'assay': [],
@@ -79,14 +81,30 @@ for doc in lorettaMd.find({}):
     gPar = '&group=' + groupAbbr
 
     assayName = doc['assay']
-    dcicName = doc['dcic-assay-name']
     assayQuery = assayName.replace('+', '\%2B').replace('(', '\(').replace(')', '\)')
     print('ASSAY: ' + assayName)
     assayArr = requests.get(nsUrl + '/assay?name=' + assayQuery + gPar).json()
+    # Add homo sapiens and ALS to each NeuroLINCS dataset
+    if 'n' in groupAbbr:
+        organismData = requests.get(nsUrl + '/organism?name=homo' + gPar).json()
+        if len(organismData) == 0:
+            organismData = requests.get(nsUrl + '/organism?name=homo').json()[0]
+        else:
+            organismData = organismData[0]
+        organismData['group'] = 'n'
+        organismId = requests.post(nsUrl + '/organism', data=json.dumps(organismData), headers=headers).json()
+        out['metadata']['organism'] = [organismId]
+        diseaseData = requests.get(nsUrl + '/disease?name=als' + gPar).json()
+        if len(diseaseData) == 0:
+            diseaseData = requests.get(nsUrl + '/disease?name=als').json()[0]
+        else:
+            diseaseData = diseaseData[0]
+        diseaseData['group'] = 'n'
+        diseaseId = requests.post(nsUrl + '/disease', data=json.dumps(diseaseData), headers=headers).json()
+        out['metadata']['disease'] = [diseaseId]
     if len(assayArr) == 0:
         assayData = {
             'name': assayName,
-            'dcicName': dcicName,
             'info': doc['assay-info'],
             'group': groupAbbr
         }
@@ -100,18 +118,20 @@ for doc in lorettaMd.find({}):
     for cLineObj in doc['cell-lines']:
         if 'name' not in cLineObj:
             continue
-        cLineName = cLineObj['name'].replace('+', '\%2B').replace('(', '\(').replace(')', '\)')
+        cLineName = cLineObj['name'].replace('+', '\%2B').replace('(', '\(').replace(')', '\)').replace(' ', '%20')
         if 'Which four?' in cLineName:
             continue
         # print('CELL LINE: ' + cLineName)
         cLineArr = requests.get(nsUrl + '/cell?name=' + cLineName + gPar).json()
         if len(cLineArr) == 0:
             cLineObj['group'] = groupAbbr
-            cLineReq = requests.post(nsUrl + '/cell', data=json.dumps(cLineObj), headers=headers)
-            cLineId = cLineReq.json()
+            cLineId = requests.post(nsUrl + '/cell', data=json.dumps(cLineObj), headers=headers).json()
+        elif '#2645' in cLineName:
+            cLineId = requests.post(nsUrl + '/cell', data=json.dumps(cLineArr[1]), headers=headers).json()
+        elif '#2759' in cLineName:
+            cLineId = requests.post(nsUrl + '/cell', data=json.dumps(cLineArr[2]), headers=headers).json()
         else:
-            cLineReq = requests.post(nsUrl + '/cell', data=json.dumps(cLineArr[0]), headers=headers)
-            cLineId = cLineReq.json()
+            cLineId = requests.post(nsUrl + '/cell', data=json.dumps(cLineArr[0]), headers=headers).json()
         out['metadata']['cellLines'].append(cLineId)
 
     if 'perturbagens' in doc:

@@ -231,7 +231,16 @@ button.login-btn {
     }
 }
 
-.error-msg {
+.dataset-title {
+    float: left;
+}
+
+.dataset-error-msg {
+    float: right;
+    line-height: 35px;
+}
+
+.dataset-error-msg, .error-msg {
     color: @color-red;
 }
 
@@ -374,11 +383,31 @@ tags-input {
                 }
             }
         }
+        .input {
+            font: 14px @font-family-primary;
+        }
     }
 }
 
-.assay-input {
-    padding: 0 15px 0 0;
+.dataset-name {
+    &:focus {
+        -webkit-box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+        -moz-box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+        box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+    }
+    -webkit-appearance: textfield;
+    overflow: hidden;
+    word-wrap: break-word;
+    cursor: text;
+    border: 1px solid rgb(169, 169, 169);
+    box-shadow: rgb(211, 211, 211) 1px 1px 1px 0 inset;
+    margin: 0;
+    background-color: rgb(255, 255, 255);
+    width: 100% !important;
+    outline: 0;
+    padding: 7px;
+    float: left;
+    font: 14px @font-family-primary;
 }
 
 textarea.experiment {
@@ -402,7 +431,6 @@ textarea.experiment {
     padding: 7px;
     float: left;
     font: 14px @font-family-primary;
-
 }
 
 #data-registration-form {
@@ -484,8 +512,7 @@ h4.meta-header {
 }
 
 table.legend {
-    margin: 18px auto 0 auto;
-    min-width: 450px;
+    margin-top: 20px;
 }
 
 td.legend-color {

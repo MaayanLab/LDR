@@ -221,26 +221,22 @@ module.exports = function(app) {
             var query = { _id: id };
             DataRelease
                 .findOne(query)
-                .lean()
                 .exec(function(err, release) {
                     if (err) {
                         console.log(err);
                         res.status(404).send('An error occurred getting ' +
                             'release with id: ' + id);
                     }
-                    else if (release.urls.qcDocumentUrl === "") {
-                        res.status(403).send('QC Document required!');
-                    }
                     else if (release.urls.dataUrl === "") {
                         res.status(403).send('Data URL required!');
                     }
                     else if (release.approved === false) {
-                        res.status(403).send('Release must be approved!');
+                        res.status(403).send('Dataset must be approved!');
                     }
                     else {
                         release.released = true;
                         release.save();
-                        res.status(204).send('Entry successfully released.')
+                        res.status(204).send('Dataset successfully released.')
                     }
                 })
         }

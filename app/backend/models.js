@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 http.globalAgent.maxSockets = 100;
 
 var SALT_WORK_FACTOR = 10;
-// Uncomment if we want account locking implemented for unsuccessful logins
+// Uncomment if we want account locking implemented for unsuccessful log-ins
 // var MAX_LOGIN_ATTEMPTS = 100;
 // var LOCK_TIME = 2 * 60 * 60 * 1000;
 
@@ -179,6 +179,8 @@ var dataReleaseSchema = new Schema({
     dateModified: { type: String, required: true },
     needsEdit: { type: Boolean, default: false },
     message: { type: String, default: '' }, // Message for returning from NIH
+    doi: { type: String },
+    datasetName: { type: String, required: true },
     description: { type: String, default: '' }, // Brief description of exp.
     releaseDates: {
         upcoming: { type: String, default: '' },
@@ -210,7 +212,8 @@ var dataReleaseSchema = new Schema({
 try {
     DataRelease = mongoose.model('DataRelease');
 } catch (e) {
-    DataRelease = mongoose.model('DataRelease', dataReleaseSchema, 'dataReleases');
+    DataRelease = mongoose.model('DataRelease',
+        dataReleaseSchema, 'dataReleases');
 }
 
 dataReleaseSchema.pre('save', function(next) {
