@@ -40,24 +40,45 @@ angular.module('ldr.releases.overview', [
                         obj.releaseDates[key] = new Date(level);
                     });
                 });
-                console.log(data);
                 $scope.forms = data;
             });
+
+        $scope.releaseForm = function(form) {
+            if (confirm('Are you sure you would like to release this entry?')) {
+                api('releases/form/' + form._id + '/release')
+                    .put()
+                    .success(function() {
+                        api('releases/group/' + $scope.user.group._id)
+                            .get()
+                            .success(function(data) {
+                                $scope.forms = data;
+                            }
+                        );
+                    })
+                    .error(function(error) {
+                        alert(error);
+                    }
+                );
+            }
+        };
 
         $scope.editForm = function(form) {
             $state.go('releasesCreate', { id: form._id });
         };
 
         $scope.deleteForm = function(form) {
-            console.log(form);
             if (confirm('Are you sure you would like to delete this entry?')) {
-                api('releases/form/' + form._id).del().success(function() {
-                    api('releases/group/' + $scope.user.group._id)
-                        .get()
-                        .success(function(data) {
-                        $scope.forms = data;
-                    });
-                });
+                api('releases/form/' + form._id)
+                    .del()
+                    .success(function() {
+                        api('releases/group/' + $scope.user.group._id)
+                            .get()
+                            .success(function(data) {
+                                $scope.forms = data;
+                            }
+                        );
+                    }
+                );
             }
         };
     });

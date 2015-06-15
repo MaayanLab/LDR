@@ -1,4 +1,25 @@
 <h3 class="text-center">Data Releases</h3>
+<p>
+    Below are all data releases for {{currentUser.group.name}}. You may release,
+    edit, or delete entries by clicking the Action button on the right.
+    Clicking the plus button will expand entries, making visible all relevant
+    meta-data. Please note that <em>in order to release an entry, it must
+    have data and QC document URLs provided and it must be approved.</em>
+</p>
+<table class="text-center legend">
+    <tr>
+        <td class="legend-color" id="awaiting-approval"></td>
+        <td class="legend-color" id="approved"></td>
+        <td class="legend-color" id="needs-edit"></td>
+        <td class="legend-color" id="released"></td>
+    </tr>
+    <tr>
+        <td>Awaiting Approval</td>
+        <td>Approved</td>
+        <td>Needs Attention</td>
+        <td>Released</td>
+    </tr>
+</table>
 <div class="content">
     <table class="table">
         <thead>
@@ -80,7 +101,9 @@
         </thead>
         <tbody>
         <tr ng-repeat-start="form in forms | orderBy: sortType : sortReverse"
-            ng-class="form.approved ? 'tr-approved' : 'tr-unapproved'"
+            ng-class="!form.approved && !form.needsEdit ? 'tr-awaiting-approval' :
+            form.approved && !form.needsEdit ? 'tr-approved' :
+            form.released ? 'tr-released' : form.needsEdit ? 'tr-needs-edit' : ''"
             class="form-table-data text-center">
             <!--<td id="id">{{form._id}}</td>-->
             <td class="text-left" id="assay-name">
@@ -99,7 +122,7 @@
                 {{form.metadata.readouts.length}}
             </td>-->
 
-            <td class="col-sm-2" id="release-date">
+            <td class="col-sm-3" id="release-date">
                 {{form.releaseDates.upcoming | date: 'MM-dd-yyyy'}}
             </td>
             <td class="col-sm-1" id="status">
@@ -116,15 +139,23 @@
             <!--<td id="id">{{form._id}}</td>-->
             <td>
                 <div class="btn-group">
-                    <a class="btn btn-default dropdown-toggle"
-                       ng-class="form.approved ? 'tr-approved-btn' :
-                       'tr-unapproved-btn'"
+                    <a class="btn btn-default dropdown-toggle form-table-data text-center"
+                       ng-class="!form.approved && !form.needsEdit ? 'tr-awaiting-approval-btn' :
+                       form.approved && !form.needsEdit ? 'tr-approved-btn' :
+                       form.released ? 'tr-released-btn' : form.needsEdit ? 'tr-needs-edit-btn' : ''"
                        data-toggle="dropdown" ng-href="">
                         Action<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a ng-click="editForm(form)">Edit</a></li>
-                        <li><a ng-click="deleteForm(form)">Delete</a></li>
+                        <li ng-if="form.approved">
+                            <a ng-click="releaseForm(form)">Release</a>
+                        </li>
+                        <li ng-if="!form.released">
+                            <a ng-click="editForm(form)">Edit</a>
+                        </li>
+                        <li ng-if="!form.released">
+                            <a ng-click="deleteForm(form)">Delete</a>
+                        </li>
                     </ul>
                 </div>
             </td>

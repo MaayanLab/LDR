@@ -196,7 +196,6 @@ var dataReleaseSchema = new Schema({
         manipulatedGene: { type: [], default: [] }, // Always length 1
         organism: { type: [], default: [] }, // Always length 1
         relevantDisease: { type: [], default: [] }, // Always length 1
-        disease: { type: [], default: [] }, // Always length 1
         analysisTools: { type: [], default: [] },
         tagsKeywords: { type: [], default: [] }
     },
@@ -217,14 +216,10 @@ try {
 dataReleaseSchema.pre('save', function(next) {
 
     // Generate 'upcoming' field with closest release date
-    this.releaseDates.upcoming =
-        this.releaseDates.level1 !== '' ?
-            this.releaseDates.level1 :
-            this.releaseDates.level2 !== '' ?
-                this.releaseDates.level2 :
-                this.releaseDates.level3 !== '' ?
-                    this.releaseDates.level3 :
-                    this.releaseDates.level4 !== '' ?
+    this.releaseDates.upcoming = this.releaseDates.level1 !== '' ?
+            this.releaseDates.level1 : this.releaseDates.level2 !== '' ?
+                this.releaseDates.level2 : this.releaseDates.level3 !== '' ?
+                    this.releaseDates.level3 : this.releaseDates.level4 !== '' ?
                         this.releaseDates.level4 : 'NA';
 
     // Check if any ids are null. If they are, throw an error

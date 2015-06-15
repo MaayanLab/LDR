@@ -12,14 +12,17 @@
 @color-gray: #aaa;
 @color-gray-light: #eee;
 @color-gray-charcoal: #222;
-@color-approved: rgba(169, 214, 167, 0.46);
-@color-approved-hover: rgba(169, 214, 167, 0.8);
-@color-unapproved: rgba(214, 167, 167, 0.46);
-@color-unapproved-hover: rgba(214, 167, 167, 0.8);
-
+@color-approved: rgba(167, 181, 214, 0.46);
+@color-approved-hover: rgba(167, 181, 214, 0.8);
+@color-released: rgba(169, 214, 167, 0.46);
+@color-released-hover: rgba(169, 214, 167, 0.8);
+@color-needs-edit: rgba(214, 167, 167, 0.46);
+@color-needs-edit-hover: rgba(214, 167, 167, 0.8);
+@color-awaiting-approval: rgba(212, 214, 167, 0.46);
+@color-awaiting-approval-hover: rgba(212, 214, 167, 0.8);
 
 @font-family-base: arial, sans-serif;
-@font-family-primary: 'Roboto', sans-serif;
+@font-family-primary: 'Avenir Next', Avenir, sans-serif;
 
 html,
 body {
@@ -27,13 +30,16 @@ body {
     font-family: @font-family-primary;
     -webkit-font-smoothing: antialiased;
 }
+
 body {
     background-color: #ffffff;
 }
+
 a {
     color: @color-primary;
     cursor: pointer;
 }
+
 h1,
 h2,
 h3,
@@ -43,13 +49,16 @@ h6 {
     font-family: @font-family-primary;
     font-weight: 700 !important;
 }
+
 #wrapper {
     min-height: 100%;
     position: relative;
 }
+
 .pointer, .nav, .dropdown-menu > li > a {
     cursor: pointer;
 }
+
 .btn-danger {
     background-color: #b82c28;
     border-color: #67201e;
@@ -123,10 +132,12 @@ a#group-nav-icon {
         height: 32px;
     }
 }
+
 .nav > li > a:focus,
 .nav > li > a:hover {
     background: @color-gray-light;
 }
+
 .dropdown-menu {
     border-radius: 0;
 }
@@ -137,16 +148,19 @@ a#group-nav-icon {
     background: @color-gray-light;
     border-color: white;
 }
+
 .nav-items {
     display: inline-flex;
     margin-top: 5px;
     height: 100%;
     vertical-align: middle;
 }
+
 .title-bar {
     margin: 0 auto;
     vertical-align: middle;
 }
+
 h5.errorMsg {
     margin: 0;
     padding: 15px 15px;
@@ -176,16 +190,20 @@ button.login-btn {
     margin-top: 20px;
     padding-bottom: 120px;
 }
+
 .content {
     margin: 20px auto;
 }
+
 .ldr-view {
     font-family: @font-family-primary;
     margin: 0 90px;
 }
+
 #password-group {
     padding-right: 5px;
 }
+
 .tabs-left > .nav-tabs {
     border-bottom: 0;
     float: left;
@@ -220,91 +238,115 @@ button.login-btn {
 .tab-content > .tab-pane, .pill-content > .pill-pane {
     display: none;
 }
+
 .tab-content > .active, .pill-content > .active {
     display: block;
 }
+
 .tab-content {
     min-width: 75%;
     float: left;
 }
+
 .docent {
     width: 100%;
 }
+
 .tab-pane-data {
     display: inline-block;
 }
+
 #metadataForm section {
     padding: 20px 0;
     border-bottom: 1px solid @color-gray-light;
 }
+
 .form-table-head, .form-table-data {
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 2px solid #cccccc;
 }
+
 .form-table-item {
     padding: 2px 5px;
 }
+
 .form-info-block {
     float: right;
     margin-top: 120px;
     width: 45%;
 }
+
 .form-block {
     padding-top: 40px;
 }
+
 .form-select {
     cursor: default;
     width: 90%;
 }
+
 button#form-reset {
     float: left;
 }
+
 button#form-submit {
     margin-left: 10px;
 }
+
 a#clear-btn {
     top: 2px;
 }
+
 a.add-new-btn {
     color: black;
 }
+
 a#add-new-btn-paragraph, a.clear-btn {
     color: black;
 }
+
 a.add-new-btn:hover, a.clear-btn:hover {
     text-decoration: none;
     color: gray;
 }
+
 a#add-new-btn-paragraph:hover {
     text-decoration: none;
     color: black;
     cursor: text;
 }
+
 p.input-group {
     margin: 14px 0;
 }
+
 .form-center {
     width: 100%;
     margin-top: 0;
 }
+
 .form-title {
     margin-top: 20px;
     float: left;
 }
+
 .form-count {
     width: 45%;
     margin-top: 20px;
     float: left;
     text-align: right;
 }
+
 .form-date {
     width: 90%;
     display: inline-block;
 }
+
 .post-button {
     float: left;
     text-align: right;
     width: 90%;
 }
+
 tags-input {
     width: 100% !important;
     .autocomplete {
@@ -318,6 +360,8 @@ tags-input {
         .tag-item {
             background: #f1f1f1;
             border-radius: 0;
+            font: 14px @font-family-primary;
+            line-height: 25px;
             .remove-button {
                 text-decoration: none;
             }
@@ -357,9 +401,10 @@ textarea.experiment {
     outline: 0;
     padding: 7px;
     float: left;
-    font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font: 14px @font-family-primary;
 
 }
+
 #data-registration-form {
     section {
         border-top: 1px solid #eee;
@@ -414,34 +459,63 @@ textarea.experiment {
     }
     padding-bottom: 20px;
 }
+
 .highlight {
     color: @color-red;
 }
+
 .modal-content {
     border-radius: 0;
 }
+
 .meta-data {
     display: inline-block;
     width: 100%;
 }
+
 table.meta-data-table {
     width: 90%;
     float: right;
     cursor: default;
 }
+
 h4.meta-header {
     margin-top: 40px;
 }
 
-.tr-approved {
+table.legend {
+    margin: 18px auto 0 auto;
+    min-width: 450px;
+}
+
+td.legend-color {
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+}
+
+.legend-label {
+    line-height: 20px;
+    margin: 0;
+}
+
+.tr-approved, #approved {
     background-color: @color-approved;
 }
 
-.tr-unapproved {
-    background-color: @color-unapproved;
+.tr-released, #released {
+    background-color: @color-released;
 }
 
-div.btn-group >.tr-approved-btn,
+.tr-needs-edit, #needs-edit {
+    background-color: @color-needs-edit;
+}
+
+.tr-awaiting-approval, #awaiting-approval {
+    background-color: @color-awaiting-approval;
+}
+
+div.btn-group > .tr-approved-btn,
 div.btn-group.open > .tr-approved-btn {
     background-color: transparent;
     &:hover, &:active, &:focus {
@@ -449,24 +523,47 @@ div.btn-group.open > .tr-approved-btn {
     }
 }
 
-div.btn-group >.tr-unapproved-btn {
+div.btn-group > .tr-awaiting-approval-btn {
     background-color: transparent;
     &:hover, &:active, &:focus {
-        background-color: @color-unapproved-hover;
+        background-color: @color-awaiting-approval-hover;
     }
 }
 
 div.btn-group.open > .tr-approved-btn {
-  background-color: @color-approved-hover;
+    background-color: @color-approved-hover;
 }
 
+div.btn-group.open > .tr-awaiting-approval-btn {
+    background-color: @color-awaiting-approval-hover;
+}
 
-div.btn-group.open > .tr-unapproved-btn {
-    background-color: @color-unapproved-hover;
+div.btn-group > .tr-released-btn,
+div.btn-group.open > .tr-released-btn {
+    background-color: transparent;
+    &:hover, &:active, &:focus {
+        background-color: @color-released-hover;
+    }
+}
+
+div.btn-group > .tr-needs-edit-btn {
+    background-color: transparent;
+    &:hover, &:active, &:focus {
+        background-color: @color-needs-edit-hover;
+    }
+}
+
+div.btn-group.open > .tr-released-btn {
+    background-color: @color-released-hover;
+}
+
+div.btn-group.open > .tr-needs-edit-btn {
+    background-color: @color-needs-edit-hover;
 }
 
 .release-details {
-    border: 1px solid #ccc;
+    border-left: 2px solid #ccc;
+    border-right: 2px solid #ccc;
 }
 
 .animate.ng-enter, .animate.ng-leave {
@@ -478,6 +575,7 @@ div.btn-group.open > .tr-unapproved-btn {
 .animate.ng-enter.ng-enter-active, .animate.ng-leave {
     left: 0;
 }
+
 .animate.ng-leave.ng-leave-active, .animate.ng-enter {
     left: 500px;
 }
@@ -523,6 +621,7 @@ span.stat-num {
     display: inline-block;
     width: 100%;
 }
+
 .user-card-name {
     float: left;
 }
@@ -571,6 +670,7 @@ small {
         }
     }
 }
+
 .credit {
     margin: 20px 0;
 }
@@ -590,10 +690,12 @@ small {
         border: transparent;
     }
 }
+
 .btn-danger {
     background-color: @color-red;
     outline: none;
 }
+
 .btn-success,
 .btn-primary {
     background-color: @color-primary;
@@ -605,6 +707,7 @@ small {
         outline: none;
     }
 }
+
 .btn-success[disabled] {
     background-color: @color-primary;
     outline: none;
@@ -620,12 +723,13 @@ small {
         outline: none;
     }
 }
+
 .normal {
     font-weight: normal;
 }
 
-.table>tbody>tr>td, .table>tbody>tr>th,
-.table>tfoot>tr>td, .table>tfoot>tr>th,
-.table>thead>tr>td, .table>thead>tr>th {
+.table > tbody > tr > td, .table > tbody > tr > th,
+.table > tfoot > tr > td, .table > tfoot > tr > th,
+.table > thead > tr > td, .table > thead > tr > th {
     vertical-align: inherit;
 }

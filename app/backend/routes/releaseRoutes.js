@@ -149,10 +149,10 @@ module.exports = function(app) {
                                 if (up === '' || !up) {
                                     finalRelease.releaseDates.upcoming =
                                         dates.level1 !== '' ? dates.level1 :
-                                        dates.level2 !== '' ? dates.level2 :
-                                            dates.level3 !== '' ? dates.level3 :
-                                                dates.level4 !== '' ?
-                                                    dates.level4 : 'NA';
+                                            dates.level2 !== '' ? dates.level2 :
+                                                dates.level3 !== '' ? dates.level3 :
+                                                    dates.level4 !== '' ?
+                                                        dates.level4 : 'NA';
                                 }
                                 releasesArr.push(finalRelease);
                                 if (i === allData.length - 1) {
@@ -214,6 +214,37 @@ module.exports = function(app) {
             }
         });
     });
+
+    app.put(baseUrl + '/api/secure/releases/form/:id/release',
+        function(req, res) {
+            var id = req.params.id;
+            var query = { _id: id };
+            DataRelease
+                .findOne(query)
+                .lean()
+                .exec(function(err, release) {
+                    if (err) {
+                        console.log(err);
+                        res.status(404).send('An error occurred getting ' +
+                            'release with id: ' + id);
+                    }
+                    else if (release.urls.qcDocumentUrl === "") {
+                        res.status(403).send('QC Document required!');
+                    }
+                    else if (release.urls.dataUrl === "") {
+                        res.status(403).send('Data URL required!');
+                    }
+                    else if (release.approved === false) {
+                        res.status(403).send('Release must be approved!');
+                    }
+                    else {
+                        release.released = true;
+                        release.save();
+                        res.status(204).send('Entry successfully released.')
+                    }
+                })
+        }
+    );
 
     // DELETE individual release
     app.delete(baseUrl + '/api/secure/releases/form/:id', function(req, res) {

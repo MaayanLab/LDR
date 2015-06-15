@@ -30,7 +30,7 @@ module.exports = function(releaseData, cb) {
             path = '/form/assay?_id=' + id;
         else if (key === 'cellLines')
             path = '/form/cell?_id=' + id;
-        else if (key === 'disease')
+        else if (key === 'relevantDisease')
             path = '/form/disease?_id=' + id;
         else if (key === 'manipulatedGene')
             path = '/form/gene?_id=' + id;

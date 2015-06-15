@@ -24,6 +24,7 @@ angular.module('ldr', [
         };
         $httpProvider.interceptors.push('jwtInterceptor');
 
+        /*
         // For AJAX errors
         $httpProvider.interceptors.push(function($q) {
             return {
@@ -36,6 +37,7 @@ angular.module('ldr', [
                 }
             };
         });
+        */
     })
 
     .run(function($rootScope, $state, store, jwtHelper) {
