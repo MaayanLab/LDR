@@ -19,6 +19,7 @@ angular.module('ldr.user.settings', [
         });
     })
     .controller('UserSettingsCtrl', function($scope, $stateParams, store) {
-        var currentUser = store.get('currentUser');
+
+        var currentUser = $scope.getCurrentUser();
 
     });

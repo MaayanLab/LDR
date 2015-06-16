@@ -22,10 +22,10 @@ angular.module('ldr', [
                     var listener = function(event, toState) {
                         $timeout(function() {
                             $rootScope.title =
-                                (toState.data && toState.data.pagetitle) ?
+                                (toState.data && toState.data.pageTitle) ?
                                     toState.data.pageTitle :
-                                    'LINCS Data Registry'
-                        })
+                                    'LINCS Data Registry';
+                        });
                     };
                     $rootScope.$on('$stateChangeSuccess', listener);
                 }

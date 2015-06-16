@@ -31,7 +31,8 @@ angular.module('ldr.user.settings.changePassword', [
 
         $scope.changePassword = function() {
             console.log($scope);
-            api('user/' + id + '/changePassword').put($scope.passwords)
+            api('user/' + id + '/changePassword')
+                .put($scope.passwords)
                 .then(function() {
                     alert('Password successfully changed');
                 }, function(error) {

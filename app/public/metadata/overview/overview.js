@@ -14,9 +14,9 @@ angular.module('ldr.metadata.overview', [
     });
 })
 
-.controller('MetadataCtrl', function($scope, $http, store, $state, $modal, lodash, api) {
+.controller('MetadataCtrl', function($scope) {
 
-    $scope.user = store.get('currentUser');
+    $scope.user = $scope.getCurrentUser();
 
     $scope.categories = [
         {

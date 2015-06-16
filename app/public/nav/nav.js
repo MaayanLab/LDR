@@ -13,6 +13,14 @@ angular.module('ldr.nav', [])
                     $rootScope.isLoggedInAdmin = user.admin;
                     $rootScope.isAdmitted = user.admitted;
                 };
+                scope.getCurrentUser = function() {
+                    var user = store.get('currentUser');
+                    $rootScope.isLoggedIn = true;
+                    $rootScope.isLoggedInAdmin = user.admin;
+                    $rootScope.isAdmitted = user.admitted;
+                    return user;
+                };
+
                 scope.user = {};
                 scope.showFailMessage = false;
 

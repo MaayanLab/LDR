@@ -18,14 +18,13 @@ angular.module('ldr.releases.overview', [
     })
 
     .controller('releases.overview.ctrl', function($scope, $http, store,
-                                                   $filter, $state,
-                                                   lodash, api, $modal) {
+                                                   $filter, $state, lodash,
+                                                   api, $modal) {
 
-        $scope.user = store.get('currentUser');
+        $scope.user = $scope.getCurrentUser();
         $scope.forms = [];
         $scope.sortType = ['released', 'accepted', 'metadata.assay[0].name'];
         $scope.sortReverse = false;
-        $scope.showAdmitted = false;
 
         api('releases/group/' + $scope.user.group._id)
             .get()

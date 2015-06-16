@@ -24,7 +24,7 @@ angular.module('ldr.releases.create', [
     function($stateParams, $scope, $timeout, $http, $location, $anchorScroll,
              store, $state, $modal, lodash, api, nameServer, $q) {
 
-        $scope.user = store.get('currentUser');
+        $scope.user = $scope.getCurrentUser();
         $scope.group = $scope.user.group;
 
         var MAX_TAGS = 100;

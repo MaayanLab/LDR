@@ -24,7 +24,7 @@ angular.module('ldr.group.home', [
 
     .controller('GroupHomeCtrl', function($scope, $stateParams, $timeout,
                                           store, api) {
-        var currentUser = store.get('currentUser');
+
         var groupId = $stateParams.id;
 
         $scope.users = [];

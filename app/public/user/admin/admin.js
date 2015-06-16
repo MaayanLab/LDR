@@ -20,7 +20,7 @@ angular.module('ldr.user.admin', [
 
     .controller('AdminCtrl', function($scope, $http, lodash,
                                       store, $state, api, $modal) {
-        var currentUser = store.get('currentUser');
+
         var releaseApi = api('releases');
 
         $scope.allForms = [];
