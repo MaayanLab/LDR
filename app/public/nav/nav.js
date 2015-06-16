@@ -3,7 +3,7 @@ angular.module('ldr.nav', [])
         return {
             restrict: 'E',
             templateUrl: 'nav/nav.html',
-            link: function(scope, element, attrs) {
+            link: function(scope) {
 
                 scope.setCurrentUser = function(user, token) {
                     scope.currentUser = user;

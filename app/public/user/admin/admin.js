@@ -28,6 +28,14 @@ angular.module('ldr.user.admin', [
         $scope.sortReverse = false;
 
         releaseApi.get().success(function(forms) {
+            lodash.each(forms, function(obj) {
+                lodash.each(obj.releaseDates, function(level, key) {
+                    if (level === '') {
+                        return;
+                    }
+                    obj.releaseDates[key] = new Date(level);
+                });
+            });
             $scope.allForms = forms;
         });
 

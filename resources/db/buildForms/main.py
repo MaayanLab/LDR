@@ -11,7 +11,7 @@ lorettaClient = MongoClient('mongodb://mmcdermott:kroyweN@loretta')
 lincsDb = lorettaClient['LINCS']
 lorettaMd = lincsDb['milestones']
 
-ldrClient = MongoClient('mongodb://elizabeth')
+ldrClient = MongoClient('mongodb://hannah')
 ldrDb = ldrClient['LDR']
 releases = ldrDb['dataReleases']
 releases.drop()
@@ -25,7 +25,7 @@ for doc in lorettaMd.find({}):
         'released': False,
         'dateModified': datetime.now().isoformat(),
         'datasetName': doc['dcic-assay-name'],
-        'description': '',
+        'description': doc['assay-info'],
         'metadata': {
             'assay': [],
             'cellLines': [],
@@ -111,27 +111,28 @@ for doc in lorettaMd.find({}):
         assayReq = requests.post(nsUrl + '/assay', data=json.dumps(assayData), headers=headers)
         assayId = assayReq.json()
     else:
-        assayReq = requests.post(nsUrl + '/assay', data=json.dumps(assayArr[0]), headers=headers)
+        postData = assayArr[0]
+        postData['group'] = groupAbbr
+        assayReq = requests.post(nsUrl + '/assay', data=json.dumps(postData), headers=headers)
         assayId = assayReq.json()
     out['metadata']['assay'] = [assayId]
 
     for cLineObj in doc['cell-lines']:
         if 'name' not in cLineObj:
             continue
-        cLineName = cLineObj['name'].replace('+', '\%2B').replace('(', '\(').replace(')', '\)').replace(' ', '%20')
+        cLineName = cLineObj['name'].replace('+', '\%2B').replace('(', '\(').replace(')', '\)')\
+            .replace(' ', '%20').replace('#', '%23')
         if 'Which four?' in cLineName:
             continue
         # print('CELL LINE: ' + cLineName)
         cLineArr = requests.get(nsUrl + '/cell?name=' + cLineName + gPar).json()
+        cLineObj['group'] = groupAbbr
         if len(cLineArr) == 0:
-            cLineObj['group'] = groupAbbr
             cLineId = requests.post(nsUrl + '/cell', data=json.dumps(cLineObj), headers=headers).json()
-        elif '#2645' in cLineName:
-            cLineId = requests.post(nsUrl + '/cell', data=json.dumps(cLineArr[1]), headers=headers).json()
-        elif '#2759' in cLineName:
-            cLineId = requests.post(nsUrl + '/cell', data=json.dumps(cLineArr[2]), headers=headers).json()
         else:
-            cLineId = requests.post(nsUrl + '/cell', data=json.dumps(cLineArr[0]), headers=headers).json()
+            postData = cLineArr[0]
+            postData['group'] = groupAbbr
+            cLineId = requests.post(nsUrl + '/cell', data=json.dumps(postData), headers=headers).json()
         out['metadata']['cellLines'].append(cLineId)
 
     if 'perturbagens' in doc:
@@ -146,7 +147,9 @@ for doc in lorettaMd.find({}):
                 pertReq = requests.post(nsUrl + '/perturbagen', data=json.dumps(pertObj), headers=headers)
                 pertId = pertReq.json()
             else:
-                pertReq = requests.post(nsUrl + '/perturbagen', data=json.dumps(pertArr[0]), headers=headers)
+                postData = pertArr[0]
+                postData['group'] = groupAbbr
+                pertReq = requests.post(nsUrl + '/perturbagen', data=json.dumps(postData), headers=headers)
                 pertId = pertReq.json()
             out['metadata']['perturbagens'].append(pertId)
 
@@ -159,7 +162,9 @@ for doc in lorettaMd.find({}):
             rOutReq = requests.post(nsUrl + '/readout', data=json.dumps(rOutObj), headers=headers)
             rOutId = rOutReq.json()
         else:
-            rOutReq = requests.post(nsUrl + '/readout', data=json.dumps(rOutArr[0]), headers=headers)
+            postData = rOutArr[0]
+            postData['group'] = groupAbbr
+            rOutReq = requests.post(nsUrl + '/readout', data=json.dumps(postData), headers=headers)
             rOutId = rOutReq.json()
         out['metadata']['readouts'].append(rOutId)
 

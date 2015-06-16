@@ -19,11 +19,11 @@ angular.module('ldr.releases.overview', [
 
     .controller('releases.overview.ctrl', function($scope, $http, store,
                                                    $filter, $state,
-                                                   lodash, api) {
+                                                   lodash, api, $modal) {
 
         $scope.user = store.get('currentUser');
         $scope.forms = [];
-        $scope.sortType = ['accepted', 'metadata.assay[0].name'];
+        $scope.sortType = ['released', 'accepted', 'metadata.assay[0].name'];
         $scope.sortReverse = false;
         $scope.showAdmitted = false;
 
@@ -64,6 +64,24 @@ angular.module('ldr.releases.overview', [
 
         $scope.editForm = function(form) {
             $state.go('releasesCreate', { id: form._id });
+        };
+
+        $scope.editUrls = function(form) {
+            $modal
+                .open({
+                    templateUrl: 'releases/urlModal/urlModal.html',
+                    controller: 'URLModalInstanceCtrl',
+                    resolve: {
+                        config: function() {
+                            return {
+                                form: form
+                            };
+                        }
+                    }
+                })
+                .result.then(function(urls) {
+                    form.urls = urls;
+                });
         };
 
         $scope.deleteForm = function(form) {

@@ -188,10 +188,13 @@ module.exports = function(app) {
     // database.
     app.post(baseUrl + '/api/secure/releases/form/:id', function(req, res) {
         var inputData = req.body;
-        console.log(inputData);
         inputData.dateModified = new Date();
-        inputData.approved = false;
 
+        // Check if released. If so, do not set approved to false.
+        // Should never be released here.
+        if (!inputData.released) {
+            inputData.approved = false;
+        }
         var query = { _id: req.params.id };
         delete inputData._id;
         DataRelease.update(query, inputData, function(err) {
@@ -215,6 +218,25 @@ module.exports = function(app) {
         });
     });
 
+    app.post(baseUrl + '/api/secure/releases/form/:id/urls', function(req, res) {
+        var id = req.params.id;
+        var query = { _id: id };
+        var urls = req.body;
+        DataRelease.findOne(query, function(err, release) {
+            if (err) {
+                console.log(err);
+                res.status(400).send('There was an error updating urls for ' +
+                    'entry with id ' + query._id + '. Please try again.')
+            }
+            else {
+                release.urls = urls;
+                release.save();
+                res.status(202).send(release);
+            }
+        })
+    });
+
+    // Release an entry. Must have a data URL and be approved
     app.put(baseUrl + '/api/secure/releases/form/:id/release',
         function(req, res) {
             var id = req.params.id;

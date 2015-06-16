@@ -86,11 +86,11 @@
             </th>
             <th class="text-center">
                 <a href=""
-                   ng-click="sortType = 'approved'; sortReverse = !sortReverse">
+                   ng-click="sortType = ['released', 'approved']; sortReverse = !sortReverse">
                     Status
-                    <span ng-show="sortType == 'approved' && sortReverse"
+                    <span ng-show="sortType == ['released', 'approved'] && sortReverse"
                           class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'approved' && !sortReverse"
+                    <span ng-show="sortType == ['released', 'approved'] && !sortReverse"
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
@@ -100,13 +100,14 @@
         </thead>
         <tbody>
         <tr ng-repeat-start="form in forms | orderBy: sortType : sortReverse"
-            ng-class="!form.approved && !form.needsEdit ? 'tr-awaiting-approval' :
+            ng-class="form.released ? 'tr-released' :
+            !form.approved && !form.needsEdit ? 'tr-awaiting-approval' :
             form.approved && !form.needsEdit ? 'tr-approved' :
-            form.released ? 'tr-released' : form.needsEdit ? 'tr-needs-edit' : ''"
+            form.needsEdit ? 'tr-needs-edit' : ''"
             class="form-table-data text-center">
             <!--<td id="id">{{form._id}}</td>-->
             <td class="text-left" id="dcic-assay-name">
-            {{form.metadata.assay[0].dcicName}}
+                {{form.metadata.assay[0].dcicName}}
             </td>
             <td class="text-left" id="assay-name">
                 {{form.metadata.assay[0].name}}
@@ -125,28 +126,35 @@
                 {{form.releaseDates.upcoming | date: 'MM-dd-yyyy'}}
             </td>
             <td class="col-sm-1" id="status">
-                    <span ng-if="form.approved">
-                        Approved
-                    </span>
-                    <span ng-if="!form.approved && !form.needsEdit">
-                        Pending approval
-                    </span>
-                    <span ng-if="!form.approved && form.needsEdit">
-                        Needs Editing
-                    </span>
+                <span ng-if="form.released">
+                    Released
+                </span>
+                <span ng-if="form.approved && !form.released">
+                    Approved
+                </span>
+                <span ng-if="!form.approved && !form.needsEdit">
+                    Pending approval
+                </span>
+                <span ng-if="!form.approved && form.needsEdit">
+                    Needs Editing
+                </span>
             </td>
             <!--<td id="id">{{form._id}}</td>-->
             <td>
                 <div class="btn-group">
                     <a class="btn btn-default dropdown-toggle form-table-data text-center"
-                       ng-class="!form.approved && !form.needsEdit ? 'tr-awaiting-approval-btn' :
-                       form.approved && !form.needsEdit ? 'tr-approved-btn' :
-                       form.released ? 'tr-released-btn' : form.needsEdit ? 'tr-needs-edit-btn' : ''"
+                       ng-class="form.released ? 'tr-released-btn' :
+            !form.approved && !form.needsEdit ? 'tr-awaiting-approval-btn' :
+            form.approved && !form.needsEdit ? 'tr-approved-btn' :
+            form.needsEdit ? 'tr-needs-edit-btn' : ''"
                        data-toggle="dropdown" ng-href="">
                         Action<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li ng-if="form.approved">
+                        <li ng-if="form.released">
+                            <a ng-click="editUrls(form)">Edit URLs</a>
+                        </li>
+                        <li ng-if="!form.released">
                             <a ng-click="releaseForm(form)">Release</a>
                         </li>
                         <li ng-if="!form.released">
@@ -208,6 +216,18 @@
                                 {{level}}:
                             </strong>
                             {{date | date:'MM-dd-yyyy'}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-12">
+                    <h5>URLs</h5>
+                    <ul class="list-inline">
+                        <li ng-repeat="(label,url) in form.urls"
+                                ng-if="url !== ''">
+                            <strong class="info-release-lvl">
+                                {{label}}:
+                            </strong>
+                            {{url}}
                         </li>
                     </ul>
                 </div>

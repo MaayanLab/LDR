@@ -211,6 +211,8 @@ angular.module('ldr.releases.create', [
                 if (form._id) {
                     $scope.form._id = form._id;
                 }
+                $scope.form.description.model = form.description;
+                $scope.form.datasetName.model = form.datasetName;
                 lodash.each($scope.form.releaseDates, function(obj) {
                     var date = form.releaseDates['level' + obj.level];
                     obj.model = (date === null || date === '') ?

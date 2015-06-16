@@ -1,0 +1,40 @@
+<div class="modal-body">
+    <form ng-model="modalForm" class="modal-form-input">
+        <div class="form-group">
+            <label for="pubmed-url" class="control-label">
+                PubMed URL
+            </label>
+            <input id="pubmed-url" type="text" class="form-control"
+                   ng-model="urls.pubMedUrl"/>
+        </div>
+        <div class="form-group">
+            <label for="data-url" class="control-label">
+                Data URL
+            </label>
+            <input id="data-url" type="text" class="form-control"
+                   ng-model="urls.dataUrl"/>
+        </div>
+        <div class="form-group">
+            <label for="metadata-url" class="control-label">
+                Metadata Documentation URL
+            </label>
+            <input id="metadata-url" type="text" class="form-control"
+                   ng-model="urls.metadataUrl"/>
+        </div>
+        <div class="form-group">
+            <label for="qc-url" class="control-label">
+                QC Documentation URL
+            </label>
+            <input id="qc-url" type="text" class="form-control"
+                   ng-model="urls.qcDocumentUrl"/>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary" ng-click="ok();">
+        Update
+    </button>
+    <button type="button" class="btn btn-danger" ng-click="cancel();">
+        Cancel
+    </button>
+</div>
