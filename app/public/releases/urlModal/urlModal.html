@@ -7,11 +7,11 @@
             </label>
             <span class="url-error-msg"
                   ng-show="urlModalForm.pubMedUrl.$error.url">
-                Not a valid url! Don't forget http:// or https://
+                Not a valid url!
             </span>
             <input name="pubMedUrl" id="pubmed-url" type="url"
                    class="form-control"
-                   ng-model="urls.pubMedUrl"/>
+                   ng-model="urls.pubMedUrl" url-prefix/>
         </div>
         <div class="form-group">
             <label for="data-url" class="control-label url-label">
@@ -23,10 +23,10 @@
                 </span>
             <span class="url-error-msg"
                   ng-show="urlModalForm.dataUrl.$error.url">
-                Not a valid url! Don't forget http:// or https://
+                Not a valid url!
             </span>
             <input name="dataUrl" id="data-url" type="url" class="form-control"
-                   ng-model="urls.dataUrl" required/>
+                   ng-model="urls.dataUrl" url-prefix required/>
         </div>
         <div class="form-group">
             <label for="metadata-url" class="control-label url-label">
@@ -34,11 +34,11 @@
             </label>
             <span class="url-error-msg"
                   ng-show="urlModalForm.metadataUrl.$error.url">
-                Not a valid url! Don't forget http:// or https://
+                Not a valid url!
             </span>
             <input name="metadataUrl" id="metadata-url" type="url"
-                   class="form-control"
-                   ng-model="urls.metadataUrl"/>
+                   class="form-control" ng-model="urls.metadataUrl"
+                   url-prefix />
         </div>
         <div class="form-group">
             <label for="qc-url" class="control-label url-label">
@@ -46,11 +46,11 @@
             </label>
             <span class="url-error-msg"
                   ng-show="urlModalForm.qcDocumentUrl.$error.url">
-                Not a valid url! Don't forget http:// or https://
+                Not a valid url!
             </span>
             <input name="qcDocumentUrl" id="qc-url" type="url"
-                   class="form-control"
-                   ng-model="urls.qcDocumentUrl"/>
+                   class="form-control" ng-model="urls.qcDocumentUrl"
+                   url-prefix />
         </div>
     </form>
 </div>

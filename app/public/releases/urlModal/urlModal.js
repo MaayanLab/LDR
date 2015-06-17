@@ -1,11 +1,11 @@
 angular.module('ldr')
     .controller('URLModalInstanceCtrl', function($scope, $modalInstance, config,
                                                  api) {
-        
+
         $scope.urls = angular.copy(config.form.urls);
 
-        $scope.ok = function(formValid) {
-            if (formValid) {
+        $scope.ok = function(formIsValid) {
+            if (formIsValid) {
                 api('releases/form/' + config.form._id + '/urls')
                     .post($scope.urls)
                     .success(function() {

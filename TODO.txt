@@ -1,19 +1,5 @@
 TODO:
 
-NeuroLINCS Datasets
-  All datasets have 'Amyotrophic Lateral Sclerosis (ALS)' as disease ---- DONE
-  All datasets have Homo Sapiens as Organism ---- DONE
-Get list of organisms ----- DONE
-Confirm functionality of ALL fields ------ DONE
-Color if approved but not available yet ------ DONE
-Color if available/released ------ DONE
-Add status released. i.e. HMS datasets from 2014
-Need URL if status is released
-Some parts of released dataset should not be edited
-
-Release button --> Has to be approved and have Data URL
-
-Release controlled by center.
 Record of changes:
   Dump of database daily
   See who changed what and when

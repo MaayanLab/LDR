@@ -7,13 +7,16 @@
 var phantom = require('phantom');
 var _ = require('lodash');
 var Q = require('q');
+var fs = require('fs');
 var AnalysisTool = require('../../app/backend/models').AnalysisTool;
 
 phantom.create(function(ph) {
     var baseUrl = 'http://www.omictools.com';
-    // Blank search on omictools.com returns all tools.
+    // Blank search on omictools.com returns all tools. 50 per page
     var searchUrl = baseUrl + '/site/search/?go=Search&isNewSearch=true&page=';
     var tools = [];
+    var file = fs.createWriteStream('tools.json');
+    var sep = '';
 
     ph.createPage(function(page) {
         var getToolData = function(url) {
@@ -44,58 +47,59 @@ phantom.create(function(ph) {
                     if (result) {
                         if (!Array.isArray(result)) {
                             if (result.title) {
+                                file.write(sep + JSON.stringify(result));
+                                if (!sep) {
+                                    sep = ',\n';
+                                }
                                 tools.push(result);
                             }
                         }
                         else if (Array.isArray(result) && result.length > 0) {
                             var toolIterLeft = result.length - 1;
-                            if (toolIterLeft === 0) {
-                                return true;
-                            }
-                            else {
-                                for (var i = 1; i < result.length; i++) {
-                                    (function(i) {
-                                        setTimeout(function() {
-                                            getToolData(baseUrl + result[i]);
-                                            toolIterLeft--;
-                                            console.log(toolIterLeft + ' tools left.');
-                                            if (toolIterLeft === 0) {
-                                                return true;
-                                            }
-                                        }, 1100 * i);
-                                    }(i));
-                                }
+                            for (var i = 1; i < result.length; i++) {
+                                (function(i) {
+                                    setTimeout(function() {
+                                        getToolData(baseUrl + result[i]);
+                                        toolIterLeft--;
+                                        console.log(toolIterLeft + ' tools left.');
+                                        if (toolIterLeft === 0) {
+                                            tryToFinish();
+                                        }
+                                    }, 1100 * i);
+                                }(i));
                             }
                         }
+                    }
+                    else {
+                        tryToFinish();
                     }
                 });
             });
         };
-        var finished = function() {
-            AnalysisTool.create(tools, function(err, tool1) {
-                if (err) {
-                    console.log(err);
-                }
-                else {
-                    console.log('First tool: ' + tool1);
-                }
-                ph.exit();
-            });
-        };
 
-        var numPagesToSearch = 3;
-        for (var j = 1; j < numPagesToSearch; j++) {
+        var numPagesToSearch = 1;
+        file.write('[\n');
+        for (var j = 1; j <= numPagesToSearch; j++) {
             (function(j) {
                 setTimeout(function() {
-                    getToolData(searchUrl + j.toString());
                     numPagesToSearch--;
-                    console.log(numPagesToSearch + ' pages left.');
-                    if (numPagesToSearch === 0) {
-                        console.log('Finishing...');
-                        finished();
-                    }
+                    getToolData(searchUrl + j.toString());
                 }, 60000 * j);
             }(j));
         }
+        var tryToFinish = function() {
+            console.log('Checking pages left...');
+            console.log(numPagesToSearch + ' pages left.');
+            if (numPagesToSearch === 0) {
+                file.write('\n]');
+                file.end();
+                ph.exit();
+            }
+        };
     });
 });
+
+/*
+ Fails
+
+ */
