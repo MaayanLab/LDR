@@ -77,7 +77,7 @@ phantom.create(function(ph) {
             });
         };
 
-        var numPagesToSearch = 1;
+        var numPagesToSearch = 182;
         file.write('[\n');
         for (var j = 1; j <= numPagesToSearch; j++) {
             (function(j) {
