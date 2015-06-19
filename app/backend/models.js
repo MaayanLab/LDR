@@ -1,4 +1,5 @@
 var mongoose = require('mongoose'),
+    version = require('mongoose-version'),
     bcrypt = require('bcrypt'),
     http = require('http'),
     Q = require('q'),
@@ -58,6 +59,7 @@ userSchema.pre('save', function(next) {
         });
     });
 });
+
 userSchema.methods.checkPassword = function(candidatePassword, cb) {
     bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
         if (err) return cb(err);
@@ -208,6 +210,10 @@ var dataReleaseSchema = new Schema({
         qcDocumentUrl: { type: String, default: '' }
     }
 });
+
+// TODO: Check implementation of mongoose-version
+// https://github.com/saintedlama/mongoose-version
+dataReleaseSchema.plugin(version);
 
 try {
     DataRelease = mongoose.model('DataRelease');

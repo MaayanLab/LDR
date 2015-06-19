@@ -63,6 +63,10 @@ module.exports = function(releaseData, cb) {
                     }
                     def.resolve(resultObj);
                 });
+            }).on('error', function(e) {
+                console.log('There was an error getting data from the name ' +
+                    'server: ' + e.message);
+                def.reject(e.message);
             });
             promisesArr.push(def.promise);
         }
