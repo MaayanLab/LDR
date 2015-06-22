@@ -123,6 +123,11 @@ gulp.task('jshint', function() {
 });
 
 gulp.task('vendor', function() {
+    gulp.src([
+        BOWER_DIRECTORY + 'jquery/dist/jquery.min.js',
+        BOWER_DIRECTORY + 'jquery/dist/jquery.min.map'
+    ])
+        .pipe(gulp.dest(BUILD_DIRECTORY));
     return gulp.src(mainBowerFiles({
         paths: {
             bowerDirectory: BOWER_DIRECTORY,

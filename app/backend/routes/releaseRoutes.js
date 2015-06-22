@@ -166,10 +166,118 @@ module.exports = function(app) {
         }
     );
 
+    // Releases endpoint to get 10 latest approved releases
+    app.get(baseUrl + '/api/releases/approved/', function(req, res) {
+            DataRelease
+                .find({ approved: true })
+                .sort({ dateModified: -1 })
+                .limit(10)
+                .populate('group')
+                .lean()
+                .exec(function(err, releases) {
+                    if (err) {
+                        console.log(err);
+                        res.status(404).send('Could not return ' +
+                            'approved releases');
+                    }
+                    else {
+                        var releasesArr = [];
+                        _.each(releases, function(release, i) {
+                            getMetadata(release, function(err, finalRelease) {
+                                if (err) {
+                                    res.status(500).send('There was an error building' +
+                                        ' meta data for these releases. Try again.')
+                                }
+                                else {
+                                    var dates = finalRelease.releaseDates;
+                                    var up = dates.upcoming;
+                                    if (up === '' || !up) {
+                                        finalRelease.releaseDates.upcoming =
+                                            dates.level1 !== '' ? dates.level1 :
+                                                dates.level2 !== '' ? dates.level2 :
+                                                    dates.level3 !== '' ? dates.level3 :
+                                                        dates.level4 !== '' ?
+                                                            dates.level4 : 'NA';
+                                    }
+                                    releasesArr.push(finalRelease);
+                                    if (i === releases.length - 1) {
+                                        res.status(200).send(releasesArr);
+                                    }
+                                }
+                            });
+                        });
+                    }
+                }
+            );
+        }
+    );
+
+    // Releases endpoint for homepage infinite scroll
+    app.get(baseUrl + '/api/releases/approved/:afterId', function(req, res) {
+        var afterId = req.params.afterId;
+        console.log(afterId);
+        var query = { _id: afterId };
+        DataRelease
+            .findOne(query)
+            .lean()
+            .exec(function(err, latestRelease) {
+                if (err) {
+                    console.log(err);
+                    res.status(404).send('Could not return release');
+                }
+                else {
+                    var dateToSearch = latestRelease.dateModified;
+                    if (!(dateToSearch instanceof Date)) {
+                        dateToSearch = new Date(dateToSearch);
+                    }
+                    DataRelease
+                        .find(
+                        { dateModified: { $gt: dateToSearch } })
+                        .sort({ dateModified: -1 })
+                        .limit(10)
+                        .populate('group')
+                        .lean()
+                        .exec(function(err, afterReleases) {
+                            if (err) {
+                                console.log(err);
+                                res.status(404).send('Could not find releases' +
+                                    ' after ' + latestRelease.dateModified);
+                            }
+                            var releasesArr = [];
+                            _.each(afterReleases, function(release, i) {
+                                getMetadata(release, function(err, finalRelease) {
+                                    if (err) {
+                                        res.status(500).send('There was an error building' +
+                                            ' meta data for these releases. Try again.')
+                                    }
+                                    else {
+                                        var dates = finalRelease.releaseDates;
+                                        var up = dates.upcoming;
+                                        if (up === '' || !up) {
+                                            finalRelease.releaseDates.upcoming =
+                                                dates.level1 !== '' ? dates.level1 :
+                                                    dates.level2 !== '' ? dates.level2 :
+                                                        dates.level3 !== '' ? dates.level3 :
+                                                            dates.level4 !== '' ?
+                                                                dates.level4 : 'NA';
+                                        }
+                                        releasesArr.push(finalRelease);
+                                        if (i === afterReleases.length - 1) {
+                                            res.status(200).send(releasesArr);
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                    );
+                }
+            }
+        );
+    });
+
     // Post release without id and save it to the database
     app.post(baseUrl + '/api/secure/releases/form/', function(req, res) {
         var inputData = req.body;
-        inputData.dateModified = new Date();
         inputData.approved = false;
 
         DataRelease.create(inputData, function(err, form) {
@@ -190,7 +298,6 @@ module.exports = function(app) {
     // database.
     app.post(baseUrl + '/api/secure/releases/form/:id', function(req, res) {
         var inputData = req.body;
-        inputData.dateModified = new Date();
 
         // Check if released. If so, do not set approved to false.
         // Should never be released here.

@@ -178,7 +178,7 @@ var dataReleaseSchema = new Schema({
     group: { type: Schema.ObjectId, ref: 'Group', required: true },
     approved: { type: Boolean, required: true, default: false },
     released: { type: Boolean, required: true, default: false },
-    dateModified: { type: String, required: true },
+    dateModified: { type: Date, required: true },
     needsEdit: { type: Boolean, default: false },
     message: { type: String, default: '' }, // Message for returning from NIH
     doi: { type: String },
@@ -224,12 +224,15 @@ try {
 
 dataReleaseSchema.pre('save', function(next) {
 
+    // Update dateModified
+    this.dateModified = new Date();
+
     // Generate 'upcoming' field with closest release date
     this.releaseDates.upcoming = this.releaseDates.level1 !== '' ?
-            this.releaseDates.level1 : this.releaseDates.level2 !== '' ?
-                this.releaseDates.level2 : this.releaseDates.level3 !== '' ?
-                    this.releaseDates.level3 : this.releaseDates.level4 !== '' ?
-                        this.releaseDates.level4 : 'NA';
+        this.releaseDates.level1 : this.releaseDates.level2 !== '' ?
+        this.releaseDates.level2 : this.releaseDates.level3 !== '' ?
+        this.releaseDates.level3 : this.releaseDates.level4 !== '' ?
+        this.releaseDates.level4 : 'NA';
 
     // Check if any ids are null. If they are, throw an error
     _.each(this.metadata, function(arr, key) {

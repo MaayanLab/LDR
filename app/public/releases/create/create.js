@@ -125,7 +125,7 @@ angular.module('ldr.releases.create', [
                     placeholder: 'Select Analysis Tools...',
                     maxTags: MAX_TAGS,
                     autocompleteEndpoint: 'tool',
-                    // useAutocomplete: true, Uncomment when implemented
+                    useAutocomplete: true,
                     autocompleteOnly: true,
                     model: []
                 },
