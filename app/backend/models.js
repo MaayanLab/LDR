@@ -213,7 +213,7 @@ var dataReleaseSchema = new Schema({
 
 // TODO: Check implementation of mongoose-version
 // https://github.com/saintedlama/mongoose-version
-dataReleaseSchema.plugin(version);
+// dataReleaseSchema.plugin(version);
 
 try {
     DataRelease = mongoose.model('DataRelease');

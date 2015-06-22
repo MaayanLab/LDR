@@ -40,7 +40,8 @@ angular.module('ldr.releases.overview', [
                     });
                 });
                 $scope.forms = data;
-            });
+            }
+        );
 
         $scope.releaseForm = function(form) {
             if (confirm('Are you sure you would like to release this entry?')) {

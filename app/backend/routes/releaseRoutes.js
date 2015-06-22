@@ -161,8 +161,10 @@ module.exports = function(app) {
                             }
                         });
                     });
-                });
-        });
+                }
+            );
+        }
+    );
 
     // Post release without id and save it to the database
     app.post(baseUrl + '/api/secure/releases/form/', function(req, res) {
@@ -233,7 +235,7 @@ module.exports = function(app) {
                 release.save();
                 res.status(202).send(release);
             }
-        })
+        });
     });
 
     // Release an entry. Must have a data URL and be approved
@@ -260,7 +262,8 @@ module.exports = function(app) {
                         release.save();
                         res.status(204).send('Dataset successfully released.')
                     }
-                })
+                }
+            );
         }
     );
 

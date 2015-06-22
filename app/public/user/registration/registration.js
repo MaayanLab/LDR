@@ -118,7 +118,8 @@ angular.module('ldr.user.registration', [
                     $scope.setCurrentUser(response.user, response.id_token);
                     store.remove('userReg');
                     $state.go('home');
-                });
+                }
+            );
         };
 
         init();

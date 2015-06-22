@@ -151,7 +151,7 @@ angular.module('ldr', [
             }
         });
 
-        $rootScope.$on('$routeChangeSuccess', function(event, current, previous) {
+        $rootScope.$on('$routeChangeSuccess', function(event, current) {
             if (current.hasOwnProperty('$$route')) {
                 $rootScope.title = current.$$route.title;
             }
