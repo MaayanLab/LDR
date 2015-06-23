@@ -1,12 +1,103 @@
 var jwt = require('express-jwt'),
     _ = require('lodash'),
     Q = require('q'),
-    DataRelease = require('../models').DataRelease,
+    Models = require('../models'),
+    DataRelease = Models.DataRelease,
+    Group = Models.Group,
     getMetadata = require('../getMetadata'),
     baseUrl = require('../config/baseUrl').baseUrl,
     config = require('../config/database');
 
 module.exports = function(app) {
+
+    // Endpoint for searching releases. NEED QUERY PARAMETER.
+    app.get(baseUrl + '/api/releases/search', function(req, res) {
+        var query = req.query.query;
+        if (!query) {
+            res.status(400).send('Query string not properly formatted.');
+        }
+        // 1. Find groups matching query and gather ids
+        // 2. Find releases matching from the group that matches an
+        //    id found in step 1.
+        // 3. Find releases matching query.
+        var releasesArr = [];
+        Group
+            .find({ $text: { $search: query } }, '_id')
+            .lean()
+            .exec(function(err, groupIds) { // [ { _id: ... }, ... ]
+                if (err) {
+                    res.status(500).send(
+                        'There was an error searching for releases.'
+                    );
+                }
+
+                // _.map() and _.pluck do not work for mongoose arrays
+                var ids = [];
+                _.each(groupIds, function(obj) {
+                    ids.push(obj._id);
+                });
+                DataRelease
+                    .find({ group: { $in: ids } })
+                    .sort({ dateModified: -1 })
+                    .populate('group')
+                    .lean()
+                    .exec(function(err, results) {
+                        if (err) {
+                            console.log(err);
+                            res.status(404).send('Error searching releases');
+                        }
+                        _.each(results, function(releaseObj) {
+                            releasesArr.push(releaseObj);
+                        });
+
+                        DataRelease
+                            .find({ $text: { $search: query } })
+                            .sort({ dateModified: -1 })
+                            .populate('group')
+                            .lean()
+                            .exec(function(err, results) {
+                                console.log(releasesArr);
+                                if (err) {
+                                    console.log(err);
+                                    res.status(404).send('Error searching releases');
+                                }
+
+                                if (!results.length) {
+                                    res.status(200).send(releasesArr);
+                                }
+                                _.each(results, function(release, i) {
+                                    getMetadata(release, function(err, finalRelease) {
+                                        if (err) {
+                                            res.status(500).send('There was an error building' +
+                                                ' meta data for these releases. Try again.')
+                                        }
+                                        else {
+                                            var dates = finalRelease.releaseDates;
+                                            var up = dates.upcoming;
+                                            // Legacy. All entries should have up.
+                                            if (up === '' || !up) {
+                                                finalRelease.releaseDates.upcoming =
+                                                    dates.level1 !== '' ? dates.level1 :
+                                                        dates.level2 !== '' ? dates.level2 :
+                                                            dates.level3 !== '' ? dates.level3 :
+                                                                dates.level4 !== '' ?
+                                                                    dates.level4 : 'NA';
+                                            }
+                                            releasesArr.push(finalRelease);
+                                            if (i === results.length - 1) {
+                                                res.status(200).send(releasesArr);
+                                            }
+                                        }
+                                    });
+                                });
+                            }
+                        );
+                    }
+                );
+            }
+        );
+    });
+
     // Returns empty release for initialization on front-end
     app.get(baseUrl + '/api/releases/form/', function(req, res) {
         var releaseInit = {
@@ -166,12 +257,12 @@ module.exports = function(app) {
         }
     );
 
-    // Releases endpoint to get 10 latest approved releases
+    // Releases endpoint to get 25 latest approved releases
     app.get(baseUrl + '/api/releases/approved/', function(req, res) {
             DataRelease
                 .find({ approved: true })
                 .sort({ dateModified: -1 })
-                .limit(10)
+                .limit(25)
                 .populate('group')
                 .lean()
                 .exec(function(err, releases) {
@@ -213,9 +304,8 @@ module.exports = function(app) {
     );
 
     // Releases endpoint for homepage infinite scroll
-    app.get(baseUrl + '/api/releases/approved/:afterId', function(req, res) {
+    app.get(baseUrl + '/api/releases/approved/:afterId/', function(req, res) {
         var afterId = req.params.afterId;
-        console.log(afterId);
         var query = { _id: afterId };
         DataRelease
             .findOne(query)
@@ -232,9 +322,9 @@ module.exports = function(app) {
                     }
                     DataRelease
                         .find(
-                        { dateModified: { $gt: dateToSearch } })
+                        { dateModified: { $lt: dateToSearch } })
                         .sort({ dateModified: -1 })
-                        .limit(10)
+                        .limit(25)
                         .populate('group')
                         .lean()
                         .exec(function(err, afterReleases) {
@@ -244,6 +334,11 @@ module.exports = function(app) {
                                     ' after ' + latestRelease.dateModified);
                             }
                             var releasesArr = [];
+                            // Send an empty array if there are no later
+                            // releases
+                            if (!afterReleases.length) {
+                                res.status(204).send(afterReleases);
+                            }
                             _.each(afterReleases, function(release, i) {
                                 getMetadata(release, function(err, finalRelease) {
                                     if (err) {

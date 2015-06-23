@@ -1,43 +1,25 @@
-<div infinite-scroll='releases.nextPage()' infinite-scroll-disabled="releases.busy" infinite-scroll-distance='1'>
-    <div class="user-card col-xs-12 col-sm-6 col-md-6"
-         ng-repeat="release in releases.items">
-        <div class="well well-sm">
-            <div class="row">
-                <div class="col-sm-6 col-md-4">
-                    <img src="images/user-icon.png" alt=""
-                         class="img-circle img-responsive">
-                </div>
-                <div class="col-sm-6 col-md-8">
-                    <h4>{{release.datasetName}}</h4>
-                    <h5 class="text-muted">{{user.name}}</h5>
-                    <h5 ng-if="!user.name"></h5>
-                    <h5 class="user-card-pending" ng-if="!user.admitted">
-                        <a ng-click="acceptUser(user)">Accept</a>
-                    </h5>
-                    <h5 class="user-card-accepted" ng-if="showAdmitted">
-                        User accepted!
-                    </h5>
+<div class="row">
+    <h3 class="text-center col-sm-12">LINCS Data Registration System</h3>
 
-                    <p>
-                        <i class="user-card-glyph glyphicon glyphicon-map-marker"></i>
-                        {{user.location}}
-                        <br/>
-                        <i class="user-card-glyph glyphicon glyphicon-envelope"></i>
-                        {{user.email}}
-                        <br/>
-                        <i class="user-card-glyph glyphicon glyphicon-globe"></i>
-                        <a ng-if="user.homepage !== 'http://'"
-                           ng-href="{{user.homepage}}">
-                            {{user.homepage}}
-                        </a>
-                        <br/>
-                        <i class="user-card-glyph glyphicon glyphicon-book"></i>
-                        {{user.fieldOfStudy}}
-                        <br/>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div ng-show='releases.busy'>Loading data...</div>
+    <p class="col-sm-12">
+        This website enables the LINCS Data Signature
+        Generation Centers (DSGCs) to submit their data release instances in a
+        consistent and controlled format. This will facilitate improved data
+        integration, data search, and analysis across the various LINCS
+        resources and datasets. In the future, the data registration system will
+        be applied to the broader systems biology community for the purpose of
+        integrating LINCS data with other major repositories.
+    </p>
+</div>
+<div class="row">
+    <form id="release-search" class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
+        <input ng-model="query" name="q" value="" type="search" id="search-bar"
+               placeholder="search releases" tabindex="1" autocomplete="off">
+        <input type="submit" id="search-btn" ui-sref="search({query: query})" />
+    </form>
+</div>
+<div infinite-scroll='releases.nextPage()'
+     infinite-scroll-disabled="releases.busy" infinite-scroll-distance='1'>
+    <ldr-masonry result-array="releases.items"></ldr-masonry>
+    <div ng-show='releases.busy && !releases.empty'>Loading data...</div>
 </div>

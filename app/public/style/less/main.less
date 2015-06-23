@@ -201,12 +201,9 @@ button.login-btn {
 }
 
 #release-search {
-    float: left;
     position: relative;
-    width: 53%;
     height: 47px;
-    padding: 0;
-    margin: 0;
+    margin-bottom: 20px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 2px;
     background: #fff;
@@ -221,9 +218,9 @@ button.login-btn {
         margin: 0;
         border: 0;
         outline: 0;
-        font-weight: 300;
         font-size: 18px;
         background: none;
+
     }
 
     #search-btn {
@@ -238,8 +235,13 @@ button.login-btn {
         outline: 0;
         border-left: 1px solid rgba(0, 0, 0, 0.2);
         border-radius: 0 2px 2px 0;
-        background: url("../images/ico-search.svg") no-repeat 50% 50%;
+        background: url('../images/ico-search.svg') no-repeat 50% 50%;
         background-size: 16px 16px;
+
+        &:hover {
+            background: @color-primary url('../images/ico-search-hover.svg') no-repeat 50% 50%;
+            background-size: 16px 16px;
+        }
     }
 }
 
@@ -641,20 +643,6 @@ div.btn-group.open > .tr-needs-edit-btn {
     border-right: 2px solid #ccc;
 }
 
-.animate.ng-enter, .animate.ng-leave {
-    transition: 500ms ease-in all;
-    position: relative;
-    display: block;
-}
-
-.animate.ng-enter.ng-enter-active, .animate.ng-leave {
-    left: 0;
-}
-
-.animate.ng-leave.ng-leave-active, .animate.ng-enter {
-    left: 500px;
-}
-
 .assay-title {
     margin: 20px 0;
 }
@@ -688,35 +676,64 @@ span.stat-num {
     color: @color-primary;
 }
 
-.user-card {
+.card {
     min-height: 200px;
 }
 
-.user-card-titles {
+.card-release {
+    padding: 0 7px 14px 7px;
+}
+
+.well-release {
+    margin-bottom: 0;
+}
+
+.card-releases.ng-move,
+.card-releases.ng-enter,
+.card-releases.ng-leave {
+    -webkit-transition:all linear 0.2s;
+    transition:all linear 0.2s;
+}
+
+.card-titles {
     display: inline-block;
     width: 100%;
 }
 
-.user-card-name {
+.card-name {
     float: left;
 }
 
-.user-card-pending {
+.card-pending {
     margin-right: 20px;
     float: right;
     color: @color-red;
 }
 
-.user-card-accepted {
+.card-accepted {
     float: right;
     color: #4cae4c;
 }
 
-.user-card-glyph {
+.card-glyph {
     top: 3px;
     color: @color-primary;
     margin-bottom: 10px;
     margin-right: 10px;
+}
+
+.card-glyph-prod, .card-glyph-released {
+    top: 3px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.in-production {
+    color: @color-red;
+}
+
+.released {
+    color: #4cae4c;
 }
 
 small {
@@ -725,7 +742,7 @@ small {
     color: #999;
 }
 
-.user-card-details {
+.card-details {
     margin-left: 35px;
 }
 

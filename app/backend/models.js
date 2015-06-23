@@ -167,6 +167,8 @@ var groupSchema = new Schema({
     location: String
 });
 
+groupSchema.index({ name: 'text' });
+
 try {
     Group = mongoose.model('Group');
 } catch (e) {
@@ -214,6 +216,13 @@ var dataReleaseSchema = new Schema({
 // TODO: Check implementation of mongoose-version
 // https://github.com/saintedlama/mongoose-version
 // dataReleaseSchema.plugin(version);
+
+dataReleaseSchema.index({
+    datasetName: 'text',
+    'metadata.**': 'text',
+    'releaseDates.**': 'text',
+    'urls.**': 'text'
+});
 
 try {
     DataRelease = mongoose.model('DataRelease');

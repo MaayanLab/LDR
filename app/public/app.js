@@ -6,6 +6,7 @@ angular.module('ldr', [
     'ldr.group.create',
     'ldr.releases.overview',
     'ldr.releases.create',
+    'ldr.search',
     'ldr.user.admin',
     'ldr.user.registration',
     'ldr.user.settings',
@@ -157,7 +158,10 @@ angular.module('ldr', [
             }
         });
     })
-    .controller('ldrCtrl', function($scope, store) {
+    .controller('ldrCtrl', function($scope, store, $state) {
         $scope.pageTitle = 'LINCS Dataset Registry';
         $scope.currentUser = store.get('currentUser');
+
+        // Automatically add the hash and go to home state
+        $state.go('home');
     });

@@ -3,7 +3,7 @@
     <ldr-bar group-id="{{currentUser.group._id}}"></ldr-bar>
 </div>
 <div class="users">
-    <div class="user-card col-xs-12 col-sm-6 col-md-6" ng-repeat="user in users">
+    <div class="card col-xs-12 col-sm-6 col-md-6" ng-repeat="user in users">
         <div class="well well-sm">
             <div class="row">
                 <div class="col-sm-6 col-md-4">
@@ -14,26 +14,26 @@
                     <h4>{{user.username}}</h4>
                     <h5 class="text-muted">{{user.name}}</h5>
                     <h5 ng-if="!user.name"></h5>
-                    <h5 class="user-card-pending" ng-if="!user.admitted">
+                    <h5 class="card-pending" ng-if="!user.admitted">
                         <a ng-click="acceptUser(user)">Accept</a>
                     </h5>
-                    <h5 class="user-card-accepted" ng-if="showAdmitted">
+                    <h5 class="card-accepted" ng-if="showAdmitted">
                         User accepted!
                     </h5>
                     <p>
-                        <i class="user-card-glyph glyphicon glyphicon-map-marker"></i>
+                        <i class="card-glyph glyphicon glyphicon-map-marker"></i>
                         {{user.location}}
                         <br />
-                        <i class="user-card-glyph glyphicon glyphicon-envelope"></i>
+                        <i class="card-glyph glyphicon glyphicon-envelope"></i>
                         {{user.email}}
                         <br />
-                        <i class="user-card-glyph glyphicon glyphicon-globe"></i>
+                        <i class="card-glyph glyphicon glyphicon-globe"></i>
                         <a ng-if="user.homepage !== 'http://'"
                            ng-href="{{user.homepage}}">
                             {{user.homepage}}
                         </a>
                         <br />
-                        <i class="user-card-glyph glyphicon glyphicon-book"></i>
+                        <i class="card-glyph glyphicon glyphicon-book"></i>
                         {{user.fieldOfStudy}}
                         <br />
                     </p>

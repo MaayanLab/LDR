@@ -58,7 +58,7 @@ gulp.task('fonts', function() {
 
 gulp.task('images', function() {
     return gulp.src([
-        SRC_DIRECTORY + 'images/**/*.{jpg,jpeg,png,gif,ico}',
+        SRC_DIRECTORY + 'images/**/*.{jpg,jpeg,png,gif,ico,svg}',
         '!' + SRC_DIRECTORY + 'images/favicons/**',
         '!' + SRC_DIRECTORY + 'images/favicons'
     ])
