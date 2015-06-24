@@ -1,32 +1,35 @@
 <div masonry>
-    <div class="masonry-brick card-release col-md-4 col-sm-6 col-xs-12"
+    <div class="masonry-brick card-release col-lg-3 col-md-4 col-sm-6 col-xs-12"
          ng-repeat="release in resultArray">
         <div class="well well-sm well-release">
             <div class="row">
                 <div class="text-center col-xs-12">
-                    <img ng-src="images/user-icon.png" alt="">
+                    <img class="img-responsive group-icon" ng-src="http://amp.pharm.mssm.edu/LDR/api/group/{{release.group._id}}/icon/" alt="images/user-icon.png"/>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-10 col-xs-offset-1">
-                    <h4 class="text-muted text-center">
-                        {{release.datasetName}}
-                    </h4>
+                    <h5 class="">{{release.datasetName}}</h5>
 
                     <p>
-                            <span ng-if="!release.released"
-                                  class="in-production">
-                                <i class="card-glyph-prod glyphicon glyphicon-wrench"></i>
-                                In Production
-                                <br/>
-                            </span>
-                            <span ng-if="release.released" class="released">
-                                <i class="card-glyph-released glyphicon glyphicon-ok"></i>
-                                Released - <a
-                                    ng-href="{{release.urls.dataUrl}}">Get
-                                data here</a>
-                                <br/>
-                            </span>
+                        <span>
+                            <i class="card-glyph glyphicon glyphicon-user"></i>
+                            {{release.group.name}}
+                            <br/>
+                        </span>
+                        <span ng-if="!release.released" class="in-production">
+                            <i class="card-glyph-prod glyphicon glyphicon-wrench"></i>
+                            In Production
+                            <br/>
+                        </span>
+                        <span ng-if="release.released" class="released">
+                            <i class="card-glyph-released glyphicon glyphicon-ok"></i>
+                            Released -
+                            <a ng-href="{{release.urls.dataUrl}}">
+                                Get data here
+                            </a>
+                            <br/>
+                        </span>
                         <i class="card-glyph glyphicon glyphicon-calendar"></i>
                         {{release.releaseDates.upcoming |
                         date: 'MMMM dd, yyyy'}}

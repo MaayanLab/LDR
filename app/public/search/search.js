@@ -24,6 +24,9 @@ angular.module('ldr.search', [
 
         $scope.results = [];
         $scope.query = $stateParams.query;
+
+        // Add separate query that doesn't change on input change
+        $scope.queryLabel = angular.copy($scope.query);
         api('releases/search?query=' + $scope.query)
             .get()
             .success(function(results) {

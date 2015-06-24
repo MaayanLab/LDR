@@ -135,7 +135,6 @@ module.exports = function(app) {
                 console.log('Error creating User: ' + err);
             }
             else {
-                console.log('User created successfully');
                 var userWOPass = _.omit(user,
                     ['password', 'passwordConfirm', '__v']);
                 var token = createToken(userWOPass);

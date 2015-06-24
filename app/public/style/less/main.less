@@ -200,6 +200,26 @@ button.login-btn {
     margin: 0 90px;
 }
 
+.intro {
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.search-count {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 19px;
+}
+
+.results-info {
+    font-weight: 400 !important;
+    margin: 0 0 20px 0;
+    span {
+        font-weight: 700 !important;
+        color: @color-primary;
+    }
+}
+
 #release-search {
     position: relative;
     height: 47px;
@@ -668,6 +688,17 @@ div.btn-group.open > .tr-needs-edit-btn {
     margin: 50px auto;
 }
 
+.drop-box {
+    background: #eee;
+    border: 5px dashed rgba(170, 170, 170, 0.55);
+    min-height: 100px;
+    padding-top: 25px;
+    margin-bottom: 20px;
+}
+.dragover {
+    border: 5px dashed blue;
+}
+
 .group-data, .meta-data {
     border-top: 1px solid #eee;
 }
@@ -685,14 +716,12 @@ span.stat-num {
 }
 
 .well-release {
+    padding: 0;
     margin-bottom: 0;
 }
 
-.card-releases.ng-move,
-.card-releases.ng-enter,
-.card-releases.ng-leave {
-    -webkit-transition:all linear 0.2s;
-    transition:all linear 0.2s;
+.group-icon {
+    border-radius: 3px;
 }
 
 .card-titles {

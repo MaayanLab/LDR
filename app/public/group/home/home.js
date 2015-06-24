@@ -6,6 +6,7 @@
 angular.module('ldr.group.home', [
     'ui.router',
     'angular-storage',
+    'ngFileUpload',
     'ldr.api'
 ])
 
@@ -23,8 +24,9 @@ angular.module('ldr.group.home', [
     })
 
     .controller('GroupHomeCtrl', function($scope, $stateParams, $timeout,
-                                          store, api) {
+                                          store, api, Upload, lodash) {
 
+        var currentUser = store.get('currentUser');
         var groupId = $stateParams.id;
 
         $scope.users = [];
@@ -33,7 +35,8 @@ angular.module('ldr.group.home', [
             .get()
             .success(function(usersArr) {
                 $scope.users = usersArr;
-            });
+            }
+        );
 
         $scope.acceptUser = function(user) {
             if (confirm('Are you sure you would like to admit this user? This' +
@@ -47,8 +50,31 @@ angular.module('ldr.group.home', [
                                 $scope.users = usersArr;
                                 $scope.showAdmitted = true;
                                 $timeout($scope.showAdmitted = false, 5000);
-                            });
+                            }
+                        );
+                    }
+                );
+            }
+        };
+
+        $scope.$watch('files', function() {
+            $scope.upload($scope.files);
+        });
+        $scope.log = '';
+
+        $scope.upload = function(files) {
+            if (files && files.length) {
+                lodash.each(files, function(file) {
+                    Upload.upload({
+                        url: '/LDR/api/secure/group/' + groupId + '/upload/',
+                        file: file
+                    }).progress(function(evt) {
+                        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                    }).success(function(data, status, headers, config) {
+
+                        $scope.log = 'file: ' + config.file.name + ', Response: ' + JSON.stringify(data) + '\n' + $scope.log;
                     });
+                });
             }
         };
 

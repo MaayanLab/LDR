@@ -162,6 +162,10 @@ try {
 var groupSchema = new Schema({
     name: { type: String, required: true, index: { unique: true } },
     homepage: { type: String, default: '' },
+    icon: {
+        path: { type: String, default: '' },
+        type: { type: String, default: '' }
+    },
     email: String,
     description: String,
     location: String

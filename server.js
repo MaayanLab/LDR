@@ -23,17 +23,31 @@ if (process.env.NODE_ENV != 'production') { // if production
 }
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(multer({ dest: './backend/uploads/' }));
+app.use(multer({
+    dest: __dirname + '/backend/uploads/',
+    onFileUploadStart: function(file) {
+        console.log(file.originalname + ' is starting ...')
+    },
+    changeDest: function(dest) {
+        console.log(dest);
+        // Set dest to HDFS if in production
+        if (process.env.NODE_ENV === 'production') {
+            dest = __dirname + '/hdfs/';
+        }
+        return dest;
+    }
+}));
 app.use(compress());
 
 var publicDir = __dirname + '/';
 console.log('Serving static files from ' + publicDir);
+app.use('/LDR/uploads', express.static(path.join(publicDir, 'backend/uploads')));
 app.use('/LDR', express.static(path.join(publicDir)));
 
 require('./backend/routes')(app);
 
 app.get('/', function (req, res) {
-    res.sendFile(publicDir + 'index.html');
+    res.status(200).sendFile(publicDir + 'index.html');
 });
 
 app.use(function (err, req, res) {

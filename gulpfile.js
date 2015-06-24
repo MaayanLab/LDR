@@ -172,7 +172,8 @@ gulp.task('build:watch', function(callback) {
 gulp.task('serve', ['build:watch'], function(cb) {
     src.server = [
         BUILD_DIRECTORY + 'server.js',
-        BUILD_DIRECTORY + 'backend/**/*'
+        BUILD_DIRECTORY + 'backend/**/*',
+        '!' + BUILD_DIRECTORY + 'backend/**/uploads/**'
     ];
 
     var started = false;

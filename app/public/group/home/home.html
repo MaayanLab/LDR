@@ -1,6 +1,21 @@
+<!--<img ng-src="/LDR/api/group/{{currentUser.group._id}}/icon/" alt="Group Icon"/>-->
 <h3 class="text-center">{{currentUser.group.name}}</h3>
 <div class="statistics">
     <ldr-bar group-id="{{currentUser.group._id}}"></ldr-bar>
+</div>
+<div class="row">
+    <div class="col-sm-4 col-sm-offset-4 text-center">
+        <h4>Upload new group icon</h4>
+
+        <button type="file" ngf-select ng-model="files" ngf-capture="'camera'"
+        accept="image/*" ngf-accept="'image/*'">Upload</button>
+        <!--<div ngf-drop ngf-select ng-model="file" class="drop-box"
+             ngf-drag-over-class="dragover" ngf-multiple="false"
+             ngf-allow-dir="false"
+             accept="image/*">
+            Drag and drop an image or click here to upload
+        </div>-->
+    </div>
 </div>
 <div class="users">
     <div class="card col-xs-12 col-sm-6 col-md-6" ng-repeat="user in users">
@@ -20,22 +35,23 @@
                     <h5 class="card-accepted" ng-if="showAdmitted">
                         User accepted!
                     </h5>
+
                     <p>
                         <i class="card-glyph glyphicon glyphicon-map-marker"></i>
                         {{user.location}}
-                        <br />
+                        <br/>
                         <i class="card-glyph glyphicon glyphicon-envelope"></i>
                         {{user.email}}
-                        <br />
+                        <br/>
                         <i class="card-glyph glyphicon glyphicon-globe"></i>
                         <a ng-if="user.homepage !== 'http://'"
                            ng-href="{{user.homepage}}">
                             {{user.homepage}}
                         </a>
-                        <br />
+                        <br/>
                         <i class="card-glyph glyphicon glyphicon-book"></i>
                         {{user.fieldOfStudy}}
-                        <br />
+                        <br/>
                     </p>
                 </div>
             </div>

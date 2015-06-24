@@ -56,7 +56,6 @@ module.exports = function(app) {
                             .populate('group')
                             .lean()
                             .exec(function(err, results) {
-                                console.log(releasesArr);
                                 if (err) {
                                     console.log(err);
                                     res.status(404).send('Error searching releases');

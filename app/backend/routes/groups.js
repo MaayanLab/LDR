@@ -81,6 +81,40 @@ module.exports = function(app) {
             })
     });
 
+    app.get(baseUrl + '/api/group/:id/icon/', function(req, res) {
+        var groupId = req.params.id;
+
+        Group
+            .findOne({ _id: groupId })
+            .exec(function(err, group) {
+                if (err) {
+                    console.log(err);
+                    res.status(404).send('Group could not be found');
+                }
+                else if (!group.icon) {
+                    group.icon = {
+                        type: '',
+                        path: ''
+                    };
+                    group.save();
+                    res.status(404).end();
+                }
+                else if (group.icon.path) {
+                    res.status(200).sendFile(group.icon.path, {
+                        headers: { 'Content-Type': group.icon.type }
+                    }, function(err) {
+                        if (err) {
+                            console.log(err);
+                            res.status(err.status).end();
+                        }
+                        else {
+                            console.log('Sent:', group.icon.path);
+                        }
+                    });
+                }
+            })
+    });
+
     app.put(baseUrl + '/api/secure/group/:groupId/users/:userId/approve/',
         function(req, res) {
             var groupId = req.params.groupId;
@@ -138,23 +172,43 @@ module.exports = function(app) {
                                 'updated');
                         }
                     }
-                )
+                );
             };
         }
     );
 
+    // Do not make this API secure so that unregistered users can create a
+    // group
     app.post(baseUrl + '/api/group/create/', function(req, res) {
 
-        console.log(req.body);
         Group.create(req.body, function(err, group) {
             if (err) {
                 console.log(err);
                 res.status(404).send('Error creating group');
             }
             else {
-                console.log(group);
                 res.status(201).send(_.omit(group, ['__v']));
             }
         })
+    });
+
+    app.post(baseUrl + '/api/secure/group/:id/upload/', function(req, res) {
+        var groupId = req.params.id;
+        Group
+            .findOne({ _id: groupId })
+            .exec(function(err, group) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).send('There was an error setting the ' +
+                        'group icon. Please try again.')
+                }
+                else {
+                    group.icon.path = req.files.file.path;
+                    group.icon.type = req.files.file.mimetype;
+                    group.save();
+                    res.status(200).send('Group icon successfully updated');
+                }
+            }
+        );
     });
 };
