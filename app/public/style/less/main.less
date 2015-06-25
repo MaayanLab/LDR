@@ -684,19 +684,28 @@ div.btn-group.open > .tr-needs-edit-btn {
     margin-left: 12px;
 }
 
-.statistics {
+.group {
     margin: 50px auto;
+    display: table;
 }
 
-.drop-box {
-    background: #eee;
-    border: 5px dashed rgba(170, 170, 170, 0.55);
-    min-height: 100px;
-    padding-top: 25px;
-    margin-bottom: 20px;
+.group-info {
+    min-width: 425px !important;
 }
-.dragover {
-    border: 5px dashed blue;
+
+.statistics {
+    @media (min-width: 992px) {
+        max-width: 425px !important;
+    };
+}
+
+.group-info, .statistics {
+    // Taken same as col-lg
+    @media (min-width: 992px) {
+        float: none;
+        vertical-align: middle;
+        display: table-cell;
+    }
 }
 
 .group-data, .meta-data {
@@ -720,8 +729,34 @@ span.stat-num {
     margin-bottom: 0;
 }
 
+.well-release-released {
+    box-shadow: 0 0 8px 0 #4cae4c;
+}
+
+.well-release-prod {
+    box-shadow: 0 0 8px 0 @color-red;
+
+}
+
 .group-icon {
     border-radius: 3px;
+    border-bottom: 1px solid #ddd;
+}
+
+.group-upload {
+    display: inline-block;
+}
+
+.group-icon-upload {
+    display: block;
+    max-height: 200px;
+    width: auto;
+    cursor: pointer;
+    margin: 0 auto;
+}
+
+.caption {
+    font-size: 12px;
 }
 
 .card-titles {

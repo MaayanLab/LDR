@@ -33,7 +33,22 @@ module.exports = function(app) {
         );
     });
 
-    app.put(baseUrl + '/api/secure/user/:id/changePassword',
+    app.put(baseUrl + '/api/secure/user/:id/update/', function(req, res) {
+        var userId = req.params.id;
+        var updatedUser = req.body;
+        var query = { _id: userId };
+        User.update(query, updatedUser, function(err, user) {
+            if (err) {
+                console.log(err);
+                res.status(400).send('Error updating user');
+            }
+            else {
+                res.status(204).send('User successfully updated');
+            }
+        })
+    });
+
+    app.put(baseUrl + '/api/secure/user/:id/changePassword/',
         function(req, res) {
 
             var userId = req.params.id;

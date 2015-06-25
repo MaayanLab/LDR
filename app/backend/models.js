@@ -163,11 +163,11 @@ var groupSchema = new Schema({
     name: { type: String, required: true, index: { unique: true } },
     homepage: { type: String, default: '' },
     icon: {
-        path: { type: String, default: '' },
-        type: { type: String, default: '' }
+        path: { type: String, default: '/usr/src/app/hdfs/97a6f65cb0c61d48704153af6bdc4c3c.png' },
+        type: { type: String, default: 'image/png' }
     },
     email: String,
-    description: String,
+    about: { type: String, default: '' },
     location: String
 });
 

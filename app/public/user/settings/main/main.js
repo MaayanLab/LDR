@@ -18,8 +18,24 @@ angular.module('ldr.user.settings', [
             }
         });
     })
-    .controller('UserSettingsCtrl', function($scope, $stateParams, store) {
+    .controller('UserSettingsCtrl', function($scope, api) {
 
-        var currentUser = $scope.getCurrentUser();
+        $scope.user = angular.copy($scope.getCurrentUser());
+        if ($scope.user.name) {
+            $scope.user.firstName = $scope.user.name.split(' ')[0];
+            $scope.user.lastName = $scope.user.name.split(' ')[1];
+        }
+
+
+        $scope.updateUser = function() {
+            $scope.user.name = $scope.user.firstName + ' ' +
+                $scope.user.lastName;
+            $scope.setCurrentUser($scope.user);
+            api('user/' + $scope.user._id + '/update/')
+                .put($scope.user)
+                .success(function() {
+                    alert('User updated successfully');
+                })
+        };
 
     });

@@ -1,10 +1,13 @@
 <div masonry>
     <div class="masonry-brick card-release col-lg-3 col-md-4 col-sm-6 col-xs-12"
          ng-repeat="release in resultArray">
-        <div class="well well-sm well-release">
+        <div class="well well-sm well-release"
+             ng-class="release.released ? 'well-release-released' : 'well-release-prod'">
             <div class="row">
                 <div class="text-center col-xs-12">
-                    <img class="img-responsive group-icon" ng-src="http://amp.pharm.mssm.edu/LDR/api/group/{{release.group._id}}/icon/" alt="images/user-icon.png"/>
+                    <img class="img-responsive group-icon"
+                         ng-src="http://amp.pharm.mssm.edu/LDR/api/group/{{release.group._id}}/icon/"
+                         alt="images/user-icon.png"/>
                 </div>
             </div>
             <div class="row">
@@ -25,7 +28,7 @@
                         <span ng-if="release.released" class="released">
                             <i class="card-glyph-released glyphicon glyphicon-ok"></i>
                             Released -
-                            <a ng-href="{{release.urls.dataUrl}}">
+                            <a ng-href="{{release.urls.dataUrl}}" target="_blank">
                                 Get data here
                             </a>
                             <br/>

@@ -8,7 +8,9 @@ angular.module('ldr.nav', [])
                 scope.setCurrentUser = function(user, token) {
                     scope.currentUser = user;
                     store.set('currentUser', user);
-                    store.set('jwt', token);
+                    if (token) {
+                        store.set('jwt', token);
+                    }
                     $rootScope.isLoggedIn = true;
                     $rootScope.isLoggedInAdmin = user.admin;
                     $rootScope.isAdmitted = user.admitted;
