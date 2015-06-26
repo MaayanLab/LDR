@@ -260,7 +260,7 @@ module.exports = function(app) {
     app.get(baseUrl + '/api/releases/approved/', function(req, res) {
             DataRelease
                 .find({ approved: true })
-                .sort({ dateModified: -1 })
+                .sort({ released: -1, upcomingRelease: 1 })
                 .limit(25)
                 .populate('group')
                 .lean()
@@ -279,16 +279,6 @@ module.exports = function(app) {
                                         ' meta data for these releases. Try again.')
                                 }
                                 else {
-                                    var dates = finalRelease.releaseDates;
-                                    var up = dates.upcoming;
-                                    if (up === '' || !up) {
-                                        finalRelease.releaseDates.upcoming =
-                                            dates.level1 !== '' ? dates.level1 :
-                                                dates.level2 !== '' ? dates.level2 :
-                                                    dates.level3 !== '' ? dates.level3 :
-                                                        dates.level4 !== '' ?
-                                                            dates.level4 : 'NA';
-                                    }
                                     releasesArr.push(finalRelease);
                                     if (i === releases.length - 1) {
                                         res.status(200).send(releasesArr);
@@ -315,14 +305,16 @@ module.exports = function(app) {
                     res.status(404).send('Could not return release');
                 }
                 else {
-                    var dateToSearch = latestRelease.dateModified;
+                    var dateToSearch = latestRelease.upcomingRelease;
                     if (!(dateToSearch instanceof Date)) {
                         dateToSearch = new Date(dateToSearch);
                     }
+                    console.log(latestRelease._id);
+                    console.log(dateToSearch);
                     DataRelease
                         .find(
-                        { dateModified: { $lt: dateToSearch } })
-                        .sort({ dateModified: -1 })
+                        { upcomingRelease: { $gt: dateToSearch } })
+                        .sort({ released: -1, upcomingRelease: 1 })
                         .limit(25)
                         .populate('group')
                         .lean()
@@ -345,16 +337,6 @@ module.exports = function(app) {
                                             ' meta data for these releases. Try again.')
                                     }
                                     else {
-                                        var dates = finalRelease.releaseDates;
-                                        var up = dates.upcoming;
-                                        if (up === '' || !up) {
-                                            finalRelease.releaseDates.upcoming =
-                                                dates.level1 !== '' ? dates.level1 :
-                                                    dates.level2 !== '' ? dates.level2 :
-                                                        dates.level3 !== '' ? dates.level3 :
-                                                            dates.level4 !== '' ?
-                                                                dates.level4 : 'NA';
-                                        }
                                         releasesArr.push(finalRelease);
                                         if (i === afterReleases.length - 1) {
                                             res.status(200).send(releasesArr);

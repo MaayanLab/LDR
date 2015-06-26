@@ -685,7 +685,8 @@ div.btn-group.open > .tr-needs-edit-btn {
 }
 
 .group {
-    margin: 50px auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
     display: table;
 }
 
@@ -722,6 +723,17 @@ span.stat-num {
 
 .card-release {
     padding: 0 7px 14px 7px;
+    height: 400px;
+    @media (max-width: 500px) {
+        width: 50%;
+        float: left;
+    }
+
+    @media (min-width: 500px) and (max-width: 768px) {
+        width: 33.3333333333333%;
+        float: left;
+    }
+
 }
 
 .well-release {
@@ -739,8 +751,7 @@ span.stat-num {
 }
 
 .group-icon {
-    border-radius: 3px;
-    border-bottom: 1px solid #ddd;
+
 }
 
 .group-upload {

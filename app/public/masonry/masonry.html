@@ -1,6 +1,6 @@
-<div masonry>
-    <div class="masonry-brick card-release col-lg-3 col-md-4 col-sm-6 col-xs-12"
-         ng-repeat="release in resultArray">
+<div>
+    <div class="card-release col-md-2 col-sm-3"
+         ng-repeat="release in resultArray | orderBy:['-released']">
         <div class="well well-sm well-release"
              ng-class="release.released ? 'well-release-released' : 'well-release-prod'">
             <div class="row">
@@ -27,9 +27,11 @@
                         </span>
                         <span ng-if="release.released" class="released">
                             <i class="card-glyph-released glyphicon glyphicon-ok"></i>
-                            Released -
+                            Released
+                            <br/>
+                            <i class="card-glyph-released glyphicon glyphicon-link"></i>
                             <a ng-href="{{release.urls.dataUrl}}" target="_blank">
-                                Get data here
+                                <strong>Access data</strong>
                             </a>
                             <br/>
                         </span>

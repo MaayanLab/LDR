@@ -191,7 +191,7 @@ var dataReleaseSchema = new Schema({
     datasetName: { type: String, required: true },
     description: { type: String, default: '' }, // Brief description of exp.
     releaseDates: {
-        upcoming: { type: String, default: '' },
+        upcoming: Date,
         level1: { type: String, default: '' },
         level2: { type: String, default: '' },
         level3: { type: String, default: '' },
@@ -257,6 +257,7 @@ dataReleaseSchema.pre('save', function(next) {
     });
     next();
 });
+
 
 module.exports = {
     User: User,
