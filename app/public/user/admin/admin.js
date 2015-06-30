@@ -55,16 +55,25 @@ angular.module('ldr.user.admin', [
             });
         };
 
-        $scope.returnForm = function(formToReturn) {
-            $modal.open({
-                templateUrl: 'user/admin/returnModal/returnModal.html',
-                controller: 'ReturnModalInstanceCtrl',
-                resolve: {
-                    form: formToReturn
+        $scope.returnForm = function(form) {
+            $modal
+                .open({
+                    templateUrl: 'user/admin/returnModal/returnModal.html',
+                    controller: 'ReturnModalInstanceCtrl',
+                    resolve: {
+                        config: function() {
+                            return {
+                                form: form
+                            }
+                        }
+                    }
+                })
+                .result.then(function(message) {
+                    form.message = message;
+                    releaseApi.get().success(function(forms) {
+                        $scope.allForms = forms;
+                    });
                 }
-            });
-            releaseApi.get().success(function(forms) {
-                $scope.allForms = forms;
-            });
+            );
         };
     });

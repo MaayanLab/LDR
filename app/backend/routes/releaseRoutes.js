@@ -10,7 +10,7 @@ var jwt = require('express-jwt'),
 
 module.exports = function(app) {
 
-    // Endpoint for searching releases. NEED QUERY PARAMETER.
+    // Endpoint for searching releases. NEEDS QUERY PARAMETER.
     app.get(baseUrl + '/api/releases/search', function(req, res) {
         var query = req.query.query;
         if (!query) {
@@ -370,8 +370,7 @@ module.exports = function(app) {
         });
     });
 
-    // POST release with id, find it and update. If not, save it to the
-    // database.
+    // POST release with id, find it and update.
     app.post(baseUrl + '/api/secure/releases/form/:id', function(req, res) {
         var inputData = req.body;
 
@@ -380,7 +379,9 @@ module.exports = function(app) {
         if (!inputData.released) {
             inputData.approved = false;
         }
+        inputData.needsEdit = false;
         var query = { _id: req.params.id };
+        // Can't update _id field
         delete inputData._id;
         DataRelease.update(query, inputData, function(err) {
             if (err) {
@@ -403,7 +404,8 @@ module.exports = function(app) {
         });
     });
 
-    app.post(baseUrl + '/api/secure/releases/form/:id/urls', function(req, res) {
+    // POST endpoint for released forms. Only update urls
+    app.post(baseUrl + '/api/secure/releases/form/:id/urls/', function(req, res) {
         var id = req.params.id;
         var query = { _id: id };
         var urls = req.body;
@@ -415,6 +417,26 @@ module.exports = function(app) {
             }
             else {
                 release.urls = urls;
+                release.save();
+                res.status(202).send(release);
+            }
+        });
+    });
+
+    // POST endpoint for superuser to return unapproved releases
+    app.post(baseUrl + '/api/secure/releases/form/:id/return/', function(req, res) {
+        var id = req.params.id;
+        var query = { _id: id };
+        var message = req.body.message;
+        DataRelease.findOne(query, function(err, release) {
+            if (err) {
+                console.log(err);
+                res.status(400).send('There was an error updating urls for ' +
+                    'entry with id ' + id + '. Please try again.')
+            }
+            else {
+                release.needsEdit = true;
+                release.message = message;
                 release.save();
                 res.status(202).send(release);
             }
@@ -452,15 +474,18 @@ module.exports = function(app) {
 
     // DELETE individual release
     app.delete(baseUrl + '/api/secure/releases/form/:id', function(req, res) {
-        DataRelease.findOne({ _id: req.params.id }).remove(function(err) {
-            if (err) {
-                console.log(err);
-                res.status(404).send('There was an error deleting the data ' +
-                    'release with id ' + req.query.formId +
-                    ' Error: ' + err);
+        DataRelease
+            .findOne({ _id: req.params.id })
+            .remove(function(err) {
+                if (err) {
+                    console.log(err);
+                    res.status(404).send('There was an error deleting the ' +
+                        'data release with id ' + req.params.id +
+                        ' Error: ' + err);
+                }
+                res.status(200).send('The data release with id ' +
+                    req.params.id + ' was deleted');
             }
-            res.status(200).send('The data release with id ' + req.params.id +
-                ' was deleted');
-        });
+        );
     });
 };

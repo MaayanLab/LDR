@@ -14,13 +14,13 @@ After installing, run `karma start` or `gulp karma` to run karma tests
 ## Deploy ##
 This application is deployed using [Docker](https://www.docker.com/ "Docker Homepage"), [Mesos](http://mesos.apache.org/ "Mesos Homepage"), and [Marathon](https://mesosphere.github.io/marathon/ "Mesos Homepage").
 
-Running `npm run build` will build the container using the Dockerfile found in the root folder using the tag **maayanlab/ldr:1.5**.
+Running `npm run build` will build the container using the Dockerfile found in the root folder using the tag **146.203.54.165:5000/ldr:1.5**.
 
 The Dockerfile will perform the following actions:
 
 - `gulp build` to build the production-ready folder
 - Copy that folder into the container
-- Set NODE_ENV=production
+- Set `NODE_ENV=production`
 - Run `npm install`
 - Set `npm start` as the command to run the container.
 
@@ -35,4 +35,4 @@ Try running `docker run -p 80:3001 -d <container ID>` using the container ID giv
 ### Push to Docker Hub ###
 Running `npm run deploy` will push the previously built Dockerfile to [Docker Hub](https://hub.docker.com/account/signup/) and make a post to Marathon telling it to restart the application.
 
-On restart, the Marathon application will pull the latest Docker container from Docker Hub and host it at http://www.amp.pharm.mssm.edu/LDR/.
+On restart, the Marathon application will pull the latest Docker container from our private DockerHub and host it at http://www.amp.pharm.mssm.edu/LDR/.

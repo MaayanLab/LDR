@@ -3,8 +3,8 @@
     Below are all data releases for {{currentUser.group.name}}. You may release,
     edit, or delete entries by clicking the Action button on the right.
     Clicking the plus button will expand entries, making visible all relevant
-    meta-data. Please note that <em>in order to release an entry, it must
-    have a data URL provided and it must be approved.</em>
+    meta-data. Please note that <em class="highlight">in order to release an
+    entry, it must have a data URL provided and it must be approved.</em>
 </p>
 <table class="text-center legend col-sm-6 col-sm-offset-3 col-xs-12">
     <tr>
@@ -151,6 +151,9 @@
                         Action<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
+                        <li ng-if="form.needsEdit && form.message.length > 50">
+                            <a ng-click="viewMessage(form)">View Message</a>
+                        </li>
                         <li ng-if="form.released">
                             <a ng-click="editUrls(form)">Edit URLs</a>
                         </li>

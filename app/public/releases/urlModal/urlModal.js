@@ -6,7 +6,7 @@ angular.module('ldr')
 
         $scope.ok = function(formIsValid) {
             if (formIsValid) {
-                api('releases/form/' + config.form._id + '/urls')
+                api('releases/form/' + config.form._id + '/urls/')
                     .post($scope.urls)
                     .success(function() {
                         $modalInstance.close($scope.urls);

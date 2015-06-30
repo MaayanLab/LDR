@@ -24,17 +24,12 @@ if (process.env.NODE_ENV != 'production') { // if production
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(multer({
-    dest: __dirname + '/backend/uploads/',
+    dest: __dirname + '/hdfs/',
     onFileUploadStart: function(file) {
-        console.log(file.originalname + ' is starting ...')
+        console.log('Starting upload of ' + file.originalname);
     },
-    changeDest: function(dest) {
-        console.log(dest);
-        // Set dest to HDFS if in production
-        if (process.env.NODE_ENV === 'production') {
-            dest = __dirname + '/hdfs/';
-        }
-        return dest;
+    onFileUploadFinish: function(file) {
+        console.log('Finished uploading ' + file.originalname);
     }
 }));
 app.use(compress());

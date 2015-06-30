@@ -67,9 +67,9 @@
   },
   "scripts": {
     "test": "karma start",
-    "build": "gulp build && boot2docker up && boot2docker shellinit && docker build -t maayanlab/ldr:1.5 .",
+    "build": "gulp build && boot2docker up && boot2docker shellinit && docker build -t 146.203.54.165:5000/ldr:1.5 .",
     "start": "node server.js",
-    "deploy": "docker push maayanlab/ldr:1.5 && curl -H \"Content-Type: application/json\" -X POST -d {} maayanlab:systemsbiology@146.203.54.165:8080/v2/apps/ldr/restart"
+    "deploy": "docker push 146.203.54.165:5000/ldr:1.5 && curl -H \"Content-Type: application/json\" -X POST -d {} maayanlab:systemsbiology@146.203.54.165:8080/v2/apps/ldr/restart"
   },
   "repository": {
     "type": "git",

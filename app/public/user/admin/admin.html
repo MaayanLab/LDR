@@ -9,78 +9,79 @@
     <tr>
         <td>Awaiting Approval</td>
         <td>Approved</td>
-        <td>Needs Attention</td>
+        <td>Awaiting Changes</td>
         <td>Released</td>
     </tr>
 </table>
-<table class="table">
-    <thead>
-    <tr>
-        <th class="text-center col-sm-2">
-            <a href=""
-               ng-click="sortType = ['released', 'approved']; sortReverse = !sortReverse">
-                Status
+<div class="content col-xs-12">
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="text-center col-sm-2">
+                <a href=""
+                   ng-click="sortType = ['released', 'approved']; sortReverse = !sortReverse">
+                    Status
                     <span ng-show="sortType == ['released', 'approved'] && sortReverse"
                           class="fa fa-caret-down"></span>
                     <span ng-show="sortType == ['released', 'approved'] && !sortReverse"
                           class="fa fa-caret-up"></span>
-            </a>
-        </th>
-        <th class="text-center">
-            <a href=""
-               ng-click="sortType = 'group.name'; sortReverse = !sortReverse">
-                DSGC
+                </a>
+            </th>
+            <th class="text-center">
+                <a href=""
+                   ng-click="sortType = 'group.name'; sortReverse = !sortReverse">
+                    DSGC
                     <span ng-show="sortType == 'group.name' && sortReverse"
                           class="fa fa-caret-down"></span>
                     <span ng-show="sortType == 'group.name' && !sortReverse"
                           class="fa fa-caret-up"></span>
-            </a>
-        </th>
-        <th class="text-center">
-            <a href=""
-               ng-click="sortType = 'metadata.assay[0].name'; sortReverse = !sortReverse">
-                Assay
+                </a>
+            </th>
+            <th class="text-center">
+                <a href=""
+                   ng-click="sortType = 'metadata.assay[0].name'; sortReverse = !sortReverse">
+                    Assay
                     <span ng-show="sortType == 'metadata.assay[0].name' && sortReverse"
                           class="fa fa-caret-down"></span>
                     <span ng-show="sortType == 'metadata.assay[0].name' && !sortReverse"
                           class="fa fa-caret-up"></span>
-            </a>
-        </th>
-        <th class="text-center">
-            <a href=""
-               ng-click="sortType = 'metadata.readouts.length'; sortReverse = !sortReverse">
-                Readouts
+                </a>
+            </th>
+            <th class="text-center">
+                <a href=""
+                   ng-click="sortType = 'metadata.readouts.length'; sortReverse = !sortReverse">
+                    Readouts
                     <span ng-show="sortType == 'metadata.readouts.length' && sortReverse"
                           class="fa fa-caret-down"></span>
                     <span ng-show="sortType == 'metadata.readouts.length' && !sortReverse"
                           class="fa fa-caret-up"></span>
-            </a>
-        </th>
-        <th class="text-center">
-            <a href=""
-               ng-click="sortType = 'releaseDates.upcoming'; sortReverse = !sortReverse">
-                Release Date
+                </a>
+            </th>
+            <th class="text-center">
+                <a href=""
+                   ng-click="sortType = 'releaseDates.upcoming'; sortReverse = !sortReverse">
+                    Release Date
                     <span ng-show="sortType == 'releaseDates.upcoming' && sortReverse"
                           class="fa fa-caret-down"></span>
                     <span ng-show="sortType == 'releaseDates.upcoming' && !sortReverse"
                           class="fa fa-caret-up"></span>
-            </a>
-        </th>
-        <th></th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat-start="form in allForms | orderBy: sortType : sortReverse"
-        ng-class="form.released ? 'tr-released' :
+                </a>
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat-start="form in allForms | orderBy: sortType : sortReverse"
+            ng-class="form.released ? 'tr-released' :
             !form.approved && !form.needsEdit ? 'tr-awaiting-approval' :
             form.approved && !form.needsEdit ? 'tr-approved' :
             form.needsEdit ? 'tr-needs-edit' : ''"
-        class="form-table-data text-center">
-        <!--<td>
-            <p>{{form._id}}</p>
-        </td>-->
-        <td class="" id="status">
+            class="form-table-data text-center">
+            <!--<td>
+                <p>{{form._id}}</p>
+            </td>-->
+            <td class="" id="status">
                 <span ng-if="form.released">
                     Released
                 </span>
@@ -91,118 +92,126 @@
                     Pending approval
                 </span>
                 <span ng-if="!form.approved && form.needsEdit">
-                    Needs Editing
+                    Awaiting Changes
                 </span>
-        </td>
-        <td class="col-sm-2" id="center">
-            <a ng-href="{{form.group.homepage}}">{{form.group.name}}</a>
-        </td>
-        <td class="text-left" id="assay-name">
-            {{form.metadata.assay[0].name}}
-        </td>
-        <td class="col-sm-1" id="readout-count">
-            {{form.metadata.readouts.length}}
-        </td>
-        <td class="col-sm-2" id="release-date">
-            {{form.releaseDates.upcoming | date:'MM-dd-yyyy' }}
-        </td>
-        <td>
-            <div class="btn-group">
-                <a class="btn btn-default dropdown-toggle"
-                   ng-class="form.released ? 'tr-released-btn' :
+            </td>
+            <td class="col-sm-2" id="center">
+                <a ng-href="{{form.group.homepage}}">{{form.group.name}}</a>
+            </td>
+            <td ng-if="form.message.length > 50" class="col-sm-2 highlight"
+                id="message">
+                <p>
+                    <strong>You previously returned this release for the
+                        following
+                        reason</strong>:{{form.message}}
+            </td>
+            <td class="text-left" id="assay-name">
+                {{form.metadata.assay[0].name}}
+            </td>
+            <td class="col-sm-1" id="readout-count">
+                {{form.metadata.readouts.length}}
+            </td>
+            <td class="col-sm-2" id="release-date">
+                {{form.releaseDates.upcoming | date:'MM-dd-yyyy' }}
+            </td>
+            <td>
+                <div class="btn-group">
+                    <a class="btn btn-default dropdown-toggle"
+                       ng-class="form.released ? 'tr-released-btn' :
             !form.approved && !form.needsEdit ? 'tr-awaiting-approval-btn' :
             form.approved && !form.needsEdit ? 'tr-approved-btn' :
             form.needsEdit ? 'tr-needs-edit-btn' : ''"
-                   data-toggle="dropdown" ng-href="">
-                    Action<span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li ng-if="!form.approved">
-                        <a ng-click="approveForm(form)">Approve</a>
-                    </li>
-                    <li ng-if="form.approved">
-                        <a ng-click="unapproveForm(form)">Unapprove</a>
-                    </li>
-                    <li ng-if="!form.approved">
-                        <a ng-click="returnForm(form)">Return To Center</a>
-                    </li>
-                </ul>
-            </div>
-        </td>
-        <td>
-            <a ng-click="form.collapsed = !form.collapsed">
+                       data-toggle="dropdown" ng-href="">
+                        Action<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li ng-if="!form.approved">
+                            <a ng-click="approveForm(form)">Approve</a>
+                        </li>
+                        <li ng-if="form.approved">
+                            <a ng-click="unapproveForm(form)">Unapprove</a>
+                        </li>
+                        <li ng-if="!form.approved">
+                            <a ng-click="returnForm(form)">Return To Center</a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+            <td>
+                <a ng-click="form.collapsed = !form.collapsed">
                 <span ng-if="!form.collapsed" class="glyphicon glyphicon-plus">
                 </span>
                 <span ng-if="form.collapsed" class="glyphicon glyphicon-minus">
                 </span>
-            </a>
-        </td>
-    </tr>
-    <tr class="release-details animate" ng-show="form.collapsed">
-        <td colspan="7" class="col-sm-12">
-            <h4 class="text-center">
-                {{form.metadata.assay[0].name}}
-            </h4>
-            <h5 class="text-center">
-                <a ng-href="{{form.group.homepage}}">{{form.group.name}}</a>
-            </h5>
+                </a>
+            </td>
+        </tr>
+        <tr class="release-details animate" ng-show="form.collapsed">
+            <td colspan="7" class="col-sm-12">
+                <h4 class="text-center">
+                    {{form.metadata.assay[0].name}}
+                </h4>
+                <h5 class="text-center">
+                    <a ng-href="{{form.group.homepage}}">{{form.group.name}}</a>
+                </h5>
 
-            <p class="col-sm-12">{{form.metadata.assay[0].info}}</p>
+                <p class="col-sm-12">{{form.metadata.assay[0].info}}</p>
 
-            <div class="col-sm-12">
-                <h5>Cell Lines</h5>
-                <ul class="list-inline">
-                    <li ng-repeat="line in form.metadata.cellLines">
-                        {{line.name}}
-                    </li>
-                </ul>
-            </div>
-            <div class="col-sm-12">
-                <h5>Perturbagens</h5>
-                <ul class="list-inline">
-                    <li ng-repeat="pert in form.metadata.perturbagens">
-                        {{pert.name}}
-                    </li>
-                </ul>
-            </div>
-            <div class="col-sm-12">
-                <h5>Readouts</h5>
-                <ul class="list-inline">
-                    <li ng-repeat="rOut in form.metadata.readouts">
-                        {{rOut.name}}
-                    </li>
-                </ul>
-            </div>
-            <div class="col-sm-12">
-                <h5>Release Dates</h5>
-                <ul class="list-inline">
-                    <li ng-repeat="(level,date) in form.releaseDates"
-                        ng-if="date !== '' && level !== 'upcoming'">
-                        <strong class="info-release-lvl">
-                            {{level}}:
-                        </strong>
-                        {{date | date:'MM-dd-yyyy'}}
-                    </li>
-                </ul>
-            </div>
-            <div class="col-sm-12">
-                <h5>URLs</h5>
-                <ul class="list-inline">
-                    <li ng-repeat="(label,url) in form.urls"
-                        ng-if="url !== ''">
-                        <strong class="info-release-lvl">
-                            {{label}}:
-                        </strong>
-                        {{url}}
-                    </li>
-                </ul>
-            </div>
-        </td>
-    </tr>
-    <tr ng-repeat-end="" ng-if="allForms.length === 0">
-        <td colspan="7" class="col-sm-12">
-            There are no forms to display. Please try again later.
-        </td>
-    </tr>
-    </tbody>
-</table>
+                <div class="col-sm-12">
+                    <h5>Cell Lines</h5>
+                    <ul class="list-inline">
+                        <li ng-repeat="line in form.metadata.cellLines">
+                            {{line.name}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-12">
+                    <h5>Perturbagens</h5>
+                    <ul class="list-inline">
+                        <li ng-repeat="pert in form.metadata.perturbagens">
+                            {{pert.name}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-12">
+                    <h5>Readouts</h5>
+                    <ul class="list-inline">
+                        <li ng-repeat="rOut in form.metadata.readouts">
+                            {{rOut.name}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-12">
+                    <h5>Release Dates</h5>
+                    <ul class="list-inline">
+                        <li ng-repeat="(level,date) in form.releaseDates"
+                            ng-if="date !== '' && level !== 'upcoming'">
+                            <strong class="info-release-lvl">
+                                {{level}}:
+                            </strong>
+                            {{date | date:'MM-dd-yyyy'}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-12">
+                    <h5>URLs</h5>
+                    <ul class="list-inline">
+                        <li ng-repeat="(label,url) in form.urls"
+                            ng-if="url !== ''">
+                            <strong class="info-release-lvl">
+                                {{label}}:
+                            </strong>
+                            {{url}}
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr ng-repeat-end="" ng-if="allForms.length === 0">
+            <td colspan="7" class="col-sm-12">
+                There are no forms to display. Please try again later.
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

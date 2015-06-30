@@ -62,6 +62,20 @@ angular.module('ldr.releases.overview', [
             }
         };
 
+        $scope.viewMessage = function(form) {
+            $modal.open({
+                templateUrl: 'releases/overview/msgModal/msgModal.html',
+                controller: 'MsgModalInstanceCtrl',
+                resolve: {
+                    config: function() {
+                        return {
+                            form: form
+                        }
+                    }
+                }
+            });
+        };
+
         $scope.editForm = function(form) {
             $state.go('releasesCreate', { id: form._id });
         };
@@ -81,7 +95,8 @@ angular.module('ldr.releases.overview', [
                 })
                 .result.then(function(urls) {
                     form.urls = urls;
-                });
+                }
+            );
         };
 
         $scope.deleteForm = function(form) {

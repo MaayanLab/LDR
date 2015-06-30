@@ -69,9 +69,9 @@ angular.module('ldr.group.home', [
                         url: '/LDR/api/secure/group/' + groupId + '/upload/',
                         file: file
                     }).progress(function(evt) {
-                        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                        //var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                     }).success(function(data, status, headers, config) {
-
+                        window.location.reload();
                         $scope.log = 'file: ' + config.file.name + ', Response: ' + JSON.stringify(data) + '\n' + $scope.log;
                     });
                 });

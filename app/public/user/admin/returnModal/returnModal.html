@@ -1,17 +1,22 @@
 <div class="modal-body">
-    <form class="modal-form-input">
+    <form name="returnForm" class="modal-form-input">
         <div class="form-group">
             <h3>
-                <label class="control-label">Reason for Returning</label>
+                <label for="returnMsg" class="control-label">
+                    Reason for Returning
+                </label>
             </h3>
-            <textarea type="text" class="return-textarea form-control"
-                      ng-model="form.message">
-                </textarea>
+            <p><em>50 characters minimum</em></p>
+            <textarea id="returnMsg" type="text"  ng-model="form.message"
+                      class="return-textarea form-control"
+                     ng-required="true" ng-minlength="50">
+            </textarea>
         </div>
     </form>
 </div>
 <div class="modal-footer">
-    <button type="submit" class="btn btn-primary" ng-click="returnRelease();">
+    <button type="submit" class="btn btn-primary"
+            ng-disabled="returnForm.$invalid" ng-click="returnRelease();">
         Return Release
     </button>
     <button type="button" class="btn btn-danger" ng-click="cancel();">

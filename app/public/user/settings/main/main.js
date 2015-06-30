@@ -35,7 +35,7 @@ angular.module('ldr.user.settings', [
                 .put($scope.user)
                 .success(function() {
                     alert('User updated successfully');
-                })
+                });
         };
 
     });
