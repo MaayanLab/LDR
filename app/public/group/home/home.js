@@ -72,7 +72,9 @@ angular.module('ldr.group.home', [
                         //var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                     }).success(function(data, status, headers, config) {
                         window.location.reload();
-                        $scope.log = 'file: ' + config.file.name + ', Response: ' + JSON.stringify(data) + '\n' + $scope.log;
+                        $scope.log = 'file: ' + config.file.name +
+                        ', Response: ' + JSON.stringify(data) +
+                        '\n' + $scope.log;
                     });
                 });
             }

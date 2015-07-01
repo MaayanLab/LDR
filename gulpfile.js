@@ -154,7 +154,7 @@ gulp.task('vendor', function() {
 
 gulp.task('build', ['clean'], function(callback) {
     runSequence(['vendor', 'fonts', 'images', 'favIcons', 'html',
-        'less', 'js', 'serverJs'], callback)
+        'less', 'js', 'serverJs'], callback);
 });
 
 gulp.task('build:watch', function(callback) {
@@ -164,8 +164,8 @@ gulp.task('build:watch', function(callback) {
         gulp.watch('./server.js', ['serverJs']);
         gulp.watch(SRC_DIRECTORY + '**/*.less', ['less']);
         gulp.watch(SRC_DIRECTORY + '**/*.html', ['html']);
-        callback()
-    })
+        callback();
+    });
 });
 
 // Run node
