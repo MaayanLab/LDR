@@ -170,7 +170,7 @@ module.exports = function(app) {
         var groupId = req.params.id;
         var updatedGroup = req.body;
         var query = { _id: groupId };
-        User.update(query, updatedGroup, function(err, numUpdated) {
+        Group.update(query, updatedGroup, function(err) {
             if (err) {
                 console.log(err);
                 res.status(400).send('Error updating user');

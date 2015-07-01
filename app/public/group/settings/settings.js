@@ -19,7 +19,8 @@ angular.module('ldr.group.settings', [
             }
         });
     })
-    .controller('GroupSettingsCtrl', function($scope, $stateParams, api) {
+    .controller('GroupSettingsCtrl', function($scope, $stateParams, api,
+                                                $state) {
 
         $scope.groupId = $stateParams.id;
         $scope.group = {};
@@ -34,6 +35,7 @@ angular.module('ldr.group.settings', [
                 .put($scope.group)
                 .success(function() {
                     alert('Group updated successfully');
+                    $state.go('groupHome', { id: $scope.groupId });
                 }
             );
         };

@@ -15,11 +15,9 @@ module.exports = function(app) {
             var updateObj, token, user;
             if (req.params.action === 'approve') {
                 updateObj = { approved: true };
-            }
-            else if (req.params.action === 'unapprove') {
+            } else if (req.params.action === 'unapprove') {
                 updateObj = { approved: false };
-            }
-            else if (req.params.action === 'return' && req.body.message) {
+            } else if (req.params.action === 'return' && req.body.message) {
                 updateObj = { needsEdit: true, message: req.body.message };
             }
             if (req.headers.authorization &&
@@ -37,19 +35,16 @@ module.exports = function(app) {
                             if (err) {
                                 res.status(404).send('There was an error ' +
                                     'approving the release. Please try again.')
-                            }
-                            else {
+                            } else {
                                 res.status(200).send(release);
                             }
                         }
                     )
-                }
-                else {
+                } else {
                     res.status(401).send('You are not authorized to access ' +
                         'this URL.')
                 }
-            }
-            else {
+            } else {
                 res.status(401).send('Token or URL are invalid. Try again.')
             }
         }

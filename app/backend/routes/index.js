@@ -5,14 +5,13 @@ var jwtCheck = jwt({
     secret: config.secret
 });
 
-module.exports = function(app, mongoose) {
+module.exports = function(app) {
 
     app.use('/api/secure', jwtCheck);
 
-    require('./users')(app, mongoose);
+    require('./users')(app);
     require('./admin')(app);
-    require('./groups')(app, mongoose);
-    require('./tools')(app);
+    require('./groups')(app);
     require('./releaseRoutes')(app);
 
 };

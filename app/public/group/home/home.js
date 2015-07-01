@@ -100,5 +100,4 @@ angular.module('ldr.group.home', [
          };
          pollServer();
          */
-
     });
