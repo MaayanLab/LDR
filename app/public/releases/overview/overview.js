@@ -70,7 +70,7 @@ angular.module('ldr.releases.overview', [
                     config: function() {
                         return {
                             form: form
-                        }
+                        };
                     }
                 }
             });

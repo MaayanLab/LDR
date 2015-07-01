@@ -41,11 +41,10 @@ module.exports = function(app) {
             if (err) {
                 console.log(err);
                 res.status(400).send('Error updating user');
-            }
-            else {
+            } else {
                 res.status(204).send('User successfully updated');
             }
-        })
+        });
     });
 
     app.put(baseUrl + '/api/secure/user/:id/changePassword/',
@@ -63,16 +62,14 @@ module.exports = function(app) {
                         console.log(err);
                         res.status(404).send('Error: Could not find user ' +
                             'with id:' + userId + '.');
-                    }
-                    else if (enteredPassword) {
+                    } else if (enteredPassword) {
                         user.checkPassword(enteredPassword,
                             function(err, isMatch) {
                                 if (err) {
                                     console.log(err);
                                     res.status(404).send('Error ' +
                                         'changing password.');
-                                }
-                                else if (isMatch && newPassword) {
+                                } else if (isMatch && newPassword) {
                                     user.password = newPassword;
                                     console.log(user);
                                     user.save(function(err) {
@@ -85,10 +82,9 @@ module.exports = function(app) {
                                 }
                             }
                         );
-                    }
-                    else {
+                    } else {
                         res.status(404).send('There was an error changing the' +
-                            'user\'s password.')
+                            'user\'s password.');
                     }
                 }
             );
@@ -103,17 +99,15 @@ module.exports = function(app) {
                 if (err) {
                     console.log(err);
                     res.status(401).send('Error logging user in.');
-                }
-                else if (!user)
+                } else if (!user) {
                     res.status(404).send('User not found.');
-                else if (req.body.password) {
+                } else if (req.body.password) {
                     user.checkPassword(req.body.password,
                         function(err, isMatch) {
                             if (err) {
                                 console.log(err);
                                 res.status(401).send('Error logging user in.');
-                            }
-                            else if (isMatch) {
+                            } else if (isMatch) {
                                 var userWOPassword = _.omit(user.toObject(),
                                     ['password', '__v']);
                                 var token = createToken(userWOPassword);
@@ -126,8 +120,7 @@ module.exports = function(app) {
                             }
                         }
                     );
-                }
-                else {
+                } else {
                     res.status(404).send('There was an error logging in. ' +
                         'Please try again.');
                 }
@@ -148,8 +141,7 @@ module.exports = function(app) {
         User.create(inputUser, function(err, user) {
             if (err) {
                 console.log('Error creating User: ' + err);
-            }
-            else {
+            } else {
                 var userWOPass = _.omit(user,
                     ['password', 'passwordConfirm', '__v']);
                 var token = createToken(userWOPass);

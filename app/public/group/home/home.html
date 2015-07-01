@@ -2,23 +2,18 @@
     <div class="col-xs-12">
         <div class="group-info col-sm-12 col-md-6">
             <div class="text-center">
-                <div class="group-upload" type="file" ngf-select
-                     ng-model="files"
-                     ngf-capture="'camera'"
-                     accept="image/*" ngf-accept="'image/*'">
-                    <img class="group-icon group-icon-upload"
-                         ng-src="http://amp.pharm.mssm.edu/LDR/api/group/{{currentUser.group._id}}/icon/"
-                         alt="images/user-icon.png"/>
+                <div accept="image/*" class="group-upload" ng-model="files" ngf-accept="'image/*'" ngf-capture="'camera'" ngf-select type="file">
+                    <img alt="images/user-icon.png" class="group-icon group-icon-upload" ng-src="http://amp.pharm.mssm.edu/LDR/api/group/{{groupId}}/icon/"/>
                 </div>
                 <p class="caption">Click image to upload a new one</p>
             </div>
-            <h3>{{currentUser.group.name}}</h3>
-
-            <p>{{currentUser.group.about}}</p>
+                <h3>{{group.name}}</h3>
+                <a ui-sref="groupSettings({id: groupId})">Edit</a>
+            <p class="group-about">{{group.about}}</p>
         </div>
         <div class="statistics col-sm-12 col-md-6">
             <h4 class="text-center">Statistics</h4>
-            <ldr-bar group-id="{{currentUser.group._id}}"></ldr-bar>
+            <ldr-bar group-id="{{groupId}}"></ldr-bar>
         </div>
     </div>
 </div>
@@ -27,8 +22,7 @@
         <div class="well well-sm">
             <div class="row">
                 <div class="col-sm-6 col-md-4">
-                    <img src="images/user-icon.png" alt=""
-                         class="img-circle img-responsive">
+                    <img alt="" class="img-circle img-responsive" src="images/user-icon.png">
                 </div>
                 <div class="col-sm-6 col-md-8">
                     <h4>{{user.username}}</h4>
@@ -49,8 +43,7 @@
                         {{user.email}}
                         <br/>
                         <i class="card-glyph glyphicon glyphicon-globe"></i>
-                        <a ng-if="user.homepage !== 'http://'"
-                           ng-href="{{user.homepage}}">
+                        <a ng-href="{{user.homepage}}" ng-if="user.homepage !== 'http://'">
                             {{user.homepage}}
                         </a>
                         <br/>

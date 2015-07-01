@@ -26,12 +26,18 @@ angular.module('ldr.group.home', [
     .controller('GroupHomeCtrl', function($scope, $stateParams, $timeout,
                                           store, api, Upload, lodash) {
 
-        var currentUser = store.get('currentUser');
-        var groupId = $stateParams.id;
+        $scope.groupId = $stateParams.id;
+        $scope.group = {};
+        api('group/' + $scope.groupId + '/')
+            .get()
+            .success(function(group) {
+                $scope.group = angular.copy(group);
+            });
+
 
         $scope.users = [];
 
-        api('group/' + groupId + '/users/')
+        api('group/' + $scope.groupId + '/users/')
             .get()
             .success(function(usersArr) {
                 $scope.users = usersArr;
@@ -41,10 +47,11 @@ angular.module('ldr.group.home', [
         $scope.acceptUser = function(user) {
             if (confirm('Are you sure you would like to admit this user? This' +
                     ' can not be undone.')) {
-                api('group/' + groupId + '/users/' + user._id + '/approve/')
+                api('group/' + $scope.groupId + '/users/' + user._id +
+                    '/approve/')
                     .put()
                     .success(function() {
-                        api('group/' + groupId + '/users/')
+                        api('group/' + $scope.groupId + '/users/')
                             .get()
                             .success(function(usersArr) {
                                 $scope.users = usersArr;
@@ -66,7 +73,8 @@ angular.module('ldr.group.home', [
             if (files && files.length) {
                 lodash.each(files, function(file) {
                     Upload.upload({
-                        url: '/LDR/api/secure/group/' + groupId + '/upload/',
+                        url: '/LDR/api/secure/group/' + $scope.groupId +
+                            '/upload/',
                         file: file
                     }).progress(function(evt) {
                         //var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);

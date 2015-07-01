@@ -26,16 +26,15 @@ angular.module('ldr.user.settings', [
             $scope.user.lastName = $scope.user.name.split(' ')[1];
         }
 
-
         $scope.updateUser = function() {
             $scope.user.name = $scope.user.firstName + ' ' +
                 $scope.user.lastName;
-            $scope.setCurrentUser($scope.user);
             api('user/' + $scope.user._id + '/update/')
                 .put($scope.user)
                 .success(function() {
+                    $scope.setCurrentUser($scope.user);
                     alert('User updated successfully');
-                });
+                }
+            );
         };
-
     });

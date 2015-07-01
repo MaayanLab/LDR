@@ -68,9 +68,8 @@ module.exports = function(app) {
                                     getMetadata(release, function(err, finalRelease) {
                                         if (err) {
                                             res.status(500).send('There was an error building' +
-                                                ' meta data for these releases. Try again.')
-                                        }
-                                        else {
+                                                ' meta data for these releases. Try again.');
+                                        } else {
                                             var dates = finalRelease.releaseDates;
                                             var up = dates.upcoming;
                                             // Legacy. All entries should have up.
@@ -150,8 +149,7 @@ module.exports = function(app) {
                     if (err) {
                         res.status(500).send('There was an error building ' +
                             'meta data for this release. Try again.');
-                    }
-                    else {
+                    } else {
                         var dates = finalRelease.releaseDates;
                         var up = dates.upcoming;
                         if (up === '' || !up) {
@@ -164,7 +162,7 @@ module.exports = function(app) {
                         }
                         res.status(200).send(finalRelease);
                     }
-                })
+                });
             });
     });
 
@@ -184,9 +182,8 @@ module.exports = function(app) {
                     getMetadata(release, function(err, finalRelease) {
                         if (err) {
                             res.status(500).send('There was an error building' +
-                                ' meta data for these releases. Try again.')
-                        }
-                        else {
+                                ' meta data for these releases. Try again.');
+                        } else {
                             var dates = finalRelease.releaseDates;
                             var up = dates.upcoming;
                             if (up === '' || !up) {
@@ -204,18 +201,20 @@ module.exports = function(app) {
                         }
                     });
                 });
-            });
+            }
+        );
     });
 
     // Multiple releases endpoint for specific group or user
     app.get(baseUrl + '/api/releases/:type(group|user)/:id',
         function(req, res) {
             var query = {};
-            if (req.params.type === 'group')
+            if (req.params.type === 'group') {
                 query = { group: req.params.id };
-            if (req.params.type === 'user')
+            }
+            if (req.params.type === 'user') {
                 query = { user: req.params.id };
-
+            }
             DataRelease
                 .find(query)
                 .populate('group')
@@ -231,9 +230,8 @@ module.exports = function(app) {
                             if (err) {
                                 res.status(500).send('There was an error ' +
                                     'building meta data for these releases. ' +
-                                    'Try again.')
-                            }
-                            else {
+                                    'Try again.');
+                            } else {
                                 var dates = finalRelease.releaseDates;
                                 var up = dates.upcoming;
                                 if (up === '' || !up) {
@@ -269,16 +267,14 @@ module.exports = function(app) {
                         console.log(err);
                         res.status(404).send('Could not return ' +
                             'approved releases');
-                    }
-                    else {
+                    } else {
                         var releasesArr = [];
                         _.each(releases, function(release, i) {
                             getMetadata(release, function(err, finalRelease) {
                                 if (err) {
                                     res.status(500).send('There was an error building' +
-                                        ' meta data for these releases. Try again.')
-                                }
-                                else {
+                                        ' meta data for these releases. Try again.');
+                                } else {
                                     releasesArr.push(finalRelease);
                                     if (i === releases.length - 1) {
                                         res.status(200).send(releasesArr);
@@ -303,8 +299,7 @@ module.exports = function(app) {
                 if (err) {
                     console.log(err);
                     res.status(404).send('Could not return release');
-                }
-                else {
+                } else {
                     var dateToSearch = latestRelease.upcomingRelease;
                     if (!(dateToSearch instanceof Date)) {
                         dateToSearch = new Date(dateToSearch);
@@ -334,9 +329,8 @@ module.exports = function(app) {
                                 getMetadata(release, function(err, finalRelease) {
                                     if (err) {
                                         res.status(500).send('There was an error building' +
-                                            ' meta data for these releases. Try again.')
-                                    }
-                                    else {
+                                            ' meta data for these releases. Try again.');
+                                    } else {
                                         releasesArr.push(finalRelease);
                                         if (i === afterReleases.length - 1) {
                                             res.status(200).send(releasesArr);
@@ -363,8 +357,7 @@ module.exports = function(app) {
                     'saving JSON to database. Please confirm that your JSON ' +
                     'is formatted properly. Visit http://www.jsonlint.com ' +
                     'to confirm.');
-            }
-            else {
+            } else {
                 res.status(200).send(form);
             }
         });
@@ -387,16 +380,14 @@ module.exports = function(app) {
             if (err) {
                 console.log(err);
                 res.status(400).send('There was an error updating entry with ' +
-                    'id ' + query._id + '. Please try again')
-            }
-            else {
+                    'id ' + query._id + '. Please try again');
+            } else {
                 DataRelease.findOne(query, function(err, release) {
                     if (err) {
                         console.log(err);
                         res.status(404).send('Release with id: ' + query._id +
-                            ' was updated, but could not be returned')
-                    }
-                    else {
+                            ' was updated, but could not be returned');
+                    } else {
                         res.status(202).send(release);
                     }
                 });
@@ -413,9 +404,8 @@ module.exports = function(app) {
             if (err) {
                 console.log(err);
                 res.status(400).send('There was an error updating urls for ' +
-                    'entry with id ' + query._id + '. Please try again.')
-            }
-            else {
+                    'entry with id ' + query._id + '. Please try again.');
+            } else {
                 release.urls = urls;
                 release.save();
                 res.status(202).send(release);
@@ -432,9 +422,8 @@ module.exports = function(app) {
             if (err) {
                 console.log(err);
                 res.status(400).send('There was an error updating urls for ' +
-                    'entry with id ' + id + '. Please try again.')
-            }
-            else {
+                    'entry with id ' + id + '. Please try again.');
+            } else {
                 release.needsEdit = true;
                 release.message = message;
                 release.save();
@@ -455,17 +444,14 @@ module.exports = function(app) {
                         console.log(err);
                         res.status(404).send('An error occurred getting ' +
                             'release with id: ' + id);
-                    }
-                    else if (release.urls.dataUrl === "") {
+                    } else if (release.urls.dataUrl === "") {
                         res.status(403).send('Data URL required!');
-                    }
-                    else if (release.approved === false) {
+                    } else if (release.approved === false) {
                         res.status(403).send('Dataset must be approved!');
-                    }
-                    else {
+                    } else {
                         release.released = true;
                         release.save();
-                        res.status(204).send('Dataset successfully released.')
+                        res.status(204).send('Dataset successfully released.');
                     }
                 }
             );

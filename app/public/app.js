@@ -4,6 +4,7 @@ angular.module('ldr', [
     'ldr.bar',
     'ldr.group.home',
     'ldr.group.create',
+    'ldr.group.settings',
     'ldr.releases.overview',
     'ldr.releases.create',
     'ldr.search',
@@ -117,8 +118,7 @@ angular.module('ldr', [
                             $rootScope.currentUser = store.get('currentUser');
                             $rootScope.isLoggedIn = true;
                             $rootScope.isLoggedInAdmin = true;
-                        }
-                        else {
+                        } else {
                             $rootScope.currentUser = store.get('currentUser');
                             $rootScope.isLoggedIn = true;
                             $rootScope.isLoggedInAdmin = false;
@@ -131,21 +131,17 @@ angular.module('ldr', [
                         $state.go('home');
                     }
                 }
-            }
-            else if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
+            } else if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
                 $rootScope.isLoggedIn = false;
-            }
-            else {
+            } else {
                 if ($rootScope.currentUser.admin) {
                     $rootScope.isLoggedIn = true;
                     $rootScope.isLoggedInAdmin = true;
                     $rootScope.isAdmitted = true;
-                }
-                else if ($rootScope.currentUser.admitted) {
+                } else if ($rootScope.currentUser.admitted) {
                     $rootScope.isLoggedIn = true;
                     $rootScope.isAdmitted = true;
-                }
-                else {
+                } else {
                     $rootScope.isLoggedIn = true;
                     $rootScope.isLoggedInAdmin = false;
                 }

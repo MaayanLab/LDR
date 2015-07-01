@@ -1,7 +1,7 @@
-<h3 class="text-center">Create Group</h3>
+<h3 class="text-center">Group Settings</h3>
 <em class="col-sm-12 highlight text-center">* Required</em>
 <form name="groupForm" class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2"
-      ng-submit="groupForm.$valid && createGroup()" novalidate>
+      ng-submit="groupForm.$valid && updateGroup()" novalidate>
     <div class="form-group">
         <label for="groupName">Group Name*</label>
 
@@ -26,7 +26,7 @@
             </span>
             <span class="help-inline error-msg"
                   ng-show="groupForm.groupName.$error.minlength">
-                Please enter a Group name at least 5 characters long.
+                Please enter a group name at least 5 characters long.
             </span>
         </div>
     </div>
@@ -63,7 +63,7 @@
 
     <div class="form-group">
         <br>
-        <input class="btn btn-success" type="submit" value="Create"/>
+        <input class="btn btn-success" type="submit" value="Update"/>
         <input class="btn btn-danger" type="button"
                ng-click="reset(groupForm)" value="Reset"/>
     </div>

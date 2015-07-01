@@ -26,11 +26,10 @@ module.exports = function(app) {
                     console.log(err);
                     res.status(404).send('Could not retrieve groups. ' +
                         'Please try again.');
-                }
-                else {
+                } else {
                     res.status(200).send(groups);
                 }
-            })
+            });
     });
 
     app.get(baseUrl + '/api/group/:id/', function(req, res) {
@@ -42,8 +41,7 @@ module.exports = function(app) {
                 if (err) {
                     console.log(err);
                     res.status(404).send('Error getting group with id: ' + groupId);
-                }
-                else {
+                } else {
                     res.status(200).send(group);
                 }
             });
@@ -56,8 +54,7 @@ module.exports = function(app) {
                 console.log(err);
                 res.status(404).send('Error getting statistics for ' +
                     'group with id: ' + groupId);
-            }
-            else {
+            } else {
                 res.status(200).send(statsResponse);
             }
         });
@@ -73,12 +70,11 @@ module.exports = function(app) {
                 if (err) {
                     console.log(err);
                     res.status(404).send('Users for group with id: ' +
-                        groupId + ' could not be found')
-                }
-                else {
+                        groupId + ' could not be found');
+                } else {
                     res.status(200).send(users);
                 }
-            })
+            });
     });
 
     app.get(baseUrl + '/api/group/:id/icon/', function(req, res) {
@@ -90,29 +86,26 @@ module.exports = function(app) {
                 if (err) {
                     console.log(err);
                     res.status(404).send('Group could not be found');
-                }
-                else if (!group.icon) {
+                } else if (!group.icon) {
                     group.icon = {
                         type: '',
                         path: ''
                     };
                     group.save();
                     res.status(404).end();
-                }
-                else if (group.icon.path) {
+                } else if (group.icon.path) {
                     res.status(200).sendFile(group.icon.path, {
                         headers: { 'Content-Type': group.icon.type }
                     }, function(err) {
                         if (err) {
                             console.log(err);
                             res.status(err.status).end();
-                        }
-                        else {
+                        } else {
                             console.log('Sent:', group.icon.path);
                         }
                     });
                 }
-            })
+            });
     });
 
     app.put(baseUrl + '/api/secure/group/:groupId/users/:userId/approve/',
@@ -131,8 +124,7 @@ module.exports = function(app) {
                     }
                     if (users.length) {
                         checkForApproval();
-                    }
-                    else {
+                    } else {
                         approveUser();
                     }
                 }
@@ -149,14 +141,12 @@ module.exports = function(app) {
                     });
                     if (user.admitted && user.group._id === groupId) {
                         approveUser();
-                    }
-                    else {
+                    } else {
                         res.status(401).send('You are not authorized ' +
-                            'to access this URL.')
+                            'to access this URL.');
                     }
-                }
-                else {
-                    res.status(401).send('Token or URL are invalid. Try again.')
+                } else {
+                    res.status(401).send('Token or URL are invalid. Try again.');
                 }
             };
 
@@ -165,9 +155,8 @@ module.exports = function(app) {
                     function(err, user) {
                         if (err) {
                             res.status(404).send('There was an error ' +
-                                'admitting this user. Please try again.')
-                        }
-                        else {
+                                'admitting this user. Please try again.');
+                        } else {
                             res.status(204).send('User successfully ' +
                                 'updated');
                         }
@@ -177,6 +166,20 @@ module.exports = function(app) {
         }
     );
 
+    app.put(baseUrl + '/api/secure/group/:id/update/', function(req, res) {
+        var groupId = req.params.id;
+        var updatedGroup = req.body;
+        var query = { _id: groupId };
+        User.update(query, updatedGroup, function(err, numUpdated) {
+            if (err) {
+                console.log(err);
+                res.status(400).send('Error updating user');
+            } else {
+                res.status(204).send('Group successfully updated');
+            }
+        });
+    });
+
     // Do not make this API secure so that unregistered users can create a
     // group
     app.post(baseUrl + '/api/group/create/', function(req, res) {
@@ -185,11 +188,10 @@ module.exports = function(app) {
             if (err) {
                 console.log(err);
                 res.status(404).send('Error creating group');
-            }
-            else {
+            } else {
                 res.status(201).send(_.omit(group, ['__v']));
             }
-        })
+        });
     });
 
     app.post(baseUrl + '/api/secure/group/:id/upload/', function(req, res) {
@@ -200,9 +202,8 @@ module.exports = function(app) {
                 if (err) {
                     console.log(err);
                     res.status(500).send('There was an error setting the ' +
-                        'group icon. Please try again.')
-                }
-                else {
+                        'group icon. Please try again.');
+                } else {
                     group.icon.path = req.files.file.path;
                     group.icon.type = req.files.file.mimetype;
                     group.save();
