@@ -55,6 +55,20 @@ angular.module('ldr.user.admin', [
             });
         };
 
+        $scope.viewMessages = function(form) {
+            $modal.open({
+                templateUrl: 'msgModal/msgModal.html',
+                controller: 'MsgModalInstanceCtrl',
+                resolve: {
+                    config: function() {
+                        return {
+                            form: form
+                        };
+                    }
+                }
+            });
+        };
+
         $scope.returnForm = function(form) {
             $modal
                 .open({

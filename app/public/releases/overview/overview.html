@@ -151,13 +151,13 @@
                         Action<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li ng-if="form.needsEdit && form.message.length > 50">
-                            <a ng-click="viewMessage(form)">View Message</a>
+                        <li>
+                            <a ng-click="viewMessages(form)">View Messages</a>
                         </li>
                         <li ng-if="form.released">
                             <a ng-click="editUrls(form)">Edit URLs</a>
                         </li>
-                        <li ng-if="!form.released">
+                        <li ng-if="!form.released && !form.needsEdit">
                             <a ng-click="releaseForm(form)">Release</a>
                         </li>
                         <li ng-if="!form.released">

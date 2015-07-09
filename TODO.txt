@@ -1,8 +1,14 @@
 TODO:
 
-Record of changes:
-  Dump of database daily
-  See who changed what and when
-  Log, schedule task, stamp with
+IDs
+Export to Excel
 
 LINCSProject.org
+
+Database
+
+Add IDs for HMS i.e 20001 to Dataset Name and Description
+Ensure that cell lines and sm perturbagens match spreadsheet
+HMS-Approved Assay Names replaced
+Descriptions don't match
+Amar sent released dataset. Release it. URL given.

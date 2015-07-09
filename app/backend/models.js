@@ -179,6 +179,13 @@ try {
     Group = mongoose.model('Group', groupSchema, 'groups');
 }
 
+var msgSchema = new Schema({
+    message: String,
+    date: Date,
+    user: { type: Schema.ObjectId, ref: 'User'},
+    return: Boolean // True if reason for returning, otherwise false
+});
+
 var dataReleaseSchema = new Schema({
     user: { type: Schema.ObjectId, ref: 'User', required: true },
     group: { type: Schema.ObjectId, ref: 'Group', required: true },
@@ -186,7 +193,7 @@ var dataReleaseSchema = new Schema({
     released: { type: Boolean, required: true, default: false },
     dateModified: { type: Date, required: true },
     needsEdit: { type: Boolean, default: false },
-    message: { type: String, default: '' }, // Message for returning from NIH
+    messages: [msgSchema], // Messages between center and NIH
     doi: { type: String },
     datasetName: { type: String, required: true },
     description: { type: String, default: '' }, // Brief description of exp.
@@ -258,6 +265,15 @@ dataReleaseSchema.pre('save', function(next) {
     next();
 });
 
+/* DANGEROUS: Make updates to every release
+DataRelease
+    .find({})
+    .exec(function(err, releases) {
+        _.each(releases, function(release) {
+            release.save();
+        });
+});
+*/
 
 module.exports = {
     User: User,

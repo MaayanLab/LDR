@@ -562,6 +562,90 @@ textarea.experiment {
     padding-bottom: 20px;
 }
 
+.msg-modal-body {
+    position: relative;
+    padding: 5px;
+}
+
+.msg-label {
+    color: @color-primary;
+}
+
+.msg-panel {
+    background-color: #fff;
+    border: 1px solid @color-primary;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    .msg-panel-heading {
+        color: #fff;
+        background-color: @color-primary;
+        border-color: @color-primary;
+        padding: 10px 15px;
+        border-bottom: 1px solid transparent;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 5px;
+    border-bottom: 1px dotted #B3A9A9;
+}
+
+#msg-close-btn {
+    cursor: default;
+    border: 0;
+    background-color: transparent;
+
+    &:focus {
+        outline: none;
+    }
+    span {
+        cursor: pointer;
+        color: white;
+        top: -5px;
+        right: -15px;
+
+        &:hover {
+            color: @color-primary-light;
+        }
+    }
+}
+
+#msg-send-btn {
+    line-height: 1.7;
+}
+
+.panel-body {
+    overflow-y: scroll;
+    height: 300px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+
+.admin-msg-label {
+    &:extend(.msg-label);
+    color: @color-red;
+}
+
+.emoji-credit {
+    font-size: 9px;
+}
+
 .highlight {
     color: @color-red;
 }
@@ -678,10 +762,6 @@ div.btn-group.open > .tr-needs-edit-btn {
 .release-table {
     width: 95%;
     margin: 0 auto;
-}
-
-.return-textarea {
-    resize: vertical;
 }
 
 #create-group-tag {

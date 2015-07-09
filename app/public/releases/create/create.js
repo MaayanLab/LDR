@@ -198,7 +198,7 @@ angular.module('ldr.releases.create', [
         //});
 
         function formatText(name) {
-            var MAX = 40;
+            var MAX = 50;
             if (name.length < MAX) {
                 return name;
             }

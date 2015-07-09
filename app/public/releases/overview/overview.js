@@ -62,9 +62,9 @@ angular.module('ldr.releases.overview', [
             }
         };
 
-        $scope.viewMessage = function(form) {
+        $scope.viewMessages = function(form) {
             $modal.open({
-                templateUrl: 'releases/overview/msgModal/msgModal.html',
+                templateUrl: 'msgModal/msgModal.html',
                 controller: 'MsgModalInstanceCtrl',
                 resolve: {
                     config: function() {

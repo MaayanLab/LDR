@@ -6,14 +6,14 @@
 angular.module('ldr')
     .controller('ReturnModalInstanceCtrl', function($scope, api,
                                                     $modalInstance, config) {
-        $scope.message = angular.copy(config.form.message);
-
         $scope.returnRelease = function() {
-            if ($scope.message.length > 50) {
-                api('releases/form/' + $scope.form._id + '/return/')
-                    .post({ message: $scope.message })
+            if ($scope.message.length > 20) {
+                var reason = 'This release has been returned for the ' +
+                    'following reason: ' + $scope.message;
+                api('releases/form/' + config.form._id + '/return/')
+                    .post({ message: reason })
                     .success(function() {
-                        $modalInstance.close($scope.message);
+                        $modalInstance.close(reason);
                     })
                     .error(function(resp) {
                         console.log('error:');

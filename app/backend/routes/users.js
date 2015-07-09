@@ -104,8 +104,7 @@ module.exports = function(app) {
                 } else if (req.body.password) {
                     user.checkPassword(req.body.password,
                         function(err, isMatch) {
-                            if (err) {
-                                console.log(err);
+                            if (err || !isMatch) {
                                 res.status(401).send('Error logging user in.');
                             } else if (isMatch) {
                                 var userWOPassword = _.omit(user.toObject(),

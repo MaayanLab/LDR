@@ -1,6 +1,8 @@
 var jwt = require('express-jwt'),
+    jsonWT = require('jsonwebtoken'),
     _ = require('lodash'),
     Q = require('q'),
+    secret = require('../config/database').secret,
     Models = require('../models'),
     DataRelease = Models.DataRelease,
     Group = Models.Group,
@@ -39,7 +41,10 @@ module.exports = function(app) {
                 DataRelease
                     .find({ group: { $in: ids } })
                     .sort({ dateModified: -1 })
-                    .populate('group')
+                    .populate([
+                        { path: 'group', model: 'Group' },
+                        { path: 'messages.user', model: 'User' }
+                    ])
                     .lean()
                     .exec(function(err, results) {
                         if (err) {
@@ -132,7 +137,10 @@ module.exports = function(app) {
     app.get(baseUrl + '/api/releases/form/:id', function(req, res) {
         DataRelease
             .findOne({ _id: req.params.id })
-            .populate('group')
+            .populate([
+                { path: 'group', model: 'Group' },
+                { path: 'messages.user', model: 'User' }
+            ])
             .lean()
             .exec(function(err, release) {
                 if (err) {
@@ -170,13 +178,22 @@ module.exports = function(app) {
     app.get(baseUrl + '/api/releases/', function(req, res) {
         DataRelease
             .find({})
-            .populate('group')
+            .populate([
+                { path: 'group', model: 'Group' },
+                { path: 'messages.user', model: 'User' }
+            ])
             .lean()
             .exec(function(err, allData) {
                 if (err) {
                     console.log(err);
                     res.status(404).send('Releases could not be found.');
                 }
+
+                var options = {
+                    path: 'messages.user',
+                    model: 'User'
+                };
+
                 var releasesArr = [];
                 _.each(allData, function(release, i) {
                     getMetadata(release, function(err, finalRelease) {
@@ -217,7 +234,10 @@ module.exports = function(app) {
             }
             DataRelease
                 .find(query)
-                .populate('group')
+                .populate([
+                    { path: 'group', model: 'Group' },
+                    { path: 'messages.user', model: 'User' }
+                ])
                 .lean()
                 .exec(function(err, allData) {
                     if (err) {
@@ -260,7 +280,10 @@ module.exports = function(app) {
                 .find({ approved: true })
                 .sort({ released: -1, upcomingRelease: 1 })
                 .limit(25)
-                .populate('group')
+                .populate([
+                    { path: 'group', model: 'Group' },
+                    { path: 'messages.user', model: 'User' }
+                ])
                 .lean()
                 .exec(function(err, releases) {
                     if (err) {
@@ -304,14 +327,15 @@ module.exports = function(app) {
                     if (!(dateToSearch instanceof Date)) {
                         dateToSearch = new Date(dateToSearch);
                     }
-                    console.log(latestRelease._id);
-                    console.log(dateToSearch);
                     DataRelease
                         .find(
                         { upcomingRelease: { $gt: dateToSearch } })
                         .sort({ released: -1, upcomingRelease: 1 })
                         .limit(25)
-                        .populate('group')
+                        .populate([
+                            { path: 'group', model: 'Group' },
+                            { path: 'messages.user', model: 'User' }
+                        ])
                         .lean()
                         .exec(function(err, afterReleases) {
                             if (err) {
@@ -413,23 +437,40 @@ module.exports = function(app) {
         });
     });
 
-    // POST endpoint for superuser to return unapproved releases
-    app.post(baseUrl + '/api/secure/releases/form/:id/return/', function(req, res) {
+    // POST endpoint for messages and superuser to return unapproved releases
+    app.post(baseUrl + '/api/secure/releases/form/:id/:type(return|message)/', function(req, res) {
         var id = req.params.id;
         var query = { _id: id };
-        var message = req.body.message;
-        DataRelease.findOne(query, function(err, release) {
-            if (err) {
-                console.log(err);
-                res.status(400).send('There was an error updating urls for ' +
-                    'entry with id ' + id + '. Please try again.');
-            } else {
-                release.needsEdit = true;
-                release.message = message;
-                release.save();
-                res.status(202).send(release);
-            }
-        });
+        var messageObj = req.body;
+        messageObj.date = new Date();
+
+        if (req.headers.authorization &&
+            req.headers.authorization.split(' ')[0] === 'Bearer') {
+            var token = req.headers.authorization.split(' ')[1];
+            var user = jsonWT.verify(token, secret, {
+                issuer: 'http://amp.pharm.mssm.edu/LDR/'
+            });
+            messageObj.user = user._id;
+            DataRelease.findOne(query, function(err, release) {
+                if (err) {
+                    console.log(err);
+                    res.status(400).send('There was an error updating messages' +
+                        ' for entry with id ' + id + '. Please try again.');
+                } else {
+                    if (req.params.type === 'return') {
+                        release.needsEdit = true;
+                        messageObj.return = true;
+                    } else {
+                        messageObj.return = false;
+                    }
+                    release.messages.push(messageObj);
+                    release.save();
+                    res.status(202).send('Message POSTed');
+                }
+            });
+        } else {
+            res.status(401).send('Token or URL are invalid. Try again.');
+        }
     });
 
     // Release an entry. Must have a data URL and be approved

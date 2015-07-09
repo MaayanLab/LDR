@@ -11,7 +11,7 @@ lorettaClient = MongoClient('mongodb://mmcdermott:kroyweN@loretta')
 lincsDb = lorettaClient['LINCS']
 lorettaMd = lincsDb['milestones']
 
-ldrClient = MongoClient('mongodb://hannah')
+ldrClient = MongoClient('mongodb://mmcdermott:kroyweN@localhost')
 ldrDb = ldrClient['LDR']
 releases = ldrDb['dataReleases']
 releases.drop()

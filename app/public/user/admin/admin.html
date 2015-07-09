@@ -98,13 +98,6 @@
             <td class="col-sm-2" id="center">
                 <a ng-href="{{form.group.homepage}}">{{form.group.name}}</a>
             </td>
-            <td ng-if="form.message.length > 50" class="col-sm-2 highlight"
-                id="message">
-                <p>
-                    <strong>You previously returned this release for the
-                        following
-                        reason</strong>:{{form.message}}
-            </td>
             <td class="text-left" id="assay-name">
                 {{form.metadata.assay[0].name}}
             </td>
@@ -125,6 +118,9 @@
                         Action<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
+                        <li>
+                            <a ng-click="viewMessages(form)">View Messages</a>
+                        </li>
                         <li ng-if="!form.approved">
                             <a ng-click="approveForm(form)">Approve</a>
                         </li>
