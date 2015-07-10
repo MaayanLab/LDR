@@ -43,7 +43,7 @@ angular.module('ldr.releases.create', [
                     modalTitle: 'Assay',
                     placeholder: 'Select one assay...',
                     maxTags: 1,
-                    autocompleteEndpoint: 'assay',
+                    autocompleteEndpoint: 'assays',
                     useAutocomplete: true,
                     autocompleteOnly: true,
                     isRequired: true,
@@ -55,7 +55,7 @@ angular.module('ldr.releases.create', [
                     modalTitle: 'Cell Line',
                     placeholder: 'Select cell line(s)...',
                     maxTags: 100,
-                    autocompleteEndpoint: 'cell',
+                    autocompleteEndpoint: 'cellLines',
                     useAutocomplete: true,
                     autocompleteOnly: true,
                     isRequired: true,
@@ -67,7 +67,7 @@ angular.module('ldr.releases.create', [
                     modalTitle: 'Perturbagen',
                     placeholder: 'Select perturbagens...',
                     maxTags: MAX_TAGS,
-                    autocompleteEndpoint: 'perturbagen',
+                    autocompleteEndpoint: 'perturbagens',
                     useAutocomplete: true,
                     autocompleteOnly: true,
                     isRequired: true,
@@ -79,7 +79,7 @@ angular.module('ldr.releases.create', [
                     modalTitle: 'Readout',
                     placeholder: 'Select readout(s)...',
                     maxTags: MAX_TAGS,
-                    autocompleteEndpoint: 'readout',
+                    autocompleteEndpoint: 'readouts',
                     useAutocomplete: true,
                     autocompleteOnly: true,
                     isRequired: true,
@@ -91,7 +91,7 @@ angular.module('ldr.releases.create', [
                     modalTitle: 'Manipulated Gene',
                     placeholder: 'Select manipulated gene(s)...',
                     maxTags: 100,
-                    autocompleteEndpoint: 'gene',
+                    autocompleteEndpoint: 'genes',
                     useAutocomplete: true,
                     autocompleteOnly: true,
                     model: []
@@ -102,7 +102,7 @@ angular.module('ldr.releases.create', [
                     modalTitle: 'Organism',
                     placeholder: 'Select Organism...',
                     maxTags: 1,
-                    autocompleteEndpoint: 'organism',
+                    autocompleteEndpoint: 'organisms',
                     useAutocomplete: true,
                     autocompleteOnly: true,
                     model: []
@@ -113,7 +113,7 @@ angular.module('ldr.releases.create', [
                     modalTitle: 'Relevant Disease',
                     placeholder: 'Select Relevant Disease...',
                     maxTags: 1,
-                    autocompleteEndpoint: 'disease',
+                    autocompleteEndpoint: 'diseases',
                     useAutocomplete: true,
                     autocompleteOnly: true,
                     model: []
@@ -124,7 +124,7 @@ angular.module('ldr.releases.create', [
                     modalTitle: 'Analysis Tool',
                     placeholder: 'Select Analysis Tools...',
                     maxTags: MAX_TAGS,
-                    autocompleteEndpoint: 'tool',
+                    autocompleteEndpoint: 'tools',
                     useAutocomplete: true,
                     autocompleteOnly: true,
                     model: []
@@ -235,11 +235,10 @@ angular.module('ldr.releases.create', [
 
         $scope.autocompleteSource = function(textInput, fieldName) {
             var params = {
-                name: textInput//,
-                //group: $scope.group.abbr
+                q: textInput
             };
-            return nameServer
-                .get(fieldName, params)
+            return api('autocomplete/' + fieldName)
+                .get(params)
                 .then(function(response) {
                     // We build a hash and then convert it to an array of
                     // objects in order to prevent duplicates being returned

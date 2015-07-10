@@ -14,7 +14,8 @@ var SALT_WORK_FACTOR = 10;
 
 
 // Mongoose Models and Schemas
-var User, AnalysisTool, Group, DataRelease;
+var User, Group, Assay, CellLine, Perturbagen, Readout, Gene, Disease,
+    Organism, Tool, DataRelease;
 var Schema = mongoose.Schema;
 
 // User
@@ -145,19 +146,6 @@ try {
 //    });
 //};
 
-// Analysis Tools
-var toolSchema = new Schema({
-    title: { type: String, index: { unique: true } },
-    description: String,
-    url: String
-});
-
-try {
-    AnalysisTool = mongoose.model('AnalysisTool');
-} catch (e) {
-    AnalysisTool = mongoose.model('AnalysisTool', toolSchema, 'analysisTools');
-}
-
 // Group
 var groupSchema = new Schema({
     name: { type: String, required: true, index: { unique: true } },
@@ -179,12 +167,122 @@ try {
     Group = mongoose.model('Group', groupSchema, 'groups');
 }
 
+var asSchema = new Schema({
+    name: String,
+    description: String
+});
+
+asSchema.index({ name: 'text' });
+
+try {
+    Assay = mongoose.model('Assay');
+} catch (e) {
+    Assay = mongoose.model('Assay', asSchema, 'assays');
+}
+
+var clSchema = new Schema({
+    name: String,
+    type: String,
+    class: String,
+    controlOrDisease: String,
+    tissue: String
+});
+
+clSchema.index({ name: 'text' });
+
+try {
+    CellLine = mongoose.model('CellLine');
+} catch (e) {
+    CellLine = mongoose.model('CellLine', clSchema, 'cellLines');
+}
+
+var pertSchema = new Schema({
+    name: { type: String, index: { unique: true } },
+    type: String
+});
+
+pertSchema.index({ name: 'text' });
+
+try {
+    Perturbagen = mongoose.model('Perturbagen');
+} catch (e) {
+    Perturbagen = mongoose.model('Perturbagen', pertSchema, 'perturbagens');
+}
+
+var roSchema = new Schema({
+    name: { type: String, index: { unique: true } },
+    datatype: String
+});
+
+roSchema.index({ name: 'text' });
+
+try {
+    Readout = mongoose.model('Readout');
+} catch (e) {
+    Readout = mongoose.model('Readout', roSchema, 'readouts');
+}
+
+var geneSchema = new Schema({
+    name: { type: String, index: { unique: true } },
+    organism: String,
+    url: String,
+    description: String,
+    reference: String
+});
+
+geneSchema.index({ name: 'text' });
+
+try {
+    GeneGene = mongoose.model('Gene');
+} catch (e) {
+    Gene = mongoose.model('Gene', geneSchema, 'genes');
+}
+
+var disSchema = new Schema({
+    name: { type: String, index: { unique: true } }
+});
+
+disSchema.index({ name: 'text' });
+
+try {
+    Disease = mongoose.model('Disease');
+} catch (e) {
+    Disease = mongoose.model('Disease', disSchema, 'diseases');
+}
+
+var orgSchema = new Schema({
+    name: { type: String, index: { unique: true } }
+});
+
+orgSchema.index({ name: 'text' });
+
+try {
+     Organism = mongoose.model('Organism');
+} catch (e) {
+     Organism = mongoose.model('Organism', orgSchema, 'organisms');
+}
+
+var toolSchema = new Schema({
+    title: { type: String, index: { unique: true } },
+    description: String,
+    url: String
+});
+
+toolSchema.index({ name: 'text' });
+
+try {
+     Tool = mongoose.model('Tool');
+} catch (e) {
+     Tool = mongoose.model('Tool', toolSchema, 'tools');
+}
+
 var msgSchema = new Schema({
     message: String,
     date: Date,
     user: { type: Schema.ObjectId, ref: 'User'},
     return: Boolean // True if reason for returning, otherwise false
 });
+
 
 var dataReleaseSchema = new Schema({
     user: { type: Schema.ObjectId, ref: 'User', required: true },
@@ -206,14 +304,14 @@ var dataReleaseSchema = new Schema({
     },
     // These are arrays of IDs pointing to the name-metadata server
     metadata: {
-        assay: { type: [], default: [] }, // Always length 1
-        cellLines: { type: [], default: [] },
-        perturbagens: { type: [], default: [] },
-        readouts: { type: [], default: [] },
-        manipulatedGene: { type: [], default: [] }, // Always length 1
-        organism: { type: [], default: [] }, // Always length 1
-        relevantDisease: { type: [], default: [] }, // Always length 1
-        analysisTools: { type: [], default: [] },
+        assay: { type: [{ type: Schema.ObjectId, ref: 'Assay'}], default: [] },
+        cellLines: { type: [{ type: Schema.ObjectId, ref: 'CellLine' }], default: [] },
+        perturbagens: { type: [{ type: Schema.ObjectId, ref: 'Perturbagen' }], default: [] },
+        readouts: { type: [{ type: Schema.ObjectId, ref: 'Readout' }], default: [] },
+        manipulatedGene: { type: [{ type: Schema.ObjectId, ref: 'Gene' }], default: [] }, // Always length 1
+        organism:{ type: [{ type: Schema.ObjectId, ref: 'Organism' }], default: [] }, // Always length 1
+        relevantDisease: { type: [{ type: Schema.ObjectId, ref: 'Disease' }], default: [] }, // Always length 1
+        analysisTools: { type: [{ type: Schema.ObjectId, ref: 'tool' }], default: [] },
         tagsKeywords: { type: [], default: [] }
     },
     urls: {
@@ -277,7 +375,15 @@ DataRelease
 
 module.exports = {
     User: User,
-    AnalysisTool: AnalysisTool,
     Group: Group,
+    Assay: Assay,
+    CellLine: CellLine,
+    Perturbagen: Perturbagen,
+    Readout: Readout,
+    Gene: Gene,
+    Disease: Disease,
+    Organism: Organism,
+    Tool: Tool,
     DataRelease: DataRelease
 };
+

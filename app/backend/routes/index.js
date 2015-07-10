@@ -12,6 +12,7 @@ module.exports = function(app) {
     require('./users')(app);
     require('./admin')(app);
     require('./groups')(app);
+    require('./metadata')(app);
     require('./releaseRoutes')(app);
 
 };

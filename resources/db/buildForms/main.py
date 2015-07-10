@@ -6,20 +6,95 @@ from datetime import datetime
 import requests
 import json
 
-lorettaClient = MongoClient('mongodb://mmcdermott:kroyweN@loretta')
+hannahClient = MongoClient('mongodb://hannah')
 
-lincsDb = lorettaClient['LINCS']
-lorettaMd = lincsDb['milestones']
+lincsDb = hannahClient['LINCS']
+hannahMd = lincsDb['milestones']
+
+hannahDiseases = hannahClient['LDR']['diseases']
+hannahOrganisms = hannahClient['suggest-general']['Organism']
+hannahGenes = hannahClient['suggest-general']['Gene']
 
 ldrClient = MongoClient('mongodb://mmcdermott:kroyweN@localhost')
 ldrDb = ldrClient['LDR']
+assays = ldrDb['assays']
+cellLines = ldrDb['cellLines']
+perturbagens = ldrDb['perturbagens']
+readouts = ldrDb['readouts']
+genes = ldrDb['genes']
+diseases = ldrDb['diseases']
+organisms = ldrDb['organisms']
+tools = ldrDb['tools']
 releases = ldrDb['dataReleases']
+assays.drop()
+cellLines.drop()
+perturbagens.drop()
+readouts.drop()
+genes.drop()
+diseases.drop()
+organisms.drop()
+tools.drop()
 releases.drop()
 
-nsUrl = 'http://146.203.54.165:7078/form'
-headers = {'Content-Type': 'application/json'}
 
-for doc in lorettaMd.find({}):
+for doc in hannahMd.find({}):
+    assay = {
+        'name': doc['assay'],
+        'description': doc['assay-info']
+    }
+    assayId = assays.insert(assay)
+
+    cLIds = []
+    for line in doc['cell-lines']:
+        cLine = {
+            'name': line['name'],
+            'type': line['type'],
+            'class': line['class'],
+            'tissue': line['tissue']
+        }
+        cLIds.append(cellLines.insert(cLine))
+
+    pertIds = []
+    for pert in doc['perturbagens']:
+        pertDict = {
+            'name': pert['name'],
+            'type': pert['type']
+        }
+        pertIds.append(perturbagens.insert(pertDict))
+
+    rOutIds = []
+    for rOut in doc['readouts']:
+        ro = {
+            'name': rOut['name'],
+            'datatype': rOut['datatype']
+        }
+        rOutIds.append(readouts.insert(ro))
+
+    geneIds = []
+    for geneDoc in hannahGenes:
+        gene = {
+            'name': geneDoc['name'],
+            'organism': geneDoc['organism'],
+            'reference': geneDoc['ref'],
+            'url': geneDoc['url'],
+            'description': geneDoc['desc']
+        }
+        geneIds.append(genes.insert(gene))
+
+    disIds = []
+    for disDoc in hannahDiseases:
+        dis = {
+            'name': disDoc['name']
+        }
+        disIds.append(diseases.insert(dis))
+
+    orgIds = []
+    for org in hannahOrganisms:
+        orgDict = {
+            'name': org['name']
+        }
+        orgIds.append(organisms.insert(orgDict))
+
     out = {
         'approved': True,
         'released': False,
@@ -27,9 +102,9 @@ for doc in lorettaMd.find({}):
         'datasetName': doc['dcic-assay-name'],
         'description': doc['assay-info'],
         'metadata': {
-            'assay': [],
-            'cellLines': [],
-            'perturbagens': [],
+            'assay': [assayId],
+            'cellLines': [cLIds],
+            'perturbagens': [pertIds],
             'readouts': [],
             'manipulatedGene': [],
             'organism': [],
@@ -76,97 +151,6 @@ for doc in lorettaMd.find({}):
         out['group'] = ObjectId('5519bd94ea7e106fc6784167')
         out['user'] = ObjectId('5519bd94ea7e106fc678416d')
         groupAbbr = 'm'
-
-    print('GROUP: ' + groupAbbr)
-    gPar = '&group=' + groupAbbr
-
-    assayName = doc['assay']
-    assayQuery = assayName.replace('+', '\%2B').replace('(', '\(').replace(')', '\)')
-    print('ASSAY: ' + assayName)
-    assayArr = requests.get(nsUrl + '/assay?name=' + assayQuery + gPar).json()
-    # Add homo sapiens and ALS to each NeuroLINCS dataset
-    if 'n' in groupAbbr:
-        organismData = requests.get(nsUrl + '/organism?name=homo' + gPar).json()
-        if len(organismData) == 0:
-            organismData = requests.get(nsUrl + '/organism?name=homo').json()[0]
-        else:
-            organismData = organismData[0]
-        organismData['group'] = 'n'
-        organismId = requests.post(nsUrl + '/organism', data=json.dumps(organismData), headers=headers).json()
-        out['metadata']['organism'] = [organismId]
-        diseaseData = requests.get(nsUrl + '/disease?name=als' + gPar).json()
-        if len(diseaseData) == 0:
-            diseaseData = requests.get(nsUrl + '/disease?name=als').json()[0]
-        else:
-            diseaseData = diseaseData[0]
-        diseaseData['group'] = 'n'
-        diseaseId = requests.post(nsUrl + '/disease', data=json.dumps(diseaseData), headers=headers).json()
-        out['metadata']['disease'] = [diseaseId]
-    if len(assayArr) == 0:
-        assayData = {
-            'name': assayName,
-            'info': doc['assay-info'],
-            'group': groupAbbr
-        }
-        assayReq = requests.post(nsUrl + '/assay', data=json.dumps(assayData), headers=headers)
-        assayId = assayReq.json()
-    else:
-        postData = assayArr[0]
-        postData['group'] = groupAbbr
-        assayReq = requests.post(nsUrl + '/assay', data=json.dumps(postData), headers=headers)
-        assayId = assayReq.json()
-    out['metadata']['assay'] = [assayId]
-
-    for cLineObj in doc['cell-lines']:
-        if 'name' not in cLineObj:
-            continue
-        cLineName = cLineObj['name'].replace('+', '\%2B').replace('(', '\(').replace(')', '\)')\
-            .replace(' ', '%20').replace('#', '%23')
-        if 'Which four?' in cLineName:
-            continue
-        # print('CELL LINE: ' + cLineName)
-        cLineArr = requests.get(nsUrl + '/cell?name=' + cLineName + gPar).json()
-        cLineObj['group'] = groupAbbr
-        if len(cLineArr) == 0:
-            cLineId = requests.post(nsUrl + '/cell', data=json.dumps(cLineObj), headers=headers).json()
-        else:
-            postData = cLineArr[0]
-            postData['group'] = groupAbbr
-            cLineId = requests.post(nsUrl + '/cell', data=json.dumps(postData), headers=headers).json()
-        out['metadata']['cellLines'].append(cLineId)
-
-    if 'perturbagens' in doc:
-        for pertObj in doc['perturbagens']:
-            if 'name' not in pertObj:
-                continue
-            pertName = pertObj['name'].replace('+', '\%2B').replace('(', '\(').replace(')', '\)')
-            # print('PERTURBAGEN: ' + pertName)
-            pertArr = requests.get(nsUrl + '/perturbagen?name=' + pertName + gPar).json()
-            if len(pertArr) == 0:
-                pertObj['group'] = groupAbbr
-                pertReq = requests.post(nsUrl + '/perturbagen', data=json.dumps(pertObj), headers=headers)
-                pertId = pertReq.json()
-            else:
-                postData = pertArr[0]
-                postData['group'] = groupAbbr
-                pertReq = requests.post(nsUrl + '/perturbagen', data=json.dumps(postData), headers=headers)
-                pertId = pertReq.json()
-            out['metadata']['perturbagens'].append(pertId)
-
-    for rOutObj in doc['readouts']:
-        rOutName = rOutObj['name'].replace('+', '\%2B').replace('(', '\(').replace(')', '\)')
-        # print('READOUT: ' + rOutName)
-        rOutArr = requests.get(nsUrl + '/readout?name=' + rOutName + gPar).json()
-        if len(rOutArr) == 0:
-            rOutObj['group'] = groupAbbr
-            rOutReq = requests.post(nsUrl + '/readout', data=json.dumps(rOutObj), headers=headers)
-            rOutId = rOutReq.json()
-        else:
-            postData = rOutArr[0]
-            postData['group'] = groupAbbr
-            rOutReq = requests.post(nsUrl + '/readout', data=json.dumps(postData), headers=headers)
-            rOutId = rOutReq.json()
-        out['metadata']['readouts'].append(rOutId)
 
     for dateObj in doc['release-dates']:
         if dateObj['releaseLevel'] == 1:

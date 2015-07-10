@@ -43,7 +43,15 @@ module.exports = function(app) {
                     .sort({ dateModified: -1 })
                     .populate([
                         { path: 'group', model: 'Group' },
-                        { path: 'messages.user', model: 'User' }
+                        { path: 'messages.user', model: 'User' },
+                        { path: 'metadata.assay', model: 'Assay' },
+                        { path: 'metadata.cellLines', model: 'CellLine' },
+                        { path: 'metadata.perturbagens', model: 'Perturbagen' },
+                        { path: 'metadata.readouts', model: 'Readout' },
+                        { path: 'metadata.manipulatedGene', model: 'Gene' },
+                        { path: 'metadata.organism', model: 'Organism' },
+                        { path: 'metadata.relevantDisease', model: 'Disease' },
+                        { path: 'metadata.analysisTools', model: 'Tool' }
                     ])
                     .lean()
                     .exec(function(err, results) {
@@ -58,41 +66,27 @@ module.exports = function(app) {
                         DataRelease
                             .find({ $text: { $search: query } })
                             .sort({ dateModified: -1 })
-                            .populate('group')
+                            .populate([
+                                { path: 'group', model: 'Group' },
+                                { path: 'messages.user', model: 'User' },
+                                { path: 'metadata.assay', model: 'Assay' },
+                                { path: 'metadata.cellLines', model: 'CellLine' },
+                                { path: 'metadata.perturbagens', model: 'Perturbagen' },
+                                { path: 'metadata.readouts', model: 'Readout' },
+                                { path: 'metadata.manipulatedGene', model: 'Gene' },
+                                { path: 'metadata.organism', model: 'Organism' },
+                                { path: 'metadata.relevantDisease', model: 'Disease' },
+                                { path: 'metadata.analysisTools', model: 'Tool' }
+                            ])
                             .lean()
                             .exec(function(err, results) {
                                 if (err) {
                                     console.log(err);
                                     res.status(404).send('Error searching releases');
+                                } else {
+                                    data = _.union(results, releasesArr);
+                                    res.status(200).send(data);
                                 }
-
-                                if (!results.length) {
-                                    res.status(200).send(releasesArr);
-                                }
-                                _.each(results, function(release, i) {
-                                    getMetadata(release, function(err, finalRelease) {
-                                        if (err) {
-                                            res.status(500).send('There was an error building' +
-                                                ' meta data for these releases. Try again.');
-                                        } else {
-                                            var dates = finalRelease.releaseDates;
-                                            var up = dates.upcoming;
-                                            // Legacy. All entries should have up.
-                                            if (up === '' || !up) {
-                                                finalRelease.releaseDates.upcoming =
-                                                    dates.level1 !== '' ? dates.level1 :
-                                                        dates.level2 !== '' ? dates.level2 :
-                                                            dates.level3 !== '' ? dates.level3 :
-                                                                dates.level4 !== '' ?
-                                                                    dates.level4 : 'NA';
-                                            }
-                                            releasesArr.push(finalRelease);
-                                            if (i === results.length - 1) {
-                                                res.status(200).send(releasesArr);
-                                            }
-                                        }
-                                    });
-                                });
                             }
                         );
                     }
@@ -139,7 +133,15 @@ module.exports = function(app) {
             .findOne({ _id: req.params.id })
             .populate([
                 { path: 'group', model: 'Group' },
-                { path: 'messages.user', model: 'User' }
+                { path: 'messages.user', model: 'User' },
+                { path: 'metadata.assay', model: 'Assay' },
+                { path: 'metadata.cellLines', model: 'CellLine' },
+                { path: 'metadata.perturbagens', model: 'Perturbagen' },
+                { path: 'metadata.readouts', model: 'Readout' },
+                { path: 'metadata.manipulatedGene', model: 'Gene' },
+                { path: 'metadata.organism', model: 'Organism' },
+                { path: 'metadata.relevantDisease', model: 'Disease' },
+                { path: 'metadata.analysisTools', model: 'Tool' }
             ])
             .lean()
             .exec(function(err, release) {
@@ -147,30 +149,12 @@ module.exports = function(app) {
                     console.log(err);
                     res.status(404).send('Error: Release could not be found. ' +
                         'Id may be invalid');
-                }
-                if (!release) {
+                } else if (!release) {
                     res.status(404).send('Error: Release with given id could ' +
                         'not be found.');
+                } else {
+                    res.status(200).send(release);
                 }
-
-                getMetadata(release, function(err, finalRelease) {
-                    if (err) {
-                        res.status(500).send('There was an error building ' +
-                            'meta data for this release. Try again.');
-                    } else {
-                        var dates = finalRelease.releaseDates;
-                        var up = dates.upcoming;
-                        if (up === '' || !up) {
-                            finalRelease.releaseDates.upcoming =
-                                dates.level1 !== '' ? dates.level1 :
-                                    dates.level2 !== '' ? dates.level2 :
-                                        dates.level3 !== '' ? dates.level3 :
-                                            dates.level4 !== '' ?
-                                                dates.level4 : 'NA';
-                        }
-                        res.status(200).send(finalRelease);
-                    }
-                });
             });
     });
 
@@ -180,44 +164,24 @@ module.exports = function(app) {
             .find({})
             .populate([
                 { path: 'group', model: 'Group' },
-                { path: 'messages.user', model: 'User' }
+                { path: 'messages.user', model: 'User' },
+                { path: 'metadata.assay', model: 'Assay' },
+                { path: 'metadata.cellLines', model: 'CellLine' },
+                { path: 'metadata.perturbagens', model: 'Perturbagen' },
+                { path: 'metadata.readouts', model: 'Readout' },
+                { path: 'metadata.manipulatedGene', model: 'Gene' },
+                { path: 'metadata.organism', model: 'Organism' },
+                { path: 'metadata.relevantDisease', model: 'Disease' },
+                { path: 'metadata.analysisTools', model: 'Tool' }
             ])
             .lean()
             .exec(function(err, allData) {
                 if (err) {
                     console.log(err);
                     res.status(404).send('Releases could not be found.');
+                } else {
+                    res.status(200).send(allData);
                 }
-
-                var options = {
-                    path: 'messages.user',
-                    model: 'User'
-                };
-
-                var releasesArr = [];
-                _.each(allData, function(release, i) {
-                    getMetadata(release, function(err, finalRelease) {
-                        if (err) {
-                            res.status(500).send('There was an error building' +
-                                ' meta data for these releases. Try again.');
-                        } else {
-                            var dates = finalRelease.releaseDates;
-                            var up = dates.upcoming;
-                            if (up === '' || !up) {
-                                finalRelease.releaseDates.upcoming =
-                                    dates.level1 !== '' ? dates.level1 :
-                                        dates.level2 !== '' ? dates.level2 :
-                                            dates.level3 !== '' ? dates.level3 :
-                                                dates.level4 !== '' ?
-                                                    dates.level4 : 'NA';
-                            }
-                            releasesArr.push(finalRelease);
-                            if (i === allData.length - 1) {
-                                res.status(200).send(releasesArr);
-                            }
-                        }
-                    });
-                });
             }
         );
     });
@@ -236,39 +200,24 @@ module.exports = function(app) {
                 .find(query)
                 .populate([
                     { path: 'group', model: 'Group' },
-                    { path: 'messages.user', model: 'User' }
+                    { path: 'messages.user', model: 'User' },
+                    { path: 'metadata.assay', model: 'Assay' },
+                    { path: 'metadata.cellLines', model: 'CellLine' },
+                    { path: 'metadata.perturbagens', model: 'Perturbagen' },
+                    { path: 'metadata.readouts', model: 'Readout' },
+                    { path: 'metadata.manipulatedGene', model: 'Gene' },
+                    { path: 'metadata.organism', model: 'Organism' },
+                    { path: 'metadata.relevantDisease', model: 'Disease' },
+                    { path: 'metadata.analysisTools', model: 'Tool' }
                 ])
                 .lean()
-                .exec(function(err, allData) {
+                .exec(function(err, releases) {
                     if (err) {
                         console.log(err);
                         res.status(404).send('Releases could not be found.');
+                    } else {
+                        res.status(200).send(releases);
                     }
-                    var releasesArr = [];
-                    _.each(allData, function(release, i) {
-                        getMetadata(release, function(err, finalRelease) {
-                            if (err) {
-                                res.status(500).send('There was an error ' +
-                                    'building meta data for these releases. ' +
-                                    'Try again.');
-                            } else {
-                                var dates = finalRelease.releaseDates;
-                                var up = dates.upcoming;
-                                if (up === '' || !up) {
-                                    finalRelease.releaseDates.upcoming =
-                                        dates.level1 !== '' ? dates.level1 :
-                                            dates.level2 !== '' ? dates.level2 :
-                                                dates.level3 !== '' ? dates.level3 :
-                                                    dates.level4 !== '' ?
-                                                        dates.level4 : 'NA';
-                                }
-                                releasesArr.push(finalRelease);
-                                if (i === allData.length - 1) {
-                                    res.status(200).send(releasesArr);
-                                }
-                            }
-                        });
-                    });
                 }
             );
         }
@@ -282,7 +231,15 @@ module.exports = function(app) {
                 .limit(25)
                 .populate([
                     { path: 'group', model: 'Group' },
-                    { path: 'messages.user', model: 'User' }
+                    { path: 'messages.user', model: 'User' },
+                    { path: 'metadata.assay', model: 'Assay' },
+                    { path: 'metadata.cellLines', model: 'CellLine' },
+                    { path: 'metadata.perturbagens', model: 'Perturbagen' },
+                    { path: 'metadata.readouts', model: 'Readout' },
+                    { path: 'metadata.manipulatedGene', model: 'Gene' },
+                    { path: 'metadata.organism', model: 'Organism' },
+                    { path: 'metadata.relevantDisease', model: 'Disease' },
+                    { path: 'metadata.analysisTools', model: 'Tool' }
                 ])
                 .lean()
                 .exec(function(err, releases) {
@@ -291,20 +248,7 @@ module.exports = function(app) {
                         res.status(404).send('Could not return ' +
                             'approved releases');
                     } else {
-                        var releasesArr = [];
-                        _.each(releases, function(release, i) {
-                            getMetadata(release, function(err, finalRelease) {
-                                if (err) {
-                                    res.status(500).send('There was an error building' +
-                                        ' meta data for these releases. Try again.');
-                                } else {
-                                    releasesArr.push(finalRelease);
-                                    if (i === releases.length - 1) {
-                                        res.status(200).send(releasesArr);
-                                    }
-                                }
-                            });
-                        });
+                        res.status(200).send(releases);
                     }
                 }
             );
@@ -323,45 +267,36 @@ module.exports = function(app) {
                     console.log(err);
                     res.status(404).send('Could not return release');
                 } else {
-                    var dateToSearch = latestRelease.upcomingRelease;
+                    var dateToSearch = latestRelease.releaseDates.upcoming;
                     if (!(dateToSearch instanceof Date)) {
                         dateToSearch = new Date(dateToSearch);
                     }
                     DataRelease
                         .find(
-                        { upcomingRelease: { $gt: dateToSearch } })
-                        .sort({ released: -1, upcomingRelease: 1 })
+                        { 'releaseDates.upcoming' : { $gt: dateToSearch } })
+                        .sort({ released: -1, 'releaseDates.upcoming' : 1 })
                         .limit(25)
                         .populate([
                             { path: 'group', model: 'Group' },
-                            { path: 'messages.user', model: 'User' }
+                            { path: 'messages.user', model: 'User' },
+                            { path: 'metadata.assay', model: 'Assay' },
+                            { path: 'metadata.cellLines', model: 'CellLine' },
+                            { path: 'metadata.perturbagens', model: 'Perturbagen' },
+                            { path: 'metadata.readouts', model: 'Readout' },
+                            { path: 'metadata.manipulatedGene', model: 'Gene' },
+                            { path: 'metadata.organism', model: 'Organism' },
+                            { path: 'metadata.relevantDisease', model: 'Disease' },
+                            { path: 'metadata.analysisTools', model: 'Tool' }
                         ])
                         .lean()
                         .exec(function(err, afterReleases) {
                             if (err) {
                                 console.log(err);
                                 res.status(404).send('Could not find releases' +
-                                    ' after ' + latestRelease.dateModified);
+                                    ' after ' + latestRelease.releaseDates.upcoming);
+                            } else {
+                                res.status(200).send(afterReleases);
                             }
-                            var releasesArr = [];
-                            // Send an empty array if there are no later
-                            // releases
-                            if (!afterReleases.length) {
-                                res.status(204).send(afterReleases);
-                            }
-                            _.each(afterReleases, function(release, i) {
-                                getMetadata(release, function(err, finalRelease) {
-                                    if (err) {
-                                        res.status(500).send('There was an error building' +
-                                            ' meta data for these releases. Try again.');
-                                    } else {
-                                        releasesArr.push(finalRelease);
-                                        if (i === afterReleases.length - 1) {
-                                            res.status(200).send(releasesArr);
-                                        }
-                                    }
-                                });
-                            });
                         }
                     );
                 }
