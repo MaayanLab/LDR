@@ -239,7 +239,8 @@ try {
 }
 
 var disSchema = new Schema({
-    name: { type: String, index: { unique: true } }
+    name: { type: String, index: { unique: true } },
+    description: String
 });
 
 disSchema.index({ name: 'text' });
@@ -251,7 +252,8 @@ try {
 }
 
 var orgSchema = new Schema({
-    name: { type: String, index: { unique: true } }
+    name: { type: String, index: { unique: true } },
+    commonName: String
 });
 
 orgSchema.index({ name: 'text' });
@@ -333,12 +335,6 @@ dataReleaseSchema.index({
     'urls.**': 'text'
 });
 
-try {
-    DataRelease = mongoose.model('DataRelease');
-} catch (e) {
-    DataRelease = mongoose.model('DataRelease',
-        dataReleaseSchema, 'dataReleases');
-}
 
 dataReleaseSchema.pre('save', function(next) {
 
@@ -362,6 +358,13 @@ dataReleaseSchema.pre('save', function(next) {
     });
     next();
 });
+
+try {
+    DataRelease = mongoose.model('DataRelease');
+} catch (e) {
+    DataRelease = mongoose.model('DataRelease',
+        dataReleaseSchema, 'dataReleases');
+}
 
 /* DANGEROUS: Make updates to every release
 DataRelease

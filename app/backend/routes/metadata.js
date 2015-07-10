@@ -138,4 +138,40 @@ module.exports = function(app) {
             );
         }
     );
+
+    app.post(baseUrl + '/api/secure/:sample(assays|cellLines|perturbagens|readouts|genes|diseases|organisms|tools)/',
+        function(req, res) {
+            var inputData = req.body;
+            var s = req.params.sample;
+            var sample;
+
+            if (s === 'assays') {
+                sample = Assay;
+            } else if (s === 'cellLines') {
+                sample = CellLine;
+            } else if (s === 'perturbagens') {
+                sample = Perturbagen;
+            } else if (s === 'readouts') {
+                sample = Readout;
+            } else if (s === 'genes') {
+                sample = Gene;
+            } else if (s === 'diseases') {
+                sample = Disease;
+            } else if (s === 'organisms') {
+                sample = Organism;
+            } else if (s === 'tools') {
+                sample = Tool;
+            }
+
+            sample.create(inputData, function(err, sample) {
+                if (err) {
+                    console.log(err);
+                    res.status(400).send('A ' + err.name + ' occurred while ' +
+                        'saving to the database.');
+                } else {
+                    res.status(200).send(sample);
+                }
+            });
+        }
+    );
 };

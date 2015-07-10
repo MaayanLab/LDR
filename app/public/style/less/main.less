@@ -96,10 +96,10 @@ nav.thin-navbar {
 
 a#group-nav-icon {
     height: 13px;
-    width: 26px;
+    width: 19px;
     background: url('../images/group-icon.png') no-repeat left top;
     &:hover {
-        background-position: -26px 0;
+        background-position: -19px 0;
     }
 }
 
@@ -464,24 +464,27 @@ tags-input {
 }
 
 .dataset-name {
-    &:focus {
-        -webkit-box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
-        -moz-box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
-        box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
-    }
+    position: relative;
+    height: 100%;
     -webkit-appearance: textfield;
     overflow: hidden;
     word-wrap: break-word;
     cursor: text;
     border: 1px solid rgb(169, 169, 169);
     box-shadow: rgb(211, 211, 211) 1px 1px 1px 0 inset;
-    margin: 0;
+    margin: 5px 0 0 0;
     background-color: rgb(255, 255, 255);
     width: 100% !important;
     outline: 0;
     padding: 7px;
     float: left;
     font: 14px @font-family-primary;
+
+    &:focus {
+        -webkit-box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+        -moz-box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+        box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+    }
 }
 
 textarea.experiment {
@@ -771,7 +774,6 @@ div.btn-group.open > .tr-needs-edit-btn {
 .group {
     margin-top: 50px;
     margin-bottom: 50px;
-    display: table;
 }
 
 .group-info {
@@ -844,8 +846,8 @@ span.stat-num {
 
 }
 
-.group-icon {
-
+.user-icon {
+    margin: 0 auto;
 }
 
 .group-upload {

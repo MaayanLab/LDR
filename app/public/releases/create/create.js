@@ -22,10 +22,11 @@ angular.module('ldr.releases.create', [
 
     .controller('releases.create.ctrl',
     function($stateParams, $scope, $timeout, $http, $location, $anchorScroll,
-             store, $state, $modal, lodash, api, nameServer, $q) {
+             store, $state, $modal, lodash, api) {
 
         $scope.user = $scope.getCurrentUser();
         $scope.group = $scope.user.group;
+        $scope.showErrors = false;
 
         var MAX_TAGS = 100;
         $scope.form = {
@@ -188,6 +189,15 @@ angular.module('ldr.releases.create', [
             ]
         };
 
+        $scope.$watchGroup([
+            'form.metadata[0].model',
+            'form.metadata[1].model',
+            'form.metadata[2].model',
+            'form.metadata[3].model'
+            ], function() {
+            $scope.showErrors = false;
+        });
+
         // Watch assay description and change experiment description if that
         // is changed
         //$scope.$watch('form.metadata[0].model[0]', function() {
@@ -211,6 +221,7 @@ angular.module('ldr.releases.create', [
                 if (form._id) {
                     $scope.form._id = form._id;
                 }
+                console.log(form);
                 $scope.form.description.model = form.description;
                 $scope.form.datasetName.model = form.datasetName;
                 lodash.each($scope.form.releaseDates, function(obj) {
@@ -269,7 +280,22 @@ angular.module('ldr.releases.create', [
             $state.go('releasesOverview');
         };
 
+        $scope.validate = function() {
+            lodash.each($scope.form.metadata, function(obj) {
+                if (obj.isRequired && !obj.model.length) {
+                    $scope.showErrors = true;
+                }
+            });
+        };
+
         $scope.submit = function() {
+
+            lodash.each($scope.form.metadata, function(obj) {
+                if (obj.isRequired && !obj.model.length) {
+                    $scope.showErrors = true;
+                }
+            });
+
             var form = {
                 user: $scope.user._id,
                 group: $scope.user.group,
@@ -282,66 +308,39 @@ angular.module('ldr.releases.create', [
             form.datasetName = $scope.form.datasetName.model;
             form.description = $scope.form.description.model;
 
-            var buildIds = function() {
-                var promises = [];
-                lodash.each($scope.form.metadata, function(metadataObj) {
-                    lodash.each(metadataObj.model, function(modelObj) {
-                        if (!modelObj._id && modelObj.endpoint) {
-                            // Id doesn't exist but omit it anyway
-                            // Add group abbr (will be name eventually)
-                            modelObj.group = $scope.group.abbr;
-                            var endpoint = modelObj.endpoint;
-                            var promise = nameServer
-                                .post(endpoint,
-                                lodash.omit(modelObj, ['_id', 'endpoint', 'text']))
-                                .success(function(id) {
-                                    modelObj._id = id;
-                                })
-                                .error(function(xhr, textStatus, errorThrown) {
-                                }
-                            );
-                            promises.push(promise);
-                        }
-                    });
-                });
-                return $q.all(promises);
-            };
-
-            buildIds().then(function() {
-                lodash.each($scope.form.metadata, function(obj) {
-                    form.metadata[obj.name] = lodash.map(obj.model, function(obj) {
-                        if (Object.keys(obj).length === 1 && obj.text) {
-                            return obj.text;
-                        }
-                        if (obj._id) {
-                            return obj._id;
-                        }
-                    });
-                });
-                lodash.each($scope.form.releaseDates, function(obj) {
-                    form.releaseDates['level' + obj.level] =
-                        lodash.isUndefined(obj.model) ? '' : obj.model;
-                });
-                lodash.each($scope.form.urls, function(obj) {
-                    form.urls[obj.name] = lodash.isUndefined(obj.model) ?
-                        '' : obj.model;
-                });
-
-                console.log(form);
-                var endpoint = 'releases/form/';
-                if (!lodash.isUndefined($scope.form._id)) {
-                    endpoint += $scope.form._id;
-                }
-                api(endpoint)
-                    .post(form)
-                    .error(function(err) {
-                        throw new Error(err);
-                    })
-                    .success(function() {
-                        //$state.go('releasesCreate', { id: result._id });
-                        $state.go('releasesOverview');
+            lodash.each($scope.form.metadata, function(obj) {
+                form.metadata[obj.name] = lodash.map(obj.model, function(obj) {
+                    if (Object.keys(obj).length === 1 && obj.text) {
+                        return obj.text;
                     }
-                );
+                    if (obj._id) {
+                        return obj._id;
+                    }
+                });
             });
+            lodash.each($scope.form.releaseDates, function(obj) {
+                form.releaseDates['level' + obj.level] =
+                    lodash.isUndefined(obj.model) ? '' : obj.model;
+            });
+            lodash.each($scope.form.urls, function(obj) {
+                form.urls[obj.name] = lodash.isUndefined(obj.model) ?
+                    '' : obj.model;
+            });
+
+            console.log(form);
+            var endpoint = 'releases/form/';
+            if (!lodash.isUndefined($scope.form._id)) {
+                endpoint += $scope.form._id;
+            }
+            api(endpoint)
+                .post(form)
+                .error(function(err) {
+                    throw new Error(err);
+                })
+                .success(function() {
+                    //$state.go('releasesCreate', { id: result._id });
+                    $state.go('releasesOverview');
+                }
+            );
         };
     });

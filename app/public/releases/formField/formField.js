@@ -13,7 +13,8 @@ angular.module('ldr')
                 autocompleteEndpoint: '@',
                 autocompleteSource: '=',
                 ngModel: '=',
-                isRequired: '@'
+                isRequired: '@',
+                showErrors: '='
             },
             templateUrl: 'releases/formField/formField.html',
             link: function(scope, element) {
@@ -21,7 +22,8 @@ angular.module('ldr')
                     if (!newTag.newField) {
                         return true;
                     }
-                    $modal.open({
+                    $modal
+                        .open({
                         templateUrl: 'releases/addModal/addModal.html',
                         controller: 'ModalInstanceCtrl',
                         resolve: {
@@ -34,7 +36,12 @@ angular.module('ldr')
                                 };
                             }
                         }
-                    });
+                        })
+                        .result.then(function () {
+                        }, function () {
+                            // Modal was dismissed
+                            scope.ngModel.splice(scope.ngModel.length - 1, 1);
+                        });
                     return true;
                 };
             }

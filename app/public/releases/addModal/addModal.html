@@ -9,11 +9,11 @@
                    ng-model="newTag.name"/>
         </div>
         <div class="form-group">
-            <label for="assay-info" class="control-label">
-                Information
+            <label for="assay-desc" class="control-label">
+                Description
             </label>
-            <input id="assay-info" type="text" class="form-control"
-                   ng-model="newTag.info"/>
+            <input id="assay-desc" type="text" class="form-control"
+                   ng-model="newTag.description"/>
         </div>
     </form>
 
@@ -79,12 +79,51 @@
                 Data Type
             </label>
             <input type="text" class="form-control"
-                   ng-model="modalForm.type"/>
+                   ng-model="modalForm.datatype"/>
         </div>
     </form>
 
     <form ng-model="modalForm" class="modal-form-input"
-          ng-show="name === 'relevantDisease'">
+          ng-show="name === 'manipulatedGene'">
+        <div class="form-group">
+            <label for="gene-name" class="control-label">
+                Name
+            </label>
+            <input id="gene-name" type="text" class="form-control"
+                   ng-model="modalForm.name"/>
+            </div>
+        <div class="form-group">
+            <label for="gene-org" class="control-label">
+                Organism
+            </label>
+            <input id="gene-org" type="text" class="form-control"
+                   ng-model="modalForm.organism"/>
+        </div>
+        <div class="form-group">
+            <label for="gene-url" class="control-label">
+                URL
+            </label>
+            <input id="gene-url" type="text" class="form-control"
+                   ng-model="modalForm.url"/>
+        </div>
+        <div class="form-group">
+            <label for="gene-desc" class="control-label">
+                Description
+            </label>
+            <input id="gene-desc" type="text" class="form-control"
+                   ng-model="modalForm.description"/>
+        </div>
+        <div class="form-group">
+            <label for="gene-ref" class="control-label">
+                Reference
+            </label>
+            <input id="gene-ref" type="text" class="form-control"
+                   ng-model="modalForm.reference"/>
+        </div>
+    </form>
+
+    <form ng-model="modalForm" class="modal-form-input"
+          ng-show="name === 'organism'">
         <div class="form-group">
             <label for="org-sci-name" class="control-label">
                 Scientific Name
@@ -111,11 +150,36 @@
                    ng-model="modalForm.name"/>
         </div>
         <div class="form-group">
-            <label for="disease-info" class="control-label">
-                Information
+            <label for="disease-desc" class="control-label">
+                Description
             </label>
-            <input id="disease-info" type="text" class="form-control"
-                   ng-model="modalForm.info"/>
+            <input id="disease-desc" type="text" class="form-control"
+                   ng-model="modalForm.description"/>
+        </div>
+    </form>
+
+    <form ng-model="modalForm" class="modal-form-input"
+          ng-show="name === 'analysisTools'">
+        <div class="form-group">
+            <label for="tool-title" class="control-label">
+                Title
+            </label>
+            <input id="tool-title" type="text" class="form-control"
+                   ng-model="modalForm.title"/>
+        </div>
+        <div class="form-group">
+            <label for="tool-desc" class="control-label">
+                Description
+            </label>
+            <input id="tool-desc" type="text" class="form-control"
+                   ng-model="modalForm.description"/>
+        </div>
+        <div class="form-group">
+            <label for="tool-url" class="control-label">
+                URL
+            </label>
+            <input id="tool-url" type="text" class="form-control"
+                   ng-model="modalForm.url"/>
         </div>
     </form>
 </div>

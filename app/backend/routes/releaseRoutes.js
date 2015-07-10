@@ -98,6 +98,7 @@ module.exports = function(app) {
     // Returns empty release for initialization on front-end
     app.get(baseUrl + '/api/releases/form/', function(req, res) {
         var releaseInit = {
+            datasetName: '',
             description: '',
             metadata: {
                 assay: [],
@@ -309,6 +310,7 @@ module.exports = function(app) {
         var inputData = req.body;
         inputData.approved = false;
 
+        console.log(inputData);
         DataRelease.create(inputData, function(err, form) {
             if (err) {
                 console.log(err);
@@ -317,6 +319,7 @@ module.exports = function(app) {
                     'is formatted properly. Visit http://www.jsonlint.com ' +
                     'to confirm.');
             } else {
+                console.log(form);
                 res.status(200).send(form);
             }
         });

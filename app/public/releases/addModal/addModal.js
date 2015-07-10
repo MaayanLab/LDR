@@ -1,6 +1,6 @@
 angular.module('ldr')
     .controller('ModalInstanceCtrl', function($scope, $modalInstance,
-                                              config, nameServer) {
+                                              config, api) {
         // name = assay, cellLines, readouts, perturbagens, relevantDisease
         $scope.name = config.name;
         $scope.newTag = config.newTag;
@@ -13,25 +13,21 @@ angular.module('ldr')
             delete $scope.newTag.newField;
             var post;
             if ($scope.name === 'assay') {
-                post = nameServer.post('assay', $scope.newTag);
-            }
-            if ($scope.name === 'cellLines') {
-                post = nameServer.post('cell', $scope.newTag);
-            }
-            if ($scope.name === 'perturbagens') {
-                post = nameServer.post('perturbagen', $scope.newTag);
-            }
-            if ($scope.name === 'readouts') {
-                post = nameServer.post('readout', $scope.newTag);
-            }
-            if ($scope.name === 'manipulatedGene') {
-                post = nameServer.post('gene', $scope.newTag);
-            }
-            if ($scope.name === 'organism') {
-                post = nameServer.post('organism', $scope.newTag);
-            }
-            if ($scope.name === 'relevantDisease') {
-                post = nameServer.post('disease', $scope.newTag);
+                post = api('assays').post($scope.newTag);
+            } else if ($scope.name === 'cellLines') {
+                post = api('cellLines').post($scope.newTag);
+            } else if ($scope.name === 'perturbagens') {
+                post = api('perturbagens').post($scope.newTag);
+            } else if ($scope.name === 'readouts') {
+                post = api('readouts').post($scope.newTag);
+            } else if ($scope.name === 'manipulatedGene') {
+                post = api('genes').post($scope.newTag);
+            } else if ($scope.name === 'relevantDisease') {
+                post = api('diseases').post($scope.newTag);
+            } else if ($scope.name === 'organism') {
+                post = api('organisms').post($scope.newTag);
+            } else if ($scope.name === 'analysisTools') {
+                post = api('tools').post($scope.newTag);
             }
 
             post.success(function(resp) {
