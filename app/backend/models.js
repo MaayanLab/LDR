@@ -169,7 +169,8 @@ try {
 
 var asSchema = new Schema({
     name: String,
-    description: String
+    description: String,
+    group: { type: Schema.ObjectId, ref: 'Group' }
 });
 
 asSchema.index({ name: 'text' });
@@ -185,7 +186,8 @@ var clSchema = new Schema({
     type: String,
     class: String,
     controlOrDisease: String,
-    tissue: String
+    tissue: String,
+    group: { type: Schema.ObjectId, ref: 'Group' }
 });
 
 clSchema.index({ name: 'text' });
@@ -198,7 +200,8 @@ try {
 
 var pertSchema = new Schema({
     name: { type: String, index: { unique: true } },
-    type: String
+    type: String,
+    group: { type: Schema.ObjectId, ref: 'Group' }
 });
 
 pertSchema.index({ name: 'text' });
@@ -211,7 +214,8 @@ try {
 
 var roSchema = new Schema({
     name: { type: String, index: { unique: true } },
-    datatype: String
+    datatype: String,
+    group: { type: Schema.ObjectId, ref: 'Group' }
 });
 
 roSchema.index({ name: 'text' });
@@ -227,7 +231,8 @@ var geneSchema = new Schema({
     organism: String,
     url: String,
     description: String,
-    reference: String
+    reference: String,
+    group: { type: Schema.ObjectId, ref: 'Group' }
 });
 
 geneSchema.index({ name: 'text' });
@@ -240,7 +245,8 @@ try {
 
 var disSchema = new Schema({
     name: { type: String, index: { unique: true } },
-    description: String
+    description: String,
+    group: { type: Schema.ObjectId, ref: 'Group' }
 });
 
 disSchema.index({ name: 'text' });
@@ -253,7 +259,8 @@ try {
 
 var orgSchema = new Schema({
     name: { type: String, index: { unique: true } },
-    commonName: String
+    commonName: String,
+    group: { type: Schema.ObjectId, ref: 'Group' }
 });
 
 orgSchema.index({ name: 'text' });
@@ -265,9 +272,10 @@ try {
 }
 
 var toolSchema = new Schema({
-    title: { type: String, index: { unique: true } },
+    name: { type: String, index: { unique: true } },
     description: String,
-    url: String
+    url: String,
+    group: { type: Schema.ObjectId, ref: 'Group' }
 });
 
 toolSchema.index({ name: 'text' });
@@ -299,10 +307,10 @@ var dataReleaseSchema = new Schema({
     description: { type: String, default: '' }, // Brief description of exp.
     releaseDates: {
         upcoming: Date,
-        level1: { type: String, default: '' },
-        level2: { type: String, default: '' },
-        level3: { type: String, default: '' },
-        level4: { type: String, default: '' }
+        level1: { type: Date, required: true },
+        level2: Date,
+        level3: Date,
+        level4: Date
     },
     // These are arrays of IDs pointing to the name-metadata server
     metadata: {
@@ -328,25 +336,18 @@ var dataReleaseSchema = new Schema({
 // https://github.com/saintedlama/mongoose-version
 // dataReleaseSchema.plugin(version);
 
-dataReleaseSchema.index({
-    datasetName: 'text',
-    'metadata.**': 'text',
-    'releaseDates.**': 'text',
-    'urls.**': 'text'
-});
-
-
 dataReleaseSchema.pre('save', function(next) {
 
+    console.log('CURRENTLY ABOUT TO SAVE ' + this.toString());
     // Update dateModified
     this.dateModified = new Date();
 
     // Generate 'upcoming' field with closest release date
-    this.releaseDates.upcoming = this.releaseDates.level1 !== '' ?
-        this.releaseDates.level1 : this.releaseDates.level2 !== '' ?
-        this.releaseDates.level2 : this.releaseDates.level3 !== '' ?
-        this.releaseDates.level3 : this.releaseDates.level4 !== '' ?
-        this.releaseDates.level4 : 'NA';
+    //this.releaseDates.upcoming = this.releaseDates.level1 !== '' ?
+    //    this.releaseDates.level1 : this.releaseDates.level2 !== '' ?
+    //    this.releaseDates.level2 : this.releaseDates.level3 !== '' ?
+    //    this.releaseDates.level3 : this.releaseDates.level4 !== '' ?
+    //    this.releaseDates.level4 : 'NA';
 
     // Check if any ids are null. If they are, throw an error
     _.each(this.metadata, function(arr, key) {
@@ -359,14 +360,22 @@ dataReleaseSchema.pre('save', function(next) {
     next();
 });
 
+dataReleaseSchema.index({
+    datasetName: 'text',
+    'metadata.**': 'text',
+    'releaseDates.**': 'text',
+    'urls.**': 'text'
+});
+
 try {
     DataRelease = mongoose.model('DataRelease');
 } catch (e) {
     DataRelease = mongoose.model('DataRelease',
         dataReleaseSchema, 'dataReleases');
 }
+/*
 
-/* DANGEROUS: Make updates to every release
+// DANGEROUS: Make updates to every release
 DataRelease
     .find({})
     .exec(function(err, releases) {
@@ -374,8 +383,8 @@ DataRelease
             release.save();
         });
 });
-*/
 
+*/
 module.exports = {
     User: User,
     Group: Group,
@@ -389,4 +398,3 @@ module.exports = {
     Tool: Tool,
     DataRelease: DataRelease
 };
-

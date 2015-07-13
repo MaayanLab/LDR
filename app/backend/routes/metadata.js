@@ -20,6 +20,7 @@ var jwt = require('express-jwt'),
     Disease = Models.Disease,
     Organism = Models.Organism,
     Tool = Models.Tool,
+    secret = require('../config/database').secret;
     baseUrl = require('../config/baseUrl').baseUrl;
 
 module.exports = function(app) {
@@ -47,7 +48,7 @@ module.exports = function(app) {
             }
 
             sample
-                .find({ name: new RegExp(req.query.q, 'i')})
+                .find({ name: new RegExp(req.query.q, 'i') })
                 .lean()
                 .exec(function(err, results) {
                     if (err) {
@@ -143,7 +144,18 @@ module.exports = function(app) {
         function(req, res) {
             var inputData = req.body;
             var s = req.params.sample;
-            var sample;
+            var token, user, sample;
+
+            if (req.headers.authorization &&
+                req.headers.authorization.split(' ')[0] === 'Bearer') {
+                token = req.headers.authorization.split(' ')[1];
+                user = jwt.verify(token, secret, {
+                    issuer: 'http://amp.pharm.mssm.edu/LDR/'
+                });
+                inputData.group = user.group._id;
+            } else {
+                res.status(401).send('Token or URL are invalid. Try again.');
+            }
 
             if (s === 'assays') {
                 sample = Assay;
@@ -166,10 +178,17 @@ module.exports = function(app) {
             sample.create(inputData, function(err, sample) {
                 if (err) {
                     console.log(err);
-                    res.status(400).send('A ' + err.name + ' occurred while ' +
-                        'saving to the database.');
+                    // Catch duplicate key error
+                    if (err.code === 11000) {
+                        res.status(400).send('A sample with that name ' +
+                            'already exists. Please try another.')
+                    }
+                    else {
+                        res.status(400).send('A ' + err.name + ' occurred while ' +
+                            'saving to the database.');
+                    }
                 } else {
-                    res.status(200).send(sample);
+                    res.status(200).send(sample._id);
                 }
             });
         }

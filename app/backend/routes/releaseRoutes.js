@@ -6,7 +6,6 @@ var jwt = require('express-jwt'),
     Models = require('../models'),
     DataRelease = Models.DataRelease,
     Group = Models.Group,
-    getMetadata = require('../getMetadata'),
     baseUrl = require('../config/baseUrl').baseUrl,
     config = require('../config/database');
 
@@ -70,13 +69,31 @@ module.exports = function(app) {
                                 { path: 'group', model: 'Group' },
                                 { path: 'messages.user', model: 'User' },
                                 { path: 'metadata.assay', model: 'Assay' },
-                                { path: 'metadata.cellLines', model: 'CellLine' },
-                                { path: 'metadata.perturbagens', model: 'Perturbagen' },
+                                {
+                                    path: 'metadata.cellLines',
+                                    model: 'CellLine'
+                                },
+                                {
+                                    path: 'metadata.perturbagens',
+                                    model: 'Perturbagen'
+                                },
                                 { path: 'metadata.readouts', model: 'Readout' },
-                                { path: 'metadata.manipulatedGene', model: 'Gene' },
-                                { path: 'metadata.organism', model: 'Organism' },
-                                { path: 'metadata.relevantDisease', model: 'Disease' },
-                                { path: 'metadata.analysisTools', model: 'Tool' }
+                                {
+                                    path: 'metadata.manipulatedGene',
+                                    model: 'Gene'
+                                },
+                                {
+                                    path: 'metadata.organism',
+                                    model: 'Organism'
+                                },
+                                {
+                                    path: 'metadata.relevantDisease',
+                                    model: 'Disease'
+                                },
+                                {
+                                    path: 'metadata.analysisTools',
+                                    model: 'Tool'
+                                }
                             ])
                             .lean()
                             .exec(function(err, results) {
@@ -274,19 +291,25 @@ module.exports = function(app) {
                     }
                     DataRelease
                         .find(
-                        { 'releaseDates.upcoming' : { $gt: dateToSearch } })
-                        .sort({ released: -1, 'releaseDates.upcoming' : 1 })
+                        { 'releaseDates.upcoming': { $gt: dateToSearch } })
+                        .sort({ released: -1, 'releaseDates.upcoming': 1 })
                         .limit(25)
                         .populate([
                             { path: 'group', model: 'Group' },
                             { path: 'messages.user', model: 'User' },
                             { path: 'metadata.assay', model: 'Assay' },
                             { path: 'metadata.cellLines', model: 'CellLine' },
-                            { path: 'metadata.perturbagens', model: 'Perturbagen' },
+                            {
+                                path: 'metadata.perturbagens',
+                                model: 'Perturbagen'
+                            },
                             { path: 'metadata.readouts', model: 'Readout' },
                             { path: 'metadata.manipulatedGene', model: 'Gene' },
                             { path: 'metadata.organism', model: 'Organism' },
-                            { path: 'metadata.relevantDisease', model: 'Disease' },
+                            {
+                                path: 'metadata.relevantDisease',
+                                model: 'Disease'
+                            },
                             { path: 'metadata.analysisTools', model: 'Tool' }
                         ])
                         .lean()
@@ -305,12 +328,29 @@ module.exports = function(app) {
         );
     });
 
+    var formatData = function(inputData) {
+        inputData.approved = false;
+        inputData.dateModified = new Date();
+
+        _.each(inputData.releaseDates, function(date) {
+            if (date) {
+                date = new Date(date);
+            }
+            return date;
+        });
+        inputData.releaseDates.upcoming = inputData.releaseDates.level1 !== '' ?
+            inputData.releaseDates.level1 : inputData.releaseDates.level2 !== '' ?
+            inputData.releaseDates.level2 : inputData.releaseDates.level3 !== '' ?
+            inputData.releaseDates.level3 : inputData.releaseDates.level4 !== '' ?
+            inputData.releaseDates.level4 : '';
+        inputData.releaseDates.upcoming = new Date(inputData.releaseDates.upcoming);
+        return inputData;
+    };
+
     // Post release without id and save it to the database
     app.post(baseUrl + '/api/secure/releases/form/', function(req, res) {
-        var inputData = req.body;
-        inputData.approved = false;
+        var inputData = formatData(req.body);
 
-        console.log(inputData);
         DataRelease.create(inputData, function(err, form) {
             if (err) {
                 console.log(err);
@@ -319,7 +359,6 @@ module.exports = function(app) {
                     'is formatted properly. Visit http://www.jsonlint.com ' +
                     'to confirm.');
             } else {
-                console.log(form);
                 res.status(200).send(form);
             }
         });
@@ -327,7 +366,7 @@ module.exports = function(app) {
 
     // POST release with id, find it and update.
     app.post(baseUrl + '/api/secure/releases/form/:id', function(req, res) {
-        var inputData = req.body;
+        var inputData = formatData(req.body);
 
         // Check if released. If so, do not set approved to false.
         // Should never be released here.
@@ -338,21 +377,13 @@ module.exports = function(app) {
         var query = { _id: req.params.id };
         // Can't update _id field
         delete inputData._id;
-        DataRelease.update(query, inputData, function(err) {
+        DataRelease.update(query, inputData, function(err, release) {
             if (err) {
                 console.log(err);
                 res.status(400).send('There was an error updating entry with ' +
                     'id ' + query._id + '. Please try again');
             } else {
-                DataRelease.findOne(query, function(err, release) {
-                    if (err) {
-                        console.log(err);
-                        res.status(404).send('Release with id: ' + query._id +
-                            ' was updated, but could not be returned');
-                    } else {
-                        res.status(202).send(release);
-                    }
-                });
+                res.status(202).send(release);
             }
         });
     });
@@ -368,6 +399,7 @@ module.exports = function(app) {
                 res.status(400).send('There was an error updating urls for ' +
                     'entry with id ' + query._id + '. Please try again.');
             } else {
+                release.dateModified = new Date();
                 release.urls = urls;
                 release.save();
                 res.status(202).send(release);

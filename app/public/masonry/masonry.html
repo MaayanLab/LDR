@@ -4,10 +4,10 @@
         <div class="well well-sm well-release"
              ng-class="release.released ? 'well-release-released' : 'well-release-prod'">
             <div class="row">
-                <div class="text-center col-xs-12">
-                    <img class="img-responsive group-icon"
-                         ng-src="http://amp.pharm.mssm.edu/LDR/api/group/{{release.group._id}}/icon/"
-                         alt="images/user-icon.png"/>
+                <div class="text-center col-xs-12 group-icon-wrapper">
+                    <div class="text-center group-icon"
+                         style="background-image: url(http://amp.pharm.mssm.edu/LDR/api/group/{{release.group._id}}/icon/)">
+                    </div>
                 </div>
             </div>
             <div class="row">

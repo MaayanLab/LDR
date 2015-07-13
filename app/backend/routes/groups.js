@@ -8,10 +8,13 @@ var http = require('http'),
     _ = require('lodash'),
     jwt = require('jsonwebtoken'),
     secret = require('../config/database').secret,
-    getGroupStats = require('../getGroupStats'),
     baseUrl = require('../config/baseUrl').baseUrl,
     Models = require('../models'),
     DataRelease = Models.DataRelease,
+    Assay = Models.Assay,
+    CellLine = Models.CellLine,
+    Perturbagen = Models.Perturbagen,
+    Readout = Models.Readout,
     User = Models.User,
     Group = Models.Group;
 
@@ -49,15 +52,74 @@ module.exports = function(app) {
 
     app.get(baseUrl + '/api/group/:id/statistics/', function(req, res) {
         var groupId = req.params.id;
-        getGroupStats(groupId, function(err, statsResponse) {
-            if (err) {
-                console.log(err);
-                res.status(404).send('Error getting statistics for ' +
-                    'group with id: ' + groupId);
-            } else {
-                res.status(200).send(statsResponse);
+        var statResponse = {
+            user: 0,
+            release: 0,
+            assay: 0,
+            cell: 0,
+            perturbagen: 0,
+            readout: 0
+        };
+        User
+            .where({ group: groupId })
+            .count(function(err, userCount) {
+                if (err) {
+                    console.log(err);
+                }
+                statResponse.user = userCount;
+
+                DataRelease
+                    .where({ group: groupId })
+                    .count(function(err, releaseCount) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        statResponse.release = releaseCount;
+
+                        Assay
+                            .where({ group: groupId })
+                            .count(function(err, asCount) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                                statResponse.assay = asCount;
+
+                                CellLine
+                                    .where({ group: groupId })
+                                    .count(function(err, clCount) {
+                                        if (err) {
+                                            console.log(err);
+                                        }
+                                        statResponse.cell = clCount;
+
+                                        Perturbagen
+                                            .where({ group: groupId })
+                                            .count(function(err, pertCount) {
+                                                if (err) {
+                                                    console.log(err);
+                                                }
+                                                statResponse.perturbagen = pertCount;
+
+                                                Readout
+                                                    .where({ group: groupId })
+                                                    .count(function(err, roCount) {
+                                                        if (err) {
+                                                            console.log(err);
+                                                        }
+                                                        statResponse.readout = roCount;
+                                                        res.status(200).send(statResponse);
+                                                    }
+                                                );
+                                            }
+                                        );
+                                    }
+                                );
+                            }
+                        );
+                    }
+                );
             }
-        });
+        );
     });
 
     app.get(baseUrl + '/api/group/:id/users/', function(req, res) {

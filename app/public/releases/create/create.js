@@ -286,19 +286,21 @@ angular.module('ldr.releases.create', [
                     $scope.showErrors = true;
                 }
             });
-        };
-
-        $scope.submit = function() {
-
-            lodash.each($scope.form.metadata, function(obj) {
-                if (obj.isRequired && !obj.model.length) {
+            lodash.each($scope.form.releaseDates, function(obj) {
+                if (obj.isRequired && obj.model === '') {
                     $scope.showErrors = true;
                 }
             });
+            if (!$scope.showErrors) {
+                submit();
+            }
+        };
+
+        var submit = function() {
 
             var form = {
                 user: $scope.user._id,
-                group: $scope.user.group,
+                group: $scope.user.group._id,
                 description: '',
                 metadata: {},
                 releaseDates: {},

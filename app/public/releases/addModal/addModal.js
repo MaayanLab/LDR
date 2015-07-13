@@ -32,6 +32,7 @@ angular.module('ldr')
 
             post.success(function(resp) {
                 $scope.newTag._id = resp;
+                console.log($scope.newTag);
                 $scope.save();
             })
                 .error(function(resp) {
