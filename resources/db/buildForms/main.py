@@ -3,8 +3,6 @@ __author__ = 'mmcdermott'
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from datetime import datetime
-import requests
-import json
 
 hannahClient = MongoClient('mongodb://hannah')
 
@@ -35,7 +33,6 @@ diseases.drop()
 organisms.drop()
 tools.drop()
 releases.drop()
-
 
 for doc in hannahMd.find({}):
     assay = {

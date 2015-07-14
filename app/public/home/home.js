@@ -30,6 +30,8 @@ angular.module('ldr.home', [
             }
             this.busy = true;
 
+            console.log(this.items.length);
+
             api('releases/approved/' + this.after)
                 .get()
                 .success(function(releases) {
@@ -38,16 +40,6 @@ angular.module('ldr.home', [
                         return;
                     }
                     this.empty = false;
-                    // Convert release date strings to proper date objects
-                    // so Angular can format them correctly.
-                    lodash.each(releases, function(obj) {
-                        lodash.each(obj.releaseDates, function(level, key) {
-                            if (level === '') {
-                                return;
-                            }
-                            obj.releaseDates[key] = new Date(level);
-                        });
-                    });
 
                     for (var i = 0; i < releases.length; i++) {
                         this.items.push(releases[i]);
@@ -60,13 +52,50 @@ angular.module('ldr.home', [
         return ReleasesLoader;
     })
 
-    .controller('HomeController', function($scope, ReleasesLoader, $state) {
+    .controller('HomeController', function($scope, ReleasesLoader, api) {
 
         $scope.releases = new ReleasesLoader();
         $scope.query = '';
 
-        $scope.searchReleases = function() {
-            console.log($scope.query);
-            
+        $scope.summary = {
+            Users: 0,
+            Readouts: 0,
+            Centers: 0,
+            Genes: 0,
+            Assays: 0,
+            Diseases: 0,
+            'Cell lines': 0,
+            Organisms: 0,
+            Perturbagens: 0,
+            'Data Releases': 0
         };
+
+        var counts = {};
+
+        api('counts').get().success(function(countsObj) {
+            counts = countsObj;
+            countUpTo('Users', 0, counts.Users, 1, 50);
+            countUpTo('Data Releases', 0, counts.DataReleases, 3, 50);
+            countUpTo('Centers', 0, counts.Groups, 1, 50);
+            countUpTo('Assays', 0, counts.Assays, 1, 50);
+            countUpTo('Cell lines', 0, counts.CellLines, 5, 50);
+            countUpTo('Perturbagens', 0, counts.Perturbagens, 12, 50);
+            countUpTo('Readouts', 0, counts.Readouts, 5, 50);
+            countUpTo('Genes', 0, counts.Genes, 5, 50);
+            countUpTo('Diseases', 0, counts.Diseases, 5, 50);
+            countUpTo('Organisms', 0, counts.Organisms, 5, 50);
+        });
+
+        function countUpTo(field, count, max, step, time) {
+            setTimeout(function() {
+                if (count + step > max) {
+                    countUpTo(field, count, max, 1, 0);
+                } else if (count !== max) {
+                    count = count + step;
+                    $scope.summary[field] = count;
+                    $scope.$apply();
+                    countUpTo(field, count, max, step, time);
+                }
+            }, time);
+        }
     });
