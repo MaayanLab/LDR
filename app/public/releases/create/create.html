@@ -7,13 +7,13 @@
             <em class="col-sm-12 highlight text-center">* Required</em>
             <h4 class="col-sm-12 text-center">Dataset Release Instance</h4>
 
-            <div class="col-sm-6">
+            <div class="col-sm-6 form-div">
                 <!--<a class="glyphicon glyphicon-plus add-new-btn" ng-click="openModal()"></a>-->
                 <div class="row">
-                    <h5 class="dataset-title col-xs-6">{{form.datasetName.title}}*</h5>
-                <span class="dataset-error-msg col-xs-6 text-right"
+                    <h5 class="dataset-title col-xs-12 col-lg-5">{{form.datasetName.title}}*</h5>
+                <span class="dataset-error-msg col-xs-12 col-lg-7 text-left"
                       ng-if="datasetRegForm.datasetName.$error.maxlength">
-                    Please enter a dataset name that is less than 50 characters.
+                    Dataset name must be less than 75 characters.
                 </span>
                 <span ng-if="showErrors && form.datasetName.model === ''"
                       class="dataset-error-msg col-xs-6 text-right">
@@ -24,7 +24,7 @@
                        placeholder="{{form.datasetName.placeholder}}"
                        class="dataset-name"
                        ng-model="form.datasetName.model"
-                       ng-maxlength="50"/>
+                       ng-maxlength="75"/>
             </div>
             <ldr-form-field
                     ng-repeat="field in form.metadata"

@@ -24,8 +24,5 @@
 <div infinite-scroll='releases.nextPage()'
      infinite-scroll-disabled="releases.busy" infinite-scroll-distance='1'>
     <ldr-masonry result-array="releases.items"></ldr-masonry>
-    <!--<p ng-repeat="release in releases.items">
-        {{release.datasetName}} : {{release.releaseDates.upcoming | date: 'MMMM dd, yyyy'}}
-    </p>-->
     <div ng-show='releases.busy && !releases.empty'>Loading data...</div>
 </div>

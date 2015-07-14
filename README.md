@@ -14,7 +14,7 @@ After installing, run `karma start` or `gulp karma` to run karma tests
 ## Deploy ##
 This application is deployed using [Docker](https://www.docker.com/ "Docker Homepage"), [Mesos](http://mesos.apache.org/ "Mesos Homepage"), and [Marathon](https://mesosphere.github.io/marathon/ "Mesos Homepage").
 
-Running `npm run build` will build the container using the Dockerfile found in the root folder using the tag **146.203.54.165:5000/ldr:1.5**.
+Running `VERSION=x.x.x npm run build` will build the container using the Dockerfile found in the root folder using the tag **146.203.54.165:5000/ldr:x.x.x** and **146.203.54.165:5000/ldr:latest**.
 
 The Dockerfile will perform the following actions:
 
@@ -27,7 +27,7 @@ The Dockerfile will perform the following actions:
 *It is important to test the docker container before deploying*
 
 ### Running the Container ###
-Try running `docker run -p 80:3001 -d <container ID>` using the container ID given from `npm run build` to run the application and find it at the ip address found by running `boot2docker ip`
+Try running `docker run -p 80:3001 -d 146.203.54.165:5000/ldr:latest` to run the application and find it at the ip address found by running `boot2docker ip`
 
 ### Errors in Deploying ###
 `npm run build` will error if docker is not configured correctly. Make sure the correct variables are set in your ~/.bash_profile or its equivalent. (These variables are different for each user. Docker will error and tell you how to fix these errors if they occur.)

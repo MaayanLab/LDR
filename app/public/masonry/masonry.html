@@ -1,6 +1,7 @@
 <div>
     <div class="card-release col-md-2 col-sm-3"
-         ng-repeat="release in resultArray | orderBy:['-released', 'releaseDates.upcoming']">
+         ng-class="release.released ? 'card-release-released' : 'card-release-prod'"
+         ng-repeat="release in resultArray | orderBy:['-released', '-releaseDates.upcoming']">
         <div class="well well-sm well-release"
              ng-class="release.released ? 'well-release-released' : 'well-release-prod'">
             <div class="row">
@@ -18,8 +19,8 @@
                         <span>
                             <i class="card-glyph glyphicon glyphicon-user"></i>
                             {{release.group.name}}
-                            <br/>
                         </span>
+                        <br/>
                         <span ng-if="!release.released" class="in-production">
                             <i class="card-glyph-prod glyphicon glyphicon-wrench"></i>
                             In Production
@@ -29,15 +30,20 @@
                             <i class="card-glyph-released glyphicon glyphicon-ok"></i>
                             Released
                             <br/>
+                        </span>
+                        <span ng-if="release.released" class="released">
                             <i class="card-glyph-released glyphicon glyphicon-link"></i>
-                            <a ng-href="{{release.urls.dataUrl}}" target="_blank">
+                            <a ng-href="{{release.urls.dataUrl}}"
+                               target="_blank">
                                 <strong>Access data</strong>
                             </a>
-                            <br/>
                         </span>
-                        <i class="card-glyph glyphicon glyphicon-calendar"></i>
-                        {{release.releaseDates.upcoming |
-                        date: 'MMMM dd, yyyy'}}
+                        <br/>
+                        <span ng-if="release.released">
+                            <i class="card-glyph glyphicon glyphicon-calendar"></i>
+                            {{release.releaseDates.upcoming |
+                            date: 'MMMM dd, yyyy'}}
+                        </span>
                         <br/>
                     </p>
                 </div>

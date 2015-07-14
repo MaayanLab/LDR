@@ -1,4 +1,4 @@
-<h3 class="text-center">Dataset Releases</h3>
+<h3 class="text-center headline-info">Dataset Releases</h3>
 <p>
     Below are all data releases for {{currentUser.group.name}}. You may release,
     edit, or delete entries by clicking the Action button on the right.
@@ -28,9 +28,9 @@
                 <a href=""
                    ng-click="sortType = 'datasetName'; sortReverse = !sortReverse">
                     Dataset
-                    <span ng-show="sortType == 'datasetName' && sortReverse"
+                    <span ng-show="sortType === 'datasetName' && sortReverse"
                           class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'datasetName' && !sortReverse"
+                    <span ng-show="sortType === 'datasetName' && !sortReverse"
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
@@ -38,9 +38,9 @@
                 <a href=""
                    ng-click="sortType = 'metadata.assay[0].name'; sortReverse = !sortReverse">
                     Assay
-                    <span ng-show="sortType == 'metadata.assay[0].name' && sortReverse"
+                    <span ng-show="sortType === 'metadata.assay[0].name' && sortReverse"
                           class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'metadata.assay[0].name' && !sortReverse"
+                    <span ng-show="sortType === 'metadata.assay[0].name' && !sortReverse"
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
@@ -78,9 +78,9 @@
                 <a href=""
                    ng-click="sortType = 'releaseDates.upcoming'; sortReverse = !sortReverse">
                     Release Date
-                    <span ng-show="sortType == 'releaseDates.upcoming' && sortReverse"
+                    <span ng-show="sortType === 'releaseDates.upcoming' && sortReverse"
                           class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'releaseDates.upcoming' && !sortReverse"
+                    <span ng-show="sortType === 'releaseDates.upcoming' && !sortReverse"
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
@@ -88,9 +88,9 @@
                 <a href=""
                    ng-click="sortType = ['released', 'approved']; sortReverse = !sortReverse">
                     Status
-                    <span ng-show="sortType == ['released', 'approved'] && sortReverse"
+                    <span ng-show="sortType[0] === 'released' && sortReverse"
                           class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == ['released', 'approved'] && !sortReverse"
+                    <span ng-show="sortType[0] === 'released' && !sortReverse"
                           class="fa fa-caret-up"></span>
                 </a>
             </th>

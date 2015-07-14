@@ -213,7 +213,16 @@ button.login-btn {
 
 .headline-info {
     font-weight: 400 !important;
+    span {
+        font-weight: 700 !important;
+        color: @color-primary;
+    }
+}
+
+.headline-info-margins {
+    &:extend(.headline-info);
     margin: 0 0 20px 0;
+
     span {
         font-weight: 700 !important;
         color: @color-primary;
@@ -306,6 +315,10 @@ button.login-btn {
 span.url-error-msg {
     float: right;
     line-height: 20px;
+}
+
+.form-div {
+    min-height: 120px;
 }
 
 .dataset-title, label.url-label {
@@ -472,7 +485,6 @@ tags-input {
 
 .dataset-name {
     position: relative;
-    height: 100%;
     -webkit-appearance: textfield;
     overflow: hidden;
     word-wrap: break-word;
@@ -949,15 +961,12 @@ small {
     position: absolute;
     width: 100%;
     a {
-        color: white;
-        &:hover {
-            color: @color-primary-light;
-        }
+        color: @color-primary-light;
     }
 }
 
 .credit {
-    margin: 20px 0;
+    margin: 20px;
 }
 
 .form-control {
