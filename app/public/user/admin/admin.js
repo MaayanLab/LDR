@@ -24,7 +24,7 @@ angular.module('ldr.user.admin', [
         var releaseApi = api('releases');
 
         $scope.allForms = [];
-        $scope.sortType = ['accepted', 'group.name'];
+        $scope.sortType = ['released', 'approved'];
         $scope.sortReverse = false;
 
         releaseApi.get().success(function(forms) {

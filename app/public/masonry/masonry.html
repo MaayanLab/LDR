@@ -1,6 +1,6 @@
 <div>
     <div class="card-release col-md-2 col-sm-3"
-         ng-repeat="release in resultArray | orderBy:['-released']">
+         ng-repeat="release in resultArray | orderBy:['-released', 'releaseDates.upcoming']">
         <div class="well well-sm well-release"
              ng-class="release.released ? 'well-release-released' : 'well-release-prod'">
             <div class="row">

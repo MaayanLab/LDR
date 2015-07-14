@@ -21,9 +21,9 @@
                 <a href=""
                    ng-click="sortType = ['released', 'approved']; sortReverse = !sortReverse">
                     Status
-                    <span ng-show="sortType == ['released', 'approved'] && sortReverse"
+                    <span ng-show="sortType[0] === 'released' && sortReverse"
                           class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == ['released', 'approved'] && !sortReverse"
+                    <span ng-show="sortType[0] === 'released' && !sortReverse"
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
@@ -31,9 +31,9 @@
                 <a href=""
                    ng-click="sortType = 'group.name'; sortReverse = !sortReverse">
                     DSGC
-                    <span ng-show="sortType == 'group.name' && sortReverse"
+                    <span ng-show="sortType === 'group.name' && sortReverse"
                           class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'group.name' && !sortReverse"
+                    <span ng-show="sortType === 'group.name' && !sortReverse"
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
@@ -41,9 +41,9 @@
                 <a href=""
                    ng-click="sortType = 'metadata.assay[0].name'; sortReverse = !sortReverse">
                     Assay
-                    <span ng-show="sortType == 'metadata.assay[0].name' && sortReverse"
+                    <span ng-show="sortType === 'metadata.assay[0].name' && sortReverse"
                           class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'metadata.assay[0].name' && !sortReverse"
+                    <span ng-show="sortType === 'metadata.assay[0].name' && !sortReverse"
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
@@ -51,9 +51,9 @@
                 <a href=""
                    ng-click="sortType = 'metadata.readouts.length'; sortReverse = !sortReverse">
                     Readouts
-                    <span ng-show="sortType == 'metadata.readouts.length' && sortReverse"
+                    <span ng-show="sortType === 'metadata.readouts.length' && sortReverse"
                           class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'metadata.readouts.length' && !sortReverse"
+                    <span ng-show="sortType === 'metadata.readouts.length' && !sortReverse"
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
@@ -61,9 +61,9 @@
                 <a href=""
                    ng-click="sortType = 'releaseDates.upcoming'; sortReverse = !sortReverse">
                     Release Date
-                    <span ng-show="sortType == 'releaseDates.upcoming' && sortReverse"
+                    <span ng-show="sortType === 'releaseDates.upcoming' && sortReverse"
                           class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'releaseDates.upcoming' && !sortReverse"
+                    <span ng-show="sortType === 'releaseDates.upcoming' && !sortReverse"
                           class="fa fa-caret-up"></span>
                 </a>
             </th>

@@ -46,6 +46,7 @@ angular.module('ldr.home', [
                     }
                     this.after = this.items[this.items.length - 1]._id;
                     this.busy = false;
+                    console.log(this.items);
                 }.bind(this)
             );
         };
