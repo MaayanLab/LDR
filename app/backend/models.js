@@ -375,7 +375,8 @@ dataReleaseSchema.pre('save', function(next) {
         })
     });
 
-    generateId();
+    //generateId();
+    next();
 });
 
 dataReleaseSchema.index({
