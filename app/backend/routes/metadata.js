@@ -174,19 +174,18 @@ module.exports = function(app) {
 
     app.get(baseUrl + '/api/counts', function(req, res) {
         var summary = {};
-        var left = Object.keys(Models).length;
         User.count(function(err, uCount) {
             if (err) {
                 console.log(err);
                 res.status(404).send('An error occurred obtaining counts.');
             } else {
-                summary.Users = uCount;
+                summary.users = uCount;
                 Group.count(function(err, gCount) {
                     if (err) {
                         console.log(err);
                         res.status(404).send('An error occurred obtaining counts.');
                     } else {
-                        summary.Groups = gCount;
+                        summary.groups = gCount;
                         DataRelease
                             .find({})
                             .lean()
@@ -212,7 +211,6 @@ module.exports = function(app) {
                                     res.status(404).send('An error ' +
                                         'occurred obtaining counts.');
                                 } else {
-                                    summary.DataReleases = releases.length;
                                     var assays = [];
                                     var cellLines = [];
                                     var perturbagens = [];
@@ -220,50 +218,25 @@ module.exports = function(app) {
                                     var diseases = [];
                                     var genes = [];
                                     var organisms = [];
+
                                     _.each(releases, function(release) {
-                                        _.each(release.metadata.assay, function(assay) {
-                                            if (assays.indexOf(assay) === -1) {
-                                                assays.push(assay);
-                                            }
-                                        });
-                                        _.each(release.metadata.cellLines, function(line) {
-                                            if (cellLines.indexOf(line) === -1) {
-                                                cellLines.push(line);
-                                            }
-                                        });
-                                        _.each(release.metadata.perturbagens, function(pert) {
-                                            if (perturbagens.indexOf(pert) === -1) {
-                                                perturbagens.push(pert);
-                                            }
-                                        });
-                                        _.each(release.metadata.readouts, function(rOut) {
-                                            if (readouts.indexOf(rOut) === -1) {
-                                                readouts.push(rOut);
-                                            }
-                                        });
-                                        _.each(release.metadata.diseases, function(dis) {
-                                            if (diseases.indexOf(dis) === -1) {
-                                                diseases.push(dis);
-                                            }
-                                        });
-                                        _.each(release.metadata.organisms, function(org) {
-                                            if (organisms.indexOf(org) === -1) {
-                                                organisms.push(org);
-                                            }
-                                        });
-                                        _.each(release.metadata.genes, function(gene) {
-                                            if (genes.indexOf(gene) === -1) {
-                                                genes.push(gene);
-                                            }
-                                        });
+                                        assays = _.uniq(_.union(release.metadata.assay, assays));
+                                        cellLines = _.uniq(_.union(release.metadata.cellLines, cellLines));
+                                        perturbagens = _.uniq(_.union(release.metadata.perturbagens, perturbagens));
+                                        readouts = _.uniq(_.union(release.metadata.readouts, readouts));
+                                        diseases = _.uniq(_.union(release.metadata.diseases, diseases));
+                                        organisms = _.uniq(_.union(release.metadata.organisms, organisms));
+                                        genes = _.uniq(_.union(release.metadata.genes, genes));
                                     });
-                                    summary.Assays = assays.length;
-                                    summary.CellLines = cellLines.length;
-                                    summary.Perturbagens = perturbagens.length;
-                                    summary.Readouts = readouts.length;
-                                    summary.Diseases = diseases.length;
-                                    summary.Organisms = organisms.length;
-                                    summary.Genes = genes.length;
+
+                                    summary.dataReleases = releases.length;
+                                    summary.assays = assays.length;
+                                    summary.cellLines = cellLines.length;
+                                    summary.perturbagens = perturbagens.length;
+                                    summary.readouts = readouts.length;
+                                    summary.diseases = diseases.length;
+                                    summary.organisms = organisms.length;
+                                    summary.genes = genes.length;
 
                                     res.status(200).send(summary);
                                 }

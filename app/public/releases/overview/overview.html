@@ -6,16 +6,18 @@
     meta-data. Please note that <em class="highlight">in order to release an
     entry, it must have a data URL provided and it must be approved.</em>
 </p>
-<table class="text-center legend col-sm-6 col-sm-offset-3 col-xs-12">
+<table class="text-center legend col-sm-10 col-sm-offset-1 col-xs-12">
     <tr>
         <td class="legend-color" id="awaiting-approval"></td>
         <td class="legend-color" id="approved"></td>
+        <td class="legend-color" id="selected"></td>
         <td class="legend-color" id="needs-edit"></td>
         <td class="legend-color" id="released"></td>
     </tr>
     <tr>
         <td>Awaiting Approval</td>
         <td>Approved</td>
+        <td>Selected</td>
         <td>Needs Attention</td>
         <td>Released</td>
     </tr>
@@ -24,6 +26,9 @@
     <table class="table">
         <thead>
         <tr>
+            <th class="text-center">
+                Dataset ID
+            </th>
             <th class="text-center">
                 <a href=""
                    ng-click="sortType = 'datasetName'; sortReverse = !sortReverse">
@@ -34,7 +39,7 @@
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
-            <th class="text-center">
+            <!--<th class="text-center">
                 <a href=""
                    ng-click="sortType = 'metadata.assay[0].name'; sortReverse = !sortReverse">
                     Assay
@@ -43,7 +48,7 @@
                     <span ng-show="sortType === 'metadata.assay[0].name' && !sortReverse"
                           class="fa fa-caret-up"></span>
                 </a>
-            </th>
+            </th>-->
             <!--<th class="text-center">
                 <a href=""
                    ng-click="sortType = 'metadata.perturbagens.length'; sortReverse = !sortReverse">
@@ -120,13 +125,13 @@
             form.approved && !form.needsEdit ? 'tr-approved' :
             form.needsEdit ? 'tr-needs-edit' : ''"
             class="form-table-data text-center">
-            <!--<td id="id">{{form._id}}</td>-->
+            <td id="text-left">{{form.did}}</td>
             <td class="text-left" id="dcic-assay-name">
                 {{form.datasetName}}
             </td>
-            <td class="text-left" id="assay-name">
+            <!--<td class="text-left" id="assay-name">
                 {{form.metadata.assay[0].name}}
-            </td>
+            </td>-->
             <!--<td class="col-sm-2" id="pert-count">
                 {{form.metadata.perturbagens.length}}
             </td>
@@ -196,7 +201,7 @@
         <tr class="release-details animate" ng-show="form.collapsed">
             <td colspan="10" class="col-sm-12">
                 <h4 class="text-center assay-title">
-                    {{form.metadata.assay[0].name}}
+                    {{form.datasetName}}
                 </h4>
 
                 <p class="col-sm-12">{{form.description}}</p>

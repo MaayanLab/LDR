@@ -460,7 +460,6 @@ module.exports = function(app) {
 
         var stream = fs.createWriteStream(__dirname + '/' + randName + '.txt');
 
-        var index = 0;
         DataRelease
             .find({ _id: { $in: ids } })
             .populate([
@@ -482,7 +481,7 @@ module.exports = function(app) {
                     var dates = release.releaseDates;
                     var urls = release.urls;
 
-                    stream.write('UID\t' + release._id + '\n');
+                    stream.write('DID\t' + release.did + '\n');
                     stream.write('DSN\t' + release.datasetName + '\n');
                     try {
                         stream.write('CTR\t' + release.group.name + '\n');
@@ -490,7 +489,7 @@ module.exports = function(app) {
                         console.log('ERROR FOR ' + release._id);
                     }
                     stream.write('DES\t' + release.description + '\n');
-                    stream.write('ASY\t' + meta.assay.name + '\n');
+                    stream.write('ASY\t' + meta.assay[0].name + '\n');
 
                     _.each(meta.cellLines, function(obj) {
                         var appStr = 'CLN\t' + obj.name;

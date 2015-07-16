@@ -1,15 +1,17 @@
 <h3 class="text-center">NIH Approval Interface</h3>
-<table class="text-center legend col-sm-6 col-sm-offset-3 col-xs-12">
+<table class="text-center legend col-sm-10 col-sm-offset-1 col-xs-12">
     <tr>
         <td class="legend-color" id="awaiting-approval"></td>
         <td class="legend-color" id="approved"></td>
+        <td class="legend-color" id="selected"></td>
         <td class="legend-color" id="needs-edit"></td>
         <td class="legend-color" id="released"></td>
     </tr>
     <tr>
         <td>Awaiting Approval</td>
         <td>Approved</td>
-        <td>Awaiting Changes</td>
+        <td>Selected</td>
+        <td>Needs Attention</td>
         <td>Released</td>
     </tr>
 </table>
@@ -17,6 +19,9 @@
     <table class="table">
         <thead>
         <tr>
+            <th class="text-center">
+                Dataset ID
+            </th>
             <th class="text-center col-sm-2">
                 <a href=""
                    ng-click="sortType = ['released', 'approved']; sortReverse = !sortReverse">
@@ -47,7 +52,7 @@
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
-            <th class="text-center">
+            <!--<th class="text-center">
                 <a href=""
                    ng-click="sortType = 'metadata.readouts.length'; sortReverse = !sortReverse">
                     Readouts
@@ -56,7 +61,7 @@
                     <span ng-show="sortType === 'metadata.readouts.length' && !sortReverse"
                           class="fa fa-caret-up"></span>
                 </a>
-            </th>
+            </th>-->
             <th class="text-center">
                 <a href=""
                    ng-click="sortType = 'releaseDates.upcoming'; sortReverse = !sortReverse">
@@ -93,9 +98,7 @@
             form.approved && !form.needsEdit ? 'tr-approved' :
             form.needsEdit ? 'tr-needs-edit' : ''"
             class="form-table-data text-center">
-            <!--<td>
-                <p>{{form._id}}</p>
-            </td>-->
+            <td id="text-left">{{form.did}}</td>
             <td class="" id="status">
                 <span ng-if="form.released">
                     Released
@@ -110,15 +113,15 @@
                     Awaiting Changes
                 </span>
             </td>
-            <td class="col-sm-2" id="center">
+            <td class="col-sm-2 text-left" id="center">
                 <a ng-href="{{form.group.homepage}}">{{form.group.name}}</a>
             </td>
             <td class="text-left" id="assay-name">
                 {{form.datasetName}}
             </td>
-            <td class="col-sm-1" id="readout-count">
+            <!--<td class="col-sm-1" id="readout-count">
                 {{form.metadata.readouts.length}}
-            </td>
+            </td>-->
             <td class="col-sm-2" id="release-date">
                 {{form.releaseDates.upcoming | date:'MM-dd-yyyy' }}
             </td>
@@ -160,7 +163,7 @@
         <tr class="release-details animate" ng-show="form.collapsed">
             <td colspan="7" class="col-sm-12">
                 <h4 class="text-center">
-                    {{form.metadata.assay[0].name}}
+                    {{form.datasetName}}
                 </h4>
                 <h5 class="text-center">
                     <a ng-href="{{form.group.homepage}}">{{form.group.name}}</a>

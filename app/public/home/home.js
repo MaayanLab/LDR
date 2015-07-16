@@ -56,7 +56,7 @@ angular.module('ldr.home', [
         $scope.query = '';
 
         $scope.summary = {
-            Users: 0,
+            //Users: 0,
             Readouts: 0,
             Centers: 0,
             Genes: 0,
@@ -72,16 +72,16 @@ angular.module('ldr.home', [
 
         api('counts').get().success(function(countsObj) {
             counts = countsObj;
-            countUpTo('Users', 0, counts.Users, 1, 50);
-            countUpTo('Data Releases', 0, counts.DataReleases, 3, 50);
-            countUpTo('Centers', 0, counts.Groups, 1, 50);
-            countUpTo('Assays', 0, counts.Assays, 1, 50);
-            countUpTo('Cell lines', 0, counts.CellLines, 5, 50);
-            countUpTo('Perturbagens', 0, counts.Perturbagens, 12, 50);
-            countUpTo('Readouts', 0, counts.Readouts, 5, 50);
-            countUpTo('Genes', 0, counts.Genes, 5, 50);
-            countUpTo('Diseases', 0, counts.Diseases, 5, 50);
-            countUpTo('Organisms', 0, counts.Organisms, 5, 50);
+            //countUpTo('Users', 0, counts.Users, 1, 50);
+            countUpTo('Data Releases', 0, counts.dataReleases, 3, 50);
+            countUpTo('Centers', 0, counts.groups, 1, 50);
+            countUpTo('Assays', 0, counts.assays, 1, 50);
+            countUpTo('Cell lines', 0, counts.cellLines, 5, 50);
+            countUpTo('Perturbagens', 0, counts.perturbagens, 12, 50);
+            countUpTo('Readouts', 0, counts.readouts, 5, 50);
+            countUpTo('Genes', 0, counts.genes, 5, 50);
+            countUpTo('Diseases', 0, counts.diseases, 5, 50);
+            countUpTo('Organisms', 0, counts.organisms, 5, 50);
         });
 
         function countUpTo(field, count, max, step, time) {

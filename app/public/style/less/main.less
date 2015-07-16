@@ -14,6 +14,7 @@
 @color-gray-charcoal: #222;
 @color-approved: rgba(167, 181, 214, 0.46);
 @color-approved-hover: rgba(167, 181, 214, 0.8);
+@color-selected: #88A9EF;
 @color-released: rgba(169, 214, 167, 0.46);
 @color-released-hover: rgba(169, 214, 167, 0.8);
 @color-needs-edit: rgba(214, 167, 167, 0.46);
@@ -318,7 +319,7 @@ span.url-error-msg {
 }
 
 .form-div {
-    min-height: 120px;
+    min-height: 100px;
 }
 
 .dataset-title, label.url-label {
@@ -719,8 +720,8 @@ td.legend-color {
     margin: 0;
 }
 
-.tr-selected {
-    background-color: #88A9EF;
+.tr-selected, #selected {
+    background-color: @color-selected;
 }
 
 .tr-approved, #approved {

@@ -302,7 +302,7 @@ var dataReleaseSchema = new Schema({
     dateModified: { type: Date, required: true },
     needsEdit: { type: Boolean, default: false },
     messages: [msgSchema], // Messages between center and NIH
-    doi: { type: String },
+    did: { type: String, required: true },
     datasetName: { type: String, required: true },
     description: { type: String, default: '' }, // Brief description of exp.
     releaseDates: {
@@ -338,6 +338,24 @@ var dataReleaseSchema = new Schema({
 
 dataReleaseSchema.pre('save', function(next) {
 
+    //var generateId = function() {
+    //    DataRelease
+    //        .find({})
+    //        .sort({'_id': -1})
+    //        .limit(1)
+    //        .exec(function(err, latestDoc) {
+    //            if (err) {
+    //                console.log(err);
+    //                next(new Error(err));
+    //            } else {
+    //                var lDid = latestDoc.did;
+    //                var didNum = parseInt(lDid.substr(lDid.length - 5));
+    //                this.did = ''
+    //                next();
+    //            }
+    //        });
+    //};
+
     // Update dateModified
     this.dateModified = new Date();
 
@@ -356,7 +374,8 @@ dataReleaseSchema.pre('save', function(next) {
             }
         })
     });
-    next();
+
+    generateId();
 });
 
 dataReleaseSchema.index({

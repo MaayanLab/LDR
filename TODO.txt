@@ -12,3 +12,7 @@ Ensure that cell lines and sm perturbagens match spreadsheet
 HMS-Approved Assay Names replaced
 Descriptions don't match
 Amar sent released dataset. Release it. URL given.
+
+Two tables upcoming. Available. Don't need status or action.
+
+Release Broad GEO datasets
