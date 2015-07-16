@@ -30,8 +30,6 @@ angular.module('ldr.home', [
             }
             this.busy = true;
 
-            console.log(this.items.length);
-
             api('releases/approved/' + this.after)
                 .get()
                 .success(function(releases) {
@@ -46,7 +44,6 @@ angular.module('ldr.home', [
                     }
                     this.after = this.items[this.items.length - 1]._id;
                     this.busy = false;
-                    console.log(this.items);
                 }.bind(this)
             );
         };

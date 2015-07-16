@@ -13,7 +13,7 @@ angular.module('ldr.search', [
     // UI Router state formCreate
     .config(function($stateProvider) {
         $stateProvider.state('search', {
-            url: '/search?{query:string}',
+            url: '/search?{q:string}',
             controller: 'SearchCtrl',
             templateUrl: 'search/search.html'
         });
@@ -23,11 +23,11 @@ angular.module('ldr.search', [
                                           store, api) {
 
         $scope.results = [];
-        $scope.query = $stateParams.query;
+        $scope.query = $stateParams.q;
 
         // Add separate query that doesn't change on input change
         $scope.queryLabel = angular.copy($scope.query);
-        api('releases/search?query=' + $scope.query)
+        api('releases/search?q=' + $scope.query)
             .get()
             .success(function(results) {
                 lodash.each(results, function(obj) {

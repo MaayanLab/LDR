@@ -79,7 +79,6 @@ angular.module('ldr.group.create', [
         };
 
         $scope.createGroup = function() {
-            console.log('Creating group');
             $http.post('/LDR/api/group/create/', $scope.group)
                 .success(function(group) {
                     // Check if there is a logged in user.

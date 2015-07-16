@@ -14,7 +14,7 @@ module.exports = function(app) {
 
     // Endpoint for searching releases. NEEDS QUERY PARAMETER.
     app.get(baseUrl + '/api/releases/search', function(req, res) {
-        var query = req.query.query;
+        var query = req.query.q;
         if (!query) {
             res.status(400).send('Query string not properly formatted.');
         }
@@ -22,11 +22,10 @@ module.exports = function(app) {
         // 2. Find releases matching from the group that matches an
         //    id found in step 1.
         // 3. Find releases matching query.
-        var releasesArr = [];
         Group
-            .find({ $text: { $search: query } }, '_id')
+            .find({ name: new RegExp(query, 'i') })
             .lean()
-            .exec(function(err, groupIds) { // [ { _id: ... }, ... ]
+            .exec(function(err, groups) {
                 if (err) {
                     res.status(500).send(
                         'There was an error searching for releases.'
@@ -35,7 +34,7 @@ module.exports = function(app) {
 
                 // _.map() and _.pluck do not work for mongoose arrays
                 var ids = [];
-                _.each(groupIds, function(obj) {
+                _.each(groups, function(obj) {
                     ids.push(obj._id);
                 });
                 DataRelease
@@ -54,17 +53,19 @@ module.exports = function(app) {
                         { path: 'metadata.analysisTools', model: 'Tool' }
                     ])
                     .lean()
-                    .exec(function(err, results) {
+                    .exec(function(err, drgResults) {
                         if (err) {
                             console.log(err);
                             res.status(404).send('Error searching releases');
                         }
-                        _.each(results, function(releaseObj) {
-                            releasesArr.push(releaseObj);
-                        });
 
                         DataRelease
-                            .find({ $text: { $search: query } })
+                            .find({
+                                $or: [
+                                    { datasetName: new RegExp(query, 'i') },
+                                    { 'assay.name': new RegExp(query, 'i') }
+                                ]
+                            })
                             .sort({ dateModified: -1 })
                             .populate([
                                 { path: 'group', model: 'Group' },
@@ -102,8 +103,9 @@ module.exports = function(app) {
                                     console.log(err);
                                     res.status(404).send('Error searching releases');
                                 } else {
-                                    data = _.union(results, releasesArr);
-                                    res.status(200).send(data);
+                                    var data = _.union(results, drgResults);
+                                    var uniqueData = _.uniq(data, 'datasetName');
+                                    res.status(200).send(uniqueData);
                                 }
                             }
                         );

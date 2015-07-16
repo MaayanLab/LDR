@@ -338,7 +338,6 @@ var dataReleaseSchema = new Schema({
 
 dataReleaseSchema.pre('save', function(next) {
 
-    console.log('CURRENTLY ABOUT TO SAVE ' + this.toString());
     // Update dateModified
     this.dateModified = new Date();
 

@@ -59,7 +59,6 @@ angular.module('ldr')
         //};
 
         $scope.$on('modal.closing', function() {
-            console.log('MODAL CLOSING');
             $timeout.cancel(toPromise);
         });
 

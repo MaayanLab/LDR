@@ -118,7 +118,6 @@ angular.module('ldr.user.admin', [
                 return !!id;
             });
 
-            console.log(selectedIds);
             if (selectedIds.length) {
                 window.open('/LDR/api/releases/export?ids=' + selectedIds.join(','));
             } else {

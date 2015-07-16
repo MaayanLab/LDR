@@ -373,7 +373,6 @@ angular.module('ldr.releases.create', [
                 lodash.isEqual(form.metadata, formInit.metadata) &&
                 compareDateObjs(form.releaseDates, formInit.releaseDates) &&
                 lodash.isEqual(form.urls, formInit.urls)) {
-                console.log('FORMS ARE EQUAL');
                 $state.go('releasesOverview');
             } else {
                 api(endpoint)
