@@ -19,9 +19,9 @@ app.use(cors());
 app.use(timeout('20s'));
 if (process.env.NODE_ENV != 'production') { // if production
     app.use(morgan('dev')); // log every request to console
-    mongoose.set('debug', true); // More verbose mongoose queries
+    //mongoose.set('debug', true); // More verbose mongoose queries
 }
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '20mb'}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(multer({
     dest: __dirname + '/hdfs/',

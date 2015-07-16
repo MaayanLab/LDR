@@ -1,5 +1,6 @@
 var jwt = require('express-jwt'),
     jsonWT = require('jsonwebtoken'),
+    fs = require('fs'),
     _ = require('lodash'),
     Q = require('q'),
     secret = require('../config/database').secret,
@@ -441,6 +442,221 @@ module.exports = function(app) {
         } else {
             res.status(401).send('Token or URL are invalid. Try again.');
         }
+    });
+
+    app.get(baseUrl + '/api/releases/export', function(req, res) {
+
+        var randName = '';
+        var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        for (var i = 0; i < 5; i++) {
+            randName += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+
+        var ids = req.query.ids;
+        ids = ids.split(',');
+
+        var stream = fs.createWriteStream(__dirname + '/' + randName + '.txt');
+
+        var index = 0;
+        DataRelease
+            .find({ _id: { $in: ids } })
+            .populate([
+                { path: 'group', model: 'Group' },
+                { path: 'messages.user', model: 'User' },
+                { path: 'metadata.assay', model: 'Assay' },
+                { path: 'metadata.cellLines', model: 'CellLine' },
+                { path: 'metadata.perturbagens', model: 'Perturbagen' },
+                { path: 'metadata.readouts', model: 'Readout' },
+                { path: 'metadata.manipulatedGene', model: 'Gene' },
+                { path: 'metadata.organism', model: 'Organism' },
+                { path: 'metadata.relevantDisease', model: 'Disease' },
+                { path: 'metadata.analysisTools', model: 'Tool' }
+            ])
+            .lean()
+            .exec(function(err, releases) {
+                _.each(releases, function(release) {
+                    var meta = release.metadata;
+                    var dates = release.releaseDates;
+                    var urls = release.urls;
+
+                    stream.write('UID\t' + release._id + '\n');
+                    stream.write('DSN\t' + release.datasetName + '\n');
+                    try {
+                        stream.write('CTR\t' + release.group.name + '\n');
+                    } catch (e) {
+                        console.log('ERROR FOR ' + release._id);
+                    }
+                    stream.write('DES\t' + release.description + '\n');
+                    stream.write('ASY\t' + meta.assay.name + '\n');
+
+                    _.each(meta.cellLines, function(obj) {
+                        var appStr = 'CLN\t' + obj.name;
+                        if (obj.type) {
+                            appStr += '\t' + obj.type;
+                        } else {
+                            appStr += '\t';
+                        }
+                        if (obj.class) {
+                            appStr += '\t' + obj.class;
+                        } else {
+                            appStr += '\t';
+                        }
+                        if (obj.tissue) {
+                            appStr += '\t' + obj.tissue;
+                        } else {
+                            appStr += '\t';
+                        }
+                        stream.write(appStr + '\n');
+                    });
+
+                    _.each(meta.perturbagens, function(obj) {
+                        var appStr = 'PRT\t' + obj.name;
+                        if (obj.type) {
+                            appStr += '\t' + obj.type;
+                        } else {
+                            appStr += '\t';
+                        }
+                        stream.write(appStr + '\n');
+                    });
+
+                    _.each(meta.readouts, function(obj) {
+                        var appStr = 'RDO\t' + obj.name;
+                        if (obj.datatype) {
+                            appStr += '\t' + obj.datatype;
+                        } else {
+                            appStr += '\t';
+                        }
+                        stream.write(appStr + '\n');
+                    });
+
+                    _.each(meta.manipulatedGene, function(obj) {
+                        var appStr = 'PRT\t' + obj.name;
+                        if (obj.organism) {
+                            appStr += '\t' + obj.organism;
+                        } else {
+                            appStr += '\t';
+                        }
+                        if (obj.reference) {
+                            appStr += '\t' + obj.reference;
+                        } else {
+                            appStr += '\t';
+                        }
+                        if (obj.url) {
+                            appStr += '\t' + obj.url;
+                        } else {
+                            appStr += '\t';
+                        }
+                        if (obj.description) {
+                            appStr += '\t' + obj.description;
+                        } else {
+                            appStr += '\t';
+                        }
+                        stream.write(appStr + '\n');
+                    });
+
+                    _.each(meta.organism, function(obj) {
+                        var appStr = 'ORG\t' + obj.name;
+                        if (obj.commonName) {
+                            appStr += '\t' + obj.commonName;
+                        } else {
+                            appStr += '\t';
+                        }
+                        stream.write(appStr + '\n');
+                    });
+
+                    _.each(meta.relevantDisease, function(obj) {
+                        var appStr = 'DIS\t' + obj.name;
+                        if (obj.description) {
+                            appStr += '\t' + obj.description;
+                        } else {
+                            appStr += '\t';
+                        }
+                        stream.write(appStr + '\n');
+                    });
+
+                    _.each(meta.analysisTools, function(obj) {
+                        var appStr = 'ATL\t' + obj.name;
+                        if (obj.url) {
+                            appStr += '\t' + obj.url;
+                        } else {
+                            appStr += '\t';
+                        }
+                        if (obj.description) {
+                            appStr += '\t' + obj.description;
+                        } else {
+                            appStr += '\t';
+                        }
+                        stream.write(appStr + '\n');
+                    });
+
+                    stream.write('TKS\t' + meta.tagsKeywords.join('\t') + '\n');
+
+                    try {
+                        stream.write('LV1\t' + dates.level1.toString() + '\n');
+                    } catch (e) {
+                        stream.write('LV1\t' + '' + '\n');
+                    }
+
+                    try {
+                        stream.write('LV2\t' + dates.level2.toString() + '\n');
+                    } catch (e) {
+                        stream.write('LV2\t' + '' + '\n');
+                    }
+
+                    try {
+                        stream.write('LV3\t' + dates.level3.toString() + '\n');
+                    } catch (e) {
+                        stream.write('LV3\t' + '' + '\n');
+                    }
+
+                    try {
+                        stream.write('LV4\t' + dates.level4.toString() + '\n');
+                    } catch (e) {
+                        stream.write('LV4\t' + '' + '\n');
+                    }
+
+                    stream.write('PUB\t' + urls.pubMedUrl + '\n');
+                    stream.write('DTA\t' + urls.dataUrl + '\n');
+                    stream.write('MET\t' + urls.metadataUrl + '\n');
+                    stream.write('QCD\t' + urls.qcDocumentUrl + '\n');
+
+                    try {
+                        stream.write('MOD\t' + release.dateModified.toString() + '\n');
+                    } catch (e) {
+                        stream.write('MOD\t' + '' + '\n');
+                    }
+
+                    var approved = release.approved ? 'YES' : 'NO';
+                    stream.write('APR\t' + approved + '\n');
+
+                    var released = release.released ? 'YES' : 'NO';
+                    stream.write('REL\t' + released + '\n');
+
+                    stream.write('\n');
+
+                });
+                stream.end();
+                stream.on('finish', function() {
+                    res.download(__dirname + '/' + randName + '.txt', 'LDR-export.txt',
+                        function(err) {
+                            if (err) {
+                                console.log(err);
+                                res.status(err.status).end();
+                            } else {
+                                console.log(__dirname + '/' + randName + '.txt SENT');
+                                fs.unlink(__dirname + '/' + randName + '.txt', function(err) {
+                                    if (err) {
+                                        throw err;
+                                    }
+                                    console.log(__dirname + '/' + randName + '.txt DELETED');
+                                });
+                            }
+                        }
+                    );
+                });
+            }
+        );
     });
 
     // Release an entry. Must have a data URL and be approved

@@ -94,13 +94,28 @@
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
-            <th></th>
-            <th></th>
+            <th class="text-center" ng-if="!allSelected">
+                <a href="" ng-click="selectAll()">
+                    Select All
+                </a>
+            </th>
+            <th class="text-center" ng-if="allSelected">
+                <a href="" ng-click="unselectAll()">
+                    Unselect All
+                </a>
+            </th>
+            <th class="text-center">
+                <a href="" ng-click="export()">
+                    Export
+                </a>
+            </th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat-start="form in forms | orderBy: sortType : sortReverse"
-            ng-class="form.released ? 'tr-released' :
+            ng-click="form.selected = !form.selected"
+            ng-class="form.selected ? 'tr-selected' :
+            form.released ? 'tr-released' :
             !form.approved && !form.needsEdit ? 'tr-awaiting-approval' :
             form.approved && !form.needsEdit ? 'tr-approved' :
             form.needsEdit ? 'tr-needs-edit' : ''"
@@ -144,9 +159,9 @@
                 <div class="btn-group">
                     <a class="btn btn-default dropdown-toggle form-table-data text-center"
                        ng-class="form.released ? 'tr-released-btn' :
-            !form.approved && !form.needsEdit ? 'tr-awaiting-approval-btn' :
-            form.approved && !form.needsEdit ? 'tr-approved-btn' :
-            form.needsEdit ? 'tr-needs-edit-btn' : ''"
+                       !form.approved && !form.needsEdit ? 'tr-awaiting-approval-btn' :
+                       form.approved && !form.needsEdit ? 'tr-approved-btn' :
+                       form.needsEdit ? 'tr-needs-edit-btn' : ''"
                        data-toggle="dropdown" ng-href="">
                         Action<span class="caret"></span>
                     </a>
@@ -184,7 +199,7 @@
                     {{form.metadata.assay[0].name}}
                 </h4>
 
-                <p class="col-sm-12">{{form.metadata.assay[0].info}}</p>
+                <p class="col-sm-12">{{form.description}}</p>
 
                 <div class="col-sm-12">
                     <h5>Cell Lines</h5>

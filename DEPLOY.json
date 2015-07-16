@@ -6,7 +6,7 @@
     "container": {
         "type": "DOCKER",
         "docker": {
-            "image": "146.203.54.165:5000/ldr:1.5",
+            "image": "146.203.54.165:5000/ldr:latest",
             "forcePullImage": true,
             "network": "BRIDGE",
             "portMappings": [

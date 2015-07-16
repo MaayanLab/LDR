@@ -28,7 +28,7 @@ angular.module('ldr.releases.create', [
         $scope.group = $scope.user.group;
         $scope.showErrors = false;
 
-        var MAX_TAGS = 100;
+        var MAX_TAGS = 10000;
         $scope.form = {
             datasetName: {
                 name: 'datasetName',
@@ -194,18 +194,9 @@ angular.module('ldr.releases.create', [
             'form.metadata[1].model',
             'form.metadata[2].model',
             'form.metadata[3].model'
-            ], function() {
+        ], function() {
             $scope.showErrors = false;
         });
-
-        // Watch assay description and change experiment description if that
-        // is changed
-        //$scope.$watch('form.metadata[0].model[0]', function() {
-        //    if ($scope.form.metadata[0].model.length) {
-        //        $scope.form.experiment.model =
-        //            $scope.form.metadata[0].model[0].info;
-        //    }
-        //});
 
         function formatText(name) {
             var MAX = 50;
@@ -215,23 +206,39 @@ angular.module('ldr.releases.create', [
             return name.slice(0, MAX) + '...';
         }
 
+        var formInit;
+
         api('releases/form/' + $stateParams.id)
             .get()
             .success(function(form) {
+                formInit = angular.copy(form);
+                lodash.each(formInit.metadata, function(arr, key) {
+                    formInit.metadata[key] = lodash.map(arr, function(obj) {
+                        return obj._id;
+                    });
+                });
+                lodash.each(formInit.releaseDates, function(str, key) {
+                    formInit.releaseDates[key] =
+                        (str === null || str === '') ? null : new Date(str);
+                });
+
                 if (form._id) {
                     $scope.form._id = form._id;
                 }
-                console.log(form);
+
                 $scope.form.description.model = form.description;
                 $scope.form.datasetName.model = form.datasetName;
+
                 lodash.each($scope.form.releaseDates, function(obj) {
                     var date = form.releaseDates['level' + obj.level];
                     obj.model = (date === null || date === '') ?
                         null : new Date(date);
                 });
+
                 lodash.each($scope.form.urls, function(obj) {
                     obj.model = form.urls[obj.name];
                 });
+
                 lodash.each($scope.form.metadata, function(obj) {
                     var newData = form.metadata[obj.name];
                     lodash.each(newData, function(newObj) {
@@ -329,20 +336,55 @@ angular.module('ldr.releases.create', [
                     '' : obj.model;
             });
 
-            console.log(form);
             var endpoint = 'releases/form/';
             if (!lodash.isUndefined($scope.form._id)) {
                 endpoint += $scope.form._id;
             }
-            api(endpoint)
-                .post(form)
-                .error(function(err) {
-                    throw new Error(err);
-                })
-                .success(function() {
-                    //$state.go('releasesCreate', { id: result._id });
-                    $state.go('releasesOverview');
-                }
-            );
+
+            // Compare datasetName, metadata, releaseDates, and urls to see
+            // if anything has changed. If it has, update it. If not, go back
+            // to releasesOverview page.
+
+            var compareDateObjs = function(obj1, obj2) {
+                var equal = true;
+                lodash.each(obj1, function(date, key) {
+                    // If either date is null, calling .toString() will throw a
+                    // TypeError. Pythony code here -- Ask forgiveness after
+                    // doing it rather than before.
+                    try {
+                        if (obj1[key].toString() !== obj2[key].toString()) {
+                            equal = false;
+                        }
+                    } catch (e) {
+                        if (e instanceof TypeError) {
+                            if (obj1[key] !== obj2[key]) {
+                                equal = false;
+                            }
+                        }
+                        else {
+                            throw e;
+                        }
+                    }
+                });
+                return equal;
+            };
+
+            if (form.datasetName === formInit.datasetName &&
+                lodash.isEqual(form.metadata, formInit.metadata) &&
+                compareDateObjs(form.releaseDates, formInit.releaseDates) &&
+                lodash.isEqual(form.urls, formInit.urls)) {
+                console.log('FORMS ARE EQUAL');
+                $state.go('releasesOverview');
+            } else {
+                api(endpoint)
+                    .post(form)
+                    .error(function(err) {
+                        throw new Error(err);
+                    })
+                    .success(function() {
+                        $state.go('releasesOverview');
+                    }
+                );
+            }
         };
     });

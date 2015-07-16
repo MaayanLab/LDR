@@ -460,20 +460,28 @@ tags-input {
         }
     }
     .tags {
-        .tag-item {
-            background: #f1f1f1;
-            border-radius: 0;
-            font: 14px @font-family-primary;
-            line-height: 25px;
-            .remove-button {
-                text-decoration: none;
-            }
-            &.selected {
-                color: white;
-                background: @color-red;
-                border: 1px solid @color-red-dark;
+
+        .tag-list {
+            display: flex;
+            flex-direction: row;
+            overflow-x: auto;
+
+            .tag-item {
+                display: inline-table;
+                background: #f1f1f1;
+                border-radius: 0;
+                font: 14px @font-family-primary;
+                line-height: 25px;
                 .remove-button {
+                    text-decoration: none;
+                }
+                &.selected {
                     color: white;
+                    background: @color-red;
+                    border: 1px solid @color-red-dark;
+                    .remove-button {
+                        color: white;
+                    }
                 }
             }
         }
@@ -650,7 +658,8 @@ textarea.experiment {
 }
 
 ::-webkit-scrollbar {
-    width: 12px;
+    width: 3px;
+    height: 5px;
     background-color: #F5F5F5;
 }
 
@@ -708,6 +717,10 @@ td.legend-color {
 .legend-label {
     line-height: 20px;
     margin: 0;
+}
+
+.tr-selected {
+    background-color: #88A9EF;
 }
 
 .tr-approved, #approved {
@@ -852,7 +865,7 @@ span.stat-num {
 
 .card-release {
     padding: 0 7px 14px 7px;
-    height: 400px;
+    height: 350px;
     @media (max-width: 500px) {
         width: 50%;
         float: left;
@@ -956,10 +969,26 @@ small {
     border-top: 1px solid black;
     bottom: 0;
     color: white;
-    height: 100px;
     left: 0;
     position: absolute;
     width: 100%;
+
+    .bd2k, .contact {
+        text-align: center;
+    }
+
+    .bd2k {
+        @media all and (min-width: 992px) {
+            float: left!important;
+        }
+    }
+
+    .contact {
+        @media all and (min-width: 992px) {
+            float: right!important;
+        }
+    }
+
     a {
         color: @color-primary-light;
     }

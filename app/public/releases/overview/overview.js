@@ -114,4 +114,39 @@ angular.module('ldr.releases.overview', [
                 );
             }
         };
+
+        $scope.allSelected = false;
+
+        $scope.unselectAll = function() {
+            $scope.allSelected = false;
+            angular.forEach($scope.forms, function(form) {
+                form.selected = false;
+            });
+        };
+
+        $scope.selectAll = function() {
+            $scope.allSelected = true;
+            angular.forEach($scope.forms, function(form) {
+                form.selected = true;
+            });
+        };
+
+        $scope.export = function() {
+            var selectedIds = lodash.map($scope.forms, function(form) {
+                if (form.selected) {
+                    return form._id;
+                }
+            });
+
+            selectedIds = lodash.remove(selectedIds, function(id) {
+                return !!id;
+            });
+
+            if (selectedIds.length) {
+                window.open('/LDR/api/releases/export?ids=' + selectedIds.join(','));
+            } else {
+                alert('You must select releases before you can export them!');
+            }
+        };
+
     });
