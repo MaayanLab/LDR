@@ -2,11 +2,10 @@
     <div class="msg-modal-body">
         <div class="msg-panel">
             <div class="msg-panel-heading">
-                <div class="btn-group pull-right">
-                    <button id="msg-close-btn" type="button" ng-click="close();">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                </div>
+                <button id="msg-close-btn" type="button"
+                        ng-click="close();">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
                 <h4 class="text-left">
                     <label for="btn-input" class="control-label msg-header">
                         Messages about {{header}}
@@ -29,6 +28,10 @@
                         </span>
                         <span class="text-right text-muted col-xs-3">
                             {{msg.date | date: 'h:mm a'}}
+                            <button id="msg-delete-btn" type="button"
+                                    ng-click="removeMsg(msg);">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
                         </span>
                     </p>
                 </div>

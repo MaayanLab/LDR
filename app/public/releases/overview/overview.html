@@ -6,22 +6,7 @@
     meta-data. Please note that <em class="highlight">in order to release an
     entry, it must have a data URL provided and it must be approved.</em>
 </p>
-<table class="text-center legend col-sm-10 col-sm-offset-1 col-xs-12">
-    <tr>
-        <td class="legend-color" id="awaiting-approval"></td>
-        <td class="legend-color" id="approved"></td>
-        <td class="legend-color" id="selected"></td>
-        <td class="legend-color" id="needs-edit"></td>
-        <td class="legend-color" id="released"></td>
-    </tr>
-    <tr>
-        <td>Awaiting Approval</td>
-        <td>Approved</td>
-        <td>Selected</td>
-        <td>Needs Attention</td>
-        <td>Released</td>
-    </tr>
-</table>
+<div ng-include="'partials/legend.html'"></div>
 <div class="content col-xs-12">
     <table class="table">
         <thead>
@@ -39,46 +24,6 @@
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
-            <!--<th class="text-center">
-                <a href=""
-                   ng-click="sortType = 'metadata.assay[0].name'; sortReverse = !sortReverse">
-                    Assay
-                    <span ng-show="sortType === 'metadata.assay[0].name' && sortReverse"
-                          class="fa fa-caret-down"></span>
-                    <span ng-show="sortType === 'metadata.assay[0].name' && !sortReverse"
-                          class="fa fa-caret-up"></span>
-                </a>
-            </th>-->
-            <!--<th class="text-center">
-                <a href=""
-                   ng-click="sortType = 'metadata.perturbagens.length'; sortReverse = !sortReverse">
-                    Perturbagens
-                    <span ng-show="sortType == 'metadata.perturbagens.length' && sortReverse"
-                          class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'metadata.perturbagens.length' && !sortReverse"
-                          class="fa fa-caret-up"></span>
-                </a>
-            </th>
-            <th class="text-center">
-                <a href=""
-                   ng-click="sortType = 'metadata.cellLines.length'; sortReverse = !sortReverse">
-                    Cells
-                    <span ng-show="sortType == 'metadata.cellLines.length' && sortReverse"
-                          class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'metadata.cellLines.length' && !sortReverse"
-                          class="fa fa-caret-up"></span>
-                </a>
-            </th>
-            <th class="text-center">
-                <a href=""
-                   ng-click="sortType = 'metadata.readouts.length'; sortReverse = !sortReverse">
-                    Readouts
-                    <span ng-show="sortType == 'metadata.readouts.length' && sortReverse"
-                          class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'metadata.readouts.length' && !sortReverse"
-                          class="fa fa-caret-up"></span>
-                </a>
-            </th>-->
             <th class="text-center">
                 <a href=""
                    ng-click="sortType = 'releaseDates.upcoming'; sortReverse = !sortReverse">
@@ -100,17 +45,17 @@
                 </a>
             </th>
             <th class="text-center" ng-if="!allSelected">
-                <a href="" ng-click="selectAll()">
+                <a class="btn btn-primary" href="" ng-click="selectAll()">
                     Select All
                 </a>
             </th>
             <th class="text-center" ng-if="allSelected">
-                <a href="" ng-click="unselectAll()">
+                <a class="btn btn-primary" href="" ng-click="unselectAll()">
                     Unselect All
                 </a>
             </th>
             <th class="text-center">
-                <a href="" ng-click="export()">
+                <a class="btn btn-primary" href="" ng-click="export()">
                     Export
                 </a>
             </th>
@@ -129,19 +74,6 @@
             <td class="text-left" id="dcic-assay-name">
                 {{form.datasetName}}
             </td>
-            <!--<td class="text-left" id="assay-name">
-                {{form.metadata.assay[0].name}}
-            </td>-->
-            <!--<td class="col-sm-2" id="pert-count">
-                {{form.metadata.perturbagens.length}}
-            </td>
-            <td class="col-sm-1" id="cell-count">
-                {{form.metadata.cellLines.length}}
-            </td>
-            <td class="col-sm-1" id="readout-count">
-                {{form.metadata.readouts.length}}
-            </td>-->
-
             <td class="col-sm-3" id="release-date">
                 {{form.releaseDates.upcoming | date: 'MM-dd-yyyy'}}
             </td>
@@ -159,7 +91,6 @@
                     Needs Editing
                 </span>
             </td>
-            <!--<td id="id">{{form._id}}</td>-->
             <td>
                 <div class="btn-group">
                     <a class="btn btn-default dropdown-toggle form-table-data text-center"
@@ -199,61 +130,8 @@
             </td>
         </tr>
         <tr class="release-details animate" ng-show="form.collapsed">
-            <td colspan="10" class="col-sm-12">
-                <h4 class="text-center assay-title">
-                    {{form.datasetName}}
-                </h4>
-
-                <p class="col-sm-12">{{form.description}}</p>
-
-                <div class="col-sm-12">
-                    <h5>Cell Lines</h5>
-                    <ul class="list-inline">
-                        <li ng-repeat="line in form.metadata.cellLines">
-                            {{line.name}}
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-sm-12">
-                    <h5>Perturbagens</h5>
-                    <ul class="list-inline">
-                        <li ng-repeat="pert in form.metadata.perturbagens">
-                            {{pert.name}}
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-sm-12">
-                    <h5>Readouts</h5>
-                    <ul class="list-inline">
-                        <li ng-repeat="rOut in form.metadata.readouts">
-                            {{rOut.name}}
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-sm-12">
-                    <h5>Release Dates</h5>
-                    <ul class="list-inline">
-                        <li ng-repeat="(level,date) in form.releaseDates"
-                            ng-if="date !== '' && level !== 'upcoming'">
-                            <strong class="info-release-lvl">
-                                {{level}}:
-                            </strong>
-                            {{date | date:'MM-dd-yyyy'}}
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-sm-12">
-                    <h5>URLs</h5>
-                    <ul class="list-inline">
-                        <li ng-repeat="(label,url) in form.urls"
-                                ng-if="url !== ''">
-                            <strong class="info-release-lvl">
-                                {{label}}:
-                            </strong>
-                            <a ng-href={{url}}>{{url}}</a>
-                        </li>
-                    </ul>
-                </div>
+            <td colspan="10">
+                <div ng-include="'partials/expand.html'"></div>
             </td>
         </tr>
         <tr ng-repeat-end="" ng-if="forms.length === 0">

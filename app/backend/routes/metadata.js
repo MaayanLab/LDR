@@ -180,11 +180,15 @@ module.exports = function(app) {
                 res.status(404).send('An error occurred obtaining counts.');
             } else {
                 summary.users = uCount;
-                Group.count(function(err, gCount) {
+                Group
+                    .where('name')
+                    .ne('NIH')
+                    .count(function(err, gCount) {
                     if (err) {
                         console.log(err);
                         res.status(404).send('An error occurred obtaining counts.');
                     } else {
+                        // Subtract 1 for the NIH
                         summary.groups = gCount;
                         DataRelease
                             .find({})
@@ -289,8 +293,7 @@ module.exports = function(app) {
                     if (err.code === 11000) {
                         res.status(400).send('A sample with that name ' +
                             'already exists. Please try another.')
-                    }
-                    else {
+                    } else {
                         res.status(400).send('A ' + err.name + ' occurred while ' +
                             'saving to the database.');
                     }

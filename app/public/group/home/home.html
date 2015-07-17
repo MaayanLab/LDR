@@ -2,13 +2,15 @@
     <div class="col-xs-12">
         <div class="group-info col-sm-12 col-md-6">
             <div class="text-center">
-                <div accept="image/*" class="group-upload" ng-model="files" ngf-accept="'image/*'" ngf-capture="'camera'" ngf-select type="file">
-                    <img alt="images/user-icon.png" class="group-icon group-icon-upload" ng-src="http://amp.pharm.mssm.edu/LDR/api/group/{{groupId}}/icon/"/>
+                <div accept="image/*" class="group-icon-upload" ng-model="files"
+                     ngf-accept="'image/*'" ngf-capture="'camera'" ngf-select
+                     type="file" style="background-image: url(http://amp.pharm.mssm.edu/LDR/api/group/{{groupId}}/icon/);">
                 </div>
                 <p class="caption">Click image to upload a new one</p>
             </div>
-                <h3>{{group.name}}</h3>
-                <a ui-sref="groupSettings({id: groupId})">Edit</a>
+            <h3>{{group.name}}</h3>
+            <a ui-sref="groupSettings({id: groupId})">Edit</a>
+
             <p class="group-about">{{group.about}}</p>
         </div>
         <div class="statistics col-sm-12 col-md-6">
@@ -22,7 +24,8 @@
         <div class="well well-sm">
             <div class="row">
                 <div class="col-md-6 col-md-4">
-                    <img alt="" class="user-icon img-circle img-responsive" src="images/user-icon.png">
+                    <img alt="" class="user-icon img-circle img-responsive"
+                         src="images/user-icon.png">
                 </div>
                 <div class="col-sm-6 col-md-8">
                     <h4>{{user.username}}</h4>
@@ -43,7 +46,8 @@
                         {{user.email}}
                         <br/>
                         <i class="card-glyph glyphicon glyphicon-globe"></i>
-                        <a ng-href="{{user.homepage}}" ng-if="user.homepage !== 'http://'">
+                        <a ng-href="{{user.homepage}}"
+                           ng-if="user.homepage !== 'http://'">
                             {{user.homepage}}
                         </a>
                         <br/>

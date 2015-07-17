@@ -10,6 +10,27 @@ angular.module('ldr')
         $scope.header = formatText(angular.copy(config.form.datasetName));
         $scope.newMessage = '';
 
+        $scope.removeMsg = function(msg) {
+            api('releases/form/' + config.form._id + '/message/remove/')
+                .post(msg)
+                .success(function() {
+                    api('releases/form/' + config.form._id)
+                        .get()
+                        .success(function(release) {
+                            $scope.messages = angular.copy(release.messages);
+                            strsToDates();
+                        });
+                })
+                .error(function(resp) {
+                    console.log('error:');
+                    console.log(resp);
+                    alert('There was an error saving the data. ' +
+                        'Please try again later.');
+                    $scope.close();
+                }
+            );
+        };
+
         $scope.post = function() {
             api('releases/form/' + config.form._id + '/message/')
                 .post({ message: $scope.newMessage })

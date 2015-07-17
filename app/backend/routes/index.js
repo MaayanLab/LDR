@@ -13,6 +13,6 @@ module.exports = function(app) {
     require('./admin')(app);
     require('./groups')(app);
     require('./metadata')(app);
-    require('./releaseRoutes')(app);
+    require('./releases')(app);
 
 };

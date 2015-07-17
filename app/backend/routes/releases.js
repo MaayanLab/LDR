@@ -446,6 +446,33 @@ module.exports = function(app) {
         }
     });
 
+    app.post(baseUrl + '/api/secure/releases/form/:id/message/remove/', function(req, res) {
+        var id = req.params.id;
+        var query = { _id: id };
+        var messageObj = req.body;
+
+        DataRelease
+            .findOne(query)
+            .exec(function(err, release) {
+            if (err) {
+                console.log(err);
+                res.status(400).send('There was an error updating messages' +
+                    ' for entry with id ' + id + '. Please try again.');
+            } else {
+                // Need to call .toObject() in order for lodash to work
+                var releaseObj = release.toObject();
+                var messages = releaseObj.messages;
+                _.remove(messages, function(msg) {
+                    console.log(messageObj._id === msg._id.toString());
+                    return messageObj._id === msg._id.toString();
+                });
+                release.messages = messages;
+                release.save();
+                res.status(202).send('Message deleted');
+            }
+        });
+    });
+
     app.get(baseUrl + '/api/releases/export', function(req, res) {
 
         var randName = '';

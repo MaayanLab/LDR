@@ -168,8 +168,9 @@ try {
 }
 
 var asSchema = new Schema({
-    name: String,
+    name: { type: String, index: { unique: true } },
     description: String,
+    abbr: { type: String, index: { unique: true } },
     group: { type: Schema.ObjectId, ref: 'Group' }
 });
 
@@ -182,7 +183,7 @@ try {
 }
 
 var clSchema = new Schema({
-    name: String,
+    name: { type: String, index: { unique: true } },
     type: String,
     class: String,
     controlOrDisease: String,
@@ -337,27 +338,70 @@ var dataReleaseSchema = new Schema({
 // dataReleaseSchema.plugin(version);
 
 dataReleaseSchema.pre('save', function(next) {
+    var rel = this;
 
+    // ID format: LINCS_CENTERNAME_ASSAYABBR_NUMBER
+    // Example: LINCS_DTOXS_RNS_001
     //var generateId = function() {
     //    DataRelease
     //        .find({})
-    //        .sort({'_id': -1})
+    //        .sort({_id: -1})
     //        .limit(1)
     //        .exec(function(err, latestDoc) {
     //            if (err) {
     //                console.log(err);
     //                next(new Error(err));
     //            } else {
-    //                var lDid = latestDoc.did;
-    //                var didNum = parseInt(lDid.substr(lDid.length - 5));
-    //                this.did = ''
-    //                next();
+    //                // Get Group name and Assay Abbr
+    //                Group
+    //                    .findOne({_id: rel.group})
+    //                    .lean()
+    //                    .exec(function(err, group) {
+    //                        if (err) {
+    //                            next(new Error(err));
+    //                        } else {
+    //                            var groupName = group.name;
+    //                            // Replace space with hyphen
+    //                            groupName.split(' ').join('-');
+    //
+    //                            Assay
+    //                                .find({_id: rel.metadata.assay[0]})
+    //                                .lean()
+    //                                .exec(function(err, assay) {
+    //                                    if (err) {
+    //                                        next(new Error(err));
+    //                                    } else {
+    //                                        var assayAbbr = assay.abbr;
+    //                                        var didArr = latestDoc[0].did.split('_');
+    //                                        var didNum = parseInt(didArr[didArr.length - 1]) + 1;
+    //                                        var didNumStr = didNum.toString();
+    //
+    //                                        var lenGrThree = function(string) {
+    //                                            if (string.length < 3) {
+    //                                                string = '0' + string;
+    //                                                lenGrThree(string);
+    //                                            }
+    //                                            return string
+    //                                        };
+    //
+    //                                        rel.did = 'LINCS_' + groupName +
+    //                                            '_' + assayAbbr + '_' +
+    //                                            lenGrThree(didNumStr);
+    //
+    //                                        next();
+    //                                    }
+    //                                }
+    //                            );
+    //                        }
+    //                    }
+    //                );
     //            }
-    //        });
+    //        }
+    //    );
     //};
 
     // Update dateModified
-    this.dateModified = new Date();
+    rel.dateModified = new Date();
 
     // Generate 'upcoming' field with closest release date
     //this.releaseDates.upcoming = this.releaseDates.level1 !== '' ?
@@ -367,7 +411,7 @@ dataReleaseSchema.pre('save', function(next) {
     //    this.releaseDates.level4 : 'NA';
 
     // Check if any ids are null. If they are, throw an error
-    _.each(this.metadata, function(arr, key) {
+    _.each(rel.metadata, function(arr, key) {
         _.each(arr, function(id) {
             if (id === null) {
                 next(new Error('An id in the ' + key + ' array was null!'));
@@ -392,18 +436,7 @@ try {
     DataRelease = mongoose.model('DataRelease',
         dataReleaseSchema, 'dataReleases');
 }
-/*
 
-// DANGEROUS: Make updates to every release
-DataRelease
-    .find({})
-    .exec(function(err, releases) {
-        _.each(releases, function(release) {
-            release.save();
-        });
-});
-
-*/
 module.exports = {
     User: User,
     Group: Group,
