@@ -10,6 +10,7 @@ var runSequence = require('run-sequence');
 var del = require('del');
 var karma = require('karma').server;
 var minifyCss = require('gulp-minify-css');
+var ngAnnotate = require('gulp-ng-annotate');
 var $ = require('gulp-load-plugins')();
 
 var SERVER_DIRECTORY = 'app/backend/';
@@ -89,6 +90,7 @@ gulp.task('js', function() {
     ])
         .pipe($.plumber())
         .pipe($.concat('bundle.js'))
+        .pipe(ngAnnotate())
         .pipe(gulp.dest(BUILD_DIRECTORY));
 });
 

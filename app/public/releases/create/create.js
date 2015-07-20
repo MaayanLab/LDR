@@ -1,35 +1,47 @@
-angular.module('ldr.releases.create', [
-    'ui.router',
-    'angular-storage',
-    'ngSanitize',
-    'ui.bootstrap',
-    'ngTagsInput',
-    'ngLodash'
-])
+(function() {
 
-    // UI Router state formCreate
-    .config(function($stateProvider) {
+    angular
+        .module('ldr.releases.create', [
+            'ui.router',
+            'angular-storage',
+            'ngSanitize',
+            'ui.bootstrap',
+            'ngTagsInput',
+            'ngLodash'
+        ])
+
+        // UI Router state formCreate
+        .config(releasesCreateConfig)
+        .controller('releases.create.ctrl', ReleasesCreateCtrl);
+
+    /* @ngInject */
+    function releasesCreateConfig($stateProvider) {
         $stateProvider.state('releasesCreate', {
             url: '/releases/form/{id:string}',
-            controller: 'releases.create.ctrl',
             templateUrl: 'releases/create/create.html',
+            controller: 'releases.create.ctrl',
+            controllerAs: 'vm',
             data: {
                 requiresLogin: true,
                 requiresAdmitted: true
             }
         });
-    })
+    }
 
-    .controller('releases.create.ctrl',
-    function($stateParams, $scope, $timeout, $http, $location, $anchorScroll,
-             store, $state, $modal, lodash, api) {
+    /* @ngInject */
+    function ReleasesCreateCtrl($stateParams, $scope, store, $state, lodash, api) {
 
-        $scope.user = $scope.getCurrentUser();
-        $scope.group = $scope.user.group;
-        $scope.showErrors = false;
+        var vm = this;
+        vm.user = store.get('currentUser');
+        vm.group = vm.user.group;
+        vm.showErrors = false;
+
+        vm.autocompleteSource = autocompleteSource;
+        vm.validate = validate;
+        vm.cancel = cancel;
 
         var MAX_TAGS = 10000;
-        $scope.form = {
+        vm.form = {
             datasetName: {
                 name: 'datasetName',
                 title: 'Dataset Name',
@@ -190,12 +202,12 @@ angular.module('ldr.releases.create', [
         };
 
         $scope.$watchGroup([
-            'form.metadata[0].model',
-            'form.metadata[1].model',
-            'form.metadata[2].model',
-            'form.metadata[3].model'
+            'vm.form.metadata[0].model',
+            'vm.form.metadata[1].model',
+            'vm.form.metadata[2].model',
+            'vm.form.metadata[3].model'
         ], function() {
-            $scope.showErrors = false;
+            vm.showErrors = false;
         });
 
         function formatText(name) {
@@ -223,23 +235,23 @@ angular.module('ldr.releases.create', [
                 });
 
                 if (form._id) {
-                    $scope.form._id = form._id;
+                    vm.form._id = form._id;
                 }
 
-                $scope.form.description.model = form.description;
-                $scope.form.datasetName.model = form.datasetName;
+                vm.form.description.model = form.description;
+                vm.form.datasetName.model = form.datasetName;
 
-                lodash.each($scope.form.releaseDates, function(obj) {
+                lodash.each(vm.form.releaseDates, function(obj) {
                     var date = form.releaseDates['level' + obj.level];
                     obj.model = (date === null || date === '') ?
                         null : new Date(date);
                 });
 
-                lodash.each($scope.form.urls, function(obj) {
+                lodash.each(vm.form.urls, function(obj) {
                     obj.model = form.urls[obj.name];
                 });
 
-                lodash.each($scope.form.metadata, function(obj) {
+                lodash.each(vm.form.metadata, function(obj) {
                     var newData = form.metadata[obj.name];
                     lodash.each(newData, function(newObj) {
                         if (newObj.name) {
@@ -251,7 +263,7 @@ angular.module('ldr.releases.create', [
             }
         );
 
-        $scope.autocompleteSource = function(textInput, fieldName) {
+        function autocompleteSource(textInput, fieldName) {
             var params = {
                 q: textInput
             };
@@ -281,43 +293,43 @@ angular.module('ldr.releases.create', [
                     });
                     return lodash.values(results);
                 });
-        };
+        }
 
-        $scope.cancel = function() {
+        function cancel() {
             $state.go('releasesOverview');
-        };
+        }
 
-        $scope.validate = function() {
-            lodash.each($scope.form.metadata, function(obj) {
+        function validate() {
+            lodash.each(vm.form.metadata, function(obj) {
                 if (obj.isRequired && !obj.model.length) {
-                    $scope.showErrors = true;
+                    vm.showErrors = true;
                 }
             });
-            lodash.each($scope.form.releaseDates, function(obj) {
+            lodash.each(vm.form.releaseDates, function(obj) {
                 if (obj.isRequired && obj.model === '') {
-                    $scope.showErrors = true;
+                    vm.showErrors = true;
                 }
             });
-            if (!$scope.showErrors) {
+            if (!vm.showErrors) {
                 submit();
             }
-        };
+        }
 
-        var submit = function() {
+        function submit() {
 
             var form = {
-                user: $scope.user._id,
-                group: $scope.user.group._id,
+                user: vm.user._id,
+                group: vm.user.group._id,
                 description: '',
                 metadata: {},
                 releaseDates: {},
                 urls: {}
             };
 
-            form.datasetName = $scope.form.datasetName.model;
-            form.description = $scope.form.description.model;
+            form.datasetName = vm.form.datasetName.model;
+            form.description = vm.form.description.model;
 
-            lodash.each($scope.form.metadata, function(obj) {
+            lodash.each(vm.form.metadata, function(obj) {
                 form.metadata[obj.name] = lodash.map(obj.model, function(obj) {
                     if (Object.keys(obj).length === 1 && obj.text) {
                         return obj.text;
@@ -327,25 +339,25 @@ angular.module('ldr.releases.create', [
                     }
                 });
             });
-            lodash.each($scope.form.releaseDates, function(obj) {
+            lodash.each(vm.form.releaseDates, function(obj) {
                 form.releaseDates['level' + obj.level] =
                     lodash.isUndefined(obj.model) ? '' : obj.model;
             });
-            lodash.each($scope.form.urls, function(obj) {
+            lodash.each(vm.form.urls, function(obj) {
                 form.urls[obj.name] = lodash.isUndefined(obj.model) ?
                     '' : obj.model;
             });
 
             var endpoint = 'releases/form/';
-            if (!lodash.isUndefined($scope.form._id)) {
-                endpoint += $scope.form._id;
+            if (!lodash.isUndefined(vm.form._id)) {
+                endpoint += vm.form._id;
             }
 
             // Compare datasetName, metadata, releaseDates, and urls to see
             // if anything has changed. If it has, update it. If not, go back
             // to releasesOverview page.
 
-            var compareDateObjs = function(obj1, obj2) {
+            function compareDateObjs(obj1, obj2) {
                 var equal = true;
                 lodash.each(obj1, function(date, key) {
                     // If either date is null, calling .toString() will throw a
@@ -367,7 +379,7 @@ angular.module('ldr.releases.create', [
                     }
                 });
                 return equal;
-            };
+            }
 
             if (form.datasetName === formInit.datasetName &&
                 lodash.isEqual(form.metadata, formInit.metadata) &&
@@ -385,5 +397,6 @@ angular.module('ldr.releases.create', [
                     }
                 );
             }
-        };
-    });
+        }
+    }
+})();

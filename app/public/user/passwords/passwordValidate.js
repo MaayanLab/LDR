@@ -3,8 +3,13 @@
  * Created on 5/20/15.
  */
 
-angular.module('ldr')
-    .directive("passwordStrength", function() {
+(function() {
+    angular
+        .module('ldr')
+        .directive('passwordStrength', passwordStrength)
+        .directive('comparePasswordTo', comparePasswordTo);
+
+    function passwordStrength() {
         return {
             restrict: 'A',
             link: function(scope, element, attrs) {
@@ -18,22 +23,23 @@ angular.module('ldr')
                 });
             }
         };
-    })
-    .directive('comparePasswordTo', function() {
+    }
+
+    function comparePasswordTo() {
         return {
             require: 'ngModel',
-            link: function (scope, elem, attrs, model) {
+            link: function(scope, elem, attrs, model) {
                 if (!attrs.comparePasswordTo) {
                     console.error('comparePasswordTo expects a model as an argument!');
                     return;
                 }
-                scope.$watch(attrs.comparePasswordTo, function (value) {
+                scope.$watch(attrs.comparePasswordTo, function(value) {
                     // Only compare values if the second ctrl has a value.
                     if (model.$viewValue !== undefined && model.$viewValue !== '') {
                         model.$setValidity('comparePasswordTo', value === model.$viewValue);
                     }
                 });
-                model.$parsers.push(function (value) {
+                model.$parsers.push(function(value) {
                     // Mute the error if the second ctrl is empty.
                     if (value === undefined || value === '') {
                         model.$setValidity('comparePasswordTo', true);
@@ -45,4 +51,5 @@ angular.module('ldr')
                 });
             }
         };
-    });
+    }
+})();

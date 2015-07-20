@@ -1,5 +1,10 @@
-angular.module('ldr')
-    .directive('ldrFormField', function($modal) {
+(function() {
+    angular
+        .module('ldr')
+        .directive('ldrFormField', ldrFormField);
+
+    /* @ngInject */
+    function ldrFormField($modal) {
         return {
             restrict: 'E',
             required: 'ngModel',
@@ -24,21 +29,22 @@ angular.module('ldr')
                     }
                     $modal
                         .open({
-                        templateUrl: 'releases/addModal/addModal.html',
-                        controller: 'ModalInstanceCtrl',
-                        resolve: {
-                            config: function() {
-                                return {
-                                    newTag: newTag,
-                                    name: scope.name,
-                                    model: scope.ngModel,
-                                    element: element
-                                };
+                            templateUrl: 'releases/addModal/addModal.html',
+                            controller: 'ModalInstanceCtrl',
+                            controllerAs: 'vm',
+                            resolve: {
+                                config: function() {
+                                    return {
+                                        newTag: newTag,
+                                        name: scope.name,
+                                        model: scope.ngModel,
+                                        element: element
+                                    };
+                                }
                             }
-                        }
                         })
-                        .result.then(function () {
-                        }, function () {
+                        .result.then(function() {
+                        }, function() {
                             // Modal was dismissed
                             scope.ngModel.splice(scope.ngModel.length - 1, 1);
                         });
@@ -46,4 +52,5 @@ angular.module('ldr')
                 };
             }
         };
-    });
+    }
+})();

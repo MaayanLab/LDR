@@ -1,127 +1,95 @@
-angular.module('ldr.user.admin', [
-    'ui.router',
-    'angular-storage',
-    'ldr.api',
-    'ui.bootstrap'
-])
+(function() {
+    'use strict';
+    angular
+        .module('ldr.user.admin', [
+            'ui.router',
+            'angular-storage',
+            'ldr.api',
+            'ui.bootstrap'
+        ])
 
-    .config(function($stateProvider) {
+        .config(adminConfig)
+        .controller('AdminCtrl', AdminCtrl);
+
+    /* @ngInject */
+    function adminConfig($stateProvider) {
         // UI Router state admin
         $stateProvider.state('admin', {
             url: '/user/admin',
-            controller: 'AdminCtrl',
             templateUrl: 'user/admin/admin.html',
+            controller: 'AdminCtrl',
+            controllerAs: 'vm',
             data: {
                 requiresLogin: true,
                 requiresAdmin: true
             }
         });
-    })
+    }
 
-    .controller('AdminCtrl', function($scope, $http, lodash,
-                                      store, $state, api, $modal) {
+    /* @ngInject */
+    function AdminCtrl(admin, releases, messagesServ, exportReleases) {
 
-        var releaseApi = api('releases');
+        var vm = this;
 
-        $scope.allForms = [];
-        $scope.sortType = ['released', 'approved'];
-        $scope.sortReverse = false;
+        vm.allForms = [];
+        vm.sortType = ['released', 'approved'];
+        vm.sortReverse = false;
+        vm.allSelected = false;
 
-        releaseApi.get().success(function(forms) {
-            lodash.each(forms, function(obj) {
-                lodash.each(obj.releaseDates, function(level, key) {
-                    if (level === '') {
-                        return;
-                    }
-                    obj.releaseDates[key] = new Date(level);
-                });
+        vm.approve = approve;
+        vm.unApprove = unApprove;
+        vm.returnRel = returnRel;
+        vm.selectAll = selAll;
+        vm.unselectAll = unselAll;
+        vm.export = expRel;
+        vm.exportReleases = exportReleases;
+        vm.viewMessages = messagesServ.viewMessages;
+
+
+        function getReleases() {
+            releases.getAllRel().success(function(data) {
+                vm.allForms = data;
+                return vm.allForms;
             });
-            $scope.allForms = forms;
-        });
+        }
 
-        $scope.approveForm = function(form) {
-            api('admin/' + form._id + '/approve').post().success(function() {
-                releaseApi.get().success(function(forms) {
-                    $scope.allForms = forms;
-                });
-            });
-        };
-
-        $scope.unapproveForm = function(form) {
-            api('admin/' + form._id + '/unapprove').post().success(function() {
-                releaseApi.get().success(function(forms) {
-                    $scope.allForms = forms;
-                });
-            });
-        };
-
-        $scope.viewMessages = function(form) {
-            $modal.open({
-                templateUrl: 'msgModal/msgModal.html',
-                controller: 'MsgModalInstanceCtrl',
-                resolve: {
-                    config: function() {
-                        return {
-                            form: form
-                        };
-                    }
-                }
-            });
-        };
-
-        $scope.returnForm = function(form) {
-            $modal
-                .open({
-                    templateUrl: 'user/admin/returnModal/returnModal.html',
-                    controller: 'ReturnModalInstanceCtrl',
-                    resolve: {
-                        config: function() {
-                            return {
-                                form: form
-                            }
-                        }
-                    }
-                })
-                .result.then(function(message) {
-                    form.message = message;
-                    releaseApi.get().success(function(forms) {
-                        $scope.allForms = forms;
-                    });
+        function approve(form) {
+            admin.approve(form)
+                .success(function() {
+                    getReleases();
                 }
             );
-        };
+        }
 
-        $scope.allSelected = false;
-
-        $scope.unselectAll = function() {
-            $scope.allSelected = false;
-            angular.forEach($scope.allForms, function(form) {
-                form.selected = false;
-            });
-        };
-
-        $scope.selectAll = function() {
-            $scope.allSelected = true;
-            angular.forEach($scope.allForms, function(form) {
-                form.selected = true;
-            });
-        };
-
-        $scope.export = function() {
-            var selectedIds = lodash.map($scope.allForms, function(form) {
-                if (form.selected) {
-                    return form._id;
+        function unApprove(form) {
+            admin.unApprove(form)
+                .success(function() {
+                    getReleases();
                 }
-            });
+            );
+        }
 
-            selectedIds = lodash.remove(selectedIds, function(id) {
-                return !!id;
-            });
+        function returnRel(form) {
+            admin.returnRel()
+                .then(function(message) {
+                    form.message = message;
+                    getReleases();
+                }
+            );
+        }
 
-            if (selectedIds.length) {
-                window.open('/LDR/api/releases/export?ids=' + selectedIds.join(','));
-            } else {
-                alert('You must select releases before you can export them!');
-            }
-        };
-    });
+        function selAll() {
+            vm.allSelected = exportReleases.selectAll(vm.allForms);
+        }
+
+        function unselAll() {
+            vm.allSelected = exportReleases.unselectAll(vm.allForms);
+        }
+
+        function expRel() {
+            exportReleases.exportRel(vm.allForms);
+        }
+
+        getReleases();
+    }
+})();

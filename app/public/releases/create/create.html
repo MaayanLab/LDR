@@ -1,5 +1,5 @@
 <h3 class="text-center">Dataset Registration Form</h3>
-<h4 class="text-center">{{group.name}}</h4>
+<h4 class="text-center">{{vm.group.name}}</h4>
 <div id="data-registration-form">
     <form name="datasetRegForm" ng-submit="registerForm.$valid"
           novalidate>
@@ -8,26 +8,25 @@
             <h4 class="col-sm-12 text-center">Dataset Release Instance</h4>
 
             <div class="col-sm-6 form-div">
-                <!--<a class="glyphicon glyphicon-plus add-new-btn" ng-click="openModal()"></a>-->
                 <div class="row">
                     <h5 class="dataset-title col-xs-12 col-lg-5">{{form.datasetName.title}}*</h5>
                 <span class="dataset-error-msg col-xs-12 col-lg-7 text-left"
                       ng-if="datasetRegForm.datasetName.$error.maxlength">
                     Dataset name must be less than 75 characters.
                 </span>
-                <span ng-if="showErrors && form.datasetName.model === ''"
+                <span ng-if="showErrors && vm.form.datasetName.model === ''"
                       class="dataset-error-msg col-xs-6 text-right">
                         This field is required.
                 </span>
                 </div>
                 <input name="datasetName"
-                       placeholder="{{form.datasetName.placeholder}}"
+                       placeholder="{{vm.form.datasetName.placeholder}}"
                        class="dataset-name"
-                       ng-model="form.datasetName.model"
+                       ng-model="vm.form.datasetName.model"
                        ng-maxlength="75"/>
             </div>
             <ldr-form-field
-                    ng-repeat="field in form.metadata"
+                    ng-repeat="field in vm.form.metadata"
                     title="{{field.title}}"
                     name="{{field.name}}"
                     autocomplete-endpoint="{{field.autocompleteEndpoint}}"
@@ -35,46 +34,45 @@
                     placeholder="{{field.placeholder}}"
                     ng-model="field.model"
                     use-autocomplete="{{field.useAutocomplete}}"
-                    autocomplete-source="autocompleteSource"
+                    autocomplete-source="vm.autocompleteSource"
                     is-required="{{field.isRequired}}"
                     show-errors="showErrors">
             </ldr-form-field>
             <div class="col-sm-12">
-                <!--<a class="glyphicon glyphicon-plus add-new-btn" ng-click="openModal()"></a>-->
-                <h5>{{form.description.title}}</h5>
+                <h5>{{vm.form.description.title}}</h5>
                 <textarea
-                        placeholder="{{form.description.placeholder}}"
+                        placeholder="{{vm.form.description.placeholder}}"
                         class="experiment"
-                        ng-model="form.description.model">
+                        ng-model="vm.form.description.model">
                 </textarea>
             </div>
         </section>
         <section id="releaseDates" class="row">
             <h4 class="col-sm-12 text-center">Release Dates</h4>
             <ldr-date-picker
-                    ng-repeat="date in form.releaseDates track by $index"
+                    ng-repeat="date in vm.form.releaseDates track by $index"
                     level="{{date.level}}"
-                    ng-model="form.releaseDates[$index].model"
-                    is-required="{{form.isRequired}}">
+                    ng-model="vm.form.releaseDates[$index].model"
+                    is-required="{{vm.form.releaseDates[$index].isRequired}}">
             </ldr-date-picker>
         </section>
         <section id="urls" class="row">
             <h4 class="col-sm-12 text-center">URLs</h4>
 
-            <div ng-repeat="url in form.urls track by $index" class="col-sm-12">
+            <div ng-repeat="url in vm.form.urls track by $index" class="col-sm-12">
                 <h5>{{url.title}}</h5>
-                <input name="" type="url" ng-model="form.urls[$index].model"/>
+                <input name="" type="url" ng-model="vm.form.urls[$index].model"/>
             </div>
         </section>
         <section id="submit">
-            <button class="btn btn-success" type="submit" ng-click="validate()">
-                <span ng-if="form._id">Update</span>
-                <span ng-if="!form._id">Submit</span>
+            <button class="btn btn-success" type="submit" ng-click="vm.validate()">
+                <span ng-if="vm.form._id">Update</span>
+                <span ng-if="!vm.form._id">Submit</span>
             </button>
-            <button class="btn btn-danger" type="button" ng-click="cancel()">
+            <button class="btn btn-danger" type="button" ng-click="vm.cancel()">
                 Cancel
             </button>
-            <span ng-show="showErrors" class="highlight">
+            <span ng-show="vm.showErrors" class="highlight">
                 There are errors in your submission. Please check above.
             </span>
         </section>

@@ -1,152 +1,103 @@
-angular.module('ldr.releases.overview', [
-    'ui.router',
-    'angular-storage',
-    'ldr.api'
-])
+(function() {
+    'use strict';
+
+    angular
+        .module('ldr.releases.overview', [
+            'ui.router',
+            'angular-storage'
+        ])
+
+        .config(relOverviewConfig)
+        .controller('RelOverviewCtrl', RelOverviewCtrl);
 
     // UI Router state forms
-    .config(function($stateProvider) {
-        $stateProvider.state('releasesOverview', {
-            url: '/releases/overview',
-            templateUrl: 'releases/overview/overview.html',
-            controller: 'releases.overview.ctrl',
-            data: {
-                requiresLogin: true,
-                requiresAdmitted: true
-            }
-        });
-    })
-
-    .controller('releases.overview.ctrl', function($scope, $http, store,
-                                                   $filter, $state, lodash,
-                                                   api, $modal) {
-
-        $scope.user = $scope.getCurrentUser();
-        $scope.forms = [];
-        $scope.sortType = ['released', 'accepted', 'metadata.assay[0].name'];
-        $scope.sortReverse = false;
-
-        api('releases/group/' + $scope.user.group._id)
-            .get()
-            .success(function(data) {
-                // Convert release date strings to proper date objects
-                // so Angular can format them correctly.
-                lodash.each(data, function(obj) {
-                    lodash.each(obj.releaseDates, function(level, key) {
-                        if (level === '') {
-                            return;
-                        }
-                        obj.releaseDates[key] = new Date(level);
-                    });
-                });
-                $scope.forms = data;
-            }
-        );
-
-        $scope.releaseForm = function(form) {
-            if (confirm('Are you sure you would like to release this entry?')) {
-                api('releases/form/' + form._id + '/release')
-                    .put()
-                    .success(function() {
-                        api('releases/group/' + $scope.user.group._id)
-                            .get()
-                            .success(function(data) {
-                                $scope.forms = data;
-                            }
-                        );
-                    })
-                    .error(function(error) {
-                        alert(error);
-                    }
-                );
-            }
-        };
-
-        $scope.viewMessages = function(form) {
-            $modal.open({
-                templateUrl: 'msgModal/msgModal.html',
-                controller: 'MsgModalInstanceCtrl',
-                resolve: {
-                    config: function() {
-                        return {
-                            form: form
-                        };
-                    }
+    /* @ngInject */
+    function relOverviewConfig($stateProvider) {
+        $stateProvider
+            .state('releasesOverview', {
+                url: '/releases/overview',
+                templateUrl: 'releases/overview/overview.html',
+                controller: 'RelOverviewCtrl',
+                controllerAs: 'vm',
+                data: {
+                    requiresLogin: true,
+                    requiresAdmitted: true
                 }
             });
-        };
+    }
 
-        $scope.editForm = function(form) {
-            $state.go('releasesCreate', { id: form._id });
-        };
+    /* @ngInject */
+    function RelOverviewCtrl(store, messagesServ, releases, exportReleases) {
 
-        $scope.editUrls = function(form) {
-            $modal
-                .open({
-                    templateUrl: 'releases/urlModal/urlModal.html',
-                    controller: 'URLModalInstanceCtrl',
-                    resolve: {
-                        config: function() {
-                            return {
-                                form: form
-                            };
-                        }
-                    }
-                })
-                .result.then(function(urls) {
+        var vm = this;
+        vm.user = store.get('currentUser');
+        vm.forms = [];
+        vm.sortType = ['released', 'accepted', 'datasetName'];
+        vm.sortReverse = false;
+        vm.allSelected = false;
+
+        vm.editUrls = editUrls;
+        vm.rel = rel;
+        vm.del = del;
+        vm.selectAll = selAll;
+        vm.unselectAll = unselAll;
+        vm.export = expRel;
+        vm.releases = releases;
+        vm.viewMessages = messagesServ.viewMessages;
+
+        function getReleases() {
+            releases.getRel().success(function(data) {
+                vm.forms = data;
+                return vm.forms;
+            });
+        }
+
+        function editUrls(form) {
+            releases
+                .editUrls(form)
+                .then(function(urls) {
                     form.urls = urls;
+                    return form;
                 }
             );
-        };
+        }
 
-        $scope.deleteForm = function(form) {
-            if (confirm('Are you sure you would like to delete this entry?')) {
-                api('releases/form/' + form._id)
-                    .del()
-                    .success(function() {
-                        api('releases/group/' + $scope.user.group._id)
-                            .get()
-                            .success(function(data) {
-                                $scope.forms = data;
-                            }
-                        );
-                    }
-                );
-            }
-        };
-
-        $scope.allSelected = false;
-
-        $scope.unselectAll = function() {
-            $scope.allSelected = false;
-            angular.forEach($scope.forms, function(form) {
-                form.selected = false;
-            });
-        };
-
-        $scope.selectAll = function() {
-            $scope.allSelected = true;
-            angular.forEach($scope.forms, function(form) {
-                form.selected = true;
-            });
-        };
-
-        $scope.export = function() {
-            var selectedIds = lodash.map($scope.forms, function(form) {
-                if (form.selected) {
-                    return form._id;
+        function del(form) {
+            releases
+                .deleteRel(form)
+                .success(function() {
+                    getReleases();
+                })
+                .error(function(error) {
+                    alert(error);
                 }
-            });
+            );
+        }
 
-            selectedIds = lodash.remove(selectedIds, function(id) {
-                return !!id;
-            });
+        function rel(form) {
+            releases
+                .release(form)
+                .success(function() {
+                    getReleases();
+                })
+                .error(function(error) {
+                    alert(error);
+                }
+            );
+        }
 
-            if (selectedIds.length) {
-                window.open('/LDR/api/releases/export?ids=' + selectedIds.join(','));
-            } else {
-                alert('You must select releases before you can export them!');
-            }
-        };
+        function selAll() {
+            vm.allSelected = exportReleases.selectAll(vm.forms);
+        }
 
-    });
+        function unselAll() {
+            vm.allSelected = exportReleases.unselectAll(vm.forms);
+        }
+
+        function expRel() {
+            exportReleases.exportRel(vm.forms);
+        }
+
+        getReleases();
+    }
+})();

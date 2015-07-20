@@ -1,11 +1,16 @@
-<h3 class="text-center headline-info">Dataset Releases</h3>
-<p>
-    Below are all data releases for {{currentUser.group.name}}. You may release,
-    edit, or delete entries by clicking the Action button on the right.
-    Clicking the plus button will expand entries, making visible all relevant
-    meta-data. Please note that <em class="highlight">in order to release an
-    entry, it must have a data URL provided and it must be approved.</em>
-</p>
+<div class="col-xs-12">
+    <h3 class="text-center headline-info">Dataset Releases</h3>
+
+    <p>
+        Below are all data releases for {{vm.currentUser.group.name}}. You may
+        release,
+        edit, or delete entries by clicking the Action button on the right.
+        Clicking the plus button will expand entries, making visible all
+        relevant
+        meta-data. Please note that <em class="highlight">in order to release an
+        entry, it must have a data URL provided and it must be approved.</em>
+    </p>
+</div>
 <div ng-include="'partials/legend.html'"></div>
 <div class="content col-xs-12">
     <table class="table">
@@ -16,53 +21,53 @@
             </th>
             <th class="text-center">
                 <a href=""
-                   ng-click="sortType = 'datasetName'; sortReverse = !sortReverse">
+                   ng-click="vm.sortType = 'datasetName'; vm.sortReverse = !vm.sortReverse">
                     Dataset
-                    <span ng-show="sortType === 'datasetName' && sortReverse"
+                    <span ng-show="vm.sortType === 'datasetName' && vm.sortReverse"
                           class="fa fa-caret-down"></span>
-                    <span ng-show="sortType === 'datasetName' && !sortReverse"
+                    <span ng-show="vm.sortType === 'datasetName' && !vm.sortReverse"
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
             <th class="text-center">
                 <a href=""
-                   ng-click="sortType = 'releaseDates.upcoming'; sortReverse = !sortReverse">
+                   ng-click="vm.sortType = 'releaseDates.upcoming'; vm.sortReverse = !vm.sortReverse">
                     Release Date
-                    <span ng-show="sortType === 'releaseDates.upcoming' && sortReverse"
+                    <span ng-show="vm.sortType === 'releaseDates.upcoming' && vm.sortReverse"
                           class="fa fa-caret-down"></span>
-                    <span ng-show="sortType === 'releaseDates.upcoming' && !sortReverse"
+                    <span ng-show="vm.sortType === 'releaseDates.upcoming' && !vm.sortReverse"
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
             <th class="text-center">
                 <a href=""
-                   ng-click="sortType = ['released', 'approved']; sortReverse = !sortReverse">
+                   ng-click="vm.sortType = ['released', 'approved']; vm.sortReverse = !vm.sortReverse">
                     Status
-                    <span ng-show="sortType[0] === 'released' && sortReverse"
+                    <span ng-show="vm.sortType[0] === 'released' && vm.sortReverse"
                           class="fa fa-caret-down"></span>
-                    <span ng-show="sortType[0] === 'released' && !sortReverse"
+                    <span ng-show="vm.sortType[0] === 'released' && !vm.sortReverse"
                           class="fa fa-caret-up"></span>
                 </a>
             </th>
-            <th class="text-center" ng-if="!allSelected">
-                <a class="btn btn-primary" href="" ng-click="selectAll()">
+            <th class="text-center" ng-if="!vm.allSelected">
+                <a class="btn btn-primary" href="" ng-click="vm.selectAll()">
                     Select All
                 </a>
             </th>
-            <th class="text-center" ng-if="allSelected">
-                <a class="btn btn-primary" href="" ng-click="unselectAll()">
+            <th class="text-center" ng-if="vm.allSelected">
+                <a class="btn btn-primary" href="" ng-click="vm.unselectAll()">
                     Unselect All
                 </a>
             </th>
             <th class="text-center">
-                <a class="btn btn-primary" href="" ng-click="export()">
+                <a class="btn btn-primary" href="" ng-click="vm.export()">
                     Export
                 </a>
             </th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat-start="form in forms | orderBy: sortType : sortReverse"
+        <tr ng-repeat-start="form in vm.forms | orderBy: vm.sortType : vm.sortReverse"
             ng-click="form.selected = !form.selected"
             ng-class="form.selected ? 'tr-selected' :
             form.released ? 'tr-released' :
@@ -103,19 +108,19 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a ng-click="viewMessages(form)">View Messages</a>
+                            <a ng-click="vm.viewMessages(form)">View Messages</a>
                         </li>
                         <li ng-if="form.released">
-                            <a ng-click="editUrls(form)">Edit URLs</a>
+                            <a ng-click="vm.editUrls(form)">Edit URLs</a>
                         </li>
                         <li ng-if="!form.released && !form.needsEdit">
-                            <a ng-click="releaseForm(form)">Release</a>
+                            <a ng-click="vm.rel(form)">Release</a>
                         </li>
                         <li ng-if="!form.released">
-                            <a ng-click="editForm(form)">Edit</a>
+                            <a ng-click="vm.releases.edit(form)">Edit</a>
                         </li>
                         <li ng-if="!form.released">
-                            <a ng-click="deleteForm(form)">Delete</a>
+                            <a ng-click="vm.del(form)">Delete</a>
                         </li>
                     </ul>
                 </div>
@@ -134,7 +139,7 @@
                 <div ng-include="'partials/expand.html'"></div>
             </td>
         </tr>
-        <tr ng-repeat-end="" ng-if="forms.length === 0">
+        <tr ng-repeat-end="" ng-if="vm.forms.length === 0">
             <td colspan="5" class="col-md-12">
                 There are no releases to display.
                 Please <a ui-sref="releasesCreate">add data here</a>.

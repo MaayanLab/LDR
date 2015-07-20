@@ -1,5 +1,9 @@
-angular.module('ldr')
-    .directive('datepickerPopup', function () {
+(function() {
+    angular
+        .module('ldr')
+        .directive('datepickerPopup', datepickerPopup);
+
+    function datepickerPopup() {
         return {
             restrict: 'EAC',
             require: 'ngModel',
@@ -10,4 +14,5 @@ angular.module('ldr')
                 controller.$formatters.shift();
             }
         };
-    });
+    }
+})();

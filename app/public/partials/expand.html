@@ -1,14 +1,14 @@
 <div class="col-sm-12">
     <h4 class="text-center assay-title">
-        {{form.datasetName}}
+        {{vm.form.datasetName}}
     </h4>
 
-    <p class="col-sm-12">{{form.description}}</p>
+    <p class="col-sm-12">{{vm.form.description}}</p>
 
     <div class="col-sm-12">
         <h5>Cell Lines</h5>
         <ul class="list-inline">
-            <li ng-repeat="line in form.metadata.cellLines">
+            <li ng-repeat="line in vm.form.metadata.cellLines">
                 {{line.name}}
             </li>
         </ul>
@@ -16,7 +16,7 @@
     <div class="col-sm-12">
         <h5>Perturbagens</h5>
         <ul class="list-inline">
-            <li ng-repeat="pert in form.metadata.perturbagens">
+            <li ng-repeat="pert in vm.form.metadata.perturbagens">
                 {{pert.name}}
             </li>
         </ul>
@@ -24,7 +24,7 @@
     <div class="col-sm-12">
         <h5>Readouts</h5>
         <ul class="list-inline">
-            <li ng-repeat="rOut in form.metadata.readouts">
+            <li ng-repeat="rOut in vm.form.metadata.readouts">
                 {{rOut.name}}
             </li>
         </ul>
@@ -32,7 +32,7 @@
     <div class="col-sm-12">
         <h5>Release Dates</h5>
         <ul class="list-inline">
-            <li ng-repeat="(level,date) in form.releaseDates"
+            <li ng-repeat="(level,date) in vm.form.releaseDates"
                 ng-if="date !== '' && level !== 'upcoming'">
                 <strong class="info-release-lvl">
                     {{level}}:
@@ -44,7 +44,7 @@
     <div class="col-sm-12">
         <h5>URLs</h5>
         <ul class="list-inline">
-            <li ng-repeat="(label,url) in form.urls"
+            <li ng-repeat="(label,url) in vm.form.urls"
                 ng-if="url !== ''">
                 <strong class="info-release-lvl">
                     {{label}}:

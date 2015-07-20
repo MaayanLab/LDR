@@ -3,40 +3,51 @@
  * Created on 5/20/15.
  */
 
+(function() {
+
 angular.module('ldr.user.settings.changePassword', [
     'ui.router',
     'angular-storage',
     'ldr.api'
 ])
-    .config(function($stateProvider) {
+    .config(changePasswordConfig)
+    .controller('ChangePasswordCtrl', ChangePasswordCtrl);
+
+    function changePasswordConfig($stateProvider) {
         // UI Router state changePassword
         $stateProvider.state('changePassword', {
             url: '/user/{id:string}/settings/changePassword',
-            controller: 'ChangePasswordCtrl',
             templateUrl: 'user/settings/changePassword/changePassword.html',
+            controller: 'ChangePasswordCtrl',
+            controllerAs: 'vm',
             data: {
                 requiresLogin: true
             }
         });
-    })
-    .controller('ChangePasswordCtrl', function($scope, $stateParams, api) {
+    }
 
+    function ChangePasswordCtrl($stateParams, userManagement) {
+
+        var vm = this;
         var id = $stateParams.id;
+        vm.changePassword = changePassword;
 
-        $scope.passwords = {
+        vm.passwords = {
             old: '',
             new: '',
             confirm: ''
         };
 
-        $scope.changePassword = function() {
-            api('user/' + id + '/changePassword/')
-                .put($scope.passwords)
+        function changePassword() {
+            userManagement
+                .changePassword(vm.passwords.old, vm.passwords.new, vm.passwords.confirm)
                 .then(function() {
                     alert('Password successfully changed');
                 }, function(error) {
                     alert('An error occurred while changing your password. ' +
                         'Please try again.');
-                });
-        };
-    });
+                }
+            );
+        }
+    }
+})();

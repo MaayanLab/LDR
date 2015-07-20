@@ -1,14 +1,25 @@
-angular.module('ldr')
-    .controller('ModalInstanceCtrl', function($scope, $modalInstance,
-                                              config, api) {
-        // name = assay, cellLines, readouts, perturbagens, relevantDisease
-        $scope.name = config.name;
-        $scope.newTag = config.newTag;
-        $scope.model = config.model;
-        $scope.element = config.element;
-        console.log($scope.name);
+(function() {
 
-        $scope.ok = function() {
+    angular
+        .module('ldr')
+        .controller('ModalInstanceCtrl', ModalInstanceCtrl);
+
+    /* @ngInject */
+    function ModalInstanceCtrl($modalInstance, config, api) {
+        // name = assay, cellLines, readouts, perturbagens, relevantDisease
+
+        var vm = this;
+
+        vm.name = config.name;
+        vm.newTag = config.newTag;
+        vm.model = config.model;
+        vm.element = config.element;
+
+        vm.ok = ok;
+        vm.save = save;
+        vm.cancel = cancel;
+
+        function ok() {
             $scope.newTag.text = $scope.newTag.name;
             delete $scope.newTag.newField;
             var post;
@@ -42,16 +53,16 @@ angular.module('ldr')
                         'Please try again later.');
                     $scope.cancel();
                 });
-        };
+        }
 
-        $scope.save = function() {
+        function save() {
             $scope.model[$scope.model.length - 1] = $scope.newTag;
             $modalInstance.close();
-        };
+        }
 
-        $scope.cancel = function() {
+        function cancel() {
             $scope.model.splice($scope.model.length - 1, 1);
             $modalInstance.dismiss('cancel');
-        };
-    });
-
+        }
+    }
+})();

@@ -1,66 +1,40 @@
-angular.module('ldr', [
-    'ldr.nav',
-    'ldr.home',
-    'ldr.bar',
-    'ldr.group.home',
-    'ldr.group.create',
-    'ldr.group.settings',
-    'ldr.releases.overview',
-    'ldr.releases.create',
-    'ldr.search',
-    'ldr.user.admin',
-    'ldr.user.registration',
-    'ldr.user.settings',
-    'ldr.user.settings.changePassword',
-    'ui.router',
-    'ui.bootstrap',
-    'angular-storage',
-    'angular-jwt'
-])
-    .directive('title', ['$rootScope', '$timeout',
-        function($rootScope, $timeout) {
-            return {
-                link: function() {
-                    var listener = function(event, toState) {
-                        $timeout(function() {
-                            $rootScope.title =
-                                (toState.data && toState.data.pageTitle) ?
-                                    toState.data.pageTitle :
-                                    'LINCS Data Registry';
-                        });
-                    };
-                    $rootScope.$on('$stateChangeSuccess', listener);
-                }
-            };
-        }
-    ])
+(function() {
+    angular
+        .module('ldr', [
+            'ldr.nav',
+            'ldr.home',
+            'ldr.bar',
+            'ldr.group.home',
+            'ldr.group.create',
+            'ldr.group.settings',
+            'ldr.releases.overview',
+            'ldr.releases.create',
+            'ldr.search',
+            'ldr.user.admin',
+            'ldr.user.registration',
+            'ldr.user.settings',
+            'ldr.user.settings.changePassword',
+            'ui.router',
+            'ui.bootstrap',
+            'angular-storage',
+            'angular-jwt'
+        ])
+        .config(ldrConfig)
+        .run(runLDR)
+        .directive('title', xxTitle)
+        .controller('ldrCtrl', ldrCtrl);
 
-    .config(function ldrConfig($urlRouterProvider, jwtInterceptorProvider,
-                               $httpProvider) {
-
+    /* @ngInject */
+    function ldrConfig(jwtInterceptorProvider, $httpProvider) {
         // Add JWT to every request to server
         jwtInterceptorProvider.tokenGetter = function(store) {
             return store.get('jwt');
         };
         $httpProvider.interceptors.push('jwtInterceptor');
+    }
 
-        /*
-         // For AJAX errors
-         $httpProvider.interceptors.push(function($q) {
-         return {
-         response: function(response) {
-         return response;
-         },
-         responseError: function(response) {
-         if (response.status === 401)
-         return $q.reject(response);
-         }
-         };
-         });
-         */
-    })
-
-    .run(function($rootScope, $state, store, jwtHelper) {
+    /* @ngInject */
+    function runLDR($rootScope, $state, store, jwtHelper) {
 
         $rootScope.currentUser = store.get('currentUser');
         // Check status of user on every state change
@@ -148,16 +122,28 @@ angular.module('ldr', [
             }
         });
 
-        $rootScope.$on('$routeChangeSuccess', function(event, current) {
-            if (current.hasOwnProperty('$$route')) {
-                $rootScope.title = current.$$route.title;
-            }
-        });
-    })
-    .controller('ldrCtrl', function($scope, store, $state) {
-        $scope.pageTitle = 'LINCS Dataset Registry';
-        $scope.currentUser = store.get('currentUser');
+    }
 
+    /* @ngInject */
+    function xxTitle($rootScope, $timeout) {
+        return {
+            link: function() {
+                var listener = function(event, toState) {
+                    $timeout(function() {
+                        $rootScope.title =
+                            (toState.data && toState.data.pageTitle) ?
+                                toState.data.pageTitle :
+                                'LINCS Data Registry';
+                    });
+                };
+                $rootScope.$on('$stateChangeSuccess', listener);
+            }
+        };
+    }
+
+    /* @ngInject */
+    function ldrCtrl($state) {
         // Automatically add the hash and go to home state
         $state.go('home');
-    });
+    }
+})();

@@ -3,38 +3,48 @@
  * Created on 5/21/15.
  */
 
-angular.module('ldr.user.settings', [
-    'ui.router',
-    'angular-storage'
-])
-    .config(function($stateProvider) {
+(function() {
+    angular
+        .module('ldr.user.settings', [
+            'ui.router',
+            'angular-storage'
+        ])
+        .config(userSettingsConfig)
+        .controller('UserSettingsCtrl', UserSettingsCtrl);
+
+    /* @ngInject */
+    function userSettingsConfig($stateProvider) {
         // UI Router state userSettings
         $stateProvider.state('userSettings', {
             url: '/user/{id:string}/settings',
-            controller: 'UserSettingsCtrl',
             templateUrl: 'user/settings/main/main.html',
+            controller: 'UserSettingsCtrl',
+            controllerAs: 'vm',
             data: {
                 requiresLogin: true
             }
         });
-    })
-    .controller('UserSettingsCtrl', function($scope, api) {
+    }
 
-        $scope.user = angular.copy($scope.getCurrentUser());
-        if ($scope.user.name) {
-            $scope.user.firstName = $scope.user.name.split(' ')[0];
-            $scope.user.lastName = $scope.user.name.split(' ')[1];
+    /* @ngInject */
+    function UserSettingsCtrl(userManagement, store) {
+
+        var vm = this;
+        vm.user = angular.copy(store.get('currentUser'));
+
+        if (vm.user.name) {
+            vm.user.firstName = vm.user.name.split(' ')[0];
+            vm.user.lastName = vm.user.name.split(' ')[1];
         }
 
         $scope.updateUser = function() {
-            $scope.user.name = $scope.user.firstName + ' ' +
-                $scope.user.lastName;
-            api('user/' + $scope.user._id + '/update/')
-                .put($scope.user)
+            userManagement
+                .updateUser(vm.user._id, vm.user)
                 .success(function() {
-                    $scope.setCurrentUser($scope.user);
+                    store.set('currentUser', vm.user);
                     alert('User updated successfully');
                 }
             );
         };
-    });
+    }
+})();

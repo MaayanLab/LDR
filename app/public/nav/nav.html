@@ -1,15 +1,15 @@
 <div class="thin-navbar">
     <div class="container">
         <nav>
-            <p ng-show="isLoggedIn">{{ currentUser.username }}</p>
-            <a ng-show="isLoggedIn"
+            <p ng-show="vm.isLoggedIn">{{ vm.currentUser.username }}</p>
+            <a ng-show="vm.isLoggedIn"
                ui-sref="userSettings({id: currentUser._id})"
                class="glyphicon glyphicon-cog"></a>
-            <a ng-show="isLoggedIn && isAdmitted"
+            <a ng-show="vm.isLoggedIn && vm.isAdmitted"
                ui-sref="groupHome({id: currentUser.group._id})"
                id="group-nav-icon"
                class="glyphicon"></a>
-            <a ng-show="isLoggedIn" ng-click="logout()"
+            <a ng-show="vm.isLoggedIn" ng-click="vm.logout()"
                class="glyphicon glyphicon-log-out"></a>
         </nav>
     </div>
@@ -37,14 +37,14 @@
             <div>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <h5 ng-show="!isLoggedIn && showErr && showFailMessage"
+                        <h5 ng-show="!vm.isLoggedIn && showErr && vm.showFailMessage"
                             class="errorMsg">User/Password Incorrect.</h5>
                     </li>
-                    <li ng-show="isLoggedInAdmin">
+                    <li ng-show="vm.isLoggedInAdmin">
                         <a ui-sref="admin">Admin</a>
                     </li>
                     <li class="dropdown"
-                        ng-show="isLoggedIn && !isLoggedInAdmin">
+                        ng-show="vm.isLoggedIn && !vm.isLoggedInAdmin">
                         <a href="" class="dropdown-toggle"
                            data-toggle="dropdown"
                            role="button" aria-expanded="false">
@@ -55,18 +55,19 @@
                                 <a ui-sref="releasesOverview">Overview</a>
                             </li>
                             <li>
-                                <a ui-sref="releasesCreate({id: ''})">Add
-                                    New</a>
+                                <a ui-sref="releasesCreate({id: ''})">
+                                    Add New
+                                </a>
                             </li>
                         </ul>
                     </li>
-                    <li ng-show="!isLoggedIn">
+                    <li ng-show="!vm.isLoggedIn">
                         <form name="loginForm" class="navbar-form navbar-right">
                             <div class="form-group">
                                 <input ng-focus="showErr=false"
                                        ng-blur="showErr=true" name="username"
                                        type="text" class="form-control"
-                                       ng-model="user.username"
+                                       ng-model="vm.user.username"
                                        id="username" placeholder="Username">
                             </div>
                             <div id="password-group" class="form-group">
@@ -74,16 +75,16 @@
                                        ng-blur="showErr=true" name="password"
                                        type="password" class="form-control"
                                        id="password"
-                                       ng-model="user.password"
+                                       ng-model="vm.user.password"
                                        placeholder="Password">
                             </div>
                             <button type="button"
                                     class="btn pull-right register-btn"
-                                    ng-click="register()">Register
+                                    ng-click="vm.register()">Register
                             </button>
                             <button type="submit"
                                     class="btn pull-right login-btn"
-                                    ng-click="login()">Login
+                                    ng-click="vm.login()">Login
                             </button>
                         </form>
                     </li>

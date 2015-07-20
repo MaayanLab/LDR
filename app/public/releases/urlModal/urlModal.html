@@ -1,5 +1,5 @@
 <div class="modal-body">
-    <form name="urlModalForm" ng-model="modalForm" class="modal-form-input"
+    <form name="urlModalForm" ng-model="vm.modalForm" class="modal-form-input"
           novalidate>
         <div class="form-group">
             <label for="pubmed-url" class="control-label url-label">
@@ -11,7 +11,7 @@
             </span>
             <input name="pubMedUrl" id="pubmed-url" type="url"
                    class="form-control"
-                   ng-model="urls.pubMedUrl" />
+                   ng-model="vm.urls.pubMedUrl" />
         </div>
         <div class="form-group">
             <label for="data-url" class="control-label url-label">
@@ -26,7 +26,7 @@
                 Not a valid url!
             </span>
             <input name="dataUrl" id="data-url" type="url" class="form-control"
-                   ng-model="urls.dataUrl"  required/>
+                   ng-model="vm.urls.dataUrl"  required/>
         </div>
         <div class="form-group">
             <label for="metadata-url" class="control-label url-label">
@@ -37,8 +37,7 @@
                 Not a valid url!
             </span>
             <input name="metadataUrl" id="metadata-url" type="url"
-                   class="form-control" ng-model="urls.metadataUrl"
-                    />
+                   class="form-control" ng-model="vm.urls.metadataUrl" />
         </div>
         <div class="form-group">
             <label for="qc-url" class="control-label url-label">
@@ -49,17 +48,16 @@
                 Not a valid url!
             </span>
             <input name="qcDocumentUrl" id="qc-url" type="url"
-                   class="form-control" ng-model="urls.qcDocumentUrl"
-                    />
+                   class="form-control" ng-model="vm.urls.qcDocumentUrl" />
         </div>
     </form>
 </div>
 <div class="modal-footer">
     <button type="submit" class="btn btn-primary"
-            ng-click="ok(urlModalForm.dataUrl.$valid);">
+            ng-click="vm.ok(urlModalForm.dataUrl.$valid);">
         Update
     </button>
-    <button type="button" class="btn btn-danger" ng-click="cancel();">
+    <button type="button" class="btn btn-danger" ng-click="vm.cancel();">
         Cancel
     </button>
 </div>
