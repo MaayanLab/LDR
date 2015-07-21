@@ -419,7 +419,9 @@ dataReleaseSchema.pre('save', function(next) {
         })
     });
 
-    //generateId();
+    //if (!rel.did || rel.did === '' || rel.isNew) {
+        //generateId();
+    //}
     next();
 });
 
