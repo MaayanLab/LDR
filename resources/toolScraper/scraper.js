@@ -30,7 +30,7 @@ phantom.create(function(ph) {
                     }
                     else if (document.querySelector('#main > article > header > h1')) {
                         var resultObj = {};
-                        resultObj.title = document.querySelector('#main > article > header > h1').innerHTML;
+                        resultObj.name = document.querySelector('#main > article > header > h1').innerHTML;
                         resultObj.description = document.querySelector('#main > article > div > div > div:nth-child(1)').innerHTML.replace(/(\r\n|\n|\r)/gm, '');
                         if (document.querySelector('#main > article > div > div > div:nth-child(2) > a')) {
                             resultObj.url = document.querySelector('#main > article > div > div > div:nth-child(2) > a').getAttribute('href');
@@ -46,7 +46,7 @@ phantom.create(function(ph) {
                 }, function(result) {
                     if (result) {
                         if (!Array.isArray(result)) {
-                            if (result.title) {
+                            if (result.name) {
                                 file.write(sep + JSON.stringify(result));
                                 if (!sep) {
                                     sep = ',\n';

@@ -3,10 +3,10 @@
         <nav>
             <p ng-show="vm.isLoggedIn">{{ vm.user.username }}</p>
             <a ng-show="vm.isLoggedIn"
-               ui-sref="userSettings({id: currentUser._id})"
+               ui-sref="userSettings({id: vm.user._id})"
                class="glyphicon glyphicon-cog"></a>
             <a ng-show="vm.isLoggedIn && vm.isAdmitted"
-               ui-sref="groupHome({id: currentUser.group._id})"
+               ui-sref="groupHome({id: vm.user.group._id})"
                id="group-nav-icon"
                class="glyphicon"></a>
             <a ng-show="vm.isLoggedIn" ng-click="vm.logout()"

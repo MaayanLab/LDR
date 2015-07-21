@@ -48,6 +48,7 @@
     "gulp-plumber": "^1.0.0",
     "gulp-size": "^1.2.1",
     "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.4",
     "jshint-stylish": "^1.0.2",
     "karma": "^0.12.31",
@@ -68,7 +69,7 @@
   },
   "scripts": {
     "test": "karma start",
-    "build": "gulp build && boot2docker up && boot2docker shellinit && docker build -t 146.203.54.165:5000/ldr:$VERSION . | tee build.log || exit 1 && ID=$(tail -1 build.log | awk '{print $3;}') && docker tag -f $ID 146.203.54.165:5000/ldr:latest",
+    "build": "gulp build && boot2docker up && boot2docker shellinit && docker build -t 146.203.54.165:5000/ldr:$VERSION . | tee build.log || exit 1 && ID=$(tail -1 build.log | awk '{print $3;}') && docker tag -f $ID 146.203.54.165:5000/ldr:latest && rm build.log",
     "start": "node server.js",
     "deploy": "docker push 146.203.54.165:5000/ldr:latest && curl -H \"Content-Type: application/json\" -X POST -d {} maayanlab:systemsbiology@146.203.54.165:8080/v2/apps/ldr/restart"
   },

@@ -29,9 +29,13 @@
     /* @ngInject */
     function ldrConfig(jwtInterceptorProvider, $httpProvider) {
         // Add JWT to every request to server
-        jwtInterceptorProvider.tokenGetter = function(store) {
+
+        /* @ngInject */
+        function getJwt(store) {
             return store.get('jwt');
-        };
+        }
+
+        jwtInterceptorProvider.tokenGetter = getJwt;
         $httpProvider.interceptors.push('jwtInterceptor');
     }
 
@@ -41,7 +45,9 @@
         // Check status of user on every state change
         // Used for Navbar and blocking pages from unauthorized users
         // Otherwise, just check if the user is logged in
-        $rootScope.$on('$stateChangeStart', function(e, to) {
+
+        $rootScope.$on('$stateChangeStart', function(event, to) {
+            var e = event;
             // Get current user
             var currentUser = store.get('currentUser');
             var loggedIn = !!(store.get('jwt') && !jwtHelper.isTokenExpired(store.get('jwt')));

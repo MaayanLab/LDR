@@ -5,8 +5,7 @@
         .module('ldr.nav', [])
         .directive('ldrNav', ldrNav);
 
-    /* @ngInject */
-    function ldrNav($http, $state, store) {
+    function ldrNav() {
         return {
             restrict: 'E',
             templateUrl: 'nav/nav.html',
@@ -17,7 +16,8 @@
 
         ///////////////////
 
-        function LDRNavController() {
+        /* @ngInject */
+        function LDRNavController($http, $state, store) {
 
             var vm = this;
             vm.user = getCurrentUser();

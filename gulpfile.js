@@ -89,8 +89,15 @@ gulp.task('js', function() {
         '!' + SRC_DIRECTORY + 'vendor/**'
     ])
         .pipe($.plumber())
-        .pipe($.concat('bundle.js'))
-        .pipe(ngAnnotate())
+        .pipe($.sourcemaps.init())
+        .pipe($.concat('bundle.min.js', {newLine: ';'}))
+        .pipe(ngAnnotate({
+            // true helps add where @ngInject is not used. It infers.
+            // Doesn't work with resolve, so we must be explicit there
+            add: true
+        }))
+        .pipe($.uglify({mangle: true}))
+        .pipe($.sourcemaps.write())
         .pipe(gulp.dest(BUILD_DIRECTORY));
 });
 
@@ -127,7 +134,9 @@ gulp.task('jshint', function() {
 gulp.task('vendor', function() {
     gulp.src([
         BOWER_DIRECTORY + 'jquery/dist/jquery.min.js',
-        BOWER_DIRECTORY + 'jquery/dist/jquery.min.map'
+        BOWER_DIRECTORY + 'jquery/dist/jquery.min.map',
+        BOWER_DIRECTORY + 'angular/angular.min.js',
+        BOWER_DIRECTORY + 'angular/angular.min.js.map'
     ])
         .pipe(gulp.dest(BUILD_DIRECTORY));
     return gulp.src(mainBowerFiles({
