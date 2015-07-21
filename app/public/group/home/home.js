@@ -3,90 +3,103 @@
  * Created on 5/21/15.
  */
 
-angular.module('ldr.group.home', [
-    'ui.router',
-    'angular-storage',
-    'ngFileUpload',
-    'ldr.api'
-])
+(function() {
+    'use strict';
+
+    angular
+        .module('ldr.group.home', [
+            'ui.router',
+            'angular-storage',
+            'ngFileUpload',
+            'ldr.api'
+        ])
+
+        .config(groupHomeConfig)
+        .controller('GroupHomeCtrl', GroupHomeCtrl);
 
     // UI Router state formCreate
-    .config(function($stateProvider) {
-        $stateProvider.state('groupHome', {
-            url: '/group/{id:string}/home',
-            controller: 'GroupHomeCtrl',
-            templateUrl: 'group/home/home.html',
-            data: {
-                requiresLogin: true,
-                requiresAdmitted: true
-            }
-        });
-    })
-
-    .controller('GroupHomeCtrl', function($scope, $stateParams, $timeout,
-                                          store, api, Upload, lodash) {
-
-        $scope.groupId = $stateParams.id;
-        $scope.group = {};
-        api('group/' + $scope.groupId + '/')
-            .get()
-            .success(function(group) {
-                $scope.group = angular.copy(group);
+    /* @ngInject */
+    function groupHomeConfig($stateProvider) {
+        $stateProvider
+            .state('groupHome', {
+                url: '/group/{id:string}/home',
+                templateUrl: 'group/home/home.html',
+                controller: 'GroupHomeCtrl',
+                controllerAs: 'vm',
+                data: {
+                    requiresLogin: true,
+                    requiresAdmitted: true
+                }
             });
+    }
 
+    /* @ngInject */
+    function GroupHomeCtrl($scope, $stateParams, $timeout, $window, groups) {
 
-        $scope.users = [];
+        var vm = this;
+        vm.group = {};
+        vm.users = [];
+        vm.files = [];
+        vm.groupId = $stateParams.id;
+        vm.getUsers = getUsers;
+        vm.admitUser = admitUser;
 
-        api('group/' + $scope.groupId + '/users/')
-            .get()
-            .success(function(usersArr) {
-                $scope.users = usersArr;
-            }
-        );
+        function getGroup() {
+            groups
+                .getOneGroup(vm.groupId)
+                .success(function(group) {
+                    vm.group = group;
+                })
+                .error(function(resp) {
+                    console.log(resp);
+                }
+            );
+        }
 
-        $scope.acceptUser = function(user) {
+        function getUsers() {
+            groups
+                .getAllGroupUsers(vm.groupId)
+                .success(function(usersArr) {
+                    vm.users = usersArr;
+                })
+                .error(function(resp) {
+                    console.log(resp);
+                }
+            );
+        }
+
+        function admitUser(user) {
             if (confirm('Are you sure you would like to admit this user? This' +
                     ' can not be undone.')) {
-                api('group/' + $scope.groupId + '/users/' + user._id +
-                    '/approve/')
-                    .put()
+                groups.admitUserToGroup(vm.groupId, user._id)
                     .success(function() {
-                        api('group/' + $scope.groupId + '/users/')
-                            .get()
-                            .success(function(usersArr) {
-                                $scope.users = usersArr;
-                                $scope.showAdmitted = true;
-                                $timeout($scope.showAdmitted = false, 5000);
-                            }
-                        );
+                        getUsers();
+                        vm.showAdmitted = true;
+                        $timeout($scope.showAdmitted = false, 5000);
                     }
                 );
             }
-        };
+        }
 
-        $scope.$watch('files', function() {
-            $scope.upload($scope.files);
+        $scope.$watch('vm.files', function() {
+            upload(vm.files);
         });
-        $scope.log = '';
 
-        $scope.upload = function(files) {
-            if (files && files.length) {
-                lodash.each(files, function(file) {
-                    Upload.upload({
-                        url: '/LDR/api/secure/group/' + $scope.groupId +
-                            '/upload/',
-                        file: file
-                    }).progress(function(evt) {
+        function upload(files) {
+            if (files.length) {
+                groups
+                    .changeGroupIcon(vm.groupId, files)
+                    .progress(function(evt) {
                         //var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                     }).success(function(data, status, headers, config) {
-                        window.location.reload();
-                        $scope.log = 'file: ' + config.file.name +
-                        ', Response: ' + JSON.stringify(data) +
-                        '\n' + $scope.log;
-                    });
-                });
+                        $window.location.reload();
+                        console.log('file: ' + config.file.name +
+                            ', Response: ' + JSON.stringify(data) +
+                            '\n');
+                    }
+                );
             }
-        };
+        }
 
         // Uncomment to poll server and check for new users
         /*
@@ -100,4 +113,8 @@ angular.module('ldr.group.home', [
          };
          pollServer();
          */
-    });
+
+        getGroup();
+        getUsers();
+    }
+})();

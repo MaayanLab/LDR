@@ -1,4 +1,5 @@
 (function() {
+    'use strict';
 
     angular
         .module('ldr.nav', [])
@@ -9,13 +10,16 @@
         return {
             restrict: 'E',
             templateUrl: 'nav/nav.html',
-            link: linkFunc
+            controller: LDRNavController,
+            controllerAs: 'vm',
+            bindToController: true
         };
 
-        /////////////
+        ///////////////////
 
-        function linkFunc(scope, el, attr, vm) {
+        function LDRNavController() {
 
+            var vm = this;
             vm.user = getCurrentUser();
             vm.showFailMessage = false;
 
@@ -26,15 +30,23 @@
             vm.setCurrentUser = setCurrentUser;
 
             function getCurrentUser() {
-                var user = store.get('currentUser');
-                vm.isLoggedIn = true;
-                vm.isLoggedInAdmin = user.admin;
-                vm.isAdmitted = user.admitted;
+                var user;
+                if (store.get('currentUser')) {
+                    user = store.get('currentUser');
+                    vm.isLoggedIn = true;
+                    vm.isLoggedInAdmin = user.admin;
+                    vm.isAdmitted = user.admitted;
+                } else {
+                    user = {};
+                    vm.isLoggedIn = false;
+                    vm.isLoggedInAdmin = false;
+                    vm.isAdmitted = false;
+                }
                 return user;
             }
 
             function setCurrentUser(user, token) {
-                vm.currentUser = user;
+                vm.user = user;
                 store.set('currentUser', user);
                 if (token) {
                     store.set('jwt', token);
@@ -60,7 +72,7 @@
                 }).then(function(result) {
                     if (result) {
                         // No error: authentication OK
-                        // Set current user and jwt. Then go to forms page
+                        // Set current user and jwt. Then go to homepage.
                         setCurrentUser(result.data.user, result.data.id_token);
                         $state.go('home');
                     } else {

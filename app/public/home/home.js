@@ -1,61 +1,42 @@
-// Home page. Possible implementation of some sort of docent app
+/**
+ * @author Michael McDermott
+ * Created on 5/27/15.
+ */
 
-angular.module('ldr.home', [
-    'ldr.api',
-    'ui.router',
-    'angular-storage',
-    'infinite-scroll',
-    'ngLodash',
-    'wu.masonry'
-])
+(function() {
+    'use strict';
 
-    .config(function($stateProvider) {
+    angular
+        .module('ldr.home', [
+            'ldr.api',
+            'ui.router',
+            'angular-storage',
+            'infinite-scroll',
+            'ngLodash',
+            'wu.masonry'
+        ])
+        .config(ldrHomeConfig)
+        .controller('LDRHomeController', LDRHomeController);
+
+    /* @ngInject */
+    function ldrHomeConfig($stateProvider) {
         $stateProvider.state('home', {
             url: '/',
-            controller: 'HomeController',
-            templateUrl: 'home/home.html'
+            templateUrl: 'home/home.html',
+            controller: 'LDRHomeController',
+            controllerAs: 'vm'
         });
-    })
+    }
 
-    .factory('ReleasesLoader', function(api, lodash) {
-        var ReleasesLoader = function() {
-            this.items = [];
-            this.busy = false;
-            this.after = '';
-        };
+    // Need scope here for the $apply function
+    /* @ngInject */
+    function LDRHomeController($scope, ReleasesLoader, metadata) {
 
-        ReleasesLoader.prototype.nextPage = function() {
-            if (this.busy || this.empty) {
-                return;
-            }
-            this.busy = true;
+        var vm = this;
+        vm.releases = new ReleasesLoader();
+        vm.query = '';
 
-            api('releases/approved/' + this.after)
-                .get()
-                .success(function(releases) {
-                    if (!releases.length) {
-                        this.empty = true;
-                        return;
-                    }
-                    this.empty = false;
-
-                    for (var i = 0; i < releases.length; i++) {
-                        this.items.push(releases[i]);
-                    }
-                    this.after = this.items[this.items.length - 1]._id;
-                    this.busy = false;
-                }.bind(this)
-            );
-        };
-        return ReleasesLoader;
-    })
-
-    .controller('HomeController', function($scope, ReleasesLoader, api) {
-
-        $scope.releases = new ReleasesLoader();
-        $scope.query = '';
-
-        $scope.summary = {
+        vm.summary = {
             //Users: 0,
             Readouts: 0,
             Centers: 0,
@@ -70,19 +51,21 @@ angular.module('ldr.home', [
 
         var counts = {};
 
-        api('counts').get().success(function(countsObj) {
-            counts = countsObj;
-            //countUpTo('Users', 0, counts.Users, 1, 50);
-            countUpTo('Data Releases', 0, counts.dataReleases, 3, 50);
-            countUpTo('Centers', 0, counts.groups, 1, 50);
-            countUpTo('Assays', 0, counts.assays, 1, 50);
-            countUpTo('Cell lines', 0, counts.cellLines, 5, 50);
-            countUpTo('Perturbagens', 0, counts.perturbagens, 12, 50);
-            countUpTo('Readouts', 0, counts.readouts, 5, 50);
-            countUpTo('Genes', 0, counts.genes, 5, 50);
-            countUpTo('Diseases', 0, counts.diseases, 5, 50);
-            countUpTo('Organisms', 0, counts.organisms, 5, 50);
-        });
+        metadata
+            .getCounts()
+            .success(function(countsObj) {
+                counts = countsObj;
+                //countUpTo('Users', 0, counts.Users, 1, 50);
+                countUpTo('Data Releases', 0, counts.dataReleases, 3, 50);
+                countUpTo('Centers', 0, counts.groups, 1, 50);
+                countUpTo('Assays', 0, counts.assays, 1, 50);
+                countUpTo('Cell lines', 0, counts.cellLines, 5, 50);
+                countUpTo('Perturbagens', 0, counts.perturbagens, 12, 50);
+                countUpTo('Readouts', 0, counts.readouts, 5, 50);
+                countUpTo('Genes', 0, counts.genes, 5, 50);
+                countUpTo('Diseases', 0, counts.diseases, 5, 50);
+                countUpTo('Organisms', 0, counts.organisms, 5, 50);
+            });
 
         function countUpTo(field, count, max, step, time) {
             setTimeout(function() {
@@ -90,10 +73,11 @@ angular.module('ldr.home', [
                     countUpTo(field, count, max, 1, 0);
                 } else if (count !== max) {
                     count = count + step;
-                    $scope.summary[field] = count;
+                    vm.summary[field] = count;
                     $scope.$apply();
                     countUpTo(field, count, max, step, time);
                 }
             }, time);
         }
-    });
+    }
+})();

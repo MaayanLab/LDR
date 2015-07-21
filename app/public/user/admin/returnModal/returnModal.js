@@ -4,6 +4,8 @@
  */
 
 (function() {
+    'use strict';
+
     angular
         .module('ldr')
         .controller('ReturnModalInstanceCtrl', ReturnModalInstanceCtrl);

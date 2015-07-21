@@ -1,4 +1,6 @@
 (function() {
+    'use strict';
+
     angular
         .module('ldr', [
             'ldr.nav',
@@ -36,89 +38,64 @@
     /* @ngInject */
     function runLDR($rootScope, $state, store, jwtHelper) {
 
-        $rootScope.currentUser = store.get('currentUser');
         // Check status of user on every state change
         // Used for Navbar and blocking pages from unauthorized users
         // Otherwise, just check if the user is logged in
         $rootScope.$on('$stateChangeStart', function(e, to) {
             // Get current user
-            $rootScope.currentUser = store.get('currentUser');
+            var currentUser = store.get('currentUser');
+            var loggedIn = !!(store.get('jwt') && !jwtHelper.isTokenExpired(store.get('jwt')));
+            var message = '';
 
             // Check if the state requires login or admin privileges
             if (to.data) {
                 if (to.data.requiresAdmitted) {
-                    // Logged in but not admitted to group
-                    if ($rootScope.currentUser.admitted !== true) {
-                        $rootScope.isLoggedIn = true;
-                        $rootScope.isLoggedInAdmin = false;
-                        $rootScope.isAdmitted = false;
+                    if (!loggedIn || !currentUser) {
                         e.preventDefault();
-                        alert('You have not yet been admitted to this group! ' +
+                        message = 'You must be logged in to access this page.';
+                        $state.go('home');
+                    } else if (!currentUser.admitted) {
+                        // Logged in but not admitted to group
+                        e.preventDefault();
+                        message = 'You have not yet been admitted to this group! ' +
                             'Someone must accept you before you can view ' +
-                            'releases and submit new ones.');
+                            'releases and submit new ones.';
                         $state.go('home');
                     }
                 }
                 if (to.data.requiresAdmin) {
-                    // Check if user is logged in by checking if there is a valid JWT
-
                     // User not logged in
-                    if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
-                        $rootScope.isLoggedIn = false;
-                        $rootScope.isLoggedInAdmin = false;
+                    if (!loggedIn || !currentUser) {
                         e.preventDefault();
-                        alert('You must be the authorized to access this page. Please log in.');
+                        message = 'You must be the authorized to access this ' +
+                            'page.';
                         $state.go('home');
-                    }
-                    // Logged in but does not have admin privileges
-                    if ($rootScope.currentUser.admin !== true) {
-                        $rootScope.currentUser = store.get('currentUser');
-                        $rootScope.isLoggedIn = true;
-                        $rootScope.isLoggedInAdmin = false;
+                    } else if (!currentUser.admin) {
+                        // Logged in but does not have admin privileges
                         e.preventDefault();
-                        alert('You must be the authorized to access this page.');
+                        message = 'You must be the authorized to access this ' +
+                            'page.';
                         $state.go('home');
                     }
                 }
                 if (to.data.requiresLogin) {
-                    if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
-                        $rootScope.isLoggedIn = false;
-                        $rootScope.isLoggedInAdmin = false;
+                    if (!loggedIn || !currentUser) {
                         e.preventDefault();
-                        alert('You must be authorized to access this page. Please log in.');
+                        message = 'You must be authorized to access this page. ' +
+                            'Please log in.';
                         $state.go('home');
-                    } else {
-                        if ($rootScope.currentUser.admin) {
-                            $rootScope.currentUser = store.get('currentUser');
-                            $rootScope.isLoggedIn = true;
-                            $rootScope.isLoggedInAdmin = true;
-                        } else {
-                            $rootScope.currentUser = store.get('currentUser');
-                            $rootScope.isLoggedIn = true;
-                            $rootScope.isLoggedInAdmin = false;
-                        }
                     }
                 }
                 if (to.data.loggedIn) {
-                    if (store.get('jwt') && !jwtHelper.isTokenExpired(store.get('jwt'))) {
+                    if (loggedIn) {
                         e.preventDefault();
                         $state.go('home');
                     }
                 }
-            } else if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
-                $rootScope.isLoggedIn = false;
-            } else {
-                if ($rootScope.currentUser.admin) {
-                    $rootScope.isLoggedIn = true;
-                    $rootScope.isLoggedInAdmin = true;
-                    $rootScope.isAdmitted = true;
-                } else if ($rootScope.currentUser.admitted) {
-                    $rootScope.isLoggedIn = true;
-                    $rootScope.isAdmitted = true;
-                } else {
-                    $rootScope.isLoggedIn = true;
-                    $rootScope.isLoggedInAdmin = false;
-                }
+            }
+            // Prevent multiple alerts
+            if (message !== '') {
+                alert(message);
             }
         });
 

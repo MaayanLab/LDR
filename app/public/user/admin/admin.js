@@ -1,5 +1,6 @@
 (function() {
     'use strict';
+    
     angular
         .module('ldr.user.admin', [
             'ui.router',

@@ -3,72 +3,41 @@
  * Created on 5/27/15.
  */
 
+(function() {
+    'use strict';
+
 angular.module('ldr.group.create', [
     'ui.router',
     'ldr.api',
     'ngLodash'
 ])
 
-    .config(function($stateProvider) {
+    .config(groupCreateConfig)
+    .controller('GroupCreateCtrl', GroupCreateCtrl);
+
+    /* @ngInject */
+    function groupCreateConfig($stateProvider) {
         $stateProvider.state('groupCreate', {
             url: '/group/create',
-            controller: 'GroupCreateCtrl',
             templateUrl: 'group/create/create.html',
-            data: {
-            }
+            controller: 'GroupCreateCtrl',
+            controllerAs: 'vm'
         });
-    })
+    }
 
-    .directive('groupNameAvailable', function($timeout, $q, lodash) {
-        return {
-            require: 'ngModel',
-            link: function(scope, element, attrs, ctrl) {
-                ctrl.$asyncValidators.groupName = function(modelValue) {
-                    if (ctrl.$isEmpty(modelValue)) {
-                        return $q.when();
-                    }
-                    var DISALLOWED_GROUP_NAMES = [];
-                    var def = $q.defer();
-                    $timeout(function() {
-                        // Mock a delayed response
+    /* @ngInject */
+    function GroupCreateCtrl(store, $state) {
 
-                        var lcGroups = lodash.map(scope.groupList,
-                            function(name) {
-                                return name.toLowerCase();
-                            });
+        var vm = this;
+        vm.groupList = groups.getGroupList();
+        vm.reset = reset;
 
-                        // Add all disallowed group names as if they are taken
-                        lcGroups.push.apply(lcGroups, DISALLOWED_GROUP_NAMES);
-
-                        if (lcGroups.indexOf(modelValue.toLowerCase()) === -1) {
-                            // The username is available
-                            def.resolve();
-                        } else {
-                            def.reject();
-                        }
-                    }, 1000);
-                    return def.promise;
-                };
-            }
-        };
-    })
-
-    .controller('GroupCreateCtrl', function($rootScope, $scope, $http,
-                                            store, $state, api, lodash) {
-
-        $scope.groupList = [];
-
-
-        api('groups/').get().success(function(data) {
-            $scope.groupList = lodash.map(data, 'name');
-        });
-
-        $scope.reset = function(form) {
+        function reset(form) {
             if (form) {
                 form.$setPristine();
                 form.$setUntouched();
             }
-            $scope.group = {
+            vm.group = {
                 name: '',
                 abbr: '',
                 homepage: '',
@@ -76,10 +45,11 @@ angular.module('ldr.group.create', [
                 description: '',
                 location: ''
             };
-        };
+        }
 
-        $scope.createGroup = function() {
-            $http.post('/LDR/api/group/create/', $scope.group)
+        function createGroup(groupToCreate) {
+            groups
+                .createGroup(groupToCreate)
                 .success(function(group) {
                     // Check if there is a logged in user.
                     // If there is add them to the group and admit them.
@@ -88,9 +58,7 @@ angular.module('ldr.group.create', [
 
                         // Server will take care of admitting a
                         // user if there is no one else in the group
-                        api('group/' + group._id + '/users/' +
-                            currentUser._id + '/approve/')
-                            .put()
+                            groups.admitUserToGroup(group._id, currentUser._id)
                             .success(function() {
                                 $state.go('groupHome');
                             });
@@ -112,8 +80,15 @@ angular.module('ldr.group.create', [
                         // Go back to the registration page
                         $state.go('userRegistration');
                     }
-                });
-        };
+                })
+                .error(function(resp) {
+                    console.log(resp);
+                    alert('Group could not be created. Please try again.');
+                }
+            );
+        }
 
-        $scope.reset();
-    });
+        reset();
+    }
+
+})();

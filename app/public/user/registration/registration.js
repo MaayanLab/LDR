@@ -1,4 +1,6 @@
 (function() {
+    'use strict';
+
     angular
         .module('ldr.user.registration', [
             'ui.router',

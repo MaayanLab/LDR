@@ -1,7 +1,7 @@
 <div class="thin-navbar">
     <div class="container">
         <nav>
-            <p ng-show="vm.isLoggedIn">{{ vm.currentUser.username }}</p>
+            <p ng-show="vm.isLoggedIn">{{ vm.user.username }}</p>
             <a ng-show="vm.isLoggedIn"
                ui-sref="userSettings({id: currentUser._id})"
                class="glyphicon glyphicon-cog"></a>

@@ -1,0 +1,50 @@
+/**
+ * @author Michael McDermott
+ * Created on 7/21/15.
+ */
+
+(function() {
+    'use strict';
+
+    angular
+        .module('ldr')
+        .factory('metadata', metadata);
+
+    /* @ngInject */
+    function metadata($modal, api) {
+        return {
+            addNew: addNew,
+            getCounts: getCounts
+        };
+
+        ///////////////////
+
+        function addNew(newTag, name, model, element) {
+            if (!newTag.newField) {
+                return true;
+            }
+            return $modal
+                .open({
+                    templateUrl: 'releases/addModal/addModal.html',
+                    controller: 'ModalInstanceCtrl',
+                    controllerAs: 'vm',
+                    resolve: {
+                        config: function() {
+                            return {
+                                newTag: newTag,
+                                name: name,
+                                model: model,
+                                element: element
+                            };
+                        }
+                    }
+                })
+                .result;
+        }
+
+        function getCounts() {
+            return api('counts').get();
+        }
+    }
+
+})();

@@ -4,6 +4,7 @@
  */
 
 (function() {
+    'use strict';
 
     angular
         .module('ldr')

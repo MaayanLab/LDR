@@ -1,10 +1,12 @@
 (function() {
+    'use strict';
+
     angular
         .module('ldr')
         .directive('ldrFormField', ldrFormField);
 
     /* @ngInject */
-    function ldrFormField($modal) {
+    function ldrFormField(metadata) {
         return {
             restrict: 'E',
             required: 'ngModel',
@@ -22,35 +24,25 @@
                 showErrors: '='
             },
             templateUrl: 'releases/formField/formField.html',
-            link: function(scope, element) {
-                scope.addNew = function(newTag) {
-                    if (!newTag.newField) {
-                        return true;
-                    }
-                    $modal
-                        .open({
-                            templateUrl: 'releases/addModal/addModal.html',
-                            controller: 'ModalInstanceCtrl',
-                            controllerAs: 'vm',
-                            resolve: {
-                                config: function() {
-                                    return {
-                                        newTag: newTag,
-                                        name: scope.name,
-                                        model: scope.ngModel,
-                                        element: element
-                                    };
-                                }
-                            }
-                        })
-                        .result.then(function() {
-                        }, function() {
-                            // Modal was dismissed
-                            scope.ngModel.splice(scope.ngModel.length - 1, 1);
-                        });
-                    return true;
-                };
-            }
+            controller: LDRFormFieldController,
+            controllerAs: 'vm',
+            bindToController: true
         };
+
+        function LDRFormFieldController() {
+
+            var vm = this;
+            vm.addNew = addNew;
+
+            function addNew(newTag) {
+                metadata
+                    .addNew(newTag, vm.name, vm.ngModel, vm.element)
+                    .then(function() {
+                    }, function() {
+                        // Modal was dismissed
+                        vm.ngModel.splice(vm.ngModel.length - 1, 1);
+                    });
+            }
+        }
     }
 })();

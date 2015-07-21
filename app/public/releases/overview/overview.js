@@ -27,7 +27,7 @@
     }
 
     /* @ngInject */
-    function RelOverviewCtrl(store, messagesServ, releases, exportReleases) {
+    function RelOverviewCtrl(store, messages, releases, exportReleases) {
 
         var vm = this;
         vm.user = store.get('currentUser');
@@ -43,7 +43,7 @@
         vm.unselectAll = unselAll;
         vm.export = expRel;
         vm.releases = releases;
-        vm.viewMessages = messagesServ.viewMessages;
+        vm.viewMessages = viewMessages;
 
         function getReleases() {
             releases.getRel().success(function(data) {
@@ -96,6 +96,14 @@
 
         function expRel() {
             exportReleases.exportRel(vm.forms);
+        }
+
+        function viewMessages(form) {
+            messages.viewMessages(form).then(function() {
+
+            }, function() {
+                // Messages modal dismissed
+            });
         }
 
         getReleases();

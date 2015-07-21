@@ -3,61 +3,68 @@
  * Created on 6/1/15.
  */
 
-angular.module('ldr')
-    .controller('MsgModalInstanceCtrl', function($scope, $timeout, api, lodash,
-                                                 $modalInstance, config) {
-        $scope.messages = angular.copy(config.form.messages);
-        $scope.header = formatText(angular.copy(config.form.datasetName));
-        $scope.newMessage = '';
+(function() {
+    'use strict';
 
-        $scope.removeMsg = function(msg) {
-            api('releases/form/' + config.form._id + '/message/remove/')
-                .post(msg)
+    angular
+        .module('ldr')
+        .controller('MsgModalInstanceCtrl', MsgModalInstanceCtrl);
+
+    /* @ngInject */
+    function MsgModalInstanceCtrl($scope, $timeout, $modalInstance,
+                                  config, messages, releases) {
+
+        var vm = this;
+        vm.messages = angular.copy(config.form.messages);
+        vm.header = formatText(angular.copy(config.form.datasetName));
+        vm.newMessage = '';
+        vm.removeMsg = removeMsg;
+        vm.post = post;
+
+        var formId = config.form._id;
+
+        function updateRelease() {
+            releases.getOneRel(formId)
+                .success(function(release) {
+                    vm.messages = angular.copy(release.messages);
+                    strsToDates();
+                });
+        }
+
+        function removeMsg(msgObj) {
+            messages.removeMsg(formId, msgObj)
                 .success(function() {
-                    api('releases/form/' + config.form._id)
-                        .get()
-                        .success(function(release) {
-                            $scope.messages = angular.copy(release.messages);
-                            strsToDates();
-                        });
+                    updateRelease();
                 })
                 .error(function(resp) {
-                    console.log('error:');
                     console.log(resp);
                     alert('There was an error saving the data. ' +
                         'Please try again later.');
-                    $scope.close();
+                    close();
                 }
             );
-        };
+        }
 
-        $scope.post = function() {
-            api('releases/form/' + config.form._id + '/message/')
-                .post({ message: $scope.newMessage })
+        function post() {
+            messages.postMsg(formId, vm.newMessage)
                 .success(function() {
-                    api('releases/form/' + config.form._id)
-                        .get()
-                        .success(function(release) {
-                            $scope.messages = angular.copy(release.messages);
-                            strsToDates();
-                            $scope.newMessage = '';
-                        });
+                    updateRelease();
+                    vm.message = '';
                 })
                 .error(function(resp) {
-                    console.log('error:');
                     console.log(resp);
                     alert('There was an error saving the data. ' +
                         'Please try again later.');
-                    $scope.close();
+                    close();
                 }
             );
-        };
+        }
 
-        var strsToDates = function() {
-            lodash.each($scope.messages, function(msg, i) {
+        function strsToDates() {
+            angular.forEach(vm.messages, function(msg) {
                 msg.date = new Date(msg.date);
             });
-        };
+        }
 
         function formatText(name) {
             var MAX = 50;
@@ -83,11 +90,13 @@ angular.module('ldr')
             $timeout.cancel(toPromise);
         });
 
-        $scope.close = function() {
+        function close() {
             $timeout.cancel(toPromise);
             $modalInstance.dismiss('cancel');
-        };
+        }
 
         //pollServer();
         strsToDates();
-    });
+    }
+
+})();

@@ -4,6 +4,8 @@
  */
 
 (function() {
+    'use strict';
+
     angular
         .module('ldr.user.settings', [
             'ui.router',
@@ -31,13 +33,14 @@
 
         var vm = this;
         vm.user = angular.copy(store.get('currentUser'));
+        vm.updateUser = updateUser;
 
         if (vm.user.name) {
             vm.user.firstName = vm.user.name.split(' ')[0];
             vm.user.lastName = vm.user.name.split(' ')[1];
         }
 
-        $scope.updateUser = function() {
+        function updateUser() {
             userManagement
                 .updateUser(vm.user._id, vm.user)
                 .success(function() {
@@ -45,6 +48,6 @@
                     alert('User updated successfully');
                 }
             );
-        };
+        }
     }
 })();

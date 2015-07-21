@@ -4,14 +4,16 @@
  */
 
 (function() {
+    'use strict';
 
-angular.module('ldr.user.settings.changePassword', [
-    'ui.router',
-    'angular-storage',
-    'ldr.api'
-])
-    .config(changePasswordConfig)
-    .controller('ChangePasswordCtrl', ChangePasswordCtrl);
+    angular
+        .module('ldr.user.settings.changePassword', [
+            'ui.router',
+            'angular-storage',
+            'ldr.api'
+        ])
+        .config(changePasswordConfig)
+        .controller('ChangePasswordCtrl', ChangePasswordCtrl);
 
     function changePasswordConfig($stateProvider) {
         // UI Router state changePassword

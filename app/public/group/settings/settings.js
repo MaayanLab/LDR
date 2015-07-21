@@ -3,40 +3,65 @@
  * Created on 5/21/15.
  */
 
-angular.module('ldr.group.settings', [
-    'ui.router',
-    'angular-storage'
-])
-    .config(function($stateProvider) {
+(function() {
+    'use strict';
+
+    angular.module('ldr.group.settings', [
+        'ui.router',
+        'angular-storage'
+    ])
+        .config(groupSettingsConfig)
+        .controller('GroupSettingsCtrl', GroupSettingsCtrl);
+
+    /* @ngInject */
+    function groupSettingsConfig($stateProvider) {
         // UI Router state userSettings
         $stateProvider.state('groupSettings', {
             url: '/group/{id:string}/settings',
-            controller: 'GroupSettingsCtrl',
             templateUrl: 'group/settings/settings.html',
+            controller: 'GroupSettingsCtrl',
+            controllerAs: 'vm',
             data: {
                 requiresLogin: true,
                 requiresAdmitted: true
             }
         });
-    })
-    .controller('GroupSettingsCtrl', function($scope, $stateParams, api,
-                                                $state) {
+    }
 
-        $scope.groupId = $stateParams.id;
-        $scope.group = {};
-        api('group/' + $scope.groupId + '/')
-            .get()
-            .success(function(group) {
-                $scope.group = angular.copy(group);
-            });
+    /* @ngInject */
+    function GroupSettingsCtrl($stateParams, $state, groups) {
 
-        $scope.updateGroup = function() {
-            api('group/' + $scope.groupId + '/update/')
-                .put($scope.group)
-                .success(function() {
-                    alert('Group updated successfully');
-                    $state.go('groupHome', { id: $scope.groupId });
+        var vm = this;
+        vm.groupId = $stateParams.id;
+        vm.group = {};
+        vm.getGroup = getGroup;
+        vm.updateGroup = updateGroup;
+
+        function getGroup() {
+            groups
+                .getOneGroup(vm.groupId)
+                .success(function(group) {
+                    vm.group = angular.copy(group);
+                })
+                .error(function(resp) {
+                    console.log(resp);
                 }
             );
-        };
-    });
+        }
+
+        function updateGroup() {
+            groups.updateGroup(vm.groupId, vm.group)
+                .success(function() {
+                    alert('Group updated successfully');
+                    $state.go('groupHome', { id: vm.groupId });
+                })
+                .error(function(resp) {
+                    alert('An error occurred updating the group');
+                    console.log(resp);
+                }
+            );
+        }
+
+        getGroup();
+    }
+})();

@@ -3,7 +3,7 @@
  * Created on 7/10/15.
  */
 
-var jwt = require('express-jwt'),
+var jwt = require('jsonwebtoken'),
     _ = require('lodash'),
     Models = require('../models'),
     User = Models.User,
@@ -17,8 +17,8 @@ var jwt = require('express-jwt'),
     Disease = Models.Disease,
     Organism = Models.Organism,
     Tool = Models.Tool,
-    secret = require('../config/database').secret;
-baseUrl = require('../config/baseUrl').baseUrl;
+    secret = require('../config/database').secret,
+    baseUrl = require('../config/baseUrl').baseUrl;
 
 module.exports = function(app) {
     app.get(baseUrl + '/api/autocomplete/:sample(assays|cellLines|perturbagens|readouts|genes|diseases|organisms|tools)',

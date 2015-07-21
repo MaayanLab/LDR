@@ -27,7 +27,7 @@
     }
 
     /* @ngInject */
-    function SearchCtrl($stateParams, lodash) {
+    function SearchCtrl($stateParams) {
 
         var vm = this;
         vm.results = [];
@@ -41,8 +41,8 @@
             releases
                 .search(vm.query)
                 .success(function(results) {
-                    lodash.each(results, function(obj) {
-                        lodash.each(obj.releaseDates, function(level, key) {
+                    angular.forEach(results, function(obj) {
+                        angular.forEach(obj.releaseDates, function(level, key) {
                             if (level === '') {
                                 return;
                             }
