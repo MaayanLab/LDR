@@ -61,7 +61,9 @@
 
             <div ng-repeat="url in vm.form.urls track by $index" class="col-sm-12">
                 <h5>{{url.title}}</h5>
-                <input name="" type="url" ng-model="vm.form.urls[$index].model"/>
+                <h5>{{$index}}</h5>
+                <h5>{{vm.form.urls[$index]}}</h5>
+                <input name="" type="text" ng-model="vm.form.urls[$index].model"/>
             </div>
         </section>
         <section id="submit">

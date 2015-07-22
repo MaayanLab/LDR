@@ -331,15 +331,59 @@ module.exports = function(app) {
         );
     });
 
+    /*
+     var formatData = function(inputData, cb) {
+     DataRelease
+     .findOne({ _id: inputData._id })
+     .lean()
+     .exec(function(err, origData) {
+     if (err) {
+     console.log(err);
+     cb(err, null);
+     } else {
+     inputData.dateModified = new Date();
+     _.each(inputData.releaseDates, function(date) {
+     if (date) {
+     date = new Date(date);
+     }
+     return date;
+     });
+     inputData.releaseDates.upcoming = inputData.releaseDates.level1 !== '' ?
+     inputData.releaseDates.level1 : inputData.releaseDates.level2 !== '' ?
+     inputData.releaseDates.level2 : inputData.releaseDates.level3 !== '' ?
+     inputData.releaseDates.level3 : inputData.releaseDates.level4 !== '' ?
+     inputData.releaseDates.level4 : '';
+     inputData.releaseDates.upcoming = new Date(inputData.releaseDates.upcoming);
+
+     /!**
+     *  If origData doesn't exist than it's either a new release
+     *  or something is wrong with the _id field.
+     *
+     *  If cellLines, perturbagens, and release dates are not
+     *  changed, then the NIH does not need to approve.
+     *  If the release does not exist, or one of the above fields
+     *  have been changed, set approved to false
+     *!/
+
+     inputData.approved = origData ? (_.isEqual(inputData.metadata.cellLines, origData.metadata.cellLines) &&
+     _.isEqual(inputData.metadata.perturbagens, origData.metadata.perturbagens) &&
+     compareDateObjs(inputData.releaseDates, origData.releaseDates)) : false;
+
+     cb(null, inputData);
+     }
+     }
+     );
+     };
+     */
+
     var formatData = function(inputData) {
-        inputData.approved = false;
+        inputData.approved = true;
         inputData.dateModified = new Date();
 
         _.each(inputData.releaseDates, function(date) {
             if (date) {
                 date = new Date(date);
             }
-            return date;
         });
         inputData.releaseDates.upcoming = inputData.releaseDates.level1 !== '' ?
             inputData.releaseDates.level1 : inputData.releaseDates.level2 !== '' ?
@@ -367,15 +411,10 @@ module.exports = function(app) {
         });
     });
 
-    // POST release with id, find it and update.
+    // POST release with id, find it and update
     app.post(baseUrl + '/api/secure/releases/form/:id', function(req, res) {
         var inputData = formatData(req.body);
 
-        // Check if released. If so, do not set approved to false.
-        // Should never be released here.
-        if (!inputData.released) {
-            inputData.approved = false;
-        }
         inputData.needsEdit = false;
         var query = { _id: req.params.id };
         // Can't update _id field
@@ -454,23 +493,23 @@ module.exports = function(app) {
         DataRelease
             .findOne(query)
             .exec(function(err, release) {
-            if (err) {
-                console.log(err);
-                res.status(400).send('There was an error updating messages' +
-                    ' for entry with id ' + id + '. Please try again.');
-            } else {
-                // Need to call .toObject() in order for lodash to work
-                var releaseObj = release.toObject();
-                var messages = releaseObj.messages;
-                _.remove(messages, function(msg) {
-                    console.log(messageObj._id === msg._id.toString());
-                    return messageObj._id === msg._id.toString();
-                });
-                release.messages = messages;
-                release.save();
-                res.status(202).send('Message deleted');
-            }
-        });
+                if (err) {
+                    console.log(err);
+                    res.status(400).send('There was an error updating messages' +
+                        ' for entry with id ' + id + '. Please try again.');
+                } else {
+                    // Need to call .toObject() in order for lodash to work
+                    var releaseObj = release.toObject();
+                    var messages = releaseObj.messages;
+                    _.remove(messages, function(msg) {
+                        console.log(messageObj._id === msg._id.toString());
+                        return messageObj._id === msg._id.toString();
+                    });
+                    release.messages = messages;
+                    release.save();
+                    res.status(202).send('Message deleted');
+                }
+            });
     });
 
     app.get(baseUrl + '/api/releases/export', function(req, res) {

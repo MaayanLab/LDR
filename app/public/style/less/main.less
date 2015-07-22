@@ -1,8 +1,10 @@
 // http://paletton.com/#uid=33y0u0koOs0feCukkuDsjnmvzix
 
-@color-primary: #286090;
-@color-primary-light: #8ABDE8;
-@color-primary-dark: #08385F;
+@color-primary: #6A9CCD;
+@color-primary-light: #BBD1E8;
+@color-primary-dark: #3A5278;
+@color-secondary: #CC9;
+@color-secondary-light: #F1F1E2;
 @color-red: #DF6632;
 @color-red-dark: #942E02;
 @color-yellow: #DFB532;
@@ -49,6 +51,13 @@ h1, h2, h3, h4, h5, h6 {
 #wrapper {
     min-height: 100%;
     position: relative;
+    background-color: @color-secondary-light;
+
+    #content {
+        background-color: white;
+        padding-top: 20px;
+        padding-bottom: 120px;
+    }
 }
 
 .pointer, .nav, .dropdown-menu > li > a {
@@ -99,7 +108,7 @@ a#group-nav-icon {
 }
 
 .navbar-wrapper {
-    background-color: @color-gray-light;
+    background-color: @color-secondary;
     border-bottom: 1px solid rgba(170, 170, 170, 0.55);
     padding: 5px 15px 0 15px;
     a {
@@ -179,11 +188,6 @@ button.login-btn, button.register-btn {
 
 button.login-btn {
     margin-right: 5px;
-}
-
-#content {
-    margin-top: 20px;
-    padding-bottom: 120px;
 }
 
 .export {
@@ -290,7 +294,7 @@ span.url-error-msg {
 }
 
 .form-div {
-    min-height: 110px;
+    min-height: 115px;
 }
 
 .dataset-title, label.url-label {

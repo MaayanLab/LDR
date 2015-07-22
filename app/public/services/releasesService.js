@@ -18,6 +18,7 @@
             getAllRel: getAllRel,
             getApprovedRel: getApprovedRel,
             getAfterRel: getAfterRel,
+            postRel: postRel,
             edit: edit,
             editUrls: editUrls,
             release: release,
@@ -48,8 +49,16 @@
             return api('releases/approved/' + afterId).get();
         }
 
-        function edit(form) {
-            $state.go('releasesCreate', { id: form._id });
+        function postRel(form) {
+            if (angular.isDefined(form._id)) {
+                return api('releases/form/' + form._id).post(form);
+            } else {
+                return api('releases/form/').post(form);
+            }
+        }
+
+        function edit(formId) {
+            $state.go('releasesCreate', { id: formId });
         }
 
         function editUrls(form) {

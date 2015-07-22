@@ -14,7 +14,8 @@
     function metadata($modal, api) {
         return {
             addNew: addNew,
-            getCounts: getCounts
+            getCounts: getCounts,
+            autocomplete: autocomplete
         };
 
         ///////////////////
@@ -44,6 +45,10 @@
 
         function getCounts() {
             return api('counts').get();
+        }
+
+        function autocomplete(endpoint, query) {
+            return api('autocomplete/' + endpoint).get({ q: query });
         }
     }
 

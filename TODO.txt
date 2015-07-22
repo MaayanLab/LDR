@@ -16,3 +16,9 @@ Amar sent released dataset. Release it. URL given.
 Two tables upcoming. Available. Don't need status or action.
 
 Release Broad GEO datasets
+
+Dataset name, tags/keywords, description editable after release
+
+Cell lines, perturbagens, dates need approval from Ajay
+
+Send email to Ajay and Bianca if data needs approval

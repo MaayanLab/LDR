@@ -110,16 +110,16 @@
                         <li>
                             <a ng-click="vm.viewMessages(form)">View Messages</a>
                         </li>
-                        <li ng-if="form.released">
+                        <!--<li ng-if="form.released">
                             <a ng-click="vm.editUrls(form)">Edit URLs</a>
-                        </li>
+                        </li>-->
                         <li ng-if="!form.released && !form.needsEdit">
                             <a ng-click="vm.rel(form)">Release</a>
                         </li>
-                        <li ng-if="!form.released">
-                            <a ng-click="vm.releases.edit(form)">Edit</a>
+                        <li>
+                            <a ng-click="vm.releases.edit(form._id)">Edit</a>
                         </li>
-                        <li ng-if="!form.released">
+                        <li>
                             <a ng-click="vm.del(form)">Delete</a>
                         </li>
                     </ul>

@@ -13,14 +13,14 @@
 
         // UI Router state formCreate
         .config(releasesCreateConfig)
-        .controller('releases.create.ctrl', ReleasesCreateCtrl);
+        .controller('ReleasesCreateCtrl', ReleasesCreateCtrl);
 
     /* @ngInject */
     function releasesCreateConfig($stateProvider) {
         $stateProvider.state('releasesCreate', {
             url: '/releases/form/{id:string}',
             templateUrl: 'releases/create/create.html',
-            controller: 'releases.create.ctrl',
+            controller: 'ReleasesCreateCtrl',
             controllerAs: 'vm',
             data: {
                 requiresLogin: true,
@@ -30,7 +30,8 @@
     }
 
     /* @ngInject */
-    function ReleasesCreateCtrl($stateParams, $scope, store, $state, lodash, api) {
+    function ReleasesCreateCtrl($stateParams, $scope, store, $state, lodash,
+                                releases, metadata) {
 
         var vm = this;
         vm.user = store.get('currentUser');
@@ -50,7 +51,7 @@
                 model: ''
             },
             metadata: [
-                // DO NOT MOVE ASSAY OUTSIDE OF FIRST [0] POSITION
+                // DO NOT REARRANGE ORDER
                 {
                     name: 'assay',
                     title: 'Assay',
@@ -221,8 +222,8 @@
 
         var formInit;
 
-        api('releases/form/' + $stateParams.id)
-            .get()
+        releases
+            .getOneRel($stateParams.id)
             .success(function(form) {
                 formInit = angular.copy(form);
                 lodash.each(formInit.metadata, function(arr, key) {
@@ -235,10 +236,8 @@
                         (str === null || str === '') ? null : new Date(str);
                 });
 
-                if (form._id) {
-                    vm.form._id = form._id;
-                }
-
+                vm.form._id = form._id ? form._id : null;
+                vm.form.did = form.did ? form.did : '';
                 vm.form.description.model = form.description;
                 vm.form.datasetName.model = form.datasetName;
 
@@ -265,11 +264,8 @@
         );
 
         function autocompleteSource(textInput, fieldName) {
-            var params = {
-                q: textInput
-            };
-            return api('autocomplete/' + fieldName)
-                .get(params)
+            return metadata
+                .autocomplete(fieldName, textInput)
                 .then(function(response) {
                     // We build a hash and then convert it to an array of
                     // objects in order to prevent duplicates being returned
@@ -319,16 +315,15 @@
         function submit() {
 
             var form = {
+                datasetName: vm.form.datasetName.model,
                 user: vm.user._id,
                 group: vm.user.group._id,
-                description: '',
+                did: vm.form.did,
+                description: vm.form.description.model,
                 metadata: {},
                 releaseDates: {},
                 urls: {}
             };
-
-            form.datasetName = vm.form.datasetName.model;
-            form.description = vm.form.description.model;
 
             lodash.each(vm.form.metadata, function(obj) {
                 form.metadata[obj.name] = lodash.map(obj.model, function(obj) {
@@ -347,57 +342,19 @@
             lodash.each(vm.form.urls, function(obj) {
                 form.urls[obj.name] = lodash.isUndefined(obj.model) ?
                     '' : obj.model;
+                console.log(obj.model);
             });
 
-            var endpoint = 'releases/form/';
-            if (!lodash.isUndefined(vm.form._id)) {
-                endpoint += vm.form._id;
-            }
-
-            // Compare datasetName, metadata, releaseDates, and urls to see
-            // if anything has changed. If it has, update it. If not, go back
-            // to releasesOverview page.
-
-            function compareDateObjs(obj1, obj2) {
-                var equal = true;
-                lodash.each(obj1, function(date, key) {
-                    // If either date is null, calling .toString() will throw a
-                    // TypeError. Pythony code here -- Ask forgiveness after
-                    // doing it rather than before.
-                    try {
-                        if (obj1[key].toString() !== obj2[key].toString()) {
-                            equal = false;
-                        }
-                    } catch (e) {
-                        if (e instanceof TypeError) {
-                            if (obj1[key] !== obj2[key]) {
-                                equal = false;
-                            }
-                        }
-                        else {
-                            throw e;
-                        }
-                    }
-                });
-                return equal;
-            }
-
-            if (form.datasetName === formInit.datasetName &&
-                lodash.isEqual(form.metadata, formInit.metadata) &&
-                compareDateObjs(form.releaseDates, formInit.releaseDates) &&
-                lodash.isEqual(form.urls, formInit.urls)) {
-                $state.go('releasesOverview');
-            } else {
-                api(endpoint)
-                    .post(form)
-                    .error(function(err) {
-                        throw new Error(err);
-                    })
-                    .success(function() {
-                        $state.go('releasesOverview');
-                    }
-                );
-            }
+            console.log(form);
+            //releases
+            //    .postRel(form)
+            //    .error(function(err) {
+            //        throw new Error(err);
+            //    })
+            //    .success(function() {
+            //        $state.go('releasesOverview');
+            //    }
+            //);
         }
     }
 })();
