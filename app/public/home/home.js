@@ -11,7 +11,6 @@
             'ldr.api',
             'ui.router',
             'angular-storage',
-            'infinite-scroll',
             'ngLodash',
             'wu.masonry'
         ])
@@ -30,11 +29,20 @@
 
     // Need scope here for the $apply function
     /* @ngInject */
-    function LDRHomeController($scope, ReleasesLoader, metadata) {
+    function LDRHomeController($scope, releases, metadata) {
 
         var vm = this;
-        vm.releases = new ReleasesLoader();
+        vm.approvedReleases = [];
         vm.query = '';
+
+        function getApprovedReleases() {
+            releases
+                .getApprovedRel()
+                .success(function(releases) {
+                    vm.approvedReleases = releases;
+                }
+            );
+        }
 
         vm.summary = {
             //Users: 0,
@@ -79,5 +87,7 @@
                 }
             }, time);
         }
+
+        getApprovedReleases();
     }
 })();

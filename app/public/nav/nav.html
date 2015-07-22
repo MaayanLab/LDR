@@ -1,9 +1,12 @@
 <div class="navbar-wrapper">
-    <div class="container">
+    <div class="navbar-inner container">
         <div class="nav navbar-header">
+            <div id="nih-logo"></div>
             <h1>
-                <a ui-sref="home"><span class="normal">LINCS</span> Dataset
-                    Registry</a>
+                <a ui-sref="home">
+                    <span class="highlight-primary">NIH </span>
+                    LINCS <span class="normal">Program</span>
+                </a>
             </h1>
             <button type="button" data-target=".navbar-collapse"
                     data-toggle="collapse" class="navbar-toggle">
@@ -13,9 +16,9 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <nav class="container-full">
-            <p ng-show="vm.isLoggedIn">{{ vm.user.username }}</p>
-            <a ng-show="vm.isLoggedIn"
+        <nav class="container-full navbar-right username">
+            <a ng-show="vm.isLoggedIn">{{ vm.user.username }}</a>
+            <!--<a ng-show="vm.isLoggedIn"
                ui-sref="userSettings({id: vm.user._id})"
                class="glyphicon glyphicon-cog"></a>
             <a ng-show="vm.isLoggedIn && vm.isAdmitted"
@@ -23,7 +26,7 @@
                id="group-nav-icon"
                class="glyphicon"></a>
             <a ng-show="vm.isLoggedIn" ng-click="vm.logout()"
-               class="glyphicon glyphicon-log-out"></a>
+               class="glyphicon glyphicon-log-out"></a>-->
         </nav>
 
     </div>

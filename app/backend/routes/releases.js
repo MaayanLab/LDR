@@ -248,8 +248,8 @@ module.exports = function(app) {
     app.get(baseUrl + '/api/releases/approved/', function(req, res) {
             DataRelease
                 .find({ approved: true })
-                .sort({ released: -1, 'releaseDates.upcoming': 1 })
-                .limit(25)
+                .sort({ released: -1, 'releaseDates.upcoming': -1 })
+                //.limit(25)
                 .populate([
                     { path: 'group', model: 'Group' },
                     { path: 'messages.user', model: 'User' },

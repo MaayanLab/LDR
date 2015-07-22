@@ -21,8 +21,4 @@
         <input type="submit" id="search-btn" ui-sref="search({q: vm.query})"/>
     </form>
 </div>
-<div infinite-scroll='vm.releases.nextPage()'
-     infinite-scroll-disabled="vm.releases.busy" infinite-scroll-distance='1'>
-    <ldr-masonry result-array="vm.releases.items"></ldr-masonry>
-    <div ng-show='vm.releases.busy && !vm.releases.empty'>Loading data...</div>
-</div>
+<ldr-masonry result-array="vm.approvedReleases"></ldr-masonry>
