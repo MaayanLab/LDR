@@ -332,7 +332,7 @@ module.exports = function(app) {
     });
 
     var formatData = function(inputData) {
-        inputData.approved = false;
+        inputData.approved = true;
         inputData.dateModified = new Date();
 
         _.each(inputData.releaseDates, function(date) {

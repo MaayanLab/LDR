@@ -105,16 +105,16 @@
                         <li>
                             <a ng-click="viewMessages(form)">View Messages</a>
                         </li>
-                        <li ng-if="form.released">
+                        <!--<li ng-if="form.released">
                             <a ng-click="editUrls(form)">Edit URLs</a>
-                        </li>
+                        </li>-->
                         <li ng-if="!form.released && !form.needsEdit">
                             <a ng-click="releaseForm(form)">Release</a>
                         </li>
-                        <li ng-if="!form.released">
+                        <li>
                             <a ng-click="editForm(form)">Edit</a>
                         </li>
-                        <li ng-if="!form.released">
+                        <li>
                             <a ng-click="deleteForm(form)">Delete</a>
                         </li>
                     </ul>
