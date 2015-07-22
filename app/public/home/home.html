@@ -21,8 +21,7 @@
         <input type="submit" id="search-btn" ui-sref="search({q: query})"/>
     </form>
 </div>
-<div infinite-scroll='releases.nextPage()'
-     infinite-scroll-disabled="releases.busy" infinite-scroll-distance='1'>
-    <ldr-masonry result-array="releases.items"></ldr-masonry>
-    <div ng-show='releases.busy && !releases.empty'>Loading data...</div>
-</div>
+<!--<div infinite-scroll='releases.nextPage()' class="masonry-container" infinite-scroll-disabled="releases.busy" infinite-scroll-distance='1'>-->
+<ldr-masonry result-array="approvedReleases"></ldr-masonry>
+    <!--<div ng-show='releases.busy && !releases.empty'>Loading data...</div>-->
+<!--</div>-->

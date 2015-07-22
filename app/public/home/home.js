@@ -17,7 +17,7 @@ angular.module('ldr.home', [
         });
     })
 
-    .factory('ReleasesLoader', function(api, lodash) {
+    /*.factory('ReleasesLoader', function(api) {
         var ReleasesLoader = function() {
             this.items = [];
             this.busy = false;
@@ -48,12 +48,18 @@ angular.module('ldr.home', [
             );
         };
         return ReleasesLoader;
-    })
+    })*/
 
-    .controller('HomeController', function($scope, ReleasesLoader, api) {
+    .controller('HomeController', function($scope, /*ReleasesLoader,*/ api) {
 
-        $scope.releases = new ReleasesLoader();
+        $scope.approvedReleases = [];
         $scope.query = '';
+
+        api('releases/approved/')
+            .get()
+            .success(function(releases) {
+                $scope.approvedReleases = releases;
+            });
 
         $scope.summary = {
             //Users: 0,

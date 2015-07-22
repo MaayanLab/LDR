@@ -280,6 +280,18 @@ button.login-btn {
     }
 }
 
+.masonry-container:before,
+.masonry-container:after {
+    content:"";
+    display:table;
+}
+.masonry-container:after {
+    clear:both;
+}
+.masonry-container {
+    zoom:1; /* For IE 6/7 (trigger hasLayout) */
+}
+
 #password-group {
     padding-right: 5px;
 }
