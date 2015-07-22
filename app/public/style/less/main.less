@@ -5,6 +5,8 @@
 @color-primary-dark: #3A5278;
 @color-secondary: #CC9;
 @color-secondary-light: #F1F1E2;
+@color-purple: #6b7891;
+@color-purple-dark: #2b3d62;
 @color-red: #DF6632;
 @color-red-dark: #942E02;
 @color-yellow: #DFB532;
@@ -39,7 +41,7 @@ body {
 }
 
 a {
-    color: @color-primary;
+    color: @color-primary-dark;
     cursor: pointer;
 }
 
@@ -54,8 +56,8 @@ h1, h2, h3, h4, h5, h6 {
     background-color: @color-secondary-light;
 
     #content {
+        height: 100%;
         background-color: white;
-        padding-top: 20px;
         padding-bottom: 120px;
     }
 }
@@ -70,30 +72,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .thin-navbar {
-    height: 24px;
-    color: #fff;
+    height: 37px;
     font-size: 14px;
     font-weight: 600;
-    line-height: 25px;
-    text-align: right;
-    background: @color-primary;
+    line-height: 37px;
+    background: @color-secondary;
     border-bottom: 1px solid @color-primary-dark;
-    overflow: hidden;
-}
 
-.thin-navbar {
-    a, p {
-        display: inline-block;
-        line-height: 22px;
-        padding: 0 10px;
-        margin: 0;
-        color: white;
-        text-decoration: none;
-    }
-    a {
-
-        &:hover {
-            color: @color-primary-light;
+    li {
+        a {
+            color: @color-primary-dark;
+            padding: 0 15px;
+            line-height: 37px;
+            &:focus, &:hover {
+                color: @color-primary;
+                background: transparent;
+            }
         }
     }
 }
@@ -108,16 +102,17 @@ a#group-nav-icon {
 }
 
 .navbar-wrapper {
-    background-color: @color-secondary;
-    border-bottom: 1px solid rgba(170, 170, 170, 0.55);
+    background-color: @color-primary;
+    border-bottom: 1px solid @color-primary-dark;
     padding: 5px 15px 0 15px;
+    height: 60px;
     a {
-        color: @color-primary;
+        color: white;
         &:focus {
-            color: @color-primary;
+            color: white;
         }
         &:hover {
-            color: @color-primary-light;
+            color: @color-secondary-light;
         }
     }
     h1 {
@@ -126,7 +121,7 @@ a#group-nav-icon {
             font-size: 29px;
             &:hover,
             &:focus {
-                color: @color-primary;
+                color: @color-secondary-light;
                 text-decoration: none;
             }
         }
@@ -137,21 +132,17 @@ a#group-nav-icon {
     }
 }
 
-.nav > li > a:focus,
-.nav > li > a:hover {
-    background: @color-gray-light;
+
+.nav > li.dropdown.active.open > a,
+.nav > li.dropdown.open > a,
+{
+    background: transparent;
 }
 
 .dropdown-menu {
     border-radius: 0;
 }
 
-.nav > li.dropdown.active.open > a,
-.nav > li.dropdown.open > a,
-{
-    background: @color-gray-light;
-    border-color: white;
-}
 
 .nav-items {
     display: inline-flex;
@@ -174,14 +165,14 @@ h5.errorMsg {
 
 button.login-btn, button.register-btn {
     background: transparent;
-    color: @color-primary;
-    border: 1px solid @color-gray-light;
+    color: white;
+    border: 1px solid white;
     border-radius: 5px;
     &:hover,
     &:focus {
-        color: @color-primary;
+        color: @color-secondary-light;
         text-decoration: none;
-        border: 1px solid @color-primary;
+        border: 1px solid @color-secondary-light;
         border-radius: 5px;
     }
 }
@@ -194,18 +185,25 @@ button.login-btn {
     margin-top: 20px;
 }
 
-.content {
-    margin: 20px auto;
-}
-
 .ldr-view {
     font-family: @font-family-primary;
     margin: 0 90px;
 }
 
-.intro {
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+#large-banner {
+    background: url('../images/NIH-banner.jpg') no-repeat center;
+    height: 245px;
+    border-bottom: 1px solid #ddd;
+
+    @media all and (max-width: 1200px) {
+        background: url('../images/NIH-banner-sm.jpg') no-repeat center;
+        height: 59px;
+    }
+}
+
+#small-banner {
+    background: url('../images/NIH-banner-sm.jpg') no-repeat center;
+    height: 59px;
     border-bottom: 1px solid #ddd;
 }
 
@@ -218,7 +216,7 @@ button.login-btn {
     font-weight: 400 !important;
     span {
         font-weight: 700 !important;
-        color: @color-primary;
+        color: @color-primary-dark;
     }
 }
 
@@ -228,7 +226,7 @@ button.login-btn {
 
     span {
         font-weight: 700 !important;
-        color: @color-primary;
+        color: @color-primary-dark;
     }
 }
 
@@ -278,7 +276,7 @@ button.login-btn {
         background-size: 16px 16px;
 
         &:hover {
-            background: @color-primary url('../images/ico-search-hover.svg') no-repeat 50% 50%;
+            background: @color-primary-dark url('../images/ico-search-hover.svg') no-repeat 50% 50%;
             background-size: 16px 16px;
         }
     }
@@ -574,18 +572,18 @@ textarea.experiment {
 }
 
 .msg-label {
-    color: @color-primary;
+    color: @color-primary-dark;
 }
 
 .msg-panel {
     background-color: #fff;
-    border: 1px solid @color-primary;
+    border: 1px solid @color-primary-dark;
     border-radius: 4px;
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
     .msg-panel-heading {
         color: #fff;
-        background-color: @color-primary;
-        border-color: @color-primary;
+        background-color: @color-primary-dark;
+        border-color: @color-primary-dark;
         padding: 10px 15px;
         border-bottom: 1px solid transparent;
         border-top-left-radius: 3px;
@@ -617,7 +615,7 @@ textarea.experiment {
         left: 10px;
 
         &:hover {
-            color: @color-primary-light;
+            color: @color-primary;
         }
     }
 }
@@ -643,7 +641,7 @@ textarea.experiment {
         left: 20px;
 
         &:hover {
-            color: @color-primary-light;
+            color: @color-primary;
         }
     }
 }
@@ -680,7 +678,7 @@ textarea.experiment {
 }
 
 .highlight-primary {
-    color: @color-primary;
+    color: @color-primary-dark;
 }
 
 .highlight {
@@ -836,7 +834,7 @@ div.btn-group.open > .tr-needs-edit-btn {
 }
 
 span.stat-num {
-    color: @color-primary;
+    color: @color-primary-dark;
 }
 
 .card {
@@ -919,7 +917,7 @@ span.stat-num {
 
 .card-glyph {
     top: 3px;
-    color: @color-primary;
+    color: @color-primary-dark;
     margin-bottom: 10px;
     margin-right: 10px;
 }
@@ -949,7 +947,7 @@ small {
 }
 
 #footer {
-    background: @color-gray-charcoal;
+    background: @color-purple-dark;
     border-top: 1px solid black;
     bottom: 0;
     color: white;
@@ -1005,12 +1003,12 @@ small {
 
 .btn-success,
 .btn-primary {
-    background-color: @color-primary;
+    background-color: @color-primary-dark;
     outline: none;
     &:hover,
     &:active,
     &:focus {
-        background-color: @color-primary-dark;
+        background-color: @color-primary;
         outline: none;
     }
 }

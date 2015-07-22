@@ -41,6 +41,8 @@
     <body class="ng-cloak">
     <div id="wrapper">
         <ldr-nav></ldr-nav>
+        <div id="large-banner" ng-show="atHome"></div>
+        <div id="small-banner" ng-show="!atHome"></div>
         <div id="content" class="container" ui-view></div>
         <div ng-include="'partials/footer.html'"></div>
     </div>

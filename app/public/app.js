@@ -42,11 +42,15 @@
     /* @ngInject */
     function runLDR($rootScope, $state, store, jwtHelper) {
 
+        $rootScope.atHome = ($state.current.url === '^' || $state.current.url === '/');
         // Check status of user on every state change
         // Used for Navbar and blocking pages from unauthorized users
         // Otherwise, just check if the user is logged in
 
         $rootScope.$on('$stateChangeStart', function(event, to) {
+            // Change banner depending on state
+            $rootScope.atHome = (to.url === '^' || to.url === '/');
+
             var e = event;
             // Get current user
             var currentUser = store.get('currentUser');
