@@ -72,7 +72,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .thin-navbar {
-    height: 37px;
+    //height: 37px;
     font-size: 14px;
     font-weight: 600;
     line-height: 37px;
@@ -80,6 +80,7 @@ h1, h2, h3, h4, h5, h6 {
     border-bottom: 1px solid @color-primary-dark;
 
     li {
+        float: left;
         a {
             color: @color-primary-dark;
             padding: 0 15px;
@@ -107,11 +108,16 @@ a#group-nav-icon {
 
     .navbar-inner {
 
-        .navbar-header {
-            display: flex;
+        .nih-title {
+
+            @media all and (max-width: 1200px) {
+                width: 332px;
+                margin: 0 auto;
+            }
         }
-        height: 59px;
+
         #nih-logo {
+            float: left;
             display: inline-block;
             margin: 5px 10px 0 0;
             background: url('../images/nih-logo.png') center;
@@ -130,9 +136,9 @@ a#group-nav-icon {
         }
     }
     h1 {
-        display: inline-block;
-        margin: 0;
+        float: left;
         line-height: 57px;
+        margin: 0;
         a {
             font-size: 29px;
             font-weight: 500;
@@ -143,25 +149,69 @@ a#group-nav-icon {
             }
         }
     }
-    .form-control {
-        border: none;
-        height: 32px;
-    }
 
     .username {
+        text-align: center;
+        float: right;
+        @media all and (min-width: 768px) and (max-width: 1200px) {
+            float: none;
+            width: 507px;
+            margin: 0 auto;
+        }
+
+        @media all and (max-width: 768px) {
+            float: none;
+        }
+
+        li {
+            @media all and (max-width: 1200px) {
+                float: none;
+            }
+        }
 
         a {
             color: white;
             margin: 0;
-            line-height: 60px;
+            line-height: 29px;
+        }
+    }
+
+    .username-menu {
+
+        a {
+            color: inherit;
         }
     }
 }
 
 .nav > li.dropdown.active.open > a,
 .nav > li.dropdown.open > a,
-{
+.nav > li > a:hover {
     background: transparent;
+}
+
+.nav-login {
+
+    form {
+        line-height: 57px;
+        margin: 0;
+        padding: 0;
+
+        @media all and (max-width: 768px) {
+            float: none;
+            width: 100%;
+        }
+
+    }
+    input {
+        padding: 4px 12px;
+        height: 30px;
+        margin-bottom: 3px;
+
+        @media all and (max-width: 768px) {
+            width: 100%;
+        }
+    }
 }
 
 .dropdown-menu {
@@ -188,6 +238,9 @@ h5.errorMsg {
 }
 
 button.login-btn, button.register-btn {
+    height: 30px;
+    margin-top: 13px;
+    padding: 2px 6px 3px;
     background: transparent;
     color: white;
     border: 1px solid white;
@@ -308,6 +361,10 @@ button.login-btn {
 
 #password-group {
     padding-right: 5px;
+
+    @media all and (max-width: 768px) {
+        padding-right: 0;
+    }
 }
 
 span.url-error-msg {

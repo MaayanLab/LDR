@@ -28,7 +28,7 @@
     }
 
     /* @ngInject */
-    function AdminCtrl(admin, releases, messagesServ, exportReleases) {
+    function AdminCtrl(admin, releases, messages, exportReleases) {
 
         var vm = this;
 
@@ -44,7 +44,7 @@
         vm.unselectAll = unselAll;
         vm.export = expRel;
         vm.exportReleases = exportReleases;
-        vm.viewMessages = messagesServ.viewMessages;
+        vm.viewMessages = messages.viewMessages;
 
 
         function getReleases() {
