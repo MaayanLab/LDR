@@ -1,0 +1,212 @@
+@import '../base';
+
+a#group-nav-icon {
+  height: 13px;
+  width: 19px;
+  background: url('../images/group-icon.png') no-repeat left top;
+  &:hover {
+    background-position: -19px 0;
+  }
+}
+
+.navbar-wrapper {
+  background-color: $color-primary;
+  border-bottom: 1px solid $color-primary-dark;
+
+  .navbar-inner {
+
+    .nih-title {
+
+      @media all and (max-width: 1200px) {
+        width: 332px;
+        margin: 0 auto;
+      }
+    }
+
+    #nih-logo {
+      float: left;
+      display: inline-block;
+      margin: 5px 10px 0 0;
+      background: url('../images/nih-logo.png') center;
+      background-size: contain;
+      height: 50px;
+      width: 59px;
+    }
+  }
+  a {
+    color: white;
+    &:focus {
+      color: white;
+    }
+    &:hover {
+      color: $color-secondary-light;
+    }
+  }
+  h1 {
+    float: left;
+    line-height: 57px;
+    margin: 0;
+    a {
+      font-size: 29px;
+      font-weight: 500;
+      &:hover,
+      &:focus {
+        color: $color-secondary-light;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .username {
+
+    a {
+      line-height: 29px;
+      @media all and (max-width: 992px) {
+        line-height: 0;
+      }
+    }
+  }
+
+  .ul-nav-login {
+    text-align: center;
+    float: right;
+    @media all and (min-width: 768px) and (max-width: 1200px) {
+      float: none;
+      width: 507px;
+      margin: 0 auto;
+    }
+
+    @media all and (max-width: 768px) {
+      float: none;
+    }
+
+    li {
+      @media all and (max-width: 1200px) {
+        float: none;
+      }
+    }
+
+    a {
+      color: white;
+      margin: 0;
+      line-height: 29px;
+    }
+  }
+
+  .username-menu {
+
+    a {
+      color: inherit;
+    }
+  }
+}
+
+.thin-navbar {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 37px;
+  background: $color-secondary;
+  border-bottom: 1px solid $color-primary-dark;
+
+  li {
+    float: left;
+
+    a {
+      color: $color-primary-dark;
+      padding: 0 15px;
+      line-height: 37px;
+
+      &:focus, &:hover {
+        color: $color-primary;
+        background: transparent;
+      }
+    }
+  }
+}
+
+.nav > li.dropdown.active.open > a,
+.nav > li.dropdown.open > a,
+.nav > li > a:hover,
+.nav > li > a:focus {
+  background: transparent;
+}
+
+.nav-login {
+
+  form {
+    line-height: 57px;
+    margin: 0;
+    padding: 0;
+
+    @media all and (max-width: 768px) {
+      float: none;
+      width: 100%;
+    }
+
+  }
+  input {
+    padding: 4px 12px;
+    height: 30px;
+    margin-bottom: 3px;
+
+    @media all and (max-width: 768px) {
+      width: 100%;
+    }
+  }
+}
+
+.dropdown-menu {
+  border-radius: 0;
+}
+
+.nav-items {
+  display: inline-flex;
+  margin-top: 5px;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.title-bar {
+  margin: 0 auto;
+  vertical-align: middle;
+}
+
+li.errorMsg {
+  display: inline-block;
+
+  float: none;
+  h5 {
+    margin: 0;
+    cursor: default;
+    color: white;
+  }
+}
+
+button.login-btn, button.register-btn {
+  height: 30px;
+  margin-top: 13px;
+  padding: 2px 6px 3px;
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+  border-radius: 5px;
+  &:hover,
+  &:focus {
+    color: $color-secondary-light;
+    text-decoration: none;
+    border: 1px solid $color-secondary-light;
+    border-radius: 5px;
+  }
+}
+
+button.login-btn {
+  margin-right: 5px;
+}
+
+#password-group {
+  padding-right: 5px;
+
+  @media all and (max-width: 768px) {
+    padding-right: 0;
+  }
+}

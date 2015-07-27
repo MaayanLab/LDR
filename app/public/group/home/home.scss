@@ -1,0 +1,37 @@
+.group {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.group-info {
+  min-width: 425px !important;
+}
+
+.group-about {
+  margin-top: 10px;
+}
+
+#description {
+  min-height: 125px;
+  resize: vertical;
+}
+
+.group-data, .meta-data {
+  border-top: 1px solid #eee;
+}
+
+.chart-container {
+  text-align: center;
+}
+
+.group-icon-upload {
+  position: relative;
+  height: 150px;
+  width: 100%;
+  overflow: hidden;
+  vertical-align: middle;
+  margin: auto;
+  background: no-repeat center;
+  background-size: contain;
+  max-width: 350px;
+}

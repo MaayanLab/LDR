@@ -4,94 +4,95 @@
  */
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('ldr')
-        .factory('releases', releases);
+  angular
+    .module('ldr')
+    .factory('releases', releases);
 
-    /* @ngInject */
-    function releases(api, $state, $modal, store) {
-        return {
-            getRel: getRel,
-            getOneRel: getOneRel,
-            getAllRel: getAllRel,
-            getApprovedRel: getApprovedRel,
-            getAfterRel: getAfterRel,
-            postRel: postRel,
-            edit: edit,
-            editUrls: editUrls,
-            release: release,
-            deleteRel: deleteRel,
-            search: search
-        };
+  /* @ngInject */
+  function releases(api, $state, $modal) {
+    return {
+      getGroupRel: getGroupRel,
+      getOneRel: getOneRel,
+      getAllRel: getAllRel,
+      getApprovedRel: getApprovedRel,
+      getAfterRel: getAfterRel,
+      postRel: postRel,
+      edit: edit,
+      editUrls: editUrls,
+      release: release,
+      deleteRel: deleteRel,
+      search: search
+    };
 
-        //////////////
+    //////////////
 
-        function getRel() {
-            var user = store.get('currentUser');
-            return api('releases/group/' + user.group._id).get();
-        }
-
-        function getOneRel(formId) {
-            return api('releases/form/' + formId).get();
-        }
-
-        function getAllRel() {
-            return api('releases/').get();
-        }
-
-        function getApprovedRel() {
-            return api('releases/approved/').get();
-        }
-
-        function getAfterRel(afterId) {
-            return api('releases/approved/' + afterId).get();
-        }
-
-        function postRel(form) {
-            if (angular.isDefined(form._id)) {
-                return api('releases/form/' + form._id).post(form);
-            } else {
-                return api('releases/form/').post(form);
-            }
-        }
-
-        function edit(formId) {
-            $state.go('releasesCreate', { id: formId });
-        }
-
-        function editUrls(form) {
-            return $modal
-                .open({
-                    templateUrl: 'releases/urlModal/urlModal.html',
-                    controller: 'URLModalInstanceCtrl',
-                    controllerAs: 'vm',
-                    resolve: {
-                        config: function() {
-                            return {
-                                form: form
-                            };
-                        }
-                    }
-                })
-                .result;
-        }
-
-        function release(form) {
-            if (confirm('Are you sure you would like to release this entry?')) {
-                return api('releases/form/' + form._id + '/release').put();
-            }
-        }
-
-        function deleteRel(form) {
-            if (confirm('Are you sure you would like to delete this entry?')) {
-                return api('releases/form/' + form._id).del();
-            }
-        }
-
-        function search(query) {
-            return api('releases/search?q=' + query).get();
-        }
+    function getGroupRel(groupId) {
+      return api('releases/group/' + groupId).get();
     }
+
+    function getOneRel(formId) {
+      return api('releases/form/' + formId).get();
+    }
+
+    function getAllRel() {
+      return api('releases/').get();
+    }
+
+    function getApprovedRel() {
+      return api('releases/approved/').get();
+    }
+
+    function getAfterRel(afterId) {
+      return api('releases/approved/' + afterId).get();
+    }
+
+    function postRel(form) {
+      if (angular.isDefined(form._id)) {
+        return api('releases/form/' + form._id).post(form);
+      } else {
+        return api('releases/form/').post(form);
+      }
+    }
+
+    function edit(formId) {
+      $state.go('releasesCreate', {
+        id: formId
+      });
+    }
+
+    function editUrls(form) {
+      return $modal
+        .open({
+          templateUrl: 'releases/urlModal/urlModal.html',
+          controller: 'URLModalInstanceCtrl',
+          controllerAs: 'vm',
+          resolve: {
+            config: function() {
+              return {
+                form: form
+              };
+            }
+          }
+        })
+        .result;
+    }
+
+    function release(form) {
+      if (confirm('Are you sure you would like to release this entry?')) {
+        return api('releases/form/' + form._id + '/release').put();
+      }
+    }
+
+    function deleteRel(form) {
+      if (confirm('Are you sure you would like to delete this entry?')) {
+        return api('releases/form/' + form._id).del();
+      }
+    }
+
+    function search(query) {
+      return api('releases/search?q=' + query).get();
+    }
+  }
 })();

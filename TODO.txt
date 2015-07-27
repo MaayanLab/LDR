@@ -22,3 +22,16 @@ Dataset name, tags/keywords, description editable after release
 Cell lines, perturbagens, dates need approval from Ajay
 
 Send email to Ajay and Bianca if data needs approval
+
+Need to have unified APIs to give people access to the data.
+Data doesn't have to sit on our servers, but these api's
+
+Downloaded Omix Tools. Want to know their similarity.
+First time of publication. Can get from pubmed, possibly another way of
+comparing.
+
+Based on lab meeting, talking about paper that examines how innovative an
+art piece is.
+  Software innovativeness.
+  Time it was published.
+  Similar tools before and after.

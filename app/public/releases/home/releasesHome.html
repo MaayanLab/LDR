@@ -1,0 +1,42 @@
+<div class="row">
+  <div ng-include="'partials/searchBar.html'"></div>
+</div>
+<!-- Left Sidebar -->
+<div class="col-lg-2 rel-left-nav">LEFT</div>
+<!-- Middle -->
+<div class="col-lg-8 rel-middle">
+  <div class="rel-data" ng-repeat="release in vm.forms" ng-if="release.approved">
+    <div class="rel-data-inner">
+      <h4 class="rel-ds-name highlight-primary">{{release.datasetName}}</h4>
+      <div class="rel-info">
+        <p><strong>Center: </strong>{{release.group.name}}</p>
+        <p><strong>Assay: </strong>{{release.metadata.assay[0].name}}</p>
+        <p><strong>Description: </strong>{{release.description}}</p>
+        <ul class="list-inline rel-urls">
+          <li ng-show="release.urls.pubMedUrl !== '' &&
+                 release.urls.pubMedUrl !== 'http://'">
+            <a ng-href="{{release.urls.pubMedUrl}}">PubMed</a>
+          </li>
+          <li ng-show="release.urls.dataUrl !== '' &&
+                 release.urls.dataUrl !== 'http://'">
+            <a ng-href="{{release.urls.dataUrl}}">Access Data</a>
+          </li>
+          <li ng-show="release.urls.metadataUrl !== '' &&
+                 release.urls.metadataUrl !== 'http://'">
+            <a ng-href="{{release.urls.metadataUrl}}">Metadata</a>
+          </li>
+          <li ng-show="release.urls.qcDocumentUrl !== '' &&
+                 release.urls.qcDocumentUrl !== 'http://'">
+            <a ng-href="{{release.urls.qcDocumentUrl}}">QC Documentation</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="text-center rel-status">
+      <p ng-show="release.released">Released</p>
+      <p ng-show="!release.released">In Production</p>
+    </div>
+  </div>
+</div>
+<!-- Right Sidebar -->
+<div class="col-lg-2 rel-right-nav">RIGHT</div>

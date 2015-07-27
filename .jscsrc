@@ -1,7 +1,0 @@
-{
-	"preset": "crockford",
-	"requireSpaceAfterKeywords": null,
-	"requireMultipleVarDecl": null,
-	"disallowDanglingUnderscores": null,
-	"requireLineFeedAtFileEnd": null
-}

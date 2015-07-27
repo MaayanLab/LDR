@@ -1,123 +1,106 @@
 <div class="navbar-wrapper">
-    <div class="navbar-inner container">
-        <div class="col-sm-12 col-lg-6">
-            <div class="nih-title">
-                <div id="nih-logo"></div>
-                <h1>
-                    <a ui-sref="home">
-                        <span class="highlight-primary">NIH </span>
-                        LINCS <span class="normal">Program</span>
-                    </a>
-                </h1>
-            </div>
-        </div>
-        <div class="col-xs-12 col-lg-6">
-            <ul class="nav navbar-nav username">
-                <li class="dropdown" ng-show="vm.isLoggedIn">
-                    <a href="" class="dropdown-toggle" data-toggle="dropdown"
-                       role="button" aria-expanded="false">
-                        {{vm.user.username}}
-                    </a>
-                    <ul class="dropdown-menu username-menu" role="menu">
-                        <li>
-                            <a ui-sref="userSettings({id: vm.user._id})">
-                                Settings
-                            </a>
-                        </li>
-                        <li>
-                            <a ng-show="vm.isLoggedIn" ng-click="vm.logout()">
-                                Logout
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li ng-show="!vm.isLoggedIn" class="nav-login">
-                    <form name="loginForm" class="navbar-form pull-right">
-                        <div class="form-group">
-                            <input ng-focus="showErr=false"
-                                   ng-blur="showErr=true" name="username"
-                                   type="text" class="form-control"
-                                   ng-model="vm.user.username"
-                                   id="username" placeholder="Username">
-                        </div>
-                        <div id="password-group" class="form-group">
-                            <input ng-focus="showErr=false"
-                                   ng-blur="showErr=true" name="password"
-                                   type="password" class="form-control"
-                                   id="password"
-                                   ng-model="vm.user.password"
-                                   placeholder="Password">
-                        </div>
-                        <button type="button"
-                                class="btn pull-right register-btn"
-                                ng-click="vm.register()">Register
-                        </button>
-                        <button type="submit"
-                                class="btn pull-right login-btn"
-                                ng-click="vm.login()">Login
-                        </button>
-                    </form>
-                </li>
-                <!--<a ng-show="vm.isLoggedIn"
-                   ui-sref="userSettings({id: vm.user._id})"
-                   class="glyphicon glyphicon-cog"></a>
-                <a ng-show="vm.isLoggedIn && vm.isAdmitted"
-                   ui-sref="groupHome({id: vm.user.group._id})"
-                   id="group-nav-icon"
-                   class="glyphicon"></a>
-                <a ng-show="vm.isLoggedIn" ng-click="vm.logout()"
-                   class="glyphicon glyphicon-log-out"></a>-->
-            </ul>
-        </div>
+  <div class="navbar-inner container">
+    <div class="col-xs-12 col-md-5">
+      <div class="nih-title">
+        <div id="nih-logo"></div>
+        <h1>
+          <a ui-sref="home">
+            <span class="highlight-primary">NIH </span>
+            LINCS <span class="normal">Program</span>
+          </a>
+        </h1>
+      </div>
     </div>
+    <div class="col-sm-12 col-md-7">
+      <ul class="nav navbar-nav pull-right username">
+        <li class="dropdown" ng-show="vm.isLoggedIn">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+          {{vm.user.username}}
+        </a>
+          <ul class="dropdown-menu username-menu" role="menu">
+            <li>
+              <a ui-sref="userSettings({id: vm.user._id})">
+              Settings
+            </a>
+            </li>
+            <li>
+              <a ng-show="vm.isLoggedIn" ng-click="vm.logout()">
+              Logout
+            </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="col-xs-12 col-md-7" ng-show="!vm.isLoggedIn">
+      <ul class="nav navbar-nav ul-nav-login">
+        <li class="nav-login">
+          <form name="loginForm" class="navbar-form pull-right">
+            <div class="form-group">
+              <input ng-focus="showErr=false" ng-blur="showErr=true" name="username" type="text" class="form-control" ng-model="vm.user.username" id="username" placeholder="Username">
+            </div>
+            <div id="password-group" class="form-group">
+              <input ng-focus="showErr=false" ng-blur="showErr=true" name="password" type="password" class="form-control" id="password" ng-model="vm.user.password" placeholder="Password">
+            </div>
+            <button type="button" ng-click="vm.register()" class="btn pull-right register-btn">
+              Register
+            </button>
+            <button type="submit" ng-click="vm.login()" class="btn pull-right login-btn">
+              Login
+            </button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
 <div class="thin-navbar">
-    <div class="container">
-        <nav class="container-full">
-            <div>
-                <ul class="nav navbar-left">
-                    <li>
-                        <a ui-sref="centers">Centers</a>
-                    </li>
-                    <li>
-                        <a ui-sref="data">Data</a>
-                    </li>
-                    <li>
-                        <a ui-sref="community">Community</a>
-                    </li>
-                    <li>
-                        <a ui-sref="publications">Publications</a>
-                    </li>
-                    <li>
-                        <a ui-sref="news">News</a>
-                    </li>
-                    <li ng-show="vm.isLoggedInAdmin">
-                        <a ui-sref="admin">Admin</a>
-                    </li>
-                    <li class="dropdown"
-                        ng-show="vm.isLoggedIn && !vm.isLoggedInAdmin">
-                        <a href="" class="dropdown-toggle"
-                           data-toggle="dropdown"
-                           role="button" aria-expanded="false">
-                            Dataset Releases <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a ui-sref="releasesOverview">Overview</a>
-                            </li>
-                            <li>
-                                <a ui-sref="releasesCreate({id: ''})">
-                                    Add New
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <h5 ng-show="!vm.isLoggedIn && showErr && vm.showFailMessage"
-                            class="errorMsg">User/Password Incorrect.</h5>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
+  <div class="container">
+    <nav class="container-full">
+      <div>
+        <ul class="nav navbar-left">
+          <li>
+            <a ui-sref="centers">Centers</a>
+          </li>
+          <li ng-show="!vm.isLoggedIn || vm.isLoggedInAdmin">
+            <a ui-sref="releasesHome">Data</a>
+          </li>
+          <li class="dropdown" ng-show="vm.isLoggedIn && !vm.isLoggedInAdmin">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+          Data
+        </a>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-show="!vm.isLoggedInAdmin">
+                <a ui-sref="releasesHome">Data Home</a>
+              </li>
+              <li ng-show="!vm.isLoggedInAdmin">
+                <a ui-sref="releasesOverview">Your Data</a>
+              </li>
+              <li ng-show="!vm.isLoggedInAdmin">
+                <a ui-sref="releasesCreate({id: ''})">
+              Add New
+            </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a ui-sref="community">Community</a>
+          </li>
+          <li>
+            <a ui-sref="publications">Publications</a>
+          </li>
+          <li>
+            <a ui-sref="news">News</a>
+          </li>
+          <li ng-show="vm.isLoggedInAdmin">
+            <a ui-sref="admin">Admin</a>
+          </li>
+          <!--<li>
+                <h5 ng-show="!vm.isLoggedIn && showErr && vm.showFailMessage"
+                    class="errorMsg">User/Password Incorrect.</h5>
+              </li>-->
+        </ul>
+      </div>
+    </nav>
+  </div>
 </div>

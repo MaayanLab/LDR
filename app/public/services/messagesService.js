@@ -4,46 +4,48 @@
  */
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('ldr')
-        .factory('messages', messages);
+  angular
+    .module('ldr')
+    .factory('messages', messages);
 
-    /* @ngInject */
-    function messages($modal, api) {
-        return {
-            viewMessages: viewMessages,
-            removeMsg: removeMsg,
-            postMsg: postMsg
-        };
+  /* @ngInject */
+  function messages($modal, api) {
+    return {
+      viewMessages: viewMessages,
+      removeMsg: removeMsg,
+      postMsg: postMsg
+    };
 
-        //////////////////////////////
+    //////////////////////////////
 
-        function viewMessages(form) {
-            return $modal
-                .open({
-                    templateUrl: 'msgModal/msgModal.html',
-                    controller: 'MsgModalInstanceCtrl',
-                    resolve: {
-                        config: function() {
-                            return {
-                                form: form
-                            };
-                        }
-                    }
-                })
-                .result;
-        }
-
-        function removeMsg(formId, msgObj) {
-            return api('releases/form/' + formId + '/message/remove/')
-                .post(msgObj);
-        }
-
-        function postMsg(formId, msgStr) {
-            api('releases/form/' + formId + '/message/')
-                .post({ message: msgStr });
-        }
+    function viewMessages(form) {
+      return $modal
+        .open({
+          templateUrl: 'msgModal/msgModal.html',
+          controller: 'MsgModalInstanceCtrl',
+          resolve: {
+            config: function() {
+              return {
+                form: form
+              };
+            }
+          }
+        })
+        .result;
     }
+
+    function removeMsg(formId, msgObj) {
+      return api('releases/form/' + formId + '/message/remove/')
+        .post(msgObj);
+    }
+
+    function postMsg(formId, msgStr) {
+      api('releases/form/' + formId + '/message/')
+        .post({
+          message: msgStr
+        });
+    }
+  }
 })();
