@@ -1,62 +1,67 @@
 <div class="row group">
-    <div class="col-xs-12">
-        <div class="group-info col-sm-12 col-md-6">
-            <div class="text-center">
-                <div accept="image/*" class="group-icon-upload" ng-model="vm.files"
-                     ngf-accept="'image/*'" ngf-capture="'camera'" ngf-select
-                     type="file" style="background-image: url(http://amp.pharm.mssm.edu/LDR/api/group/{{vm.groupId}}/icon/);">
-                </div>
-                <p class="caption">Click image to upload a new one</p>
-            </div>
-            <h3>{{vm.group.name}}</h3>
-            <a ui-sref="groupSettings({id: vm.groupId})">Edit</a>
-
-            <p class="group-about">{{vm.group.about}}</p>
+  <div class="col-xs-12">
+    <div class="group-info col-sm-12 col-md-6" ng-if="vm.user && vm.admitted">
+      <div class="text-center">
+        <div accept="image/*" class="group-icon-upload" ng-model="vm.files"
+            ngf-accept="'image/*'" ngf-capture="'camera'" ngf-select type="file" style="background-image: url(http://amp.pharm.mssm.edu/LDR/api/group/{{vm.groupId}}/icon/);">
         </div>
-        <div class="statistics col-sm-12 col-md-6">
-            <h4 class="text-center">Statistics</h4>
-            <ldr-bar group-id="{{vm.groupId}}"></ldr-bar>
-        </div>
+        <p class="caption">Click image to upload a new one</p>
+      </div>
+      <h3>{{vm.group.name}}</h3>
+      <a ui-sref="groupSettings({id: vm.groupId})">Edit</a>
+      <p class="group-about">{{vm.group.about}}</p>
     </div>
+    <div class="group-info col-sm-12 col-md-6" ng-if="!vm.user || !vm.admitted">
+      <div class="text-center">
+        <div class="group-icon-upload" style="background-image: url(http://amp.pharm.mssm.edu/LDR/api/group/{{vm.groupId}}/icon/);">
+        </div>
+      </div>
+      <h3>{{vm.group.name}}</h3>
+      <p class="group-about">{{vm.group.about}}</p>
+    </div>
+    <div class="statistics col-sm-12 col-md-6">
+      <h4 class="text-center">Statistics</h4>
+      <ldr-bar group-id="{{vm.groupId}}"></ldr-bar>
+    </div>
+  </div>
 </div>
-<div class="users">
-    <div class="card col-xs-12 col-md-6" ng-repeat="user in vm.users">
-        <div class="well well-sm">
-            <div class="row">
-                <div class="col-md-6 col-md-4">
-                    <img alt="" class="user-icon img-circle img-responsive"
-                         src="images/user-icon.png">
-                </div>
-                <div class="col-sm-6 col-md-8">
-                    <h4>{{user.username}}</h4>
-                    <h5 class="text-muted">{{user.name}}</h5>
-                    <h5 ng-if="!user.name"></h5>
-                    <h5 class="card-pending" ng-if="!user.admitted">
+<div class="users" ng-if="vm.user && vm.admitted">
+  <div class="card col-xs-12 col-md-6" ng-repeat="user in vm.users">
+    <div class="well well-sm">
+      <div class="row">
+        <div class="col-md-6 col-md-4">
+          <img alt="" class="user-icon img-circle img-responsive" src="images/user-icon.png">
+        </div>
+        <div class="col-sm-6 col-md-8">
+          <h4>{{user.username}}</h4>
+          <h5 class="text-muted">{{user.name}}</h5>
+          <h5 ng-if="!user.name"></h5>
+          <h5 class="card-pending" ng-if="!user.admitted">
                         <a ng-click="vm.acceptUser(user)">Accept</a>
                     </h5>
-                    <h5 class="card-accepted" ng-if="vm.showAdmitted">
+          <h5 class="card-accepted" ng-if="vm.showAdmitted">
                         User accepted!
                     </h5>
-
-                    <p>
-                        <i class="card-glyph glyphicon glyphicon-map-marker"></i>
-                        {{user.location}}
-                        <br/>
-                        <i class="card-glyph glyphicon glyphicon-envelope"></i>
-                        {{user.email}}
-                        <br/>
-                        <i class="card-glyph glyphicon glyphicon-globe"></i>
-                        <a ng-href="{{user.homepage}}"
-                           ng-if="user.homepage !== 'http://'">
+          <p>
+            <i class="card-glyph glyphicon glyphicon-map-marker"></i> {{user.location}}
+            <br/>
+            <i class="card-glyph glyphicon glyphicon-envelope"></i> {{user.email}}
+            <br/>
+            <i class="card-glyph glyphicon glyphicon-globe"></i>
+            <a ng-href="{{user.homepage}}" ng-if="user.homepage !== 'http://'">
                             {{user.homepage}}
                         </a>
-                        <br/>
-                        <i class="card-glyph glyphicon glyphicon-book"></i>
-                        {{user.fieldOfStudy}}
-                        <br/>
-                    </p>
-                </div>
-            </div>
+            <br/>
+            <i class="card-glyph glyphicon glyphicon-book"></i> {{user.fieldOfStudy}}
+            <br/>
+          </p>
         </div>
+      </div>
     </div>
+  </div>
+</div>
+<div class="data" ng-if="!vm.user || !vm.admitted">
+  <div class="col-xs-12 text-center">
+    DATA FOR THIS GROUP WILL BE DISPLAYED HERE
+  </div>
 </div>

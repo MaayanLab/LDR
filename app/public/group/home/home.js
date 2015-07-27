@@ -26,17 +26,17 @@
         templateUrl: 'group/home/home.html',
         controller: 'GroupHomeCtrl',
         controllerAs: 'vm',
-        data: {
-          requiresLogin: true,
-          requiresAdmitted: true
-        }
+        data: {}
       });
   }
-
   /* @ngInject */
-  function GroupHomeCtrl($scope, $stateParams, $timeout, $window, groups) {
+  function GroupHomeCtrl($scope, $stateParams, $timeout,
+                         $window, lodash, store, groups) {
 
     var vm = this;
+
+    vm.user = store.get('currentUser');
+    vm.admitted = false;
     vm.group = {};
     vm.users = [];
     vm.files = [];
@@ -49,6 +49,8 @@
         .getOneGroup(vm.groupId)
         .success(function(group) {
           vm.group = group;
+          vm.admitted = (vm.user && lodash.isEqual(vm.user.group, group) &&
+            vm.user.admitted);
         })
         .error(function(resp) {
           console.log(resp);
@@ -86,7 +88,7 @@
       if (files.length) {
         groups
           .changeGroupIcon(vm.groupId, files)
-          .progress(function(evt) {
+          .progress(function() {
             //var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
           }).success(function(data, status, headers, config) {
             $window.location.reload();
@@ -111,6 +113,9 @@
      */
 
     getGroup();
-    getUsers();
+
+    if (vm.user) {
+      getUsers();
+    }
   }
 })();

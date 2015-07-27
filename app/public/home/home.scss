@@ -8,7 +8,7 @@
 .headline-info {
   font-weight: 400 !important;
   span {
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     color: $color-primary-dark;
   }
 }
@@ -18,7 +18,7 @@
   margin: 0 0 20px 0;
 
   span {
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     color: $color-primary-dark;
   }
 }
@@ -74,4 +74,26 @@
       background-size: 16px 16px;
     }
   }
+}
+
+.intro, .news {
+  border-bottom: 1px solid #ddd;
+}
+
+.intro {
+  padding-bottom: 60px;
+  margin-bottom: 60px;
+}
+
+.news {
+  padding-bottom: 40px;
+  margin-bottom: 40px;
+
+  p {
+    margin: 0;
+  }
+}
+
+.questions {
+  margin: 20px 0;
 }

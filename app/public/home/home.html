@@ -9,7 +9,7 @@
         <ul class="col-xs-12 home-stats list-inline text-center">
             <li ng-repeat="(field, count) in vm.summary" ng-if="count > 0">
                 <h3 class="stat-count highlight-primary">{{count}}</h3>
-                <h4 class="headline-info">{{field}}</h4>
+                <h4 class="news-title">{{field}}</h4>
             </li>
         </ul>
     </div>
@@ -18,48 +18,71 @@
 <div class="row">
   <div ng-include="'partials/searchBar.html'"></div>
 </div>
-<div class="col-xs-12 col-lg-8">
-  <h3 class="headline-info">
-    <span>L</span>ibrary of <span>I</span>ntegrated <span>N</span>etwork-Based <span>C</span>ellular <span>S</span>ignatures
+<div class="col-xs-12">
+  <div class="intro">
+    <h3 class="headline-info">
+    <span>L</span>ibrary of <span>I</span>ntegrated <span>N</span>etwork-Based
+    <span>C</span>ellular <span>S</span>ignatures
   </h3>
-  <p>
-    LINCS aims to create a network-based understanding of biology by cataloging changes in gene expression and other cellular processes that occur when cells are exposed to a variety of perturbing agents, and by using computational tools to integrate this diverse information into a comprehensive view of normal and disease states that can be applied for the development of new biomarkers and therapeutics. By generating and making public data that indicates how cells respond to various genetic and environmental stressors, the
-    <a ui-sref="about">LINCS project</a>
-    will help us gain a more detailed understanding of cell pathways and aid efforts to develop therapies that might restore perturbed pathways and networks to their normal states.
-  </p>
-
-  <p>
-    This website is a source of information for the research community and general public about the LINCS project. It contains information about the experiments conducted, as well as links to participating LINCS centers’ websites, data releases from LINCS centers, and tools that can be used for analyzing the data.
-  </p>
-
-  <h5 class="questions">
-    Questions about LINCS?
-    <a ui-sref="contact">Contact us</a>
-  </h5>
-</div>
-
-<div class="col-xs-12 col-lg-4">
-  <h5 class="home-news-title">Upcoming Webinars</h5>
-  <div class="news-info" ng-repeat="webinar in vm.news.webinars">
-  <p class="news-title">
-    {{webinar.title}}
-  </p>
-  <p class="news-date">{{webinar.date}}</p>
-  <p class="news-desc">
-    {{webinar.description}}
-  </p>
+    <p>
+      The LINCS project is based on the premise that disrupting any one of the many steps of a given biological process will cause related changes in the molecular and cellular characteristics, behavior, and/or function of the cell – the observable composite of which is known as the cellular phenotype. Observing how and when a cell’s phenotype is altered by specific stressors can provide clues about the underlying mechanisms involved in perturbation and, ultimately, disease.
+    </p>
+    <p>
+      LINCS aims to create a network-based understanding of biology by cataloging changes in gene expression and other cellular processes that occur when cells are exposed to a variety of perturbing agents, and by using computational tools to integrate this diverse information into a comprehensive view of normal and disease states that can be applied for the development of new biomarkers and therapeutics.
+    </p>
+    <p>
+      By generating and making public data that indicates how cells respond to various genetic and environmental stressors, the
+      <a ui-sref="about">LINCS project</a> will help us gain a more detailed understanding of cell pathways and aid efforts to develop therapies that might restore perturbed pathways and networks to their normal states.
+    </p>
+    <p>
+      <em>This website</em> is a source of information for the research community and general public about the LINCS project. The portal contains details about the assays, cell types, and perturbagens currently part of the library, as well as links to participating sites, the data releases from the sites, and software that can be used for analyzing the data.
+    </p>
   </div>
-  <h5 class="home-news-title">Upcoming Courses</h5>
-  <div class="news-info" ng-repeat="course in vm.news.courses">
-    <p class="news-title">
-    {{course.title}}
-  </p>
-  <p class="news-date">{{course.date}}</p>
-  <p class="news-desc">
-    {{course.description}}
-  </p>
+  <div class="news col-xs-12">
+    <h4 class="news-title">Upcoming Webinars</h4>
+    <div class="news-inner">
+      <div class="news-info col-xs-12 col-md-6"
+           ng-repeat="webinar in vm.news.webinars">
+        <h5>
+            <em>{{webinar.title}}</em>
+          </h5>
+        <p class="news-date">{{webinar.date}}</p>
+        <p class="news-desc">
+          {{webinar.description}}
+        </p>
+      </div>
+    </div>
   </div>
+  <div class="news col-xs-12">
+    <h4 class="news-title">Upcoming Courses</h4>
+    <div class="news-inner">
+      <div class="news-info col-xs-12 col-md-6"
+           ng-repeat="course in vm.news.courses">
+        <h5>
+            <em>{{course.title}}</em>
+          </h5>
+        <p class="news-date">Starts on {{course.date}}</p>
+        <p class="news-desc">
+          {{course.description}}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="news col-xs-12">
+    <h4 class="news-title">Funding Opportunity</h4>
+    <div class="news-inner">
+      <div class="news-info col-xs-12 col-md-6"
+           ng-repeat="opp in vm.news.fundingOpps">
+        <h5>
+        <strong>Request for Applications: </strong><em>{{opp.title}}</em>
+      </h5>
+        <p class="news-desc">
+          Application deadline is {{opp.deadline}}
+        </p>
+      </div>
+    </div>
+  </div>
+  <h4 class="questions text-center">
+    Questions about LINCS? <a ui-sref="contact">Contact us</a>
+  </h4>
 </div>
-
-
-

@@ -26,7 +26,6 @@
     });
   }
 
-  // Need scope here for the $apply function
   function LDRHomeController() {
 
     var vm = this;
@@ -53,9 +52,11 @@
       ],
       fundingOpps: [
         {
-          title: ''
+          title: 'BD2K-LINCS Data Coordination and Integration Center (DCIC) ' +
+          'External Data Science Research Projects',
+          deadline: 'September 1, 2015'
         }
-      ],
+      ]
     };
     /*vm.summary = {
         //Users: 0,
