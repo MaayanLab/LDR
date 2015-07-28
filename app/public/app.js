@@ -7,6 +7,8 @@
       'ldr.home',
       'ldr.bar',
       'ldr.centers',
+      'ldr.phaseOne',
+      'ldr.phaseTwo',
       'ldr.group.home',
       'ldr.group.create',
       'ldr.group.settings',

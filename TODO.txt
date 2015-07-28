@@ -37,3 +37,11 @@ art piece is.
   Similar tools before and after.
 
 -- Future data may pull from Amar --
+
+Add publications/news/etc. to database
+
+Search publications/news/data
+
+Group page. Analysis of their data instead of statistics
+PCA or Hierarchical clustering to visualize their data.
+

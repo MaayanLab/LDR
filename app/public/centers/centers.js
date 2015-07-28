@@ -24,27 +24,13 @@
   }
 
   /* @ngInject */
-  function CentersController($state, groups) {
+  function CentersController($state) {
     var vm = this;
-    vm.groups = [];
-    vm.goToGroup = goToGroup;
+    vm.goToPhase = goToPhase;
 
-    function getAllGroups() {
-      groups
-        .getAllGroups()
-        .success(function(data) {
-          vm.groups = data;
-        })
-        .error(function(resp) {
-          console.log(resp);
-        }
-      );
+    function goToPhase(phaseNum) {
+      $state.go('phase' + phaseNum);
     }
 
-    function goToGroup(groupId) {
-      $state.go('groupHome', {id: groupId });
-    }
-
-    getAllGroups();
   }
 })();
