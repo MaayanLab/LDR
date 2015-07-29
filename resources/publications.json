@@ -1,0 +1,860 @@
+[{
+  "citation": {
+    "authors": ["Wang Z", "Clark NC", "Ma’ayan A"],
+    "articleName": "Dynamics of the discovery process of protein-protein interactions from low content studies.",
+    "journalName": "BMC Systems Biology",
+    "volume": "9",
+    "issue": "1",
+    "ppPages": "26",
+    "pmId": "260484152",
+    "pmcId": "PMC4456804",
+    "yearPublished": "2015",
+    "doi": "10.1186/s12918-015-0173-z"
+  },
+  "readoutAssay": ["Data integration"],
+  "compTools": [{
+    "name": "Custom code"
+  }]
+}, {
+  "citation": {
+    "authors": ["Gundersen GW", "Jones MR", "Rouillard AD", "Kou Y",
+      "Monteiro CD", "Feldmann AS", "Hu KS", "Ma’ayan A"
+    ],
+    "articleName": "GEO2Enrichr: browser extension and server app to extract gene sets from GEO and analyze them for biological functions.",
+    "journalName": "Bioinformatics",
+    "volume": "",
+    "issue": "",
+    "ppPages": "",
+    "pmId": "25971742",
+    "doi": "pii:btv297",
+    "yearPublished": "2015"
+  },
+  "readoutAssay": ["Data integration"],
+  "compTools": [{
+    "name": "GEO2Enrichr",
+    "url": "http://amp.pharm.mssm.edu/g2e/"
+  }, {
+    "name": "Enrichr",
+    "url": "http://amp.pharm.mssm.edu/Enrichr"
+  }]
+}, {
+  "citation": {
+    "authors": ["Fallahi-Sichani M", "Moerke NJ", "Niepel M", "Zhang T",
+      "Gray NS", "Sorger PK"
+    ],
+    "articleName": "Systematic analysis of BRAFV600E melanomas reveals a role for JNK/c-Jun pathway in adaptive resistance to drug-induced apoptosis.",
+    "journalName": "Molecular Systems Biology ",
+    "volume": "11",
+    "issue": "3",
+    "ppPages": "797",
+    "pmId": "25814555",
+    "pmcId": "PMC4380931",
+    "doi": "10.15252/msb.20145877",
+    "yearPublished": "2015"
+  },
+  "readoutAssay": ["Imaging assays", "RPPA assays"],
+  "compTools": [{
+    "name": "Data exploration website",
+    "url": "http://lincs.hms.harvard.edu/fallahi-sichani-molsystbiol-2015/"
+  }]
+}, {
+  "citation": {
+    "authors": ["Hornbeck PV", "Zhang B", "Murray B", "Kornhauser JM",
+      "Latham V", "Skrzypek E"
+    ],
+    "articleName": "PhosphoSitePlus, 2014: mutations, PTMs and recalibrations.",
+    "journalName": "Nucleic Acids Research",
+    "volume": "43",
+    "issue": "Database issue",
+    "ppPages": "D512-20",
+    "pmId": "25514926",
+    "pmcId": "PMC4383998",
+    "doi": "10.1093/nar/gku1267",
+    "yearPublished": "2015"
+  },
+  "readoutAssay": ["Data integration"],
+  "compTools": [{
+    "name": "PhosphoSitePlus",
+    "url": "http://www.phosphosite.org/"
+  }]
+}, {
+  "citation": {
+    "authors": ["Jain S", "Gitter A", "Bar-Joseph Z"],
+    "articleName": "Multitask learning of signaling and regulatory networks with application to studying human response to flu.",
+    "journalName": "PLoS Computational Biology",
+    "volume": "10",
+    "issue": "12",
+    "ppPages": "e1003943",
+    "pmId": "25522349",
+    "pmcId": "PMC4270428",
+    "doi": "10.1371/journal.pcbi.1003943",
+    "yearPublished": "2014"
+  },
+  "readoutAssay": ["Modeling signaling networks"],
+  "compTools": [{
+    "name": "Custom code"
+  }]
+}, {
+  "citation": {
+    "authors": ["Duan Q", "Wang Z", "Fernandez NF", "Rouillard AD", "Tan CM",
+      "Benes CH", "Ma’ayan A"
+    ],
+    "articleName": "Drug/Cell-line Browser: interactive canvas visualization of cancer drug/cell-line viability assay datasets",
+    "journalName": "Bioinformatics",
+    "volume": "30",
+    "issue": "22",
+    "ppPages": "3289-90",
+    "pmId": "25100688",
+    "pmcId": "PMC4221125",
+    "doi": "10.1093/bioinformatics/btu526",
+    "yearPublished": "2014"
+  },
+  "readoutAssay": ["Visualization tools", "cancer cell line drug response",
+    "cross LINCS centers collaboration"
+  ],
+  "compTools": [{
+    "name": "LINCS Drug/Cell-line Browser",
+    "url": "http://www.maayanlab.net/LINCS/DCB/"
+  }]
+}, {
+  "citation": {
+    "authors": ["Gujral TS", "Chan M", "Peshkin L", "Sorger PK",
+      "Kirschner MW", "MacBeath G"
+    ],
+    "articleName": "A noncanonical Frizzled2 pathway regulates epithelial-mesenchymal transition and metastasis.",
+    "journalName": "Cell",
+    "volume": "159",
+    "issue": "4",
+    "ppPages": "844-56",
+    "pmId": "25417160",
+    "pmcId": "PMC4243058",
+    "doi": "10.1016/j.cell.2014.10.032",
+    "yearPublished": "2014"
+  },
+  "readoutAssay": ["Cignal 45-Pathway Reporter Array assays",
+    "imaging assays", "RPPA assays"
+  ],
+  "compTools": []
+}, {
+  "citation": {
+    "authors": ["Olson DE", "Udeshi ND", "Wolfson NA", "Pitcairn CA",
+      "Sullivan ED", "Jaffe JD", "Svinkina T", "Natoli T", "Lu X",
+      "Paulk J", "McCarren P", "Wagner FF", "Barker D", "Howe E",
+      "Lazzaro F", "Gale JP", "Zhang YL", "Subramanian A", "Fierke CA",
+      "Carr SA", "Holson EB"
+    ],
+    "articleName": "An unbiased approach to identify endogenous substrates of “histone” deacetylase 8.",
+    "journalName": "ACS Chemical Biology",
+    "volume": "9",
+    "issue": "10",
+    "ppPages": "2210-6",
+    "pmId": "25089360",
+    "pmcId": "PMC4201337",
+    "doi": "10.1021/cb500492r",
+    "yearPublished": "2014"
+  },
+  "readoutAssay": ["P100", "targeted mass spectrometry proteomics",
+    "epigenetics"
+  ],
+  "compTools": [{
+    "name": "Lincscloud P100 API",
+    "url": "http://api.lincscloud.org/p100"
+  }]
+}, {
+  "citation": {
+    "authors": ["Ma’ayan A", "Duan Q"],
+    "articleName": "A blueprint of cell identity.",
+    "journalName": "Nature Biotechnology",
+    "volume": "32",
+    "issue": "10",
+    "ppPages": "1007-8",
+    "pmId": "25299921",
+    "pmcId": "PMC4274604",
+    "doi": "10.1038/nbt.3035",
+    "yearPublished": "2014"
+  },
+  "readoutAssay": ["Data integration", "stem cells", "cell engineering"],
+  "compTools": [{
+    "name": "Review of CellNet (non-LINCS tool)",
+    "url": "http://cellnet.hms.harvard.edu/"
+  }]
+}, {
+  "citation": {
+    "authors": ["Vidović D", "Koleti A", "Schürer SC"],
+    "articleName": "Large-scale integration of small molecule-induced genome-wide transcriptional responses, Kinome-wide binding affinities and cell-growth inhibition profiles reveal global trends characterizing systems-level drug action.",
+    "journalName": "Frontiers in Genetics",
+    "volume": "5",
+    "issue": "",
+    "ppPages": "342",
+    "pmId": "25324859",
+    "pmcId": "PMC4179751",
+    "doi": "10.3389/fgene.2014.00342",
+    "yearPublished": "2014"
+  },
+  "readoutAssay": ["Analysis of LINCS data", "data integration"],
+  "compTools": [{
+    "name": "LIFE",
+    "url": "http://life.ccs.miami.edu/life/"
+  }]
+}, {
+  "citation": {
+    "authors": ["Sharma V", "Eckels J", "Taylor GK", "Shulman NJ",
+      "Stergachis AB", "Joyner SA", "Yan P", "Whiteaker JR", "Halusa GN",
+      "Schilling B", "Gibson BW", "Colangelo CM", "Paulovich AG", "Carr SA",
+      "Jaffe JD", "MacCoss MJ", "MacLean B"
+    ],
+    "articleName": "Panorama: a targeted proteomics knowledge base.",
+    "journalName": "Journal of Proteome Research",
+    "volume": "13",
+    "issue": "9",
+    "ppPages": "4205-10",
+    "pmId": "25102069",
+    "pmcId": "PMC4156235",
+    "doi": "10.1021/pr5006636",
+    "yearPublished": "2014"
+  },
+  "readoutAssay": ["P100", "targeted mass spectrometry proteomics",
+    "phosphoproteomics"
+  ],
+  "compTools": [{
+    "name": "Lincscloud P100 API",
+    "url": "http://api.lincscloud.org/p100"
+  }]
+}, {
+  "citation": {
+    "authors": ["Ma’ayan A", "Rouillard AD", "Clark NR", "Wang Z", "Duan Q",
+      "Kou Y"
+    ],
+    "articleName": "Lean Big Data integration in systems biology and systems pharmacology.",
+    "journalName": "Trends in Pharmacological Sciences",
+    "volume": "35",
+    "issue": "9",
+    "ppPages": "450-60",
+    "pmId": "25109570",
+    "pmcId": "PMC4153537",
+    "doi": "10.1016/j.tips.2014.07.001",
+    "yearPublished": "2014"
+  },
+  "readoutAssay": ["Data integration"],
+  "compTools": [{
+    "name": "Review of multiple tools and databases"
+  }]
+}, {
+  "citation": {
+    "authors": [""],
+    "articleName": "Fast and accurate semantic annotation of bioassays exploiting a hybrid of machine learning and user confirmation.",
+    "journalName": "PeerJ",
+    "volume": "2",
+    "issue": "",
+    "ppPages": "e524",
+    "pmId": "25165633",
+    "pmcId": "PMC4137659",
+    "doi": "10.7717/peerj.524",
+    "yearPublished": "2014"
+  },
+  "readoutAssay": ["Ontologies", "search engine", "metadata"],
+  "compTools": [{
+    "name": "LIFE",
+    "url": "http://life.ccs.miami.edu/life/"
+  }]
+}, {
+  "citation": {
+    "authors": ["Duan Q", "Flynn C", "Niepel M", "Hafner M", "Muhlich JL",
+      "Fernandez NF", "Rouillard AD", "Tan CM", "Chen EY", "Golub TR",
+      "Sorger PK", "Subramanian A", "Ma’ayan A"
+    ],
+    "articleName": "LINCS Canvas Browser: interactive web app to query, browse and interrogate LINCS L1000 gene expression signatures.",
+    "journalName": "Nucleic Acids Research",
+    "volume": "42",
+    "issue": "",
+    "ppPages": "W449-60",
+    "pmId": "24906883",
+    "pmcId": "PMC4086130",
+    "doi": "10.1093/nar/gku476",
+    "yearPublished": "2014"
+  },
+  "readoutAssay": ["L1000 data", "visualization tools", "enrichment analysis",
+    "LINCS data search engine", "cross LINCS centers collaboration"
+  ],
+  "compTools": [{
+    "name": "LINCS Canvas Browser",
+    "url": "http://www.maayanlab.net/LINCS/LCB"
+  }]
+}, {
+  "citation": {
+    "authors": ["Abeyruwan S", "Vempati UD", "Küçük-McGinty H", "Visser U",
+      "Koleti A", "Mir A", "Sakurai K", "Chung C", "Bittker JA",
+      "Clemons PA", "Brudz S", "Siripala A", "Morales AJ", "Romacker M",
+      "Twomey D", "Bureeva S", "Lemmon V", "Schürer SC"
+    ],
+    "articleName": "Evolving BioAssay Ontology (BAO): modularization, integration and applications.",
+    "journalName": "Journal of Biomedical Semantics",
+    "volume": "5",
+    "issue": "Suppl 1 Proceedings of the Bio-Ontologies Spec Interest G",
+    "ppPages": "S5",
+    "pmId": "25093074",
+    "pmcId": "PMC4108877",
+    "doi": "10.1186/2041-1480-5-S1-S5",
+    "yearPublished": "2014"
+  },
+  "readoutAssay": ["Ontologies", "metadata"],
+  "compTools": [{
+    "name": "LIFE",
+    "url": "http://life.ccs.miami.edu/life/"
+  }]
+}, {
+  "citation": {
+    "authors": ["Guo D", "van de Ven AL", "Zhou X"],
+    "articleName": "Red blood cells tracking using optical flow methods.",
+    "journalName": "IEEE Journal of Biomedical and Health Informatics",
+    "volume": "18",
+    "issue": "3",
+    "ppPages": "991-8",
+    "pmId": "24058034",
+    "pmcId": "PMC3990667",
+    "doi": "10.1109/JBHI.2013.2281915",
+    "yearPublished": "2014"
+  },
+  "readoutAssay": ["Non-LINCS data"],
+  "compTools": [{
+    "name": "CellIA"
+  }]
+}, {
+  "citation": {
+    "authors": ["Niepel M", "Hafner M", "Pace EA", "Chung M", "Chai DH",
+      "Zhou L", "Muhlich JL", "Schoeberl B", "Sorger PK"
+    ],
+    "articleName": "Analysis of growth factor signaling in genetically diverse breast cancer lines.",
+    "journalName": "BMC Biology",
+    "volume": "12",
+    "issue": "",
+    "ppPages": "20",
+    "pmId": "24655548",
+    "pmcId": "PMC4234128",
+    "doi": "10.1186/1741-7007-12-20",
+    "yearPublished": "2014"
+  },
+  "readoutAssay": ["ELISA assays"],
+  "compTools": [{
+    "name": "Data exploration website",
+    "url": "http://lincs.hms.harvard.edu/fallahi-sichani-molsystbiol-2015/"
+  }]
+}, {
+  "citation": {
+    "authors": ["Vempati UD", "Chung C", "Mader C", "Koleti A", "Datar N",
+      "Vidović D", "Wrobel D", "Erickson S", "Muhlich JL", "Berriz G",
+      "Benes CH", "Subramanian A", "Pillai A", "Shamu CE", "Schürer SC"
+    ],
+    "articleName": "Metadata Standard and Data Exchange Specifications to Describe, Model, and Integrate Complex and Diverse High-Throughput Screening Data from the Library of Integrated Network-based Cellular Signatures (LINCS).",
+    "journalName": "Journal of Biomolecular Screening",
+    "volume": "19",
+    "issue": "5",
+    "ppPages": "803-816",
+    "pmId": "24518066",
+    "pmcId": "",
+    "doi": "",
+    "yearPublished": "2014"
+  },
+  "readoutAssay": ["Data integration", "ontologies", "metadata"],
+  "compTools": [{
+    "name": "LIFE",
+    "url": "http://life.ccs.miami.edu/life/"
+  }]
+}, {
+  "citation": {
+    "authors": ["McAllister FE", "Niepel M", "Haas W", "Huttlin E",
+      "Sorger PK", "Gygi SP"
+    ],
+    "articleName": "Mass spectrometry based method to increase throughput for kinome analyses using ATP probes.",
+    "journalName": "Analytical Chemistry",
+    "volume": "85",
+    "issue": "9",
+    "ppPages": "4666-74",
+    "pmId": "23607489",
+    "pmcId": "PMC3771683",
+    "doi": "10.1021/ac303478g",
+    "yearPublished": "2013"
+  },
+  "readoutAssay": ["Proteomics", "KAYAK assays"],
+  "compTools": []
+}, {
+  "citation": {
+    "authors": ["Chen EY", "Tan CM", "Kou Y", "Duan Q", "Wang Z",
+      "Vaz Meirelles G", "Clark NR", "Ma’ayan A"
+    ],
+    "articleName": "Enrichr: Interactive and collaborative HTML5 gene list enrichment analysis tool",
+    "journalName": "BMC Bioinformatics",
+    "volume": "14",
+    "issue": "",
+    "ppPages": "128",
+    "pmId": "23586463",
+    "pmcId": "PMC3637064",
+    "doi": "10.1186/1471-2105-14-128",
+    "yearPublished": "2013"
+  },
+  "readoutAssay": ["Data integration"],
+  "compTools": [{
+    "name": "Enrichr",
+    "url": "http://amp.pharm.mssm.edu/Enrichr"
+  }]
+}, {
+  "citation": {
+    "authors": ["Wong CK", "Vaske CJ", "Ng S", "Sanborn JZ", "Benz SC",
+      "Haussler D", "Stuart JM"
+    ],
+    "articleName": "The UCSC Interaction Browser: multidimensional data views in pathway context.",
+    "journalName": "Nucleic Acids Research",
+    "volume": "41",
+    "issue": "Web Server issue",
+    "ppPages": "W218-24",
+    "pmId": "23748957",
+    "pmcId": "PMC3692096",
+    "doi": "10.1093/nar/gkt473",
+    "yearPublished": "2013"
+  },
+  "readoutAssay": ["Data integration"],
+  "compTools": [{
+    "name": "UCSC Interaction Browser"
+  }]
+}, {
+  "citation": {
+    "authors": ["Chen J", "Hu Z", "Phatak M", "Reichard J", "Freudenberg JM",
+      "Sivaganesan S", "Medvedovic M"
+    ],
+    "articleName": "Genome-wide signatures of transcription factor activity: connecting transcription factors, disease, and small molecules.",
+    "journalName": "PLoS Computational Biology",
+    "volume": "9",
+    "issue": "9",
+    "ppPages": "e1003198",
+    "pmId": "24039560",
+    "pmcId": "PMC3764016",
+    "doi": "10.1371/journal.pcbi.1003198",
+    "yearPublished": "2013"
+  },
+  "readoutAssay": ["Data integration"],
+  "compTools": [{
+    "name": "TREG",
+    "url": "http://genomicsportals.org/"
+  }]
+}, {
+  "citation": {
+    "authors": ["Benes CH"],
+    "articleName": "Functionalizing genomic data for personalization of medicine.",
+    "journalName": "Clinical Pharmacology and Therapeutics",
+    "volume": "93",
+    "issue": "4",
+    "ppPages": "309-11",
+    "pmId": "23321554",
+    "pmcId": "PMC3609407",
+    "doi": "10.1038/clpt.2012.219",
+    "yearPublished": "2013"
+  },
+  "readoutAssay": ["Commentary"],
+  "compTools": []
+}, {
+  "citation": {
+    "authors": ["Duan Q", "Kou Y", "Clark NR", "Gordonov S", "Ma’ayan A"],
+    "articleName": "Metasignatures identify two major subtypes of breast cancer.",
+    "journalName": "CPT: Pharmacometrics and Systems Pharmacology",
+    "volume": "2",
+    "issue": "",
+    "ppPages": "e35",
+    "pmId": "23836026",
+    "pmcId": "PMC3615534",
+    "doi": "10.1038/psp.2013.11",
+    "yearPublished": "2013"
+  },
+  "readoutAssay": ["Data integration"],
+  "compTools": []
+}, {
+  "citation": {
+    "authors": ["Liu Q", "Xu C", "Kirubakaran S", "Zhang X", "Hur W", "Liu Y",
+      "Kwiatkowski NP", "Wang J", "Westover KD", "Gao P", "Ercan D",
+      "Niepel M", "Thoreen CC", "Kang SA", "Patricelli MP", "Wang Y",
+      "Tupper T", "Altabef A", "Kawamura H", "Held KD", "Chou DM",
+      "Elledge SJ", "Janne PA", "Wong KK", "Sabatini DM", "Gray NS"
+    ],
+    "articleName": "Characterization of Torin2, an ATP-competitive inhibitor of mTOR, ATM, and ATR.",
+    "journalName": "Cancer Research",
+    "volume": "73",
+    "issue": "8",
+    "ppPages": "2574-86",
+    "pmId": "23436801",
+    "pmcId": "PMC3760004",
+    "doi": "10.1158/0008-5472.CAN-12-1702",
+    "yearPublished": "2013"
+  },
+  "readoutAssay": ["Various cell profiling assays"],
+  "compTools": []
+}, {
+  "citation": {
+    "authors": ["Fallahi-Sichani M", "Honarnejad S", "Heiser LM", "Gray JW",
+      "Sorger PK "
+    ],
+    "articleName": "Metrics other than potency reveal systematic variation in responses to cancer drugs.",
+    "journalName": "Nature Chemical Biology",
+    "volume": "9",
+    "issue": "11",
+    "ppPages": "708-14",
+    "pmId": "24013279",
+    "pmcId": "PMC3947796",
+    "doi": "",
+    "yearPublished": ""
+  },
+  "readoutAssay": ["Imaging assays"],
+  "compTools": [{
+    "name": "Data exploration website",
+    "url": "http://lincs.hms.harvard.edu/fallahi-sichani-molsystbiol-2015/"
+  }]
+}, {
+  "citation": {
+    "authors": ["Johannessen CM", "Johnson LA", "Piccioni F", "Townes A",
+      "Frederick DT", "Donahue MK", "Narayan R", "Flaherty KT", "Wargo JA",
+      "Root DE", "Garraway LA"
+    ],
+    "articleName": "A melanocyte lineage program confers resistance to MAP kinase pathway inhibition.",
+    "journalName": "Nature",
+    "volume": "504",
+    "issue": "7478",
+    "ppPages": "138-42",
+    "pmId": "24185007",
+    "pmcId": "PMC4098832",
+    "doi": "10.1038/nature12688",
+    "yearPublished": "2013"
+  },
+  "readoutAssay": ["mRNA/L1000"],
+  "compTools": [{
+    "name": "KS Query and GSEA"
+  }]
+}, {
+  "citation": {
+    "authors": ["Lu Y", "Chen JJ", "Mu L", "Xue Q", "Wu Y", "Wu PH", "Li J",
+      "Vortmeyer AO", "Miller-Jensen K", "Wirtz D", "Fan R"
+    ],
+    "articleName": "High-throughput secretomic analysis of single cells to assess functional cellular heterogeneity.",
+    "journalName": "Analytical Chemistry",
+    "volume": "85",
+    "issue": "4",
+    "ppPages": "2548-56",
+    "pmId": "23339603",
+    "pmcId": "PMC3589817",
+    "doi": "10.1021/ac400082e",
+    "yearPublished": "2013"
+  },
+  "readoutAssay": ["Secreted proteins (single cell)"],
+  "compTools": [{
+    "name": "MATLAB scripts"
+  }]
+}, {
+  "citation": {
+    "authors": ["Niepel M", "Hafner M", "Pace EA", "Chung M", "Chai DH",
+      "Zhou L", "Schoeberl B", "Sorger PK"
+    ],
+    "articleName": "Profiles of basal and stimulated receptor signaling networks predict drug response in breast cancer lines.",
+    "journalName": "Science Signaling",
+    "volume": "6",
+    "issue": "294",
+    "ppPages": "ra84",
+    "pmId": "24065145",
+    "pmcId": "PMC3845839",
+    "doi": "10.1126/scisignal.2004379",
+    "yearPublished": "2013"
+  },
+  "readoutAssay": ["ELISA assays", "imaging assays"],
+  "compTools": [{
+    "name": "Data exploration website",
+    "url": "http://lincs.hms.harvard.edu/fallahi-sichani-molsystbiol-2015/"
+  }]
+}, {
+  "citation": {
+    "authors": ["Paull EO", "Carlin DE", "Niepel M", "Sorger PK",
+      "Haussler D", "Stuart JM"
+    ],
+    "articleName": "Discovering causal pathways linking genomic events to transcriptional states using tied diffusion through interacting events (TieDIE).",
+    "journalName": "Bioinformatics",
+    "volume": "29",
+    "issue": "21",
+    "ppPages": "2757-64",
+    "pmId": "23986566",
+    "pmcId": "PMC3799471",
+    "doi": "10.1093/bioinformatics/btt471",
+    "yearPublished": "2013"
+  },
+  "readoutAssay": ["Data integration"],
+  "compTools": [{
+    "name": "TieDIE",
+    "url": "https://sysbiowiki.soe.ucsc.edu/tiedie"
+  }]
+}, {
+  "citation": {
+    "authors": ["Santagata S", "Mendillo ML", "Tang YC", "Subramanian A",
+      "Perley CC", "Roche SP", "Wong B", "Narayan R", "Kwon H", "Koeva M",
+      "Amon A", "Golub TR", "Porco JA Jr", "Whitesell L", "Lindquist S"
+    ],
+    "articleName": "Tight coordination of protein translation and HSF1 activation supports the anabolic malignant state.",
+    "journalName": "Science",
+    "volume": "341",
+    "issue": "6134",
+    "ppPages": "1238303",
+    "pmId": "23869022",
+    "pmcId": "PMC3959726",
+    "doi": "10.1126/science",
+    "yearPublished": "2013"
+  },
+  "readoutAssay": ["mRNA/L1000"],
+  "compTools": [{
+    "name": "KS Query"
+  }]
+}, {
+  "citation": {
+    "authors": ["Schürer SC", "Muskal SM"],
+    "articleName": "Kinome-wide activity modeling from diverse public high-quality data sets.",
+    "journalName": "Journal of Chemical Information Modeling",
+    "volume": "53",
+    "issue": "1",
+    "ppPages": "27-38",
+    "pmId": "23259810",
+    "pmcId": "PMC3569091",
+    "doi": "10.1021/ci300403k",
+    "yearPublished": "2013"
+  },
+  "readoutAssay": ["Kinome profiling (LINCS and other data)"],
+  "compTools": [{
+    "name": "LIFE",
+    "url": "http://life.ccs.miami.edu/life/"
+  }]
+}, {
+  "citation": {
+    "authors": ["Shao H", "Peng T", "Ji Z", "Su J", "Zhou X"],
+    "articleName": "Systematically studying kinase inhibitor induced signaling network signature by integrating both therapeutic and side effects. ",
+    "journalName": "PLoS One",
+    "volume": "8",
+    "issue": "12",
+    "ppPages": "e80832",
+    "pmId": "24339888",
+    "pmcId": "PMC3855094",
+    "doi": "10.1371/journal.pone.0080832",
+    "yearPublished": "2013"
+  },
+  "readoutAssay": ["Kinase profiling and cue-signal response"],
+  "compTools": [{
+    "name": "KIEP",
+    "url": "http://ctsb.is.wfubmc.edu/itNETZ/KIEP.html"
+  }]
+}, {
+  "citation": {
+    "authors": ["Tan CM", "Chen EY", "Dannenfelser R", "Clark NR",
+      "Ma’ayan A"
+    ],
+    "articleName": "Network2Canvas: Network visualization on a canvas with enrichment analysis.",
+    "journalName": "Bioinformatics",
+    "volume": "29",
+    "issue": "15",
+    "ppPages": "1872-8",
+    "pmId": "23749960",
+    "pmcId": "PMC3783590",
+    "doi": "10.1177/1087057113493804",
+    "yearPublished": "2013"
+  },
+  "readoutAssay": ["Data integration"],
+  "compTools": [{
+    "name": "Network2Canvas",
+    "url": "http://www.maayanlab.net/N2C"
+  }]
+}, {
+  "citation": {
+    "authors": ["Tang Y", "Xie T", "Florian S", "Moerke N", "Shamu C",
+      "Benes C", "Mitchison TJ "
+    ],
+    "articleName": "Differential determinants of cancer cell insensitivity to antimitotic drugs discriminated by a one-step cell imaging assay.",
+    "journalName": "Journal of Biomolecular Screening",
+    "volume": "18",
+    "issue": "9",
+    "ppPages": "1062-71",
+    "pmId": "23788527",
+    "pmcId": "PMC3783590",
+    "doi": "10.1177/1087057113493804",
+    "yearPublished": "2013"
+  },
+  "readoutAssay": ["Imaging assays"],
+  "compTools": []
+}, {
+  "citation": {
+    "authors": ["Tian Y", "Fuller E", "Klug S", "Lee F", "Su F", "Zhang L",
+      "Chao S", "Meldrum D"
+    ],
+    "articleName": "A fluorescent colorimetric pH sensor and the influences of matrices on sensing performances.",
+    "journalName": "Sensors and Actuators B, Chemical",
+    "volume": "188",
+    "issue": "",
+    "ppPages": "1-10",
+    "pmId": "24078772",
+    "pmcId": "PMC3782379",
+    "doi": "",
+    "yearPublished": "2013"
+  },
+  "readoutAssay": ["Single-cell metabolism assay: pH sensor"],
+  "compTools": []
+}, {
+  "citation": {
+    "authors": ["Zhang L", "Su F", "Buizer S", "Lu H", "Gao W", "Tian Y",
+      "Meldrum D"
+    ],
+    "articleName": "A dual sensor for real-time monitoring of glucose and oxygen. ",
+    "journalName": "Biomaterials",
+    "volume": "34",
+    "issue": "38",
+    "ppPages": "9779-88",
+    "pmId": "24090834",
+    "pmcId": "PMC3878311",
+    "doi": "10.1016/j.biomaterials.2013.09.031",
+    "yearPublished": "2013"
+  },
+  "readoutAssay": [
+    "Single-cell metabolism assay: dual sensor for glucose and oxygen"
+  ],
+  "compTools": []
+}, {
+  "citation": {
+    "authors": ["Garnett MJ", "Edelman EJ", "Heidorn SJ", "Greenman CD",
+      "Dastur A", "Lau KW", "Greninger P", "Thompson IR", "Luo X",
+      "Soares J", "Liu Q", "Iorio F", "Surdez D", "Chen L", "Milano RJ",
+      "Bignell GR", "Tam AT", "Davies H", "Stevenson JA", "Barthorpe S",
+      "Lutz SR", "Kogera F", "Lawrence K", "McLaren-Douglas A",
+      "Mitropoulos X", "Mironenko T", "Thi H", "Richardson L", "Zhou W",
+      "Jewitt F", "Zhang T", "O’Brien P", "Boisvert JL", "Price S", "Hur W",
+      "Yang W", "Deng X", "Butler A", "Choi HG", "Chang JW", "Baselga J",
+      "Stamenkovic I", "Engelman JA", "Sharma SV", "Delattre O",
+      "Saez-Rodriguez J", "Gray NS", "Settleman J", "Futreal PA",
+      "Haber DA", "Stratton MR", "Ramaswamy S", "McDermott U", "Benes CH"
+    ],
+    "articleName": "Systematic identification of genomic markers of drug sensitivity in cancer cells.",
+    "journalName": "Nature",
+    "volume": "483",
+    "issue": "7391",
+    "ppPages": "570-5",
+    "pmId": "22460902",
+    "pmcId": "PMC3349233",
+    "doi": "10.1038/nature11005",
+    "yearPublished": "2012"
+  },
+  "readoutAssay": ["Cell viability and other non-LINCS assays"],
+  "compTools": []
+}, {
+  "citation": {
+    "authors": ["Sansone SA", "Rocca-Serra P", "Field D", "Maguire E",
+      "Taylor C", "Hofmann O", "Fang H", "Neumann S", "Tong W",
+      "Amaral-Zettler L", "Begley K", "Booth T", "Bougueleret L", "Burns G",
+      "Chapman B", "Clark T", "Coleman LA", "Copeland J", "Das S",
+      "de Daruvar A", "de Matos P", "Dix I", "Edmunds S", "Evelo CT",
+      "Forster MJ", "Gaudet P", "Gilbert J", "Goble C", "Griffin JL",
+      "Jacob D", "Kleinjans J", "Harland L", "Haug K", "Hermjakob H",
+      "Ho Sui SJ", "Laederach A", "Liang S", "Marshall S", "McGrath A",
+      "Merrill E", "Reilly D", "Roux M", "Shamu CE", "Shang CA",
+      "Steinbeck C", "Trefethen A", "Williams-Jones B", "Wolstencroft K",
+      "Xenarios I", "Hide W"
+    ],
+    "articleName": "Toward interoperable bioscience data.",
+    "journalName": "Nature Genetics",
+    "volume": "44",
+    "issue": "2",
+    "ppPages": "121-6",
+    "pmId": "22281772",
+    "pmcId": "PMC3428019",
+    "doi": "10.1038/ng.1054",
+    "yearPublished": "2012"
+  },
+  "readoutAssay": ["Metadata and standards"],
+  "compTools": []
+}, {
+  "citation": {
+    "authors": ["Vempati", "UD", "Przydzial MJ", "Chung C", "Abeyruwan S",
+      "Mir A", "Sakurai K", "Visser U", "Lemmon VP", "Schürer SC"
+    ],
+    "articleName": "Formalization, annotation and analysis of diverse drug and probe screening assay datasets using the BioAssay Ontology (BAO).",
+    "journalName": "PLoS One",
+    "volume": "7",
+    "issue": "11",
+    "ppPages": "e49198",
+    "pmId": "23155465",
+    "pmcId": "PMC3498356",
+    "doi": "10.1371/journal.pone.0049198",
+    "yearPublished": "2012"
+  },
+  "readoutAssay": ["Metadata and standards"],
+  "compTools": [{
+    "name": "BAO",
+    "url": "http://bioportal.bioontology.org/ontologies/1533"
+  }]
+}, {
+  "citation": {
+    "authors": ["Zhang T", "Inesta-Vaquera F", "Niepel M", "Zhang J",
+      "Ficarro SB", "Machleidt T", "Xie T", "Marto JA", "Kim N", "Sim T",
+      "Laughlin JD", "Park H", "Lograsso PV", "Patricelli M",
+      "Nomanbhoy TK", "Sorger PK", "Alessi DR", "Gray NS"
+    ],
+    "articleName": "Discovery of potent and selective covalent inhibitors of JNK.",
+    "journalName": "Chemistry and Biology",
+    "volume": "19",
+    "issue": "1",
+    "ppPages": "140-54",
+    "pmId": "22284361",
+    "pmcId": "PMC3270411",
+    "doi": "10.1016/j.chembiol.2011.11.010",
+    "yearPublished": "2012"
+  },
+  "readoutAssay": ["Multiple assays"],
+  "compTools": []
+}, {
+  "citation": {
+    "authors": ["Zhou J", "Wu Y", "Lee SK", "Fan R"],
+    "articleName": "High-content single cell analysis on chip using a laser microarray scanner.",
+    "journalName": "Lab on a Chip",
+    "volume": "12",
+    "issue": "23",
+    "ppPages": "5025-33",
+    "pmId": "22991099",
+    "pmcId": "",
+    "doi": "10.1039/c2lc40309a",
+    "yearPublished": "2012"
+  },
+  "readoutAssay": ["Laser-scanning cytometry"],
+  "compTools": []
+}, {
+  "citation": {
+    "authors": ["Millard BL", "Niepel M", "Menden MP", "Muhlich JL",
+      "Sorger PK"
+    ],
+    "articleName": "Adaptive informatics for multifactorial and high-content biological data.",
+    "journalName": "Nature Methods",
+    "volume": "8",
+    "issue": "6",
+    "ppPages": "487-93",
+    "pmId": "21516115",
+    "pmcId": "PMC3105758",
+    "doi": "10.1038/nmeth.1600",
+    "yearPublished": "2011"
+  },
+  "readoutAssay": ["Data formatting standards"],
+  "compTools": [{
+    "name": "SDCubes",
+    "url": "https://github.com/sorgerlab/SDCube_API"
+  }]
+}, {
+  "citation": {
+    "authors": ["Prill RJ", "Saez-Rodriguez J", "Alexopoulos LG", "Sorger PK",
+      "Stolovitzky G"
+    ],
+    "articleName": "Crowdsourcing network inference: the dream predictive signaling network challenge.",
+    "journalName": "Science Signaling ",
+    "volume": "4",
+    "issue": "189",
+    "ppPages": "mr7",
+    "pmId": "21900204",
+    "pmcId": "PMC3465072",
+    "doi": "10.1126/scisignal.2002212",
+    "yearPublished": "2011"
+  },
+  "readoutAssay": ["DREAM Challange"],
+  "compTools": []
+}]

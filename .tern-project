@@ -1,0 +1,13 @@
+{
+  "libs": [
+    "browser",
+    "jquery",
+    "ecma5"
+  ],
+  "plugins": {
+    "node": {},
+    "angular": {},
+    "requirejs": {}
+  },
+  "ide": {}
+}

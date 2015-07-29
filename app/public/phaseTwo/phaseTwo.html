@@ -1,0 +1,32 @@
+<div class="row phase-two">
+  <div class="phase-two-inner col-xs-12">
+    <h3>LINCS Production Phase 2</h3>
+    <h4>LINCS Data and Signature Generation Centers</h4>
+    <p>
+      The LINCS Data and Signature Generation Centers are six research centers focused
+      on high-throughput experiments that examine the changes that occur when a variety
+      of different cell lines are exposed to perturbations.
+    </p>
+    <div class="dsgc-wrapper">
+      <div class="dsgc" ng-repeat="group in vm.groups" ng-click="vm.goToGroup(group._id)">
+        <div class="dsgc-img" style="background-image: url(http://amp.pharm.mssm.edu/LDR/api/group/{{group._id}}/icon/);"></div>
+        <h5 class="text-center">{{group.name}}</h5>
+      </div>
+    </div>
+    <h4>BD2K-LINCS Data Coordination and Integration Center (DCIC)</h4>
+    <p>
+      Along with being the data coordination center of the LINCS program, the BD2K-LINCS
+      DCIC supports data science research focusing on interpreting and integrating
+      LINCS-generated data from different data types and databases in the LINCS-funded
+      projects. This center is co-funded by
+      <a href="http://bd2k.nih.gov/#sthash.UHtPu2rQ.dpbs">BD2K</a> and the
+      <a href="https://commonfund.nih.gov/">NIH Common Fund</a>.
+    </p>
+    <p>
+      The organizational structure of the Center includes a strong Consortium Coordination
+      and Administration (CCA) that supports and manages the Center’s goals and deliverables,
+      and coordinates activities across the LINCS and BD2K programs.
+    </p>
+    <h3>Do we need all the information from <a href="http://www.lincsproject.org/centers/bd2k-lincs-dcic/">this page</a> here? How about something like...For more information, visit their webpage at <a href="http://www.lincs-dcic.org">http://www.lincs-dcic.org</a></h3>
+  </div>
+</div>

@@ -614,11 +614,6 @@ try {
     dataReleaseSchema, 'dataReleases');
 }
 
-var compToolSchema = new Schema({
-  name: String,
-  url: String
-});
-
 var publicationSchema = new Schema({
   citation: {
     authors: [String],
@@ -636,7 +631,13 @@ var publicationSchema = new Schema({
     doi: String
   },
   readoutAssay: [String],
-  compTools: [compToolSchema],
+  compTools: {
+    type: [{
+        type: Schema.ObjectId,
+        ref: 'Tool'
+      }],
+      default: []
+  },
   link: String
 });
 
