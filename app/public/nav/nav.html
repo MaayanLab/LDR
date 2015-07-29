@@ -37,10 +37,12 @@
         <li class="nav-login">
           <form name="loginForm" class="navbar-form pull-right">
             <div class="form-group">
-              <input ng-focus="showErr=false" ng-blur="showErr=true" name="username" type="text" class="form-control" ng-model="vm.user.username" id="username" placeholder="Username">
+              <input ng-focus="showErr=false" ng-blur="showErr=true" name="username" type="text"
+              class="form-control" ng-model="vm.user.username" id="username" placeholder="Username">
             </div>
             <div id="password-group" class="form-group">
-              <input ng-focus="showErr=false" ng-blur="showErr=true" name="password" type="password" class="form-control" id="password" ng-model="vm.user.password" placeholder="Password">
+              <input ng-focus="showErr=false" ng-blur="showErr=true" name="password" type="password"
+              class="form-control" id="password" ng-model="vm.user.password" placeholder="Password">
             </div>
             <!-- <button type="button" ng-click="vm.register()" class="btn pull-right register-btn">
               Register
@@ -59,16 +61,32 @@
     <nav class="container-full">
       <div>
         <ul class="nav navbar-left">
-          <li>
-            <a ui-sref="centers">Centers</a>
+          <li class="dropdown" ng-show="vm.isLoggedIn && !vm.isLoggedInAdmin">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+              Centers
+            </a>
+            <ul class="centers-menu dropdown-menu" role="menu">
+              <li>
+                <a ui-sref="centers">Centers Home</a>
+              </li>
+              <li>
+                <a ui-sref="dsgc">Data Signature Generation Centers</a>
+              </li>
+              <li>
+                <a ui-sref="dcic">BD2K-LINCS Data Coordination and Integration Center</a>
+              </li>
+              <li>
+                <a ui-sref="phaseOne">Pilot Phase 1 Centers</a>
+              </li>
+            </ul>
           </li>
           <li ng-show="!vm.isLoggedIn || vm.isLoggedInAdmin">
             <a ui-sref="releasesHome">Data</a>
           </li>
           <li class="dropdown" ng-show="vm.isLoggedIn && !vm.isLoggedInAdmin">
             <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-          Data
-        </a>
+              Data
+            </a>
             <ul class="dropdown-menu" role="menu">
               <li ng-show="!vm.isLoggedInAdmin">
                 <a ui-sref="releasesHome">Data Home</a>
@@ -77,9 +95,7 @@
                 <a ui-sref="releasesOverview">Your Data</a>
               </li>
               <li ng-show="!vm.isLoggedInAdmin">
-                <a ui-sref="releasesCreate({id: ''})">
-              Add New
-            </a>
+                <a ui-sref="releasesCreate({id: ''})">Add New</a>
               </li>
             </ul>
           </li>

@@ -46,7 +46,7 @@ app.use('/LDR', express.static(publicDir));
 
 require('./backend/routes')(app);
 
-app.get('/LDR', function(req, res) {
+app.get('/', function(req, res) {
   res.status(200).sendFile(publicDir + 'index.html');
 });
 

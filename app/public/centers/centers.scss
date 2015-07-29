@@ -1,33 +1,41 @@
 @import '../base';
-$break-width: 992px;
+$break-width: 768px;
 
-.phase-nav {
-  height: 500px;
-  cursor: pointer;
-  .phase-nav-inner {
-    border: 1px solid transparent;
-    width: 100%;
-    display: inline-block;
-    padding: 200px 0;
-    h2 {
-      font-weight: 500;
-      color: $color-primary-dark;
-    }
-    span {
-      margin-top: 15px;
-      margin-bottom: 10px;
-      color: #ccc;
-      font-size: 3em;
-    }
-    &:hover {
-      border: 1px solid $color-primary-dark;
-    }
-    @media all and (max-width: $break-width) {
-      padding: 50px 0;
-    }
+.left-nav {
+  font-size: 14px;
+  margin-top: 100px;
+
+  ul {
+    padding-left: 15px;
   }
+
+  a {
+    color: $color-primary-dark;
+  }
+
   @media all and (max-width: $break-width) {
-    height: 200px;
-    margin-bottom: 100px;
+    display: none;
   }
+}
+
+.left-nav-btn {
+  margin: 5px 0;
+}
+
+.subpage-content {
+  margin-bottom: 20px;
+  border-left: 1px solid $color-primary;
+
+  h4 {
+    margin-top: 20px;
+    color: $color-primary-dark;
+  }
+
+  @media all and (max-width: $break-width) {
+    border-left: 1px solid transparent;
+  }
+}
+
+.phase-header {
+  border-bottom: 1px solid $color-secondary;
 }

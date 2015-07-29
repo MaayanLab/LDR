@@ -1,0 +1,16 @@
+.dcic-img, .center-img {
+  display: block;
+  margin: 0 auto;
+  height: 225px;
+  width: 300px;
+}
+
+.center-img {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.dcic-img {
+  background-image: url('../images/dcic.png');
+}

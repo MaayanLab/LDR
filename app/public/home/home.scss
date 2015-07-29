@@ -76,8 +76,8 @@
   }
 }
 
-.intro, .news {
-  border-bottom: 1px solid #ddd;
+.news {
+  border-left: 1px solid #ddd;
 }
 
 .intro {
@@ -87,7 +87,6 @@
 
 .news {
   padding-bottom: 40px;
-  margin-bottom: 40px;
 
   p {
     margin: 0;

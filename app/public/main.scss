@@ -12,7 +12,7 @@ body {
 }
 
 a {
-  color: $color-primary-dark;
+  color: $color-primary;
   font-weight: 600;
   cursor: pointer;
 }
@@ -178,4 +178,8 @@ span.stat-num {
 
 .highlight-primary-light {
   color: $color-primary;
+}
+
+.highlight-secondary {
+  color: $color-secondary;
 }

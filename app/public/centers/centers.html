@@ -1,26 +1,67 @@
-<h2 class="headline-info page-header">
-  Centers
-</h2>
-<p>
-  The NIH Common Fund’s Library of Integrated Network-based Cellular Signatures (LINCS)
-  program is implemented in two parts: Pilot Phase 1 (FY 2010) and the continuation
-  of the program in Production Phase 2. This part of the program consists primarily
-  of LINCS Data and Signature Generation Centers. Phase 2 will also synergize with
-  the efforts of the
-  <a href="http://bd2k.nih.gov/#sthash.UHtPu2rQ.dpbs">NIH Big Data to
-    Knowledge (BD2K) program</a>.
-</p>
-<div class="row phase-nav">
-  <div class="phase-one-nav col-xs-12 col-md-6 text-center" ng-click="vm.goToPhase('One')">
-    <div class="phase-nav-inner">
-      <span class="glyphicon glyphicon-chevron-left pull-left"></span>
-      <h2>LINCS Pilot Phase One</h2>
+<div class="row">
+  <div class="left-nav col-xs-3">
+    <ul>
+      <li><a ui-sref="dsgc">Data and Signature Generation Centers</a></li>
+      <li><a ui-sref="dcic">BD2K-LINCS Data Coordination and Integration Center</a></li>
+      <li><a ui-sref="phaseOne">Pilot Phase 1 Centers</a></li>
+    </ul>
+    <div class="left-nav-btns text-center">
+      <button class="btn btn-primary left-nav-btn">Data Releases</button>
+      <button class="btn btn-primary left-nav-btn">Tools and Databases</button>
     </div>
   </div>
-  <div class="phase-two-nav col-xs-12 col-md-6 text-center" ng-click="vm.goToPhase('Two')">
-    <div class="phase-nav-inner">
-      <span class="glyphicon glyphicon-chevron-right pull-right"></span>
-      <h2>LINCS Production Phase Two</h2>
+  <div class="subpage-content col-xs-12 col-sm-9">
+    <h2 class="headline-info page-header">
+      Centers
+    </h2>
+    <p>
+      The LINCS program is implemented in two parts: pilot phase 1 (FY 2010) and the continuation
+      of the program in production phase 2. This part of the program consists primarily
+      of LINCS Data and Signature Generation Centers. Phase 2 will also synergize
+      with the efforts of the <a href="http://bd2k.nih.gov/#sthash.UHtPu2rQ.dpbs">NIH Big Data to
+  Knowledge (BD2K) program</a>.
+    </p>
+    <div class="row">
+      <div class="col-xs-12">
+        <h3 class="phase-header highlight-secondary">LINCS Production Phase 2</h3>
+        <h4>LINCS Data and Signature Generation Centers</h4>
+        <p>
+          The <a ui-sref="dsgc">LINCS Data and Signature Generation Centers</a> are
+          six research centers focused on high-throughput experiments that examine
+          the changes that occur when a variety of different cell lines are exposed
+          to perturbations.
+        </p>
+        <h4>BD2K-LINCS Data Coordination and Integration Center</h4>
+        <p>
+          The <a ui-sref="dcic">BD2K-LINCS Data Coordination and Integration Center (DCIC)</a> is the data coordination center for the NIH Common Fund’s Library of Integrated
+          Network-based Cellular Signatures (LINCS) program, which aims to characterize
+          how a variety of types of cells, tissues and networks respond to disruption
+          by drugs and other factors. The center supports data science research focusing
+          on interpreting and integrating LINCS-generated data from different data
+          types and databases in the LINCS-funded projects. This center is co-funded
+          by
+          <a href="http://bd2k.nih.gov/#sthash.UHtPu2rQ.dpbs">BD2K</a> and the
+          <a href="https://commonfund.nih.gov/">NIH Common Fund</a>.
+        </p>
+        <p>
+          The organizational structure of the Center includes a strong Consortium Coordination
+          and Administration (CCA) that supports and manages the Center’s goals and
+          deliverables, and coordinates activities across the LINCS and BD2K programs.
+        </p>
+      </div>
+      <div class="col-xs-12">
+        <h3 class="phase-header highlight-secondary">LINCS Pilot Phase 1 (Fiscal Year Completion 2013)</h3>
+        <p>
+          The <a ui-sref="phaseOne">LINCS Pilot Phase 1</a> was composed of 10 centers:
+          two data production/analysis centers, that generated data for the LINCS
+          matrix, four centers dedicated to developing technology to complement and
+          facilitate the collection of cellular signatures, and four centers that
+          developed computational tools for analyzing the data produced by the data
+          production centers. In addition, two external supplements, as well as a
+          number of internal collaborations, supported and augmented the work done
+          by the LINCS centers.
+        </p>
+      </div>
     </div>
   </div>
 </div>
