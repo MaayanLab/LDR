@@ -41,8 +41,8 @@ app.use(compress());
 
 var publicDir = path.join(__dirname, '/');
 console.log('Serving static files from ' + publicDir);
-app.use('/LDR/uploads', express.static(path.join(publicDir, 'backend/uploads')));
-app.use('/LDR', express.static(publicDir));
+app.use('/lincsproject/uploads', express.static(path.join(publicDir, 'backend/uploads')));
+app.use('/lincsproject', express.static(publicDir));
 
 require('./backend/routes')(app);
 
