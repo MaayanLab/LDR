@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"stat",
+				"stateParams"
+			],
+			[
 				"flex",
 				"flex-wrap"
 			],
@@ -59,6 +63,54 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "app/public/nav/nav.html",
+			"settings":
+			{
+				"buffer_size": 4169,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/public/nav/nav.scss",
+			"settings":
+			{
+				"buffer_size": 4039,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/public/_base.scss",
+			"settings":
+			{
+				"buffer_size": 959,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/public/partials/searchBar.html",
+			"settings":
+			{
+				"buffer_size": 295,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/public/index.html",
+			"settings":
+			{
+				"buffer_size": 2488,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/public/home/home.html",
+			"settings":
+			{
+				"buffer_size": 4095,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -67,10 +119,18 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 392.0,
-		"last_filter": "",
+		"height": 262.0,
+		"last_filter": "install",
 		"selected_items":
 		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"insl",
+				"Package Control: Install Package"
+			],
 			[
 				"insta",
 				"Package Control: Install Package"
@@ -86,10 +146,6 @@
 			[
 				"for",
 				"Format: Javascript"
-			],
-			[
-				"install",
-				"Package Control: Install Package"
 			],
 			[
 				"remove ",
@@ -116,7 +172,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 575.0
+		"width": 538.0
 	},
 	"console":
 	{
@@ -139,24 +195,36 @@
 	[
 		"/Users/mmcdermott/Work/ldr",
 		"/Users/mmcdermott/Work/ldr/app",
-		"/Users/mmcdermott/Work/ldr/app/public",
-		"/Users/mmcdermott/Work/ldr/app/public/bar",
-		"/Users/mmcdermott/Work/ldr/app/public/centers",
-		"/Users/mmcdermott/Work/ldr/app/public/group/create",
-		"/Users/mmcdermott/Work/ldr/app/public/group/home",
-		"/Users/mmcdermott/Work/ldr/app/public/group/settings",
-		"/Users/mmcdermott/Work/ldr/app/public/home",
-		"/Users/mmcdermott/Work/ldr/app/public/releases/create",
-		"/Users/mmcdermott/Work/ldr/app/public/releases/home",
-		"/Users/mmcdermott/Work/ldr/app/public/releases/overview",
-		"/Users/mmcdermott/Work/ldr/app/public/user/admin",
-		"/Users/mmcdermott/Work/ldr/app/public/user/settings"
+		"/Users/mmcdermott/Work/ldr/app/public"
 	],
 	"file_history":
 	[
-		"/Users/mmcdermott/Work/ldr/app/backend/routes/groups.js",
-		"/Users/mmcdermott/Work/ldr/app/public/group/home/home.html",
+		"/Users/mmcdermott/Work/ldr/app/public/home/home.scss",
+		"/Users/mmcdermott/Work/ldr/app/public/home/home.html",
+		"/Users/mmcdermott/Documents/NIH-LINCS-Title.png",
+		"/Users/mmcdermott/Work/ldr/app/public/services/groupsService.js",
+		"/Users/mmcdermott/Work/ldr/gulpfile.js",
+		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgcCenter/centerPartials/dtoxs.html",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgcCenter/centerPartials/lincsT.html",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgcCenter/centerPartials/lincsP.html",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgcCenter/centerPartials/hmsLincs.html",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgcCenter/centerPartials/mepLincs.html",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgcCenter/centerPartials/neuroLincs.html",
 		"/Users/mmcdermott/Work/ldr/app/public/centers/centers.scss",
+		"/Users/mmcdermott/Work/ldr/app/backend/config/database.js",
+		"/Users/mmcdermott/Work/ldr/app/backend/config/baseUrl.js",
+		"/Users/mmcdermott/Work/ldr/server.js",
+		"/Users/mmcdermott/Work/ldr/app/public/index.html",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dcic/dcic.scss",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgcCenter/dsgcCenter.scss",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dcic/dcic.html",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgcCenter/dsgcCenter.html",
+		"/Users/mmcdermott/Work/ldr/app/backend/routes/groups.js",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgcCenter/dsgcCenter.js",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgc/dsgc.html",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgc/dsgc.scss",
+		"/Users/mmcdermott/Work/ldr/app/public/group/home/home.html",
 		"/Users/mmcdermott/Work/ldr/app/public/centers/centers.html",
 		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/extBootstrap.scss",
@@ -165,11 +233,8 @@
 		"/Users/mmcdermott/Work/ldr/app/public/centers/centers.js",
 		"/Users/mmcdermott/Work/ldr/TODO.txt",
 		"/Users/mmcdermott/Work/ldr/app/public/home/home.js",
-		"/Users/mmcdermott/Work/ldr/app/public/home/home.html",
-		"/Users/mmcdermott/Work/ldr/app/public/services/groupsService.js",
 		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
 		"/Users/mmcdermott/Work/ldr/app/public/_base.scss",
-		"/Users/mmcdermott/Work/ldr/app/public/home/home.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.html",
 		"/Users/mmcdermott/Work/ldr/app/public/app.js",
 		"/Users/mmcdermott/Work/ldr/app/public/partials/footer.html",
@@ -181,7 +246,6 @@
 		"/Users/mmcdermott/Work/ldr/.gitignore",
 		"/Users/mmcdermott/Work/ldr/app/public/releases/home/releasesHome.js",
 		"/Users/mmcdermott/Work/ldr/app/backend/models.js",
-		"/Users/mmcdermott/Work/ldr/gulpfile.js",
 		"/Users/mmcdermott/Work/ldr/app/public/user/admin/admin.js",
 		"/Users/mmcdermott/Work/ldr/app/public/services/exportService.js",
 		"/Users/mmcdermott/Work/ldr/app/public/services/releasesService.js",
@@ -192,7 +256,6 @@
 		"/Users/mmcdermott/Work/ldr/app/public/data/data.html",
 		"/Users/mmcdermott/Work/ldr/.eslintrc",
 		"/Users/mmcdermott/Work/ldr/app/public/group/settings/settings.js",
-		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/HTML-CSS-JS Prettify/.jsbeautifyrc",
 		"/Users/mmcdermott/Work/ldr/app/public/bar/bar.js",
 		"/Users/mmcdermott/Work/ldr/app/public/msgModal/msgModal.js",
@@ -215,7 +278,7 @@
 	],
 	"find":
 	{
-		"height": 35.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -232,6 +295,13 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"vm.center",
+			"MEPLINCS",
+			"LINCSPCCSE",
+			"LINCSTranscriptomics",
+			"HMSLINCS",
+			"MEPLINCS",
+			"LINCSTranscriptomics",
 			"h5",
 			"h4",
 			"err",
@@ -280,8 +350,206 @@
 	"groups":
 	[
 		{
+			"selected": 3,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "app/public/nav/nav.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4169,
+						"regions":
+						{
+							"TagLint":
+							{
+								"flags": 2356,
+								"icon": "dot",
+								"regions":
+								[
+									[
+										2423,
+										2425
+									]
+								],
+								"scope": "variable.parameter"
+							}
+						},
+						"selection":
+						[
+							[
+								116,
+								116
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"is_xml": false,
+							"syntax": "Packages/AngularJS/AngularJS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/public/nav/nav.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4039,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2851,
+								2851
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Sass/Syntaxes/Sass.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2715.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/public/_base.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 959,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								195,
+								195
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Sass/Syntaxes/Sass.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/public/partials/searchBar.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 295,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								295,
+								295
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"is_xml": false,
+							"syntax": "Packages/AngularJS/AngularJS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "app/public/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2488,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2341,
+								2341
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"is_xml": false,
+							"syntax": "Packages/AngularJS/AngularJS.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "app/public/home/home.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4095,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								600,
+								600
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"is_xml": false,
+							"syntax": "Packages/AngularJS/AngularJS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -338,20 +606,52 @@
 		"selected_items":
 		[
 			[
-				"ex",
-				"app/public/extBootstrap.scss"
+				"homeht",
+				"app/public/home/home.html"
 			],
 			[
-				"nav",
+				"home.scs",
+				"app/public/home/home.scss"
+			],
+			[
+				"searchbar",
+				"app/public/partials/searchBar.html"
+			],
+			[
+				"home.t",
+				"app/public/home/home.html"
+			],
+			[
+				"navsc",
 				"app/public/nav/nav.scss"
 			],
 			[
-				"center.sc",
-				"app/public/centers/centers.scss"
+				"nav",
+				"app/public/nav/nav.html"
+			],
+			[
+				"grps",
+				"app/public/services/groupsService.js"
+			],
+			[
+				"home.",
+				"app/public/home/home.html"
+			],
+			[
+				"group",
+				"app/public/services/groupsService.js"
 			],
 			[
 				"groups",
 				"app/backend/routes/groups.js"
+			],
+			[
+				"ex",
+				"app/public/extBootstrap.scss"
+			],
+			[
+				"center.sc",
+				"app/public/centers/centers.scss"
 			],
 			[
 				"home",
@@ -418,10 +718,6 @@
 				"app/public/home/home.html"
 			],
 			[
-				"home.",
-				"app/public/home/home.js"
-			],
-			[
 				"nav.h",
 				"app/public/nav/nav.html"
 			],
@@ -451,7 +747,7 @@
 	"select_project":
 	{
 		"height": 500.0,
-		"last_filter": "",
+		"last_filter": "lin",
 		"selected_items":
 		[
 		],
@@ -482,8 +778,8 @@
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": false,
-	"side_bar_width": 244.0,
+	"side_bar_visible": true,
+	"side_bar_width": 281.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

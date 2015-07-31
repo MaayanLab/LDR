@@ -1,0 +1,217 @@
+@import '../base';
+
+// banner.html
+.intro-banner {
+  min-height: 400px;
+  width: 100%;
+  background: url('../images/NIH-LINCS-Background.jpg') no-repeat;
+  background-size: cover;
+  // border-bottom: 1px solid $color-primary-dark;
+}
+
+.home-block-wrapper {
+  width: 100%;
+  display: inline-block;
+}
+
+.home-block {
+  margin-top: 50px;
+  float: left;
+  width: 30%;
+  background-color: white;
+  border: 1px solid;
+  border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+  min-height: 300px;
+  padding: 20px 30px;
+  box-shadow: 0 0 12px 0 $color-primary-dark;
+
+  .block-title {
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    border-bottom: 3px solid;
+  }
+
+  button {
+    color: white;
+  }
+
+  .dr-block-title {
+    color: $color-secondary;
+    border-color: $color-secondary;
+  }
+}
+
+.c-block {
+  @media all and (max-width: 992px) {
+    width: 100%;
+    margin: 20px 0;
+  }
+  button {
+    background-color: $color-primary-dark;
+  }
+  .c-block-title {
+    color: $color-primary-dark;
+    border-color: $color-primary-dark;
+  }
+}
+
+.dr-block {
+  margin: 50px 0 0 57px;
+
+  @media all and (max-width: 1200px) {
+    margin-left: 47px;
+  }
+  @media all and (max-width: 992px) {
+    margin: 0 0 20px 0;
+    width: 45%;
+  }
+  @media all and (max-width: 753px) {
+    width: 100%;
+    margin: 20px 0;
+  }
+  button {
+    background-color: $color-secondary;
+  }
+  .dr-block-title {
+    color: $color-secondary;
+    border-color: $color-secondary;
+  }
+}
+
+.td-block {
+  float: right;
+  @media all and (max-width: 992px) {
+    margin: 0 0 20px 0;
+    width: 45%;
+  }
+  @media all and (max-width: 753px) {
+    width: 100%;
+    margin: 20px 0;
+  }
+  button {
+    background-color: $color-green;
+  }
+  .td-block-title {
+    color: $color-green;
+    border-color: $color-green;
+  }
+}
+
+
+
+// searchBar.html
+.search-wrapper {
+  margin: 18px 0;
+  #release-search {
+    position: relative;
+    height: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    background: #fff;
+    #search-bar {
+      position: absolute;
+      left: 7px;
+      width: 83%;
+      height: 30px;
+      padding: 0;
+      margin: 0;
+      border: 0;
+      outline: 0;
+      font-size: 14px;
+      background: none;
+    }
+    #search-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 28px;
+      width: 15%;
+      border: 0;
+      text-indent: -9999em;
+      cursor: pointer;
+      outline: 0;
+      border-left: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 0 2px 2px 0;
+      background: url('../images/ico-search.svg') no-repeat 50% 50%;
+      background-size: 16px 16px;
+      &:hover {
+        background: $color-primary-dark url('../images/ico-search-hover.svg') no-repeat 50% 50%;
+        background-size: 16px 16px;
+      }
+    }
+  }
+}
+
+// legend.html
+table.legend {
+  margin-top: 20px;
+}
+
+td.legend-color {
+  width: 150px;
+  height: 20px;
+  border: 1px solid black;
+}
+
+.legend-label {
+  line-height: 20px;
+  margin: 0;
+}
+
+
+// footer.html
+#footer {
+  min-height: 300px;
+  background: $color-blue-gray;
+  bottom: 0;
+  color: white;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  margin-top: 10px;
+
+  .thin-divider {
+    display: flex;
+    width: 100%;
+    height: 5px;
+
+    .green {
+      flex: 8;
+      background-color: $color-green;
+    }
+
+    .beige {
+      flex: 2;
+      background-color: $color-secondary;
+    }
+
+    .dark-blue {
+      flex: 3;
+      background-color: $color-primary-dark;
+    }
+  }
+
+  .bd2k, .contact {
+    text-align: center;
+  }
+
+  .bd2k {
+    @media all and (min-width: 992px) {
+      float: left !important;
+    }
+  }
+
+  .contact {
+    @media all and (min-width: 992px) {
+      float: right !important;
+    }
+  }
+
+  a {
+    color: $color-primary-light;
+  }
+}
+
+.credit {
+  margin: 20px;
+}

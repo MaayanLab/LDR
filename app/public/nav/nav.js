@@ -98,7 +98,6 @@
         vm.showFailMessage = false;
         $state.go('home');
       }
-
     }
   }
 })();

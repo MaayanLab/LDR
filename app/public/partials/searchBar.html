@@ -1,6 +1,5 @@
-<form id="release-search"
-      class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
+<form id="release-search">
     <input ng-model="vm.query" name="q" value="" type="search" id="search-bar"
-           placeholder="search data" tabindex="1" autocomplete="off">
+           placeholder="search assays, projects, and experimental data" tabindex="1" autocomplete="off">
     <input type="submit" id="search-btn" ui-sref="search({q: vm.query})" />
 </form>

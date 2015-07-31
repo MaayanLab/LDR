@@ -1,10 +1,5 @@
 @import '../base';
 
-.search-count {
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 19px;
-}
-
 .headline-info {
   font-weight: 400 !important;
   span {
@@ -16,81 +11,41 @@
 .headline-info-margins {
   @extend .headline-info;
   margin: 0 0 20px 0;
-
   span {
     font-weight: 700 !important;
     color: $color-primary-dark;
   }
 }
 
-.home-stats {
-
-  li {
-    padding: 0 12px;
-  }
-}
-
-#release-search {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  position: relative;
-  height: 47px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 2px;
-  background: #fff;
-
-  #search-bar {
-    position: absolute;
-    top: 7px;
-    left: 7px;
-    width: 80%;
-    height: 30px;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    outline: 0;
-    font-size: 18px;
-    background: none;
-
-  }
-
-  #search-btn {
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 45px;
-    width: 46px;
-    border: 0;
-    text-indent: -9999em;
-    cursor: pointer;
-    outline: 0;
-    border-left: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 0 2px 2px 0;
-    background: url('../images/ico-search.svg') no-repeat 50% 50%;
-    background-size: 16px 16px;
-
-    &:hover {
-      background: $color-primary-dark url('../images/ico-search-hover.svg') no-repeat 50% 50%;
-      background-size: 16px 16px;
-    }
-  }
-}
-
-.news {
-  border-left: 1px solid #ddd;
-}
-
 .intro {
-  padding-bottom: 60px;
-  margin-bottom: 60px;
+  display: inline-block;
+  margin: 100px 0;
+  padding-bottom: 100px;
+  border-bottom: 1px solid #ddd;
+}
+
+#nih-cube {
+  background: url('../images/NIH-Cube.png') no-repeat center;
+  background-size: cover;
+  margin: 20px auto 0 auto;
+  width: 239px;
+  height: 200px;
+}
+
+.news-wrapper {
+  background-color: $color-secondary;
+  margin-bottom: 200px;
 }
 
 .news {
   padding-bottom: 40px;
-
   p {
     margin: 0;
   }
+}
+
+.news {
+
 }
 
 .questions {

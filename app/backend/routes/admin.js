@@ -3,6 +3,8 @@
  * Created on 5/29/15.
  */
 
+'use strict';
+
 var jwt = require('jsonwebtoken'),
   secret = require('../config/database').secret,
   baseUrl = require('../config/baseUrl').baseUrl,
@@ -48,10 +50,10 @@ module.exports = function(app) {
                   res.status(200).send(release);
                 }
               }
-            )
+            );
         } else {
           res.status(401).send('You are not authorized to access ' +
-            'this URL.')
+            'this URL.');
         }
       } else {
         res.status(401).send('Token or URL are invalid. Try again.')

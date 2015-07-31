@@ -371,7 +371,7 @@ var msgSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   },
-  return: Boolean // True if reason for returning, otherwise false
+  return: Boolean // True if admin's 'reason for returning', otherwise false
 });
 
 
@@ -580,13 +580,6 @@ dataReleaseSchema.pre('save', function(next) {
   // Update dateModified
   rel.dateModified = new Date();
 
-  // Generate 'upcoming' field with closest release date
-  //this.releaseDates.upcoming = this.releaseDates.level1 !== '' ?
-  //    this.releaseDates.level1 : this.releaseDates.level2 !== '' ?
-  //    this.releaseDates.level2 : this.releaseDates.level3 !== '' ?
-  //    this.releaseDates.level3 : this.releaseDates.level4 !== '' ?
-  //    this.releaseDates.level4 : 'NA';
-
   // Check if any ids are null. If they are, throw an error
   _.each(rel.metadata, function(arr, key) {
     _.each(arr, function(id) {
@@ -633,10 +626,10 @@ var publicationSchema = new Schema({
   readoutAssay: [String],
   compTools: {
     type: [{
-        type: Schema.ObjectId,
-        ref: 'Tool'
-      }],
-      default: []
+      type: Schema.ObjectId,
+      ref: 'Tool'
+    }],
+    default: []
   },
   link: String
 });
@@ -647,7 +640,6 @@ try {
   Publication = mongoose.model('Publication',
     publicationSchema, 'publications');
 }
-
 
 module.exports = {
   User: User,
