@@ -5,6 +5,8 @@
 
 'use strict';
 
+/* beautify preserve:start */
+
 var mongoose = require('mongoose'),
   // version = require('mongoose-version'),
   bcrypt = require('bcrypt'),
@@ -18,62 +20,23 @@ var SALT_WORK_FACTOR = 10;
 
 // Mongoose Models and Schemas
 var User, Group, Assay, CellLine, Perturbagen, Readout, Gene, Disease,
-  Organism, Tool, DataRelease, Publication;
+  Organism, Tool, DataRelease, Publication, Event;
 var Schema = mongoose.Schema;
 
 // User
 var userSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    index: {
-      unique: true
-    }
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  name: {
-    type: String,
-    required: true
-  },
-  avatar: {
-    data: Buffer,
-    contentType: String
-  },
+  username: { type: String, required: true, index: { unique: true } },
+  password: { type: String, required: true },
+  name: { type: String, required: true },
+  avatar: { data: Buffer, contentType: String },
   // Make email unique?
-  email: {
-    type: String,
-    required: true /*, index: { unique: true }*/
-  },
-  group: {
-    type: Schema.ObjectId,
-    required: true,
-    ref: 'Group'
-  },
-  admin: {
-    type: Boolean,
-    required: true,
-    default: false
-  },
-  admitted: {
-    type: Boolean,
-    required: true,
-    default: false
-  },
-  location: {
-    type: String,
-    default: ''
-  },
-  fieldOfStudy: {
-    type: String,
-    default: ''
-  },
-  homepage: {
-    type: String,
-    default: ''
-  }
+  email: { type: String, required: true /*, index: { unique: true }*/ },
+  group: { type: Schema.ObjectId, required: true, ref: 'Group' },
+  admin: { type: Boolean, required: true, default: false },
+  admitted: { type: Boolean, required: true, default: false },
+  location: { type: String, default: '' },
+  fieldOfStudy: { type: String, default: '' },
+  homepage: { type: String, default: '' }
 });
 
 userSchema.pre('save', function(next) {
@@ -120,32 +83,14 @@ try {
 
 // Group
 var groupSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-    index: {
-      unique: true
-    }
-  },
-  homepage: {
-    type: String,
-    default: ''
-  },
+  name: { type: String, required: true, index: { unique: true } },
+  homepage: { type: String, default: '' },
   icon: {
-    path: {
-      type: String,
-      default: '/usr/src/app/hdfs/97a6f65cb0c61d48704153af6bdc4c3c.png'
-    },
-    type: {
-      type: String,
-      default: 'image/png'
-    }
+    path: { type: String, default: '/usr/src/app/hdfs/97a6f65cb0c61d48704153af6bdc4c3c.png' },
+    type: { type: String, default: 'image/png' }
   },
   email: String,
-  about: {
-    type: String,
-    default: ''
-  },
+  about: { type: String, default: '' },
   location: String
 });
 
@@ -160,23 +105,10 @@ try {
 }
 
 var asSchema = new Schema({
-  name: {
-    type: String,
-    index: {
-      unique: true
-    }
-  },
+  name: { type: String, index: { unique: true } },
   description: String,
-  abbr: {
-    type: String,
-    index: {
-      unique: true
-    }
-  },
-  group: {
-    type: Schema.ObjectId,
-    ref: 'Group'
-  }
+  abbr: { type: String, index: { unique: true } },
+  group: { type: Schema.ObjectId, ref: 'Group' }
 });
 
 asSchema.index({
@@ -190,20 +122,12 @@ try {
 }
 
 var clSchema = new Schema({
-  name: {
-    type: String,
-    index: {
-      unique: true
-    }
-  },
+  name: { type: String, index: { unique: true } },
   type: String,
   class: String,
   controlOrDisease: String,
   tissue: String,
-  group: {
-    type: Schema.ObjectId,
-    ref: 'Group'
-  }
+  group: { type: Schema.ObjectId, ref: 'Group' }
 });
 
 clSchema.index({
@@ -217,17 +141,9 @@ try {
 }
 
 var pertSchema = new Schema({
-  name: {
-    type: String,
-    index: {
-      unique: true
-    }
-  },
+  name: { type: String, index: { unique: true } },
   type: String,
-  group: {
-    type: Schema.ObjectId,
-    ref: 'Group'
-  }
+  group: { type: Schema.ObjectId, ref: 'Group' }
 });
 
 pertSchema.index({
@@ -241,17 +157,9 @@ try {
 }
 
 var roSchema = new Schema({
-  name: {
-    type: String,
-    index: {
-      unique: true
-    }
-  },
+  name: { type: String, index: { unique: true } },
   datatype: String,
-  group: {
-    type: Schema.ObjectId,
-    ref: 'Group'
-  }
+  group: { type: Schema.ObjectId, ref: 'Group' }
 });
 
 roSchema.index({
@@ -265,20 +173,12 @@ try {
 }
 
 var geneSchema = new Schema({
-  name: {
-    type: String,
-    index: {
-      unique: true
-    }
-  },
+  name: { type: String, index: { unique: true } },
   organism: String,
   url: String,
   description: String,
   reference: String,
-  group: {
-    type: Schema.ObjectId,
-    ref: 'Group'
-  }
+  group: { type: Schema.ObjectId, ref: 'Group' }
 });
 
 geneSchema.index({
@@ -292,17 +192,9 @@ try {
 }
 
 var disSchema = new Schema({
-  name: {
-    type: String,
-    index: {
-      unique: true
-    }
-  },
+  name: { type: String, index: { unique: true } },
   description: String,
-  group: {
-    type: Schema.ObjectId,
-    ref: 'Group'
-  }
+  group: { type: Schema.ObjectId, ref: 'Group' }
 });
 
 disSchema.index({
@@ -316,17 +208,9 @@ try {
 }
 
 var orgSchema = new Schema({
-  name: {
-    type: String,
-    index: {
-      unique: true
-    }
-  },
+  name: { type: String, index: { unique: true } },
   commonName: String,
-  group: {
-    type: Schema.ObjectId,
-    ref: 'Group'
-  }
+  group: { type: Schema.ObjectId, ref: 'Group' }
 });
 
 orgSchema.index({
@@ -340,18 +224,10 @@ try {
 }
 
 var toolSchema = new Schema({
-  name: {
-    type: String,
-    index: {
-      unique: true
-    }
-  },
+  name: { type: String, index: { unique: true } },
   description: String,
   url: String,
-  group: {
-    type: Schema.ObjectId,
-    ref: 'Group'
-  }
+  group: { type: Schema.ObjectId, ref: 'Group' }
 });
 
 toolSchema.index({
@@ -367,56 +243,22 @@ try {
 var msgSchema = new Schema({
   message: String,
   date: Date,
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User'
-  },
+  user: { type: Schema.ObjectId, ref: 'User' },
   return: Boolean // True if admin's 'reason for returning', otherwise false
 });
 
 
 var dataReleaseSchema = new Schema({
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  group: {
-    type: Schema.ObjectId,
-    ref: 'Group',
-    required: true
-  },
-  approved: {
-    type: Boolean,
-    required: true,
-    default: false
-  },
-  released: {
-    type: Boolean,
-    required: true,
-    default: false
-  },
-  dateModified: {
-    type: Date,
-    required: true
-  },
-  needsEdit: {
-    type: Boolean,
-    default: false
-  },
+  user: { type: Schema.ObjectId, ref: 'User', required: true },
+  group: { type: Schema.ObjectId, ref: 'Group', required: true },
+  approved: { type: Boolean, required: true, default: false },
+  released: { type: Boolean, required: true, default: false },
+  dateModified: { type: Date, required: true },
+  needsEdit: { type: Boolean, default: false },
   messages: [msgSchema], // Messages between center and NIH
-  did: {
-    type: String,
-    required: true
-  },
-  datasetName: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    default: ''
-  }, // Brief description of exp.
+  did: { type: String, required: true },
+  datasetName: { type: String, required: true },
+  description: { type: String, default: '' }, // Brief description of exp.
   releaseDates: {
     upcoming: Date,
     level1: {
@@ -429,84 +271,21 @@ var dataReleaseSchema = new Schema({
   },
   // These are arrays of IDs pointing to the name-metadata server
   metadata: {
-    assay: {
-      type: [{
-        type: Schema.ObjectId,
-        ref: 'Assay'
-      }],
-      default: []
-    },
-    cellLines: {
-      type: [{
-        type: Schema.ObjectId,
-        ref: 'CellLine'
-      }],
-      default: []
-    },
-    perturbagens: {
-      type: [{
-        type: Schema.ObjectId,
-        ref: 'Perturbagen'
-      }],
-      default: []
-    },
-    readouts: {
-      type: [{
-        type: Schema.ObjectId,
-        ref: 'Readout'
-      }],
-      default: []
-    },
-    manipulatedGene: {
-      type: [{
-        type: Schema.ObjectId,
-        ref: 'Gene'
-      }],
-      default: []
-    }, // Always length 1
-    organism: {
-      type: [{
-        type: Schema.ObjectId,
-        ref: 'Organism'
-      }],
-      default: []
-    }, // Always length 1
-    relevantDisease: {
-      type: [{
-        type: Schema.ObjectId,
-        ref: 'Disease'
-      }],
-      default: []
-    }, // Always length 1
-    analysisTools: {
-      type: [{
-        type: Schema.ObjectId,
-        ref: 'tool'
-      }],
-      default: []
-    },
-    tagsKeywords: {
-      type: [],
-      default: []
-    }
+    assay: { type: [{ type: Schema.ObjectId, ref: 'Assay' }], default: [] },
+    cellLines: { type: [{ type: Schema.ObjectId, ref: 'CellLine' }], default: [] },
+    perturbagens: { type: [{ type: Schema.ObjectId, ref: 'Perturbagen' }], default: [] },
+    readouts: { type: [{ type: Schema.ObjectId, ref: 'Readout' }], default: [] },
+    manipulatedGene: { type: [{ type: Schema.ObjectId, ref: 'Gene' }], default: [] }, // Always length 1
+    organism: { type: [{ type: Schema.ObjectId, ref: 'Organism' }], default: [] }, // Always length 1
+    relevantDisease: { type: [{ type: Schema.ObjectId, ref: 'Disease' }], default: [] }, // Always length 1
+    analysisTools: { type: [{ type: Schema.ObjectId, ref: 'tool' }], default: [] },
+    tagsKeywords: { type: [], default: [] }
   },
   urls: {
-    dataUrl: {
-      type: String,
-      default: ''
-    },
-    metadataUrl: {
-      type: String,
-      default: ''
-    },
-    pubMedUrl: {
-      type: String,
-      default: ''
-    },
-    qcDocumentUrl: {
-      type: String,
-      default: ''
-    }
+    dataUrl: { type: String, default: '' },
+    metadataUrl: { type: String, default: '' },
+    pubMedUrl: { type: String, default: '' },
+    qcDocumentUrl: { type: String, default: '' }
   }
 });
 
@@ -624,13 +403,7 @@ var publicationSchema = new Schema({
     doi: String
   },
   readoutAssay: [String],
-  compTools: {
-    type: [{
-      type: Schema.ObjectId,
-      ref: 'Tool'
-    }],
-    default: []
-  },
+  compTools: { type: [{ type: Schema.ObjectId, ref: 'Tool' }], default: [] },
   link: String
 });
 
@@ -640,6 +413,22 @@ try {
   Publication = mongoose.model('Publication',
     publicationSchema, 'publications');
 }
+
+var eventSchema = new Schema({
+  title: String,
+  type: { type: String, required: true },
+  description: String,
+  date: Date
+});
+
+try {
+  Event = mongoose.model('Event');
+} catch (e) {
+  Event = mongoose.model('Event',
+    eventSchema, 'events');
+}
+
+/* beautify preserve:end */
 
 module.exports = {
   User: User,
@@ -653,5 +442,6 @@ module.exports = {
   Organism: Organism,
   Tool: Tool,
   DataRelease: DataRelease,
-  Publication: Publication
+  Publication: Publication,
+  Event: Event
 };

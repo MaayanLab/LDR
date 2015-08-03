@@ -1,9 +1,6 @@
 <div class="navbar-wrapper">
   <div class="navbar-inner container">
     <a id="nih-title" ui-sref="home"></a>
-    <!-- <div class="col-md-4 cube-wrapper">
-      <div id="nih-cube" class="col-xs-12-col-md-4"></div>
-    </div> -->
     <div class="search-wrapper col-xs-12 col-md-6" ng-include="'partials/searchBar.html'"></div>
     <div class="username-menu text-center">
       <a ui-sref="login" ng-show="!isLoggedIn"><!-- Sign up <span>or</span>  -->Log in</p>
@@ -75,7 +72,7 @@
               </li>-->
       </ul>
     </nav>
-    <div class="col-xs-12 col-md-7" ng-show="!vm.isLoggedIn">
+    <!-- <div class="col-xs-12 col-md-7" ng-show="!vm.isLoggedIn">
       <ul class="nav navbar-nav ul-nav-login">
         <li class="nav-login">
           <form name="loginForm" class="navbar-form pull-right">
@@ -87,15 +84,15 @@
               <input ng-focus="showErr=false" ng-blur="showErr=true" name="password" type="password"
               class="form-control" id="password" ng-model="vm.user.password" placeholder="Password">
             </div>
-            <!-- <button type="button" ng-click="vm.register()" class="btn pull-right register-btn">
+            <button type="button" ng-click="vm.register()" class="btn pull-right register-btn">
               Register
-            </button> -->
+            </button>
             <button type="submit" ng-click="vm.login()" class="btn pull-right login-btn">
               Login
             </button>
           </form>
         </li>
       </ul>
-    </div>
+    </div> -->
   </div>
 </div>

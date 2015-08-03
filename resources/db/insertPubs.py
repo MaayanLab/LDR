@@ -7,7 +7,7 @@ from bson.objectid import ObjectId
 from datetime import datetime
 from dateutil.parser import parse
 
-client = MongoClient('mongodb://mmcdermott:kroyweN@localhost')
+client = MongoClient('mongodb://hannah')
 publications = client['LDR']['publications']
 publications.drop()
 tools = client['LDR']['tools']

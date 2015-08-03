@@ -11,7 +11,8 @@
       'ldr.api',
       'ui.router',
       'angular-storage',
-      'ngLodash'
+      'ngLodash',
+      'ui.bootstrap'
     ])
     .config(ldrHomeConfig)
     .controller('LDRHomeController', LDRHomeController);
@@ -26,38 +27,26 @@
     });
   }
 
-  function LDRHomeController() {
+  /* @ngInject */
+  function LDRHomeController(events) {
 
     var vm = this;
     vm.query = '';
+    vm.upcoming = [];
 
-    vm.news = {
-      webinars: [
-        {
-          title: 'TBA',
-          description: 'Qian Zhu, PhD, University of Maryland, Baltimore County',
-          date: 'August 11, 2015'
-        },
-        {
-          title: 'TBA',
-          description: 'Stephen Picoolo, PhD, Brigham Young University',
-          date: 'September 8, 2015'
+    function getUpcoming() {
+      events
+        .getNextFourEvents()
+        .success(function(nextEvents) {
+          vm.upcoming = nextEvents;
+        })
+        .error(function(resp) {
+          console.log(resp);
         }
-      ],
-      courses: [
-        {
-          title: 'Big Data Science with the BD2K-LINCS Data Coordination and Integration Center (DCIC)',
-          date: 'September 15, 2015'
-        }
-      ],
-      fundingOpps: [
-        {
-          title: 'BD2K-LINCS Data Coordination and Integration Center (DCIC) ' +
-          'External Data Science Research Projects',
-          deadline: 'September 1, 2015'
-        }
-      ]
-    };
+      );
+    }
+
+
     /*vm.summary = {
         //Users: 0,
         Readouts: 0,
@@ -89,17 +78,19 @@
             countUpTo('Organisms', 0, counts.organisms, 5, 50);
         });*/
 
-    function countUpTo(field, count, max, step, time) {
-      setTimeout(function() {
-        if (count + step > max) {
-          countUpTo(field, count, max, 1, 0);
-        } else if (count !== max) {
-          count = count + step;
-          vm.summary[field] = count;
-          $scope.$apply();
-          countUpTo(field, count, max, step, time);
-        }
-      }, time);
-    }
+    // function countUpTo(field, count, max, step, time) {
+    //   setTimeout(function() {
+    //     if (count + step > max) {
+    //       countUpTo(field, count, max, 1, 0);
+    //     } else if (count !== max) {
+    //       count = count + step;
+    //       vm.summary[field] = count;
+    //       $scope.$apply();
+    //       countUpTo(field, count, max, step, time);
+    //     }
+    //   }, time);
+    // }
+
+    getUpcoming();
   }
 })();

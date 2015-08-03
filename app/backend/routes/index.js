@@ -13,6 +13,7 @@ module.exports = function(app) {
   require('./community')(app);
   require('./news')(app);
   require('./publications')(app);
+  require('./events')(app);
   require('./users')(app);
   require('./admin')(app);
   require('./groups')(app);

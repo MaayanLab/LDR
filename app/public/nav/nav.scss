@@ -9,6 +9,8 @@ a#group-nav-icon {
 }
 
 .navbar-wrapper {
+  height: 100%;
+  width: 100%;
   background-color: #eee;
   border-bottom: 1px solid #ddd;
   .navbar-inner {
@@ -29,12 +31,6 @@ a#group-nav-icon {
   }
   li {
     width: 100%;
-  }
-}
-
-.cube-wrapper {
-  @media all and (max-width: 992px) {
-    display: none;
   }
 }
 

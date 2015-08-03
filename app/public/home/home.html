@@ -1,9 +1,10 @@
 <div class="row">
   <div class="intro">
+    <div class="col-xs-12 col-md-4 cube-wrapper">
+      <div id="nih-cube"></div>
+    </div>
     <div class="col-xs-12 col-md-8">
-      <h3 class="headline-info">
-        The <span>LINCS</span> Consortia
-      </h3>
+      <h3 class="headline-info">The <span>LINCS</span> Consortia</h3>
       <p>
         LINCS aims to create a network-based understanding of biology by cataloging changes
         in gene expression and other cellular processes that occur when cells are
@@ -23,52 +24,49 @@
         Questions about LINCS? <a ui-sref="contact">Contact us</a>
       </h4> -->
     </div>
-    <div class="col-md-4">
-      <div id="nih-cube"></div>
-    </div>
   </div>
-  <div class="news-wrapper">
-  <h3 class="upcoming-title">Upcoming</h3>
-    <div class="news">
-      <h4 class="news-title">Upcoming Webinars</h4>
-      <div class="news-inner">
-        <div class="news-info " ng-repeat="webinar in vm.news.webinars">
-          <h5>
-            <em>{{webinar.title}}</em>
-          </h5>
-          <p class="news-date">{{webinar.date}}</p>
-          <p class="news-desc">
-            {{webinar.description}}
-          </p>
+  <div class="events">
+    <div class="col-xs-12 col-md-5 scroll-wrapper">
+      <div class="events-scrollable">
+        <div class="items">
+          <div class="news" ng-repeat="event in vm.upcoming">
+            <div class="news-inner">
+              <h4 class="news-title">{{event.title}}</h4>
+              <h5 class="news-type"><em>{{event.type}}</em></h5>
+              <!-- <p class="news-date" ng-if="event.type !== 'Funding Opportunity'">
+              {{event.date | date: 'MMMM d, yyyy'}}
+            </p> -->
+              <p class="news-date" ng-if="event.type === 'Funding Opportunity'">
+                Application deadline is {{event.date | date: 'MMMM d, yyyy'}}
+              </p>
+              <p class="news-desc">{{event.description}}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="news">
-      <h4 class="news-title">Upcoming Courses</h4>
-      <div class="news-inner">
-        <div class="news-info " ng-repeat="course in vm.news.courses">
-          <h5>
-            <em>{{course.title}}</em>
-          </h5>
-          <p class="news-date">Starts on {{course.date}}</p>
-          <p class="news-desc">
-            {{course.description}}
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="news">
-      <h4 class="news-title">Funding Opportunity</h4>
-      <div class="news-inner">
-        <div class="news-info " ng-repeat="opp in vm.news.fundingOpps">
-          <h5>
-        <strong>Request for Applications: </strong><em>{{opp.title}}</em>
-      </h5>
-          <p class="news-desc">
-            Application deadline is {{opp.deadline}}
-          </p>
-        </div>
-      </div>
+    <div class="col-xs-12 col-md-7">
+      <h3 class="headline-info">Upcoming Events</h3>
+      <p>
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
+        dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient
+        montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque
+        eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo,
+        fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus
+        ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis
+        pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi.
+        Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat
+        vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat
+        a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.
+        Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies
+        nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum
+        rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.
+        Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas
+        nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis
+        faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt.
+        Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.
+        Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,
+      </p>
     </div>
   </div>
 </div>

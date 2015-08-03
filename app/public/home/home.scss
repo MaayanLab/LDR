@@ -1,5 +1,4 @@
 @import '../base';
-
 .headline-info {
   font-weight: 400 !important;
   span {
@@ -17,11 +16,21 @@
   }
 }
 
-.intro {
+.intro, .events {
   display: inline-block;
-  margin: 100px 0;
   padding-bottom: 100px;
+}
+
+.intro {
+  margin: 100px 0;
   border-bottom: 1px solid #ddd;
+}
+
+.cube-wrapper {
+  float: right;
+  @media all and (max-width: 992px) {
+    float: left;
+  }
 }
 
 #nih-cube {
@@ -30,22 +39,72 @@
   margin: 20px auto 0 auto;
   width: 239px;
   height: 200px;
+  @media all and (max-width: 992px) {
+    margin-top: 0px;
+  }
 }
 
-.news-wrapper {
-  background-color: $color-secondary;
-  margin-bottom: 200px;
+$block-height: 300px;
+
+.scroll-wrapper {
+  margin-top: 50px;
+}
+
+.events-scrollable {
+  margin: 0 auto 0 auto;
+  height: $block-height;
+  padding: 0 40px 0 40px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+
+}
+
+.items {
+  animation: scroll 20s infinite;
+  // margin-top: -300px;
+
+  &:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes scroll {
+  0% {   margin-top: 0; opacity: 1; }
+  19% {  margin-top: 0; }
+  25% {  margin-top: -1 * $block-height; }
+  44% {  margin-top: -1 * $block-height; }
+  50% {  margin-top: -2 * $block-height; }
+  69% {  margin-top: -2 * $block-height; }
+  75% {  margin-top: -3 * $block-height; }
+  94% {  margin-top: -3 * $block-height; opacity: 1; }
+  95% { opacity: 0; }
+  99% { opacity: 0; }
+  100% { margin-top: 0; opacity: 1; }
 }
 
 .news {
-  padding-bottom: 40px;
+  padding-top: 50px;
+  display: inline-block;
+  height: $block-height;
+  width: 100%;
+  margin: 0 auto;
   p {
     margin: 0;
   }
 }
 
-.news {
+.news-inner {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
 
+.news-title {
+  color: $color-primary-dark;
+}
+
+.news-type {
+  margin-top: 20px;
 }
 
 .questions {

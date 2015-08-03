@@ -1,16 +1,14 @@
 'use strict';
 
-var jwt = require('express-jwt'),
-  jsonWT = require('jsonwebtoken'),
+var jsonWT = require('jsonwebtoken'),
+  path = require('path'),
   fs = require('fs'),
   _ = require('lodash'),
-  Q = require('q'),
   secret = require('../config/database').secret,
   Models = require('../models'),
   DataRelease = Models.DataRelease,
   Group = Models.Group,
-  baseUrl = require('../config/baseUrl').baseUrl,
-  config = require('../config/database');
+  baseUrl = require('../config/baseUrl').baseUrl;
 
 module.exports = function(app) {
 
@@ -20,20 +18,19 @@ module.exports = function(app) {
     if (!query) {
       res.status(400).send('Query string not properly formatted.');
     }
+
+    /* beautify preserve:start */
+
     // 1. Find groups matching query and gather ids
     // 2. Find releases matching from the group that matches an
     //    id found in step 1.
     // 3. Find releases matching query.
     Group
-      .find({
-        name: new RegExp(query, 'i')
-      })
+      .find({ name: new RegExp(query, 'i') })
       .lean()
       .exec(function(err, groups) {
         if (err) {
-          res.status(500).send(
-            'There was an error searching for releases.'
-          );
+          res.status(500).send('There was an error searching for releases.');
         }
 
         // _.map() and _.pluck do not work for mongoose arrays
@@ -42,98 +39,54 @@ module.exports = function(app) {
           ids.push(obj._id);
         });
         DataRelease
-          .find({
-            group: {
-              $in: ids
-            }
-          })
-          .sort({
-            dateModified: -1
-          })
-          .populate([{
-            path: 'group',
-            model: 'Group'
-          }, {
-            path: 'messages.user',
-            model: 'User'
-          }, {
-            path: 'metadata.assay',
-            model: 'Assay'
-          }, {
-            path: 'metadata.cellLines',
-            model: 'CellLine'
-          }, {
-            path: 'metadata.perturbagens',
-            model: 'Perturbagen'
-          }, {
-            path: 'metadata.readouts',
-            model: 'Readout'
-          }, {
-            path: 'metadata.manipulatedGene',
-            model: 'Gene'
-          }, {
-            path: 'metadata.organism',
-            model: 'Organism'
-          }, {
-            path: 'metadata.relevantDisease',
-            model: 'Disease'
-          }, {
-            path: 'metadata.analysisTools',
-            model: 'Tool'
-          }])
+          .find({ group: { $in: ids } })
+          .sort({ dateModified: -1 })
+          .populate([
+            { path: 'group', model: 'Group' },
+            { path: 'messages.user', model: 'User' },
+            { path: 'metadata.assay', model: 'Assay' },
+            { path: 'metadata.cellLines', model: 'CellLine' },
+            { path: 'metadata.perturbagens', model: 'Perturbagen' },
+            { path: 'metadata.readouts', model: 'Readout' },
+            { path: 'metadata.manipulatedGene', model: 'Gene' },
+            { path: 'metadata.organism', model: 'Organism' },
+            { path: 'metadata.relevantDisease', model: 'Disease' },
+            { path: 'metadata.analysisTools', model: 'Tool' }
+          ])
+          /* beautify preserve:end */
           .lean()
-          .exec(function(err, drgResults) {
-            if (err) {
-              console.log(err);
+          .exec(function(dataRErr, drgResults) {
+            if (dataRErr) {
+              console.log(dataRErr);
               res.status(404).send('Error searching releases');
             }
 
+            /* beautify preserve:start */
             DataRelease
               .find({
-                $or: [{
-                  datasetName: new RegExp(query, 'i')
-                }, {
-                  'assay.name': new RegExp(query, 'i')
-                }]
+                $or: [
+                  { datasetName: new RegExp(query, 'i') },
+                  { 'assay.name': new RegExp(query, 'i') }
+                ]
               })
-              .sort({
-                dateModified: -1
-              })
-              .populate([{
-                path: 'group',
-                model: 'Group'
-              }, {
-                path: 'messages.user',
-                model: 'User'
-              }, {
-                path: 'metadata.assay',
-                model: 'Assay'
-              }, {
-                path: 'metadata.cellLines',
-                model: 'CellLine'
-              }, {
-                path: 'metadata.perturbagens',
-                model: 'Perturbagen'
-              }, {
-                path: 'metadata.readouts',
-                model: 'Readout'
-              }, {
-                path: 'metadata.manipulatedGene',
-                model: 'Gene'
-              }, {
-                path: 'metadata.organism',
-                model: 'Organism'
-              }, {
-                path: 'metadata.relevantDisease',
-                model: 'Disease'
-              }, {
-                path: 'metadata.analysisTools',
-                model: 'Tool'
-              }])
+              .sort({ dateModified: -1 })
+              .populate([
+                { path: 'group', model: 'Group' },
+                { path: 'messages.user', model: 'User' },
+                { path: 'metadata.assay', model: 'Assay' },
+                { path: 'metadata.cellLines', model: 'CellLine' },
+                { path: 'metadata.perturbagens', model: 'Perturbagen' },
+                { path: 'metadata.readouts', model: 'Readout' },
+                { path: 'metadata.manipulatedGene', model: 'Gene' },
+                { path: 'metadata.organism', model: 'Organism' },
+                { path: 'metadata.relevantDisease', model: 'Disease' },
+                { path: 'metadata.analysisTools', model: 'Tool' }
+              ])
+              /* beautify preserve:end */
               .lean()
-              .exec(function(err, results) {
-                if (err) {
-                  console.log(err);
+              .exec(function(dataRelErr, results) {
+                if (dataRelErr) {
+                  console.log(dataRelErr);
                   res.status(404).send('Error searching releases');
                 } else {
                   var data = _.union(results, drgResults);
@@ -180,41 +133,22 @@ module.exports = function(app) {
   // Individual release endpoint.
   // Query id returns form with that id for editing on front end.
   app.get(baseUrl + '/api/releases/form/:id', function(req, res) {
+    /* beautify preserve:start */
     DataRelease
-      .findOne({
-        _id: req.params.id
-      })
-      .populate([{
-        path: 'group',
-        model: 'Group'
-      }, {
-        path: 'messages.user',
-        model: 'User'
-      }, {
-        path: 'metadata.assay',
-        model: 'Assay'
-      }, {
-        path: 'metadata.cellLines',
-        model: 'CellLine'
-      }, {
-        path: 'metadata.perturbagens',
-        model: 'Perturbagen'
-      }, {
-        path: 'metadata.readouts',
-        model: 'Readout'
-      }, {
-        path: 'metadata.manipulatedGene',
-        model: 'Gene'
-      }, {
-        path: 'metadata.organism',
-        model: 'Organism'
-      }, {
-        path: 'metadata.relevantDisease',
-        model: 'Disease'
-      }, {
-        path: 'metadata.analysisTools',
-        model: 'Tool'
-      }])
+      .findOne({ _id: req.params.id })
+      .populate([
+        { path: 'group', model: 'Group' },
+        { path: 'messages.user', model: 'User' },
+        { path: 'metadata.assay', model: 'Assay' },
+        { path: 'metadata.cellLines', model: 'CellLine' },
+        { path: 'metadata.perturbagens', model: 'Perturbagen' },
+        { path: 'metadata.readouts', model: 'Readout' },
+        { path: 'metadata.manipulatedGene', model: 'Gene' },
+        { path: 'metadata.organism', model: 'Organism' },
+        { path: 'metadata.relevantDisease', model: 'Disease' },
+        { path: 'metadata.analysisTools', model: 'Tool' }
+      ])
+      /* beautify preserve:end */
       .lean()
       .exec(function(err, release) {
         if (err) {
@@ -234,37 +168,20 @@ module.exports = function(app) {
   app.get(baseUrl + '/api/releases/', function(req, res) {
     DataRelease
       .find({})
-      .populate([{
-        path: 'group',
-        model: 'Group'
-      }, {
-        path: 'messages.user',
-        model: 'User'
-      }, {
-        path: 'metadata.assay',
-        model: 'Assay'
-      }, {
-        path: 'metadata.cellLines',
-        model: 'CellLine'
-      }, {
-        path: 'metadata.perturbagens',
-        model: 'Perturbagen'
-      }, {
-        path: 'metadata.readouts',
-        model: 'Readout'
-      }, {
-        path: 'metadata.manipulatedGene',
-        model: 'Gene'
-      }, {
-        path: 'metadata.organism',
-        model: 'Organism'
-      }, {
-        path: 'metadata.relevantDisease',
-        model: 'Disease'
-      }, {
-        path: 'metadata.analysisTools',
-        model: 'Tool'
-      }])
+      /* beautify preserve:start */
+      .populate([
+        { path: 'group', model: 'Group' },
+        { path: 'messages.user', model: 'User' },
+        { path: 'metadata.assay', model: 'Assay' },
+        { path: 'metadata.cellLines', model: 'CellLine' },
+        { path: 'metadata.perturbagens', model: 'Perturbagen' },
+        { path: 'metadata.readouts', model: 'Readout' },
+        { path: 'metadata.manipulatedGene', model: 'Gene' },
+        { path: 'metadata.organism', model: 'Organism' },
+        { path: 'metadata.relevantDisease', model: 'Disease' },
+        { path: 'metadata.analysisTools', model: 'Tool' }
+      ])
+      /* beautify preserve:end */
       .lean()
       .exec(function(err, allData) {
         if (err) {
@@ -280,49 +197,28 @@ module.exports = function(app) {
   app.get(baseUrl + '/api/releases/:type(group|user)/:id',
     function(req, res) {
       var query = {};
+      /* beautify preserve:start */
       if (req.params.type === 'group') {
-        query = {
-          group: req.params.id
-        };
+        query = { group: req.params.id };
       }
       if (req.params.type === 'user') {
-        query = {
-          user: req.params.id
-        };
+        query = { user: req.params.id };
       }
       DataRelease
         .find(query)
-        .populate([{
-          path: 'group',
-          model: 'Group'
-        }, {
-          path: 'messages.user',
-          model: 'User'
-        }, {
-          path: 'metadata.assay',
-          model: 'Assay'
-        }, {
-          path: 'metadata.cellLines',
-          model: 'CellLine'
-        }, {
-          path: 'metadata.perturbagens',
-          model: 'Perturbagen'
-        }, {
-          path: 'metadata.readouts',
-          model: 'Readout'
-        }, {
-          path: 'metadata.manipulatedGene',
-          model: 'Gene'
-        }, {
-          path: 'metadata.organism',
-          model: 'Organism'
-        }, {
-          path: 'metadata.relevantDisease',
-          model: 'Disease'
-        }, {
-          path: 'metadata.analysisTools',
-          model: 'Tool'
-        }])
+        .populate([
+          { path: 'group', model: 'Group' },
+          { path: 'messages.user', model: 'User' },
+          { path: 'metadata.assay', model: 'Assay' },
+          { path: 'metadata.cellLines', model: 'CellLine' },
+          { path: 'metadata.perturbagens', model: 'Perturbagen' },
+          { path: 'metadata.readouts', model: 'Readout' },
+          { path: 'metadata.manipulatedGene', model: 'Gene' },
+          { path: 'metadata.organism', model: 'Organism' },
+          { path: 'metadata.relevantDisease', model: 'Disease' },
+          { path: 'metadata.analysisTools', model: 'Tool' }
+        ])
+        /* beautify preserve:end */
         .lean()
         .exec(function(err, releases) {
           if (err) {
@@ -337,46 +233,24 @@ module.exports = function(app) {
 
   // Releases endpoint to get 25 latest approved releases
   app.get(baseUrl + '/api/releases/approved/', function(req, res) {
+    /* beautify preserve:start */
     DataRelease
-      .find({
-        approved: true
-      })
-      .sort({
-        released: -1,
-        'releaseDates.upcoming': -1
-      })
+      .find({ approved: true })
+      .sort({ released: -1, 'releaseDates.upcoming': -1 })
       //.limit(25)
-      .populate([{
-        path: 'group',
-        model: 'Group'
-      }, {
-        path: 'messages.user',
-        model: 'User'
-      }, {
-        path: 'metadata.assay',
-        model: 'Assay'
-      }, {
-        path: 'metadata.cellLines',
-        model: 'CellLine'
-      }, {
-        path: 'metadata.perturbagens',
-        model: 'Perturbagen'
-      }, {
-        path: 'metadata.readouts',
-        model: 'Readout'
-      }, {
-        path: 'metadata.manipulatedGene',
-        model: 'Gene'
-      }, {
-        path: 'metadata.organism',
-        model: 'Organism'
-      }, {
-        path: 'metadata.relevantDisease',
-        model: 'Disease'
-      }, {
-        path: 'metadata.analysisTools',
-        model: 'Tool'
-      }])
+      .populate([
+        { path: 'group', model: 'Group' },
+        { path: 'messages.user', model: 'User' },
+        { path: 'metadata.assay', model: 'Assay' },
+        { path: 'metadata.cellLines', model: 'CellLine' },
+        { path: 'metadata.perturbagens', model: 'Perturbagen' },
+        { path: 'metadata.readouts', model: 'Readout' },
+        { path: 'metadata.manipulatedGene', model: 'Gene' },
+        { path: 'metadata.organism', model: 'Organism' },
+        { path: 'metadata.relevantDisease', model: 'Disease' },
+        { path: 'metadata.analysisTools', model: 'Tool' }
+      ])
+      /* beautify preserve:end */
       .lean()
       .exec(function(err, releases) {
         if (err) {
@@ -407,6 +281,7 @@ module.exports = function(app) {
           if (!(dateToSearch instanceof Date)) {
             dateToSearch = new Date(dateToSearch);
           }
+          /* beautify preserve:start */
           DataRelease
             .find({
               'releaseDates.upcoming': {
@@ -418,41 +293,23 @@ module.exports = function(app) {
               'releaseDates.upcoming': 1
             })
             .limit(25)
-            .populate([{
-              path: 'group',
-              model: 'Group'
-            }, {
-              path: 'messages.user',
-              model: 'User'
-            }, {
-              path: 'metadata.assay',
-              model: 'Assay'
-            }, {
-              path: 'metadata.cellLines',
-              model: 'CellLine'
-            }, {
-              path: 'metadata.perturbagens',
-              model: 'Perturbagen'
-            }, {
-              path: 'metadata.readouts',
-              model: 'Readout'
-            }, {
-              path: 'metadata.manipulatedGene',
-              model: 'Gene'
-            }, {
-              path: 'metadata.organism',
-              model: 'Organism'
-            }, {
-              path: 'metadata.relevantDisease',
-              model: 'Disease'
-            }, {
-              path: 'metadata.analysisTools',
-              model: 'Tool'
-            }])
+            .populate([
+              { path: 'group', model: 'Group' },
+              { path: 'messages.user', model: 'User' },
+              { path: 'metadata.assay', model: 'Assay' },
+              { path: 'metadata.cellLines', model: 'CellLine' },
+              { path: 'metadata.perturbagens', model: 'Perturbagen' },
+              { path: 'metadata.readouts', model: 'Readout' },
+              { path: 'metadata.manipulatedGene', model: 'Gene' },
+              { path: 'metadata.organism', model: 'Organism' },
+              { path: 'metadata.relevantDisease', model: 'Disease' },
+              { path: 'metadata.analysisTools', model: 'Tool' }
+            ])
+            /* beautify preserve:end */
             .lean()
-            .exec(function(err, afterReleases) {
-              if (err) {
-                console.log(err);
+            .exec(function(afterErr, afterReleases) {
+              if (afterErr) {
+                console.log(afterErr);
                 res.status(404).send('Could not find releases' +
                   ' after ' + latestRelease.releaseDates.upcoming);
               } else {
@@ -670,44 +527,26 @@ module.exports = function(app) {
     var stream = fs.createWriteStream(__dirname + '/' + randName + '.txt');
 
     DataRelease
-      .find({
-        _id: {
-          $in: ids
-        }
-      })
-      .populate([{
-        path: 'group',
-        model: 'Group'
-      }, {
-        path: 'messages.user',
-        model: 'User'
-      }, {
-        path: 'metadata.assay',
-        model: 'Assay'
-      }, {
-        path: 'metadata.cellLines',
-        model: 'CellLine'
-      }, {
-        path: 'metadata.perturbagens',
-        model: 'Perturbagen'
-      }, {
-        path: 'metadata.readouts',
-        model: 'Readout'
-      }, {
-        path: 'metadata.manipulatedGene',
-        model: 'Gene'
-      }, {
-        path: 'metadata.organism',
-        model: 'Organism'
-      }, {
-        path: 'metadata.relevantDisease',
-        model: 'Disease'
-      }, {
-        path: 'metadata.analysisTools',
-        model: 'Tool'
-      }])
+      /* beautify preserve:start */
+      .find({ _id: { $in: ids } })
+      .populate([
+        { path: 'group', model: 'Group' },
+        { path: 'messages.user', model: 'User' },
+        { path: 'metadata.assay', model: 'Assay' },
+        { path: 'metadata.cellLines', model: 'CellLine' },
+        { path: 'metadata.perturbagens', model: 'Perturbagen' },
+        { path: 'metadata.readouts', model: 'Readout' },
+        { path: 'metadata.manipulatedGene', model: 'Gene' },
+        { path: 'metadata.organism', model: 'Organism' },
+        { path: 'metadata.relevantDisease', model: 'Disease' },
+        { path: 'metadata.analysisTools', model: 'Tool' }
+      ])
+      /* beautify preserve:end */
       .lean()
       .exec(function(err, releases) {
+        if (err) {
+          console.log(err);
+        }
         _.each(releases, function(release) {
           var meta = release.metadata;
           var dates = release.releaseDates;
@@ -873,22 +712,23 @@ module.exports = function(app) {
         });
         stream.end();
         stream.on('finish', function() {
-          res.download(__dirname + '/' + randName + '.txt',
-            'LDR-export.txt',
-            function(err) {
-              if (err) {
-                console.log(err);
-                res.status(err.status).end();
+          res.download(path.join(__dirname, '/', randName, '.txt',
+              'LDR-export.txt'),
+            function(dlErr) {
+              if (dlErr) {
+                console.log(dlErr);
+                res.status(dlErr.status).end();
               } else {
-                console.log(__dirname + '/' + randName +
-                  '.txt SENT');
-                fs.unlink(__dirname + '/' + randName + '.txt',
-                  function(err) {
-                    if (err) {
-                      throw err;
+                console.log(path.join(__dirname, '/' + randName +
+                  '.txt SENT'));
+                fs.unlink(path.join(__dirname, '/' + randName +
+                    '.txt'),
+                  function(delErr) {
+                    if (delErr) {
+                      throw delErr;
                     }
-                    console.log(__dirname + '/' + randName +
-                      '.txt DELETED');
+                    console.log(path.join(__dirname, '/' +
+                      randName + '.txt DELETED'));
                   });
               }
             }
@@ -911,7 +751,7 @@ module.exports = function(app) {
             console.log(err);
             res.status(404).send('An error occurred getting ' +
               'release with id: ' + id);
-          } else if (release.urls.dataUrl === "") {
+          } else if (release.urls.dataUrl === '') {
             res.status(403).send('Data URL required!');
           } else if (release.approved === false) {
             res.status(403).send('Dataset must be approved!');

@@ -32,6 +32,10 @@
   }
 
   button {
+    transition: all 1s ease;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
     color: white;
   }
 
@@ -47,7 +51,11 @@
     margin: 20px 0;
   }
   button {
+    top: 60px;
     background-color: $color-primary-dark;
+    &:hover {
+      color: $color-secondary;
+    }
   }
   .c-block-title {
     color: $color-primary-dark;
@@ -70,7 +78,11 @@
     margin: 20px 0;
   }
   button {
+    top: 80px;
     background-color: $color-secondary;
+    &:hover {
+      color: $color-primary-dark;
+    }
   }
   .dr-block-title {
     color: $color-secondary;
@@ -89,7 +101,11 @@
     margin: 20px 0;
   }
   button {
+    top: 80px;
     background-color: $color-green;
+    &:hover {
+      color: $color-primary-dark;
+    }
   }
   .td-block-title {
     color: $color-green;
