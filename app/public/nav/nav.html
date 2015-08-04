@@ -1,14 +1,60 @@
 <div class="navbar-wrapper">
   <div class="navbar-inner container">
     <a id="nih-title" ui-sref="home"></a>
-    <div class="search-wrapper col-xs-12 col-md-6" ng-include="'partials/searchBar.html'"></div>
-    <div class="username-menu text-center">
-      <a ui-sref="login" ng-show="!isLoggedIn"><!-- Sign up <span>or</span>  -->Log in</p>
-      <p ng-show="isLoggedIn">{{currentUser.username}}</p>
-      <a ng-show="isLoggedIn" ui-sref="userSettings({id: currentUser._id})" class="glyphicon glyphicon-cog"></a>
-      <a ng-show="isLoggedIn && isAdmitted" ui-sref="groupHome({id: currentUser.group._id})" id="group-nav-icon" class="glyphicon"></a>
-      <a ng-show="isLoggedIn" ng-click="logout()" class="glyphicon glyphicon-log-out"></a>
-    </div>
+    <ul class="nav navbar-nav navbar-right username-menu text-center">
+      <li class="dropdown login-dropdown" ng-show="!vm.isLoggedIn">
+        <a class="dropdown-toggle" data-toggle="dropdown">
+          <b>Login</b>
+        </a>
+        <ul id="login-dp" class="dropdown-menu">
+          <li>
+            <div class="row">
+              <form class="form" role="form" accept-charset="UTF-8" id="login-nav">
+                <div class="form-group">
+                  <label class="sr-only" for="username">Email address</label>
+                  <input type="text" class="form-control" id="username" placeholder="Username" ng-model="vm.user.username"
+                  required>
+                </div>
+                <div class="form-group">
+                  <label class="sr-only" for="password">Password</label>
+                  <input type="password" class="form-control" id="password" placeholder="Password"
+                  ng-model="vm.user.password" required>
+                  <div class="help-block text-right">
+                    <a href="">Forget your password?</a>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <button type="submit" ng-click="vm.login()" class="btn btn-primary btn-block">Sign in</button>
+                </div>
+                <!--  <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> keep me logged-in
+                  </label>
+                </div> -->
+              </form>
+            </div>
+            <div class="bottom text-center">
+              We're sorry but new members are not being accepted
+            </div>
+          </li>
+        </ul>
+      </li>
+      <li class="dropdown" ng-show="vm.isLoggedIn">
+        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+          <b>{{vm.user.username}}</b>
+          <span class="caret"></span>
+        </a>
+        <ul class="username-dp dropdown-menu" role="menu">
+          <li>
+            <a ui-sref="userSettings({id: vm.user._id})">Settings</a>
+          </li>
+          <li>
+            <a ng-click="vm.logout()">Logout</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <div class="search-wrapper col-xs-12 col-lg-6" ng-include="'partials/searchBar.html'"></div>
   </div>
 </div>
 <div class="thin-navbar">
@@ -17,8 +63,8 @@
       <ul class="nav navbar-left">
         <li class="dropdown">
           <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-              Centers
-            </a>
+            Centers
+          </a>
           <ul class="centers-menu dropdown-menu" role="menu">
             <li>
               <a ui-sref="centers">Centers Home</a>
@@ -39,14 +85,14 @@
         </li>
         <li class="dropdown" ng-show="vm.isLoggedIn && !vm.isLoggedInAdmin">
           <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-              Data
-            </a>
+            Data
+          </a>
           <ul class="dropdown-menu" role="menu">
             <li ng-show="!vm.isLoggedInAdmin">
               <a ui-sref="releasesHome">Data Home</a>
             </li>
             <li ng-show="!vm.isLoggedInAdmin">
-              <a ui-sref="releasesOverview">Your Data</a>
+              <a ui-sref="releasesOverview({groupId: vm.user.group._id})">Your Data</a>
             </li>
             <li ng-show="!vm.isLoggedInAdmin">
               <a ui-sref="releasesCreate({id: ''})">Add New</a>

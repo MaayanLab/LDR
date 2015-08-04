@@ -417,6 +417,7 @@ try {
 var eventSchema = new Schema({
   title: String,
   type: { type: String, required: true },
+  url: String,
   description: String,
   date: Date
 });

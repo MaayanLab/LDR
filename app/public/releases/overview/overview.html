@@ -1,13 +1,7 @@
 <div class="col-xs-12">
     <h3 class="text-center headline-info">Dataset Releases</h3>
-
     <p>
-        Below are all data releases for {{vm.currentUser.group.name}}. You may
-        release,
-        edit, or delete entries by clicking the Action button on the right.
-        Clicking the plus button will expand entries, making visible all
-        relevant
-        meta-data. Please note that <em class="highlight">in order to release an
+        Below are all data releases for {{vm.currentUser.group.name}}. You may release, edit, or delete entries by clicking the Action button on the right. Clicking the plus button will expand entries, making visible all relevant meta-data. Please note that <em class="highlight">in order to release an
         entry, it must have a data URL provided and it must be approved.</em>
     </p>
 </div>
@@ -15,136 +9,125 @@
 <div class="content col-xs-12">
     <table class="table">
         <thead>
-        <tr>
-            <th class="text-center">
-                Dataset ID
-            </th>
-            <th class="text-center">
-                <a href=""
-                   ng-click="vm.sortType = 'datasetName'; vm.sortReverse = !vm.sortReverse">
-                    Dataset
-                    <span ng-show="vm.sortType === 'datasetName' && vm.sortReverse"
-                          class="fa fa-caret-down"></span>
-                    <span ng-show="vm.sortType === 'datasetName' && !vm.sortReverse"
-                          class="fa fa-caret-up"></span>
+            <tr>
+              <th class="text-center">
+                  Dataset ID
+              </th>
+              <th class="text-center">
+                <a href="" ng-click="vm.sortType = 'datasetName'; vm.sortReverse = !vm.sortReverse">
+                  Dataset
+                  <span ng-show="vm.sortType === 'datasetName' && vm.sortReverse"
+                        class="fa fa-caret-down"></span>
+                  <span ng-show="vm.sortType === 'datasetName' && !vm.sortReverse"
+                        class="fa fa-caret-up"></span>
                 </a>
-            </th>
-            <th class="text-center">
-                <a href=""
-                   ng-click="vm.sortType = 'releaseDates.upcoming'; vm.sortReverse = !vm.sortReverse">
-                    Release Date
-                    <span ng-show="vm.sortType === 'releaseDates.upcoming' && vm.sortReverse"
-                          class="fa fa-caret-down"></span>
-                    <span ng-show="vm.sortType === 'releaseDates.upcoming' && !vm.sortReverse"
-                          class="fa fa-caret-up"></span>
+              </th>
+              <th class="text-center">
+                <a href="" ng-click="vm.sortType = 'releaseDates.upcoming'; vm.sortReverse = !vm.sortReverse">
+                  Release Date
+                  <span ng-show="vm.sortType === 'releaseDates.upcoming' && vm.sortReverse"
+                        class="fa fa-caret-down"></span>
+                  <span ng-show="vm.sortType === 'releaseDates.upcoming' && !vm.sortReverse"
+                        class="fa fa-caret-up"></span>
                 </a>
-            </th>
-            <th class="text-center">
-                <a href=""
-                   ng-click="vm.sortType = ['released', 'approved']; vm.sortReverse = !vm.sortReverse">
-                    Status
-                    <span ng-show="vm.sortType[0] === 'released' && vm.sortReverse"
-                          class="fa fa-caret-down"></span>
-                    <span ng-show="vm.sortType[0] === 'released' && !vm.sortReverse"
-                          class="fa fa-caret-up"></span>
+              </th>
+              <th class="text-center">
+                <a href="" ng-click="vm.sortType = ['released', 'approved']; vm.sortReverse = !vm.sortReverse">
+                  Status
+                  <span ng-show="vm.sortType[0] === 'released' && vm.sortReverse"
+                        class="fa fa-caret-down"></span>
+                  <span ng-show="vm.sortType[0] === 'released' && !vm.sortReverse"
+                        class="fa fa-caret-up"></span>
                 </a>
-            </th>
-            <th class="text-center" ng-if="!vm.allSelected">
+              </th>
+              <th class="text-center" ng-if="!vm.allSelected">
                 <a class="btn btn-primary" href="" ng-click="vm.selectAll()">
-                    Select All
+                  Select All
                 </a>
-            </th>
-            <th class="text-center" ng-if="vm.allSelected">
+              </th>
+              <th class="text-center" ng-if="vm.allSelected">
                 <a class="btn btn-primary" href="" ng-click="vm.unselectAll()">
-                    Unselect All
+                  Unselect All
                 </a>
-            </th>
-            <th class="text-center">
+              </th>
+              <th class="text-center">
                 <a class="btn btn-primary" href="" ng-click="vm.export()">
-                    Export
+                  Export
                 </a>
-            </th>
-        </tr>
+              </th>
+            </tr>
         </thead>
         <tbody>
-        <tr ng-repeat-start="form in vm.forms | orderBy: vm.sortType : vm.sortReverse"
-            ng-click="form.selected = !form.selected"
-            ng-class="form.selected ? 'tr-selected' :
-            form.released ? 'tr-released' :
-            !form.approved && !form.needsEdit ? 'tr-awaiting-approval' :
-            form.approved && !form.needsEdit ? 'tr-approved' :
-            form.needsEdit ? 'tr-needs-edit' : ''"
-            class="form-table-data text-center">
-            <td id="text-left">{{form.did}}</td>
-            <td class="text-left" id="dcic-assay-name">
+          <tr ng-repeat-start="form in vm.forms | orderBy: vm.sortType : vm.sortReverse" ng-click="form.selected = !form.selected" ng-class="form.selected ? 'tr-selected' :
+          form.released ? 'tr-released' :
+          !form.approved && !form.needsEdit ? 'tr-awaiting-approval' :
+          form.approved && !form.needsEdit ? 'tr-approved' :
+          form.needsEdit ? 'tr-needs-edit' : ''" class="form-table-data text-center">
+              <td id="text-left">{{form.did}}</td>
+              <td class="text-left" id="dcic-assay-name">
                 {{form.datasetName}}
-            </td>
-            <td class="col-sm-3" id="release-date">
+              </td>
+              <td class="col-sm-3" id="release-date">
                 {{form.releaseDates.upcoming | date: 'MM-dd-yyyy'}}
-            </td>
-            <td class="col-sm-1" id="status">
+              </td>
+              <td class="col-sm-1" id="status">
                 <span ng-if="form.released">
-                    Released
+                  Released
                 </span>
                 <span ng-if="form.approved && !form.released">
-                    Approved
+                  Approved
                 </span>
                 <span ng-if="!form.approved && !form.needsEdit">
-                    Pending approval
+                  Pending approval
                 </span>
                 <span ng-if="!form.approved && form.needsEdit">
-                    Needs Editing
+                  Needs Editing
                 </span>
-            </td>
-            <td>
-                <div class="btn-group">
-                    <a class="btn btn-default dropdown-toggle form-table-data text-center"
-                       ng-class="form.released ? 'tr-released-btn' :
-                       !form.approved && !form.needsEdit ? 'tr-awaiting-approval-btn' :
-                       form.approved && !form.needsEdit ? 'tr-approved-btn' :
-                       form.needsEdit ? 'tr-needs-edit-btn' : ''"
-                       data-toggle="dropdown" ng-href="">
-                        Action<span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
+              </td>
+              <td>
+                  <div class="btn-group">
+                    <a class="btn btn-default dropdown-toggle text-center" ng-class="form.released ? 'tr-released-btn' :
+                   !form.approved && !form.needsEdit ? 'tr-awaiting-approval-btn' :
+                   form.approved && !form.needsEdit ? 'tr-approved-btn' :
+                   form.needsEdit ? 'tr-needs-edit-btn' : ''" data-toggle="dropdown" ng-href="">
+                    Action<span class="caret"></span>
+                  </a>
+                      <ul class="dropdown-menu">
+                          <li>
                             <a ng-click="vm.viewMessages(form)">View Messages</a>
-                        </li>
-                        <!--<li ng-if="form.released">
-                            <a ng-click="vm.editUrls(form)">Edit URLs</a>
-                        </li>-->
-                        <li ng-if="!form.released && !form.needsEdit">
+                          </li>
+                          <!--<li ng-if="form.released">
+                          <a ng-click="vm.editUrls(form)">Edit URLs</a>
+                      </li>-->
+                          <li ng-if="!form.released && !form.needsEdit">
                             <a ng-click="vm.rel(form)">Release</a>
-                        </li>
-                        <li>
+                          </li>
+                          <li>
                             <a ng-click="vm.releases.edit(form._id)">Edit</a>
-                        </li>
-                        <li>
+                          </li>
+                          <li>
                             <a ng-click="vm.del(form)">Delete</a>
-                        </li>
-                    </ul>
-                </div>
-            </td>
-            <td>
-                <a ng-click="form.collapsed = !form.collapsed">
-                <span ng-if="!form.collapsed" class="glyphicon glyphicon-plus">
-                </span>
-                <span ng-if="form.collapsed" class="glyphicon glyphicon-minus">
-                </span>
-                </a>
-            </td>
-        </tr>
-        <tr class="release-details animate" ng-show="form.collapsed">
-            <td colspan="10">
-                <div ng-include="'partials/expand.html'"></div>
-            </td>
-        </tr>
-        <tr ng-repeat-end="" ng-if="vm.forms.length === 0">
-            <td colspan="5" class="col-md-12">
-                There are no releases to display.
-                Please <a ui-sref="releasesCreate">add data here</a>.
-            </td>
-        </tr>
+                          </li>
+                      </ul>
+                  </div>
+              </td>
+              <td>
+                  <a ng-click="form.collapsed = !form.collapsed">
+                    <span ng-if="!form.collapsed" class="glyphicon glyphicon-plus"></span>
+                    <span ng-if="form.collapsed" class="glyphicon glyphicon-minus"></span>
+                  </a>
+              </td>
+          </tr>
+          <tr class="release-details animate" ng-show="form.collapsed">
+              <td colspan="10">
+                  <div ng-include="'partials/expand.html'"></div>
+              </td>
+          </tr>
+          <tr ng-repeat-end="" ng-if="vm.forms.length === 0">
+              <td colspan="5" class="col-md-12">
+                There are no releases to display. Please <a ui-sref="releasesCreate">add data here</a>.
+              </td>
+          </tr>
         </tbody>
     </table>
 </div>

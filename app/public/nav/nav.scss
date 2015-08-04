@@ -14,13 +14,12 @@ a#group-nav-icon {
   background-color: #eee;
   border-bottom: 1px solid #ddd;
   .navbar-inner {
-
     padding: 14px 15px 13px;
   }
 }
 
 .username-menu {
-  padding: 18px 0;
+  padding: 8px 0;
   a,
   p {
     display: inline-block;
@@ -31,6 +30,59 @@ a#group-nav-icon {
   }
   li {
     width: 100%;
+  }
+}
+
+.login-dropdown {
+  @media all and (max-width: 490px) {
+    text-align: right;
+    padding-right: 15px;
+    margin-top: 60px;
+  }
+}
+
+#login-dp {
+  min-width: 250px;
+  padding: 14px 28px 0;
+  overflow: hidden;
+}
+
+#login-dp .help-block {
+  font-size: 12px
+}
+
+#login-dp .bottom {
+  border-top: 1px solid #ddd;
+  clear: both;
+  padding: 10px 0;
+}
+
+#login-dp .social-buttons {
+  margin: 12px 0
+}
+
+#login-dp .social-buttons a {
+  width: 49%;
+}
+
+#login-dp .form-group {
+  margin-bottom: 10px;
+}
+
+
+@media all and (max-width:768px) {
+  #login-dp {
+    color: #fff;
+  }
+  #login-dp .bottom {
+    border-top: 0 none;
+  }
+}
+
+.search-wrapper {
+  margin: 18px 0;
+  @media all and (max-width: 490px) {
+    margin: 0;
   }
 }
 

@@ -17,7 +17,7 @@
     ///////////////////
 
     /* @ngInject */
-    function LDRNavController($scope, $http, $state, store) {
+    function LDRNavController($scope, $http, $state, store, jwtHelper) {
 
       var vm = this;
       vm.user = getCurrentUser();
@@ -31,7 +31,8 @@
 
       function getCurrentUser() {
         var user;
-        if (store.get('currentUser')) {
+        var loggedIn = !!(store.get('jwt') && !jwtHelper.isTokenExpired(store.get('jwt')));
+        if (loggedIn) {
           user = store.get('currentUser');
           vm.isLoggedIn = true;
           vm.isLoggedInAdmin = user.admin;
