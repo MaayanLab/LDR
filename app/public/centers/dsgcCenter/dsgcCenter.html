@@ -1,84 +1,90 @@
-<div class="row">
-  <div class="left-nav col-xs-3">
-    <ul>
-      <li><a ui-sref="dsgc">Data and Signature Generation Centers</a></li>
+<div class="container">
+  <div class="row">
+    <div class="left-nav col-xs-3">
       <ul>
-        <li ng-if="vm.center.name !== 'DTOXS'">
-          <a ui-sref="dsgcCenter({center: 'DTOXS'})">
+        <li>
+          <a ui-sref="dsgc">Data and Signature Generation Centers</a>
+        </li>
+        <ul>
+          <li ng-if="vm.center.name !== 'DTOXS'">
+            <a ui-sref="dsgcCenter({center: 'DTOXS'})">
               Drug Toxicity Signature Generation Center
             </a>
-        </li>
-        <li ng-if="vm.center.name === 'DTOXS'">
-          <strong class="highlight-secondary">
+          </li>
+          <li ng-if="vm.center.name === 'DTOXS'">
+            <strong class="highlight-secondary">
               Drug Toxicity Signature Generation Center
             </strong>
-        </li>
-        <li ng-if="vm.center.name !== 'HMS-LINCS'">
-          <a ui-sref="dsgcCenter({center: 'HMS-LINCS'})">
+          </li>
+          <li ng-if="vm.center.name !== 'HMS-LINCS'">
+            <a ui-sref="dsgcCenter({center: 'HMS-LINCS'})">
               HMS LINCS Center
             </a>
-        </li>
-        <li ng-if="vm.center.name === 'HMS-LINCS'">
-          <strong class="highlight-secondary">
+          </li>
+          <li ng-if="vm.center.name === 'HMS-LINCS'">
+            <strong class="highlight-secondary">
               HMS LINCS Center
             </strong>
-        </li>
-        <li ng-if="vm.center.name !== 'Broad-LINCS-Transcriptomics'">
-          <a ui-sref="dsgcCenter({center: 'Broad-LINCS-Transcriptomics'})">
+          </li>
+          <li ng-if="vm.center.name !== 'Broad-LINCS-Transcriptomics'">
+            <a ui-sref="dsgcCenter({center: 'Broad-LINCS-Transcriptomics'})">
               LINCS Center for Transcriptomics
             </a>
-        </li>
-        <li ng-if="vm.center.name === 'Broad-LINCS-Transcriptomics'">
-          <strong class="highlight-secondary">
+          </li>
+          <li ng-if="vm.center.name === 'Broad-LINCS-Transcriptomics'">
+            <strong class="highlight-secondary">
               LINCS Center for Transcriptomics
             </strong>
-        </li>
-        <li ng-if="vm.center.name !== 'Broad-LINCS-PCCSE'">
-          <a ui-sref="dsgcCenter({center: 'Broad-LINCS-PCCSE'})">
+          </li>
+          <li ng-if="vm.center.name !== 'Broad-LINCS-PCCSE'">
+            <a ui-sref="dsgcCenter({center: 'Broad-LINCS-PCCSE'})">
               LINCS Proteomic Characterization Center for Signaling and Epigenetics
             </a>
-        </li>
-        <li ng-if="vm.center.name === 'Broad-LINCS-PCCSE'">
-          <strong class="highlight-secondary">
+          </li>
+          <li ng-if="vm.center.name === 'Broad-LINCS-PCCSE'">
+            <strong class="highlight-secondary">
               LINCS Proteomic Characterization Center for Signaling and Epigenetics
             </strong>
-        </li>
-        <li ng-if="vm.center.name !== 'MEP-LINCS'">
-          <a ui-sref="dsgcCenter({center: 'MEP-LINCS'})">
+          </li>
+          <li ng-if="vm.center.name !== 'MEP-LINCS'">
+            <a ui-sref="dsgcCenter({center: 'MEP-LINCS'})">
               Microenvironment Perturbagen (MEP) LINCS Center
             </a>
-        </li>
-        <li ng-if="vm.center.name === 'MEP-LINCS'">
-          <strong class="highlight-secondary">
+          </li>
+          <li ng-if="vm.center.name === 'MEP-LINCS'">
+            <strong class="highlight-secondary">
               Microenvironment Perturbagen (MEP) LINCS Center
             </strong>
-        </li>
-        <li ng-if="vm.center.name !== 'NeuroLINCS'">
-          <a ui-sref="dsgcCenter({center: 'NeuroLINCS'})">
+          </li>
+          <li ng-if="vm.center.name !== 'NeuroLINCS'">
+            <a ui-sref="dsgcCenter({center: 'NeuroLINCS'})">
               NeuroLINCS Center
             </a>
-        </li>
-        <li ng-if="vm.center.name === 'NeuroLINCS'">
-          <strong class="highlight-secondary">
+          </li>
+          <li ng-if="vm.center.name === 'NeuroLINCS'">
+            <strong class="highlight-secondary">
               NeuroLINCS Center
             </strong>
+          </li>
+        </ul>
+        </li>
+        <li>
+          <a ui-sref="dcic">BD2K-LINCS Data Coordination and Integration Center</a>
+        </li>
+        <li>
+          <a ui-sref="phaseOne">Pilot Phase 1 Centers</a>
         </li>
       </ul>
-      </li>
-      <li><a ui-sref="dcic">BD2K-LINCS Data Coordination and Integration Center</a>
-      </li>
-      <li><a ui-sref="phaseOne">Pilot Phase 1 Centers</a>
-      </li>
-    </ul>
-    <div class="left-nav-btns text-center">
-      <button class="btn btn-primary left-nav-btn">Data Releases</button>
-      <button class="btn btn-primary left-nav-btn">Tools and Databases</button>
+      <div class="left-nav-btns text-center">
+        <button class="btn btn-primary left-nav-btn">Data Releases</button>
+        <button class="btn btn-primary left-nav-btn">Tools and Databases</button>
+      </div>
     </div>
+    <div ng-if="vm.center.name === 'DTOXS'" ng-include="'centers/dsgcCenter/centerPartials/dtoxs.html'"></div>
+    <div ng-if="vm.center.name === 'HMS-LINCS'" ng-include="'centers/dsgcCenter/centerPartials/hmsLincs.html'"></div>
+    <div ng-if="vm.center.name === 'Broad-LINCS-PCCSE'" ng-include="'centers/dsgcCenter/centerPartials/lincsP.html'"></div>
+    <div ng-if="vm.center.name === 'Broad-LINCS-Transcriptomics'" ng-include="'centers/dsgcCenter/centerPartials/lincsT.html'"></div>
+    <div ng-if="vm.center.name === 'MEP-LINCS'" ng-include="'centers/dsgcCenter/centerPartials/mepLincs.html'"></div>
+    <div ng-if="vm.center.name === 'NeuroLINCS'" ng-include="'centers/dsgcCenter/centerPartials/neuroLincs.html'"></div>
   </div>
-  <div ng-if="vm.center.name === 'DTOXS'" ng-include="'centers/dsgcCenter/centerPartials/dtoxs.html'"></div>
-  <div ng-if="vm.center.name === 'HMS-LINCS'" ng-include="'centers/dsgcCenter/centerPartials/hmsLincs.html'"></div>
-  <div ng-if="vm.center.name === 'Broad-LINCS-PCCSE'" ng-include="'centers/dsgcCenter/centerPartials/lincsP.html'"></div>
-  <div ng-if="vm.center.name === 'Broad-LINCS-Transcriptomics'" ng-include="'centers/dsgcCenter/centerPartials/lincsT.html'"></div>
-  <div ng-if="vm.center.name === 'MEP-LINCS'" ng-include="'centers/dsgcCenter/centerPartials/mepLincs.html'"></div>
-  <div ng-if="vm.center.name === 'NeuroLINCS'" ng-include="'centers/dsgcCenter/centerPartials/neuroLincs.html'"></div>
 </div>

@@ -45,3 +45,5 @@ Search publications/news/data
 Group page. Analysis of their data instead of statistics
 PCA or Hierarchical clustering to visualize their data.
 
+Make banner above login to mention what the login is for
+

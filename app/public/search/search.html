@@ -1,12 +1,15 @@
-<div class="row">
+<div class="container">
+  <div class="row">
     <div ng-include="'partials/searchBar.html'"></div>
-</div>
-<div class="row search-count text-center">
+  </div>
+  <div class="row search-count text-center">
     <h3 class="headline-info-margins" ng-if="vm.results.length > 0">
-        {{vm.results.length}} results for <span>{{vm.queryLabel}}</span>
+      {{vm.results.length}} results for
+      <span>{{vm.queryLabel}}</span>
     </h3>
     <h3 class="headline-info-margins" ng-if="vm.results.length === 0">
-        No results found.
+      No results found.
     </h3>
+  </div>
+  <ldr-masonry result-array="results"></ldr-masonry>
 </div>
-<ldr-masonry result-array="results"></ldr-masonry>

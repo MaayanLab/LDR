@@ -1,101 +1,120 @@
-<!--
-<div class="intro">
-    <div class="row">
-        <h3 class="text-center col-sm-12 headline-info">
-            <span>LDR</span> ensures data consistency and control among LINCS Data Signature Generation Centers
-        </h3>
-    </div>
-    <div class="row">
-        <ul class="col-xs-12 home-stats list-inline text-center">
-            <li ng-repeat="(field, count) in vm.summary" ng-if="count > 0">
-                <h3 class="stat-count highlight-primary">{{count}}</h3>
-                <h4 class="news-title">{{field}}</h4>
-            </li>
-        </ul>
-    </div>
-</div>
--->
 <div class="row">
-  <div ng-include="'partials/searchBar.html'"></div>
+  <!-- <div ng-include="'partials/searchBar.html'"></div> -->
 </div>
-<div class="col-xs-12 col-md-8">
+<div class="home-top">
+  <div class="container">
+    <div class="news-events">
+      <div class="news-events-inner">
+        <div class="row">
+          <div class="col-xs-12">
+            <h3 class="events-banner">
+              LINCS News &amp; Events
+            </h3>
+          </div>
+          <div class="events">
+            <div class="col-xs-12 col-md-6 event" ng-repeat="event in vm.upcoming">
+              <div class="date-block text-center">
+                <h4 class="date-month">
+                  {{event.date | date: 'MMM'}}
+                </h4>
+                <h4 class="date-day">
+                  {{event.date | date: 'd'}}
+                </h4>
+              </div>
+              <div class="event-info">
+                <a class="event-title" ng-if="!event.url" ui-sref="community">
+                  <h4>{{event.title}}</h4>
+                </a>
+                <a class="event-title" ng-if="event.url" ng-href="{{event.url}}">
+                  <h4>{{event.title}}</h4>
+                </a>
+                <h5 class="event-type">
+                  <em>{{event.type}}</em>
+                </h5>
+                <p class="event-deadline" ng-if="event.type === 'Funding Opportunity'">
+                  Application deadline is {{event.date | date: 'MMMM d, yyyy'}}
+                </p>
+                <p class="event-desc">{{event.description}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="intro">
-    <h3 class="headline-info">
-    <span>L</span>ibrary of <span>I</span>ntegrated <span>N</span>etwork-Based
-    <span>C</span>ellular <span>S</span>ignatures
-  </h3>
-    <p>
-      The LINCS project is based on the premise that disrupting any one of the many steps
-      of a given biological process will cause related changes in the molecular and
-      cellular characteristics, behavior, and/or function of the cell – the observable
-      composite of which is known as the cellular phenotype. Observing how and when
-      a cell’s phenotype is altered by specific stressors can provide clues about
-      the underlying mechanisms involved in perturbation and, ultimately, disease.
-    </p>
-    <p>
-      LINCS aims to create a network-based understanding of biology by cataloging changes
-      in gene expression and other cellular processes that occur when cells are exposed
-      to a variety of perturbing agents, and by using computational tools to integrate
-      this diverse information into a comprehensive view of normal and disease states
-      that can be applied for the development of new biomarkers and therapeutics.
-    </p>
-    <p>
-      By generating and making public data that indicates how cells respond to various
-      genetic and environmental stressors, the
-      <a ui-sref="about">LINCS project</a> will help us gain a more detailed understanding
-      of cell pathways and aid efforts to develop therapies that might restore perturbed
-      pathways and networks to their normal states.
-    </p>
-    <p>
-      <em>This website</em> is a source of information for the research community
-      and general public about the LINCS project. The portal contains details about
-      the assays, cell types, and perturbagens currently part of the library, as
-      well as links to participating sites, the data releases from the sites, and
-      software that can be used for analyzing the data.
-    </p>
-    <h4 class="questions text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <h3>
+            The
+            <span>LINCS</span> Consortia
+          </h3>
+          <p>
+            LINCS aims to create a network-based understanding of biology by cataloging changes
+            in gene expression and other cellular processes that occur when cells
+            are exposed to a variety of perturbing agents, and by using computational
+            tools to integrate this diverse information into a comprehensive view
+            of normal and disease states that can be applied for the development
+            of new biomarkers and therapeutics.
+          </p>
+          <p>
+            By generating and making public data that indicates how cells respond to various
+            genetic and environmental stressors, the
+            <a ui-sref="about">LINCS project</a> will help us gain a more detailed understanding of
+            cell pathways and aid efforts to develop therapies that might restore
+            perturbed pathways and networks to their normal states.
+          </p>
+          <!-- <h4 class="questions text-center">
       Questions about LINCS? <a ui-sref="contact">Contact us</a>
-    </h4>
-  </div>
-</div>
-<div class="news col-xs-12 col-md-4">
-  <h4 class="news-title">Upcoming Webinars</h4>
-  <div class="news-inner">
-    <div class="news-info col-xs-12" ng-repeat="webinar in vm.news.webinars">
-      <h5>
-            <em>{{webinar.title}}</em>
-          </h5>
-      <p class="news-date">{{webinar.date}}</p>
-      <p class="news-desc">
-        {{webinar.description}}
-      </p>
+    </h4> -->
+        </div>
+      </div>
     </div>
   </div>
 </div>
-<div class="news col-xs-12 col-md-4">
-  <h4 class="news-title">Upcoming Courses</h4>
-  <div class="news-inner">
-    <div class="news-info col-xs-12" ng-repeat="course in vm.news.courses">
-      <h5>
-            <em>{{course.title}}</em>
-          </h5>
-      <p class="news-date">Starts on {{course.date}}</p>
-      <p class="news-desc">
-        {{course.description}}
-      </p>
-    </div>
-  </div>
-</div>
-<div class="news col-xs-12 col-md-4">
-  <h4 class="news-title">Funding Opportunity</h4>
-  <div class="news-inner">
-    <div class="news-info col-xs-12" ng-repeat="opp in vm.news.fundingOpps">
-      <h5>
-        <strong>Request for Applications: </strong><em>{{opp.title}}</em>
-      </h5>
-      <p class="news-desc">
-        Application deadline is {{opp.deadline}}
-      </p>
+<div class="container">
+  <div class="squares">
+    <div class="row">
+      <div class="col-xs-12 col-md-4">
+        <div class="home-sq center-sq">
+          <h2 class="home-sq-title center-sq-title">
+            Centers
+          </h2>
+          <p class="home-sq-desc">
+            Access LINCS data and view schedule of upcoming data releases.
+          </p>
+          <button class="btn col-xs-10 col-xs-offset-1">
+            View Centers
+          </button>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-4">
+        <div class="home-sq dr-sq">
+          <h2 class="home-sq-title dr-sq-title">
+            Data
+          </h2>
+          <p class="home-sq-desc">
+            Access LINCS data and view schedule of upcoming data releases.
+          </p>
+          <button class="btn col-xs-10 col-xs-offset-1">
+            Access Data
+          </button>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-4">
+        <div class="home-sq td-sq">
+          <h2 class="home-sq-title td-sq-title">
+            Tools
+          </h2>
+          <p class="home-sq-desc">
+            Query and browse LINCS data through multiple lenses.
+          </p>
+          <button class="btn col-xs-10 col-xs-offset-1">
+            Explore Tools
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

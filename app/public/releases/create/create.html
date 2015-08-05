@@ -1,53 +1,61 @@
-<h3 class="text-center">Dataset Registration Form</h3>
-<h4 class="text-center">{{vm.group.name}}</h4>
-<div id="data-registration-form">
-  <form name="datasetRegForm" ng-submit="registerForm.$valid" novalidate>
-    <section class="row">
-      <em class="col-sm-12 highlight text-center">* Required</em>
-      <h4 class="col-sm-12 text-center">Dataset Release Instance</h4>
-      <div class="col-sm-6 form-div">
-        <div class="row">
-          <h5 class="dataset-title col-xs-12 col-lg-5">{{vm.form.datasetName.title}}*</h5>
-          <span class="dataset-error-msg col-xs-12 col-lg-7 text-left" ng-if="datasetRegForm.datasetName.$error.maxlength">
-                    Dataset name must be less than 75 characters.
-                </span>
-          <span ng-if="showErrors && vm.form.datasetName.model === ''" class="dataset-error-msg col-xs-6 text-right">
-                        This field is required.
-                </span>
-        </div>
-        <input name="datasetName" placeholder="{{vm.form.datasetName.placeholder}}" class="dataset-name" ng-model="vm.form.datasetName.model" ng-maxlength="75" />
-      </div>
-      <ldr-form-field ng-repeat="field in vm.form.metadata" title="{{field.title}}" name="{{field.name}}" autocomplete-endpoint="{{field.autocompleteEndpoint}}" max-tags="{{field.maxTags}}" placeholder="{{field.placeholder}}" ng-model="field.model" use-autocomplete="{{field.useAutocomplete}}" autocomplete-source="vm.autocompleteSource" is-required="{{field.isRequired}}" show-errors="showErrors">
-      </ldr-form-field>
-      <div class="col-sm-12">
-        <h5>{{vm.form.description.title}}</h5>
-        <textarea placeholder="{{vm.form.description.placeholder}}" class="experiment" ng-model="vm.form.description.model">
-        </textarea>
-      </div>
-    </section>
-    <section id="releaseDates" class="row">
-      <h4 class="col-sm-12 text-center">Release Dates</h4>
-      <ldr-date-picker ng-repeat="date in vm.form.releaseDates track by $index" level="{{date.level}}" ng-model="vm.form.releaseDates[$index].model" is-required="{{vm.form.releaseDates[$index].isRequired}}">
-      </ldr-date-picker>
-    </section>
-    <section id="urls" class="row">
-      <h4 class="col-sm-12 text-center">URLs</h4>
-      <div ng-repeat="url in vm.form.urls track by $index" class="col-sm-12">
-        <h5>{{url.title}}</h5>
-        <input name="" type="text" ng-model="vm.form.urls[$index].model" />
-      </div>
-    </section>
-    <section id="submit">
-      <button class="btn btn-success" type="submit" ng-click="vm.validate()">
-        <span ng-if="vm.form._id">Update</span>
-        <span ng-if="!vm.form._id">Submit</span>
-      </button>
-      <button class="btn btn-danger" type="button" ng-click="vm.cancel()">
-        Cancel
-      </button>
-      <span ng-show="vm.showErrors" class="highlight">
-                There are errors in your submission. Please check above.
+<div class="container">
+  <h3 class="text-center">Dataset Registration Form</h3>
+  <h4 class="text-center">{{vm.group.name}}</h4>
+  <div id="data-registration-form">
+    <form name="datasetRegForm" ng-submit="registerForm.$valid" novalidate>
+      <section class="row">
+        <em class="col-sm-12 highlight text-center">* Required</em>
+        <h4 class="col-sm-12 text-center">Dataset Release Instance</h4>
+        <div class="col-sm-6 form-div">
+          <div class="row">
+            <h5 class="dataset-title col-xs-12 col-lg-5">{{vm.form.datasetName.title}}*</h5>
+            <span class="dataset-error-msg col-xs-12 col-lg-7 text-left" ng-if="datasetRegForm.datasetName.$error.maxlength">
+              Dataset name must be less than 75 characters.
             </span>
-    </section>
-  </form>
+            <span ng-if="showErrors && vm.form.datasetName.model === ''" class="dataset-error-msg col-xs-6 text-right">
+              This field is required.
+            </span>
+          </div>
+          <input name="datasetName" placeholder="{{vm.form.datasetName.placeholder}}" class="dataset-name"
+          ng-model="vm.form.datasetName.model" ng-maxlength="75" />
+        </div>
+        <ldr-form-field ng-repeat="field in vm.form.metadata" title="{{field.title}}" name="{{field.name}}"
+        autocomplete-endpoint="{{field.autocompleteEndpoint}}" max-tags="{{field.maxTags}}"
+        placeholder="{{field.placeholder}}" ng-model="field.model" use-autocomplete="{{field.useAutocomplete}}"
+        autocomplete-source="vm.autocompleteSource" is-required="{{field.isRequired}}"
+        show-errors="showErrors">
+        </ldr-form-field>
+        <div class="col-sm-12">
+          <h5>{{vm.form.description.title}}</h5>
+          <textarea placeholder="{{vm.form.description.placeholder}}" class="experiment" ng-model="vm.form.description.model">
+          </textarea>
+        </div>
+      </section>
+      <section id="releaseDates" class="row">
+        <h4 class="col-sm-12 text-center">Release Dates</h4>
+        <ldr-date-picker ng-repeat="date in vm.form.releaseDates track by $index" level="{{date.level}}"
+        ng-model="vm.form.releaseDates[$index].model" is-required="{{vm.form.releaseDates[$index].isRequired}}">
+        </ldr-date-picker>
+      </section>
+      <section id="urls" class="row">
+        <h4 class="col-sm-12 text-center">URLs</h4>
+        <div ng-repeat="url in vm.form.urls track by $index" class="col-sm-12">
+          <h5>{{url.title}}</h5>
+          <input name="" type="text" ng-model="vm.form.urls[$index].model" />
+        </div>
+      </section>
+      <section id="submit">
+        <button class="btn btn-success" type="submit" ng-click="vm.validate()">
+          <span ng-if="vm.form._id">Update</span>
+          <span ng-if="!vm.form._id">Submit</span>
+        </button>
+        <button class="btn btn-danger" type="button" ng-click="vm.cancel()">
+          Cancel
+        </button>
+        <span ng-show="vm.showErrors" class="highlight">
+          There are errors in your submission. Please check above.
+        </span>
+      </section>
+    </form>
+  </div>
 </div>

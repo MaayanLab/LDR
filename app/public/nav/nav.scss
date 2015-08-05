@@ -10,28 +10,22 @@ a#group-nav-icon {
 }
 
 .navbar-wrapper {
-  background-color: $color-primary;
+  background-color: blue;
+  background: url('../images/bkg_header_top.jpg') repeat-x left top;
   border-bottom: 1px solid $color-primary-dark;
 
   .navbar-inner {
 
-    .nih-title {
-      margin-left: -15px;
-
-      @media all and (max-width: 1200px) {
-        width: 332px;
-        margin: 0 auto;
-      }
-    }
-
     #nih-logo {
       float: left;
       display: inline-block;
-      margin: 5px 10px 0 0;
-      background: url('../images/nih-logo.png') center;
+      background: url('../images/nih-logo-title.jpg') no-repeat center;
       background-size: contain;
-      height: 50px;
-      width: 59px;
+      height: 104px;
+      width: 397px;
+      @media all and (max-width: 432px) {
+        margin: 0 -30px;
+      }
     }
   }
   a {
@@ -59,9 +53,7 @@ a#group-nav-icon {
   }
 
   .username {
-
     a {
-      line-height: 29px;
       @media all and (max-width: 992px) {
         line-height: 0;
       }
@@ -94,6 +86,10 @@ a#group-nav-icon {
     }
   }
 
+  .user {
+    margin-top: 54px;
+  }
+
   .username-menu {
 
     a {
@@ -101,6 +97,7 @@ a#group-nav-icon {
     }
   }
 }
+
 
 .thin-navbar {
   font-size: 14px;
@@ -116,6 +113,7 @@ a#group-nav-icon {
       color: $color-primary-dark;
       padding: 0 15px;
       line-height: 37px;
+      font-size: 16px;
 
       &:focus, &:hover {
         color: $color-primary;
@@ -135,8 +133,7 @@ a#group-nav-icon {
 .nav-login {
 
   form {
-    line-height: 57px;
-    margin: 0;
+    margin: 65px 0 0 0;
     padding: 0;
 
     @media all and (max-width: 768px) {
@@ -185,7 +182,6 @@ li.errorMsg {
 
 button.login-btn, button.register-btn {
   height: 30px;
-  margin-top: 13px;
   padding: 2px 6px 3px;
   background: transparent;
   color: white;

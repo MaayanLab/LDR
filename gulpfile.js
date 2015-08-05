@@ -134,7 +134,9 @@ gulp.task('karma', function(callback) {
 });
 
 gulp.task('jshint', function() {
-  return gulp.src([SRC_DIRECTORY + '**/*.js', '!' + SRC_DIRECTORY + 'vendor/**'])
+  return gulp.src([SRC_DIRECTORY + '**/*.js', '!' + SRC_DIRECTORY +
+      'vendor/**'
+    ])
     .pipe($.plumber())
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
@@ -188,8 +190,8 @@ gulp.task('build:watch', function(callback) {
     gulp.watch(SRC_DIRECTORY + '**/*.js', ['js']);
     gulp.watch(SERVER_DIRECTORY + '**/*.js', ['serverJs']);
     gulp.watch('./server.js', ['serverJs']);
-    gulp.watch(SRC_DIRECTORY + '**/*.scss', ['scss']);
     gulp.watch(SRC_DIRECTORY + '**/*.html', ['html']);
+    gulp.watch(SRC_DIRECTORY + '**/*.scss', ['scss']);
     callback();
   });
 });
@@ -241,7 +243,7 @@ gulp.task('sync', ['serve'], function(cb) {
   browserSync = require('browser-sync');
 
   browserSync({
-    logPrefix: 'LDR',
+    logPrefix: 'LP',
     notify: true,
     // Run as an https by setting 'https: true'
     // Note: this uses an unsigned certificate which on first access
@@ -249,7 +251,7 @@ gulp.task('sync', ['serve'], function(cb) {
     https: false,
     // Informs browser-sync to proxy our Express app which would run
     // at the following location
-    proxy: 'localhost:3001/LDR/'
+    proxy: 'localhost:3001/lincsproject/'
   }, cb);
 
   process.on('exit', function() {

@@ -5,94 +5,193 @@
   margin-bottom: 19px;
 }
 
-.headline-info {
-  font-weight: 400 !important;
-  span {
-    font-weight: 700 !important;
-    color: $color-primary-dark;
-  }
+.home-top {
+  min-height: 400px;
 }
 
-.headline-info-margins {
-  @extend .headline-info;
-  margin: 0 0 20px 0;
-
-  span {
-    font-weight: 700 !important;
-    color: $color-primary-dark;
-  }
+.squares {
+  background-color: $color-primary-light;
+  padding: 60px 20px;
 }
 
-.home-stats {
-
-  li {
-    padding: 0 12px;
-  }
-}
-
-#release-search {
-  margin-top: 20px;
+.home-sq {
+  background-color: white;
+  width: 100%;
+  padding: 20px 15px 30px 15px;
+  min-height: 250px;
   margin-bottom: 20px;
-  position: relative;
-  height: 47px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 2px;
-  background: #fff;
 
-  #search-bar {
-    position: absolute;
-    top: 7px;
-    left: 7px;
-    width: 80%;
-    height: 30px;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    outline: 0;
-    font-size: 18px;
-    background: none;
+  box-shadow: 0 0 3px 0 $color-primary-dark;
 
+  p {
+    font-size: 16px;
+    height: 60px;
   }
 
-  #search-btn {
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 45px;
-    width: 46px;
-    border: 0;
-    text-indent: -9999em;
-    cursor: pointer;
-    outline: 0;
-    border-left: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 0 2px 2px 0;
-    background: url('../images/ico-search.svg') no-repeat 50% 50%;
-    background-size: 16px 16px;
+  button {
+    font-size: 16px;
+    top: 20px;
+    text-align: center;
+  }
 
+  .home-sq-title {
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid;
+  }
+}
+
+.center-sq {
+  button {
+    color: white;
+    background-color: $color-primary-dark;
     &:hover {
-      background: $color-primary-dark url('../images/ico-search-hover.svg') no-repeat 50% 50%;
-      background-size: 16px 16px;
+      color: $color-secondary;
+    }
+  }
+
+  .center-sq-title {
+    color: $color-primary-dark;
+    border-color: $color-primary-dark;
+  }
+}
+
+.dr-sq {
+  button {
+    color: white;
+    background-color: $color-secondary;
+    &:hover {
+      color: $color-primary-dark;
+    }
+  }
+
+  .dr-sq-title {
+    color: $color-secondary;
+    border-color: $color-secondary;
+  }
+}
+
+.td-sq {
+  button {
+    color: white;
+    background-color: $color-teal;
+    &:hover {
+      color: $color-primary-dark;
+    }
+  }
+
+  .td-sq-title {
+    color: $color-teal;
+    border-color: $color-teal;
+  }
+}
+
+.intro {
+  background-color: $color-primary-dark;
+  padding: 40px 0;
+
+  h3 {
+    color: white;
+    padding-bottom: 5px;
+    border-bottom: 1px solid $color-primary-light;
+    span {
+      font-weight: 700 !important;
+      color: $color-primary-light;
+    }
+  }
+
+  p {
+    font-size: 16px;
+    color: white;
+  }
+
+  a {
+    color: $color-orange;
+    font-weight: 700;
+    &:hover {
+      color: $color-orange;
     }
   }
 }
 
-.news {
-  border-left: 1px solid #ddd;
+.news-events {
+  padding-top: 50px;
+  background-color: $color-primary-light;
 }
 
-.intro {
-  padding-bottom: 60px;
-  margin-bottom: 60px;
+.events-banner {
+  color: white;
+  background-color: $color-primary-dark;
+  padding: 20px;
+  margin: 0 0 40px 0;
 }
 
-.news {
-  padding-bottom: 40px;
+.news-events-inner {
+  background-color: $color-primary-light;
+}
 
-  p {
-    margin: 0;
+$block-width: 280px;
+$num-blocks: 4;
+
+.events {
+  padding-left: 15px;
+  padding-right: 15px;
+
+  @media (max-width: 992px) {
+    .event:last-child {
+      margin-bottom: 180px;
+    }
   }
 }
 
-.questions {
-  margin: 20px 0;
+.scroll-items {
+  // width: $block-width * $num-blocks;
+  // animation-delay: 10s;
+  // animation: horizscroll 30s infinite;
+
+  &:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes horizscroll {
+  0% {   margin-left: 0; }
+  25% {  margin-left: -1 * $block-width; }
+  50% {  margin-left: -2 * $block-width; }
+  75% {  margin-left: -3 * $block-width; }
+  80% {  margin-left: 0; }
+  100% { margin-left: 0; }
+}
+
+.event {
+  margin-bottom: 40px;
+}
+
+.date-block {
+  height: 50px;
+  width: 50px;
+  margin-bottom: 20px;
+  padding: 0px;
+  float: left;
+  color: white;
+  background-color: $color-teal;
+  box-shadow: -2px 0 1px 0 $color-teal;
+
+  h4 {
+    color: white;
+    margin: 0;
+    line-height: 25px;
+  }
+}
+
+.event-info {
+  background-color: white;
+  min-height: 150px;
+  margin-left: 50px;
+  padding: 10px;
+  box-shadow: 0 0 3px 0 $color-primary-dark;
+
+  a {
+    color: $color-primary-dark;
+  }
 }

@@ -1,118 +1,102 @@
-<div class="row">
+<div class="container">
+  <div class="row">
     <h3 class="text-center">User Settings</h3>
+  </div>
+  <form name="registerForm" autocomplete="off" class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2"
+  ng-submit="registerForm.$valid && vm.updateUser()" novalidate>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <p class="text-muted">
+        Must be at least 5 characters long.
+      </p>
+      <input id="username" name="username" type="text" ng-minlength="5" ng-model="vm.user.username"
+      class="form-control" ng-trim="false" ng-model-options="{ updateOn: 'blur' }"
+      username-available required/>
+      <div ng-show="registerForm.$submitted || registerForm.username.$touched">
+        <span class="help-inline" data-ng-show='registerForm.username.$pending.username'
+        data-ng-class="strong">
+          Checking availability...
+        </span>
+        <span class="help-inline error-msg" data-ng-show='registerForm.username.$error.username'
+        data-ng-class="medium">
+          Username taken. Please try another.
+        </span>
+        <span class="help-inline error-msg" ng-show="registerForm.username.$error.minlength">
+          Please enter a username at least 5 characters long.
+        </span>
+      </div>
+    </div>
+    <div class="form-group">
+      <a ui-sref="changePassword({id: currentUser._id})">Change Password</a>
+    </div>
+    <div class="form-group">
+      <label>Group*</label>
+      <input type="text" ng-model="vm.user.group" name="group" placeholder="Please select a group"
+      typeahead="group as group.name for group in groups | filter:$viewValue | limitTo:8"
+      typeahead-editable="false" class="form-control">
+      <i ng-show="vm.loadingGroups" class="glyphicon glyphicon-refresh"></i>
+      <p id="create-group-tag">
+        or
+        <a ng-click="vm.createGroup()">Create a new one</a>
+      </p>
+      <div ng-show="registerForm.$submitted || registerForm.group.$touched">
+        <span class="help-inline error-msg" ng-show="!vm.user.group._id">
+          No group selected.
+        </span>
+      </div>
+    </div>
+    <div class="form-group col-sm-6">
+      <label for="firstName">First Name*</label>
+      <input id="firstName" name="firstName" type="text" ng-model="vm.user.firstName" class="form-control"
+      />
+      <div ng-show="registerForm.$submitted || registerForm.firstName.$touched">
+        <span class="help-inline error-msg" ng-show="!vm.user.firstName">
+          Please enter your first name.
+        </span>
+      </div>
+    </div>
+    <div class="form-group col-sm-6">
+      <label for="lastName">Last Name*</label>
+      <input id="lastName" name="lastName" type="text" ng-model="vm.user.lastName" class="form-control"
+      required/>
+      <div ng-show="registerForm.$submitted || registerForm.lastName.$touched">
+        <span class="help-inline error-msg" ng-show="!vm.user.lastName">
+          Please enter your last name.
+        </span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email*</label>
+      <input id="email" name="email" type="email" ng-model="vm.user.email" class="form-control"
+      ng-model-options="{ updateOn: 'blur' }" required/>
+      <span class="help-inline error-msg" data-ng-show='registerForm.email.$pending.email'
+      data-ng-class="strong">
+        Validating...
+      </span>
+      <span class="help-inline error-msg" data-ng-show='registerForm.email.$error.email'
+      data-ng-class="medium">
+        Email is invalid.
+      </span>
+    </div>
+    <div class="form-group">
+      <label for="location">Location</label>
+      <input id="location" type="text" ng-model="vm.user.location" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="fieldOfStudy">Field of Study</label>
+      <input id="fieldOfStudy" type="text" ng-model="vm.user.fieldOfStudy" class="form-control"
+      />
+    </div>
+    <div class="form-group">
+      <label for="homepage">Homepage</label>
+      <input id="homepage" type="text" ng-model="vm.user.homepage" class="form-control"
+      />
+    </div>
+    <div class="form-group">
+      <br>
+      <input class="btn btn-success" type="submit" value="Update" />
+      <input class="btn btn-danger" type="button" ng-click="vm.reset(registerForm)" value="Reset"
+      />
+    </div>
+  </form>
 </div>
-<form name="registerForm" autocomplete="off"
-      class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2"
-      ng-submit="registerForm.$valid && vm.updateUser()" novalidate>
-    <div class="form-group">
-        <label for="username">Username</label>
-
-        <p class="text-muted">
-            Must be at least 5 characters long.
-        </p>
-        <input id="username" name="username" type="text" ng-minlength="5"
-               ng-model="vm.user.username" class="form-control" ng-trim="false"
-               ng-model-options="{ updateOn: 'blur' }" username-available
-               required/>
-
-        <div ng-show="registerForm.$submitted || registerForm.username.$touched">
-            <span class="help-inline"
-                  data-ng-show='registerForm.username.$pending.username'
-                  data-ng-class="strong">
-                Checking availability...
-            </span>
-            <span class="help-inline error-msg"
-                  data-ng-show='registerForm.username.$error.username'
-                  data-ng-class="medium">
-                Username taken. Please try another.
-            </span>
-            <span class="help-inline error-msg"
-                  ng-show="registerForm.username.$error.minlength">
-                Please enter a username at least 5 characters long.
-            </span>
-        </div>
-    </div>
-    <div class="form-group">
-        <a ui-sref="changePassword({id: currentUser._id})">Change Password</a>
-    </div>
-
-    <div class="form-group">
-        <label>Group*</label>
-        <input type="text" ng-model="vm.user.group" name="group"
-               placeholder="Please select a group"
-               typeahead="group as group.name for group in groups | filter:$viewValue | limitTo:8"
-               typeahead-editable="false" class="form-control">
-        <i ng-show="vm.loadingGroups" class="glyphicon glyphicon-refresh"></i>
-
-        <p id="create-group-tag">
-            or <a ng-click="vm.createGroup()">Create a new one</a>
-        </p>
-
-        <div ng-show="registerForm.$submitted || registerForm.group.$touched">
-            <span class="help-inline error-msg"
-                  ng-show="!vm.user.group._id">
-                No group selected.
-            </span>
-        </div>
-    </div>
-    <div class="form-group col-sm-6">
-        <label for="firstName">First Name*</label>
-        <input id="firstName" name="firstName" type="text"
-               ng-model="vm.user.firstName" class="form-control"/>
-
-        <div ng-show="registerForm.$submitted || registerForm.firstName.$touched">
-            <span class="help-inline error-msg"
-                  ng-show="!vm.user.firstName">
-                Please enter your first name.
-            </span>
-        </div>
-    </div>
-    <div class="form-group col-sm-6">
-        <label for="lastName">Last Name*</label>
-        <input id="lastName" name="lastName" type="text"
-               ng-model="vm.user.lastName" class="form-control" required/>
-        <div ng-show="registerForm.$submitted || registerForm.lastName.$touched">
-            <span class="help-inline error-msg"
-                  ng-show="!vm.user.lastName">
-                Please enter your last name.
-            </span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="email">Email*</label>
-        <input id="email" name="email" type="email" ng-model="vm.user.email"
-               class="form-control" ng-model-options="{ updateOn: 'blur' }"
-               required/>
-        <span class="help-inline error-msg"
-              data-ng-show='registerForm.email.$pending.email'
-              data-ng-class="strong">
-            Validating...
-        </span>
-        <span class="help-inline error-msg"
-              data-ng-show='registerForm.email.$error.email'
-              data-ng-class="medium">
-            Email is invalid.
-        </span>
-    </div>
-    <div class="form-group">
-        <label for="location">Location</label>
-        <input id="location" type="text"
-               ng-model="vm.user.location" class="form-control">
-    </div>
-    <div class="form-group">
-        <label for="fieldOfStudy">Field of Study</label>
-        <input id="fieldOfStudy" type="text"
-               ng-model="vm.user.fieldOfStudy" class="form-control"/>
-    </div>
-    <div class="form-group">
-        <label for="homepage">Homepage</label>
-        <input id="homepage" type="text"
-               ng-model="vm.user.homepage" class="form-control"/>
-    </div>
-    <div class="form-group">
-        <br>
-        <input class="btn btn-success" type="submit" value="Update"/>
-        <input class="btn btn-danger" type="button"
-               ng-click="vm.reset(registerForm)" value="Reset"/>
-    </div>
-</form>

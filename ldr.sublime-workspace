@@ -4,6 +4,66 @@
 		"selected_items":
 		[
 			[
+				"fundingOp",
+				"fundingOppsConfig"
+			],
+			[
+				"site-",
+				"site-map-left"
+			],
+			[
+				"block",
+				"block-width"
+			],
+			[
+				"padd",
+				"padding"
+			],
+			[
+				"color",
+				"color-primary-dark"
+			],
+			[
+				"ng-re",
+				"ng-repeat	AngularJS"
+			],
+			[
+				"padding",
+				"padding-bottom"
+			],
+			[
+				"a",
+				"absolute"
+			],
+			[
+				"op",
+				"opacity"
+			],
+			[
+				"trans",
+				"transition"
+			],
+			[
+				"publ",
+				"publications〔argument〕"
+			],
+			[
+				"color-",
+				"color-primary-dark"
+			],
+			[
+				"user",
+				"username"
+			],
+			[
+				"use",
+				"userSettings({id"
+			],
+			[
+				"stat",
+				"stateParams"
+			],
+			[
 				"flex",
 				"flex-wrap"
 			],
@@ -26,10 +86,6 @@
 			[
 				"bor",
 				"border-left"
-			],
-			[
-				"color",
-				"color-primary-dark"
 			],
 			[
 				"prim",
@@ -59,6 +115,89 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "app/public/community/consortium/consortium.js",
+			"settings":
+			{
+				"buffer_size": 672,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/public/nav/nav.html",
+			"settings":
+			{
+				"buffer_size": 4921,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/public/community/webinars/webinars.js",
+			"settings":
+			{
+				"buffer_size": 562,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/public/community/fundingOpps/fundingOpps.js",
+			"settings":
+			{
+				"buffer_size": 595,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/public/community/workshops/workshops.js",
+			"settings":
+			{
+				"buffer_size": 573,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "<!--\n<div class=\"intro\">\n    <div class=\"row\">\n        <h3 class=\"text-center col-sm-12 headline-info\">\n            <span>LDR</span> ensures data consistency and control among LINCS Data Signature Generation Centers\n        </h3>\n    </div>\n    <div class=\"row\">\n        <ul class=\"col-xs-12 home-stats list-inline text-center\">\n            <li ng-repeat=\"(field, count) in vm.summary\" ng-if=\"count > 0\">\n                <h3 class=\"stat-count highlight-primary\">{{count}}</h3>\n                <h4 class=\"news-title\">{{field}}</h4>\n            </li>\n        </ul>\n    </div>\n</div>\n-->\n<div class=\"row\">\n  <div ng-include=\"'partials/searchBar.html'\"></div>\n</div>\n<div class=\"row home-top\">\n  <div class=\"col-xs-12 col-md-6\">\n    <div class=\"intro\">\n      <h3 class=\"headline-info\">\n        The\n        <span>LINCS</span> Consortia\n      </h3>\n      <p>\n        LINCS aims to create a network-based understanding of biology by cataloging changes\n        in gene expression and other cellular processes that occur when cells are\n        exposed to a variety of perturbing agents, and by using computational tools\n        to integrate this diverse information into a comprehensive view of normal\n        and disease states that can be applied for the development of new biomarkers\n        and therapeutics.\n      </p>\n      <p>\n        By generating and making public data that indicates how cells respond to various\n        genetic and environmental stressors, the\n        <a ui-sref=\"about\">LINCS project</a> will help us gain a more detailed understanding of cell\n        pathways and aid efforts to develop therapies that might restore perturbed\n        pathways and networks to their normal states.\n      </p>\n      <!-- <h4 class=\"questions text-center\">\n      Questions about LINCS? <a ui-sref=\"contact\">Contact us</a>\n    </h4> -->\n    </div>\n  </div>\n  <div class=\"col-xs-6 col-md-3\">\n    <div class=\"home-sq dr-sq\">\n      <h3 class=\"home-sq-title dr-sq-title\">\n        Data\n      </h3>\n      <p class=\"home-sq-desc\">\n        Access LINCS data and view schedule of upcoming data releases.\n      </p>\n      <button class=\"btn col-xs-10 col-xs-offset-1\">\n        Access Data\n      </button>\n    </div>\n  </div>\n  <div class=\"col-xs-6 col-md-3\">\n    <div class=\"home-sq td-sq\">\n      <h3 class=\"home-sq-title td-sq-title\">\n        Tools &amp; Databases\n      </h3>\n      <p class=\"home-sq-desc\">\n        Query and browse LINCS data through multiple lenses.\n      </p>\n      <button class=\"btn col-xs-10 col-xs-offset-1\">\n        Explore Tools\n      </button>\n    </div>\n  </div>\n</div>\n<div class=\"row news-events\">\n  <div class=\"col-xs-12\">\n    <h3 class=\"headline-info\">\n      LINCS News &amp; Events\n    </h3>\n    <div class=\"events-scroll\">\n      <div class=\"scroll-items\">\n        <div class=\"event\" ng-repeat=\"event in vm.upcoming\">\n          <div class=\"date-block text-center\">\n            <h4 class=\"date-month\">\n              {{event.date | date: 'MMM'}}\n            </h4>\n            <h4 class=\"date-day\">\n              {{event.date | date: 'd'}}\n            </h4>\n          </div>\n          <div class=\"event-info\">\n            <a class=\"event-title\" ng-if=\"!event.url\" ui-sref=\"community\">\n              <h4>{{event.title}}</h4>\n            </a>\n            <a class=\"event-title\" ng-if=\"event.url\" ng-href=\"{{event.url}}\">\n              <h4>{{event.title}}</h4>\n            </a>\n            <h5 class=\"event-type\">\n              <em>{{event.type}}</em>\n            </h5>\n            <p class=\"event-deadline\" ng-if=\"event.type === 'Funding Opportunity'\">\n              Application deadline is {{event.date | date: 'MMMM d, yyyy'}}\n            </p>\n            <p class=\"event-desc\">{{event.description}}</p>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n",
+			"file": "app/public/home/home.html",
+			"file_size": 3806,
+			"file_write_time": 130831930310000000,
+			"settings":
+			{
+				"buffer_size": 3797,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/public/app.js",
+			"settings":
+			{
+				"buffer_size": 4134,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+			"settings":
+			{
+				"buffer_size": 802,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/backend/config/database.js",
+			"settings":
+			{
+				"buffer_size": 217,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/public/nav/nav.scss",
+			"settings":
+			{
+				"buffer_size": 3359,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -67,10 +206,30 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 392.0,
-		"last_filter": "",
+		"height": 400.0,
+		"last_filter": "remove",
 		"selected_items":
 		[
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"html",
+				"HTMLPrettify: Set Prettify Preferences"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"insl",
+				"Package Control: Install Package"
+			],
 			[
 				"insta",
 				"Package Control: Install Package"
@@ -88,20 +247,12 @@
 				"Format: Javascript"
 			],
 			[
-				"install",
-				"Package Control: Install Package"
-			],
-			[
 				"remove ",
 				"Package Control: Remove Package"
 			],
 			[
 				"remove pa",
 				"Package Control: Remove Package"
-			],
-			[
-				"instal",
-				"Package Control: Install Package"
 			],
 			[
 				"edit ",
@@ -116,7 +267,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 575.0
+		"width": 601.0
 	},
 	"console":
 	{
@@ -139,61 +290,94 @@
 	[
 		"/Users/mmcdermott/Work/ldr",
 		"/Users/mmcdermott/Work/ldr/app",
+		"/Users/mmcdermott/Work/ldr/app/backend",
 		"/Users/mmcdermott/Work/ldr/app/public",
-		"/Users/mmcdermott/Work/ldr/app/public/bar",
-		"/Users/mmcdermott/Work/ldr/app/public/centers",
-		"/Users/mmcdermott/Work/ldr/app/public/group/create",
-		"/Users/mmcdermott/Work/ldr/app/public/group/home",
-		"/Users/mmcdermott/Work/ldr/app/public/group/settings",
-		"/Users/mmcdermott/Work/ldr/app/public/home",
-		"/Users/mmcdermott/Work/ldr/app/public/releases/create",
-		"/Users/mmcdermott/Work/ldr/app/public/releases/home",
-		"/Users/mmcdermott/Work/ldr/app/public/releases/overview",
-		"/Users/mmcdermott/Work/ldr/app/public/user/admin",
-		"/Users/mmcdermott/Work/ldr/app/public/user/settings"
+		"/Users/mmcdermott/Work/ldr/app/public/home"
 	],
 	"file_history":
 	[
-		"/Users/mmcdermott/Work/ldr/app/backend/routes/groups.js",
-		"/Users/mmcdermott/Work/ldr/app/public/group/home/home.html",
-		"/Users/mmcdermott/Work/ldr/app/public/centers/centers.scss",
-		"/Users/mmcdermott/Work/ldr/app/public/centers/centers.html",
-		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.scss",
-		"/Users/mmcdermott/Work/ldr/app/public/extBootstrap.scss",
+		"/Users/mmcdermott/Work/ChEA2/deploy.json",
+		"/Users/mmcdermott/Work/ChEA2/.gitignore",
+		"/Users/mmcdermott/Work/ChEA2/Dockerfile",
+		"/Users/mmcdermott/Work/Convertr/Dockerfile",
+		"/Users/mmcdermott/Work/Convertr/.gitignore.json",
+		"/Users/mmcdermott/Work/pom.xml",
+		"/Users/mmcdermott/Work/ldr/app/public/partials/footer.html",
+		"/Users/mmcdermott/Work/ldr/app/public/_base.scss",
+		"/Users/mmcdermott/Work/ldr/app/public/partials/partials.scss",
+		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.html",
+		"/Users/mmcdermott/Work/ldr/.gitignore",
+		"/Users/mmcdermott/Work/ldr/app/public/app.js",
+		"/Users/mmcdermott/Work/ldr/app/public/releases/overview/overview.html",
+		"/Users/mmcdermott/Work/ldr/app/public/index.html",
+		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.js",
 		"/Users/mmcdermott/Work/ldr/app/public/main.scss",
+		"/Users/mmcdermott/Work/ldr/app/public/home/home.scss",
+		"/Users/mmcdermott/Work/ldr/app/public/home/home.js",
+		"/Users/mmcdermott/Work/ldr/app/public/home/home.html",
+		"/Users/mmcdermott/Work/ldr/gulpfile.js",
+		"/Users/mmcdermott/Work/ldr/app/public/partials/searchBar.html",
+		"/Users/mmcdermott/Work/ldr/app/backend/routes/events.js",
+		"/Users/mmcdermott/Work/ldr/app/backend/routes/index.js",
+		"/Users/mmcdermott/Work/ldr/app/backend/routes/publications.js",
+		"/Users/mmcdermott/Work/ldr/app/public/releases/overview/overview.js",
+		"/Users/mmcdermott/Work/ldr/.jsbeautifyrc",
+		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.scss",
+		"/Users/mmcdermott/Work/ldr/app/backend/config/database.js",
+		"/Users/mmcdermott/Work/ldr/app/public/login/login.html",
+		"/Users/mmcdermott/Work/ldr/app/public/search/search.js",
+		"/Users/mmcdermott/Work/ldr/app/backend/models.js",
+		"/Users/mmcdermott/Work/ldr/app/public/login/login.js",
+		"/Users/mmcdermott/Work/ldr/app/public/partials/banner.html",
+		"/Users/mmcdermott/Work/ldr/app/public/services/eventsService.js",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/phaseOne/phaseOne.html",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/centers.html",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgc/dsgc.html",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dcic/dcic.html",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgcCenter/centerPartials/neuroLincs.html",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgcCenter/centerPartials/dtoxs.html",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgcCenter/centerPartials/hmsLincs.html",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgcCenter/centerPartials/lincsP.html",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgcCenter/centerPartials/lincsT.html",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgcCenter/centerPartials/mepLincs.html",
+		"/Users/mmcdermott/Work/ldr/app/backend/routes/releases.js",
+		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/HTML-CSS-JS Prettify/.jsbeautifyrc",
+		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/mmcdermott/Work/ldr/app/public/releases/home/releasesHome.scss",
+		"/Users/mmcdermott/Work/ldr/app/backend/routes/admin.js",
+		"/Users/mmcdermott/Work/ldr/ldr.sublime-project",
+		"/Users/mmcdermott/Work/ldr/resources/db/insertPubs.py",
+		"/Users/mmcdermott/Documents/NIH-LINCS-Title.png",
+		"/Users/mmcdermott/Work/ldr/app/public/services/groupsService.js",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/centers.scss",
+		"/Users/mmcdermott/Work/ldr/app/backend/config/baseUrl.js",
+		"/Users/mmcdermott/Work/ldr/server.js",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dcic/dcic.scss",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgcCenter/dsgcCenter.scss",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgcCenter/dsgcCenter.html",
+		"/Users/mmcdermott/Work/ldr/app/backend/routes/groups.js",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgcCenter/dsgcCenter.js",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgc/dsgc.scss",
+		"/Users/mmcdermott/Work/ldr/app/public/group/home/home.html",
+		"/Users/mmcdermott/Work/ldr/app/public/extBootstrap.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/group/home/home.js",
 		"/Users/mmcdermott/Work/ldr/app/public/centers/centers.js",
 		"/Users/mmcdermott/Work/ldr/TODO.txt",
-		"/Users/mmcdermott/Work/ldr/app/public/home/home.js",
-		"/Users/mmcdermott/Work/ldr/app/public/home/home.html",
-		"/Users/mmcdermott/Work/ldr/app/public/services/groupsService.js",
 		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
-		"/Users/mmcdermott/Work/ldr/app/public/_base.scss",
-		"/Users/mmcdermott/Work/ldr/app/public/home/home.scss",
-		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.html",
-		"/Users/mmcdermott/Work/ldr/app/public/app.js",
-		"/Users/mmcdermott/Work/ldr/app/public/partials/footer.html",
-		"/Users/mmcdermott/Work/ldr/app/public/releases/home/releasesHome.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/releases/home/releasesHome.html",
 		"/Users/mmcdermott/Work/ldr/app/public/releases/create/create.js",
 		"/Users/mmcdermott/Work/ldr/app/public/releases/create/create.html",
 		"/Users/mmcdermott/Work/ldr/app/public/group/create/create.js",
-		"/Users/mmcdermott/Work/ldr/.gitignore",
 		"/Users/mmcdermott/Work/ldr/app/public/releases/home/releasesHome.js",
-		"/Users/mmcdermott/Work/ldr/app/backend/models.js",
-		"/Users/mmcdermott/Work/ldr/gulpfile.js",
 		"/Users/mmcdermott/Work/ldr/app/public/user/admin/admin.js",
 		"/Users/mmcdermott/Work/ldr/app/public/services/exportService.js",
 		"/Users/mmcdermott/Work/ldr/app/public/services/releasesService.js",
 		"/Users/mmcdermott/Work/ldr/app/public/services/adminService.js",
 		"/Users/mmcdermott/Work/ldr/app/public/services/metadataService.js",
 		"/Users/mmcdermott/Work/ldr/app/public/services/messagesService.js",
-		"/Users/mmcdermott/Work/ldr/app/public/releases/overview/overview.js",
 		"/Users/mmcdermott/Work/ldr/app/public/data/data.html",
 		"/Users/mmcdermott/Work/ldr/.eslintrc",
 		"/Users/mmcdermott/Work/ldr/app/public/group/settings/settings.js",
-		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
-		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/HTML-CSS-JS Prettify/.jsbeautifyrc",
 		"/Users/mmcdermott/Work/ldr/app/public/bar/bar.js",
 		"/Users/mmcdermott/Work/ldr/app/public/msgModal/msgModal.js",
 		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
@@ -206,16 +390,14 @@
 		"/Users/mmcdermott/Work/ldr/app/public/releases/create/create.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/msgModal/msgModal.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/group/home/home.scss",
-		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.js",
 		"/Users/mmcdermott/Work/ldr/app/public/partials/legend.scss",
-		"/Users/mmcdermott/Work/ldr/ldr.sublime-project",
 		"/Users/mmcdermott/Work/ldr/app/public/style/main.scss",
 		"/Users/mmcdermott/Work/ldr/package.json",
 		"/Users/mmcdermott/Work/ldr/app/public/style/less/main.less"
 	],
 	"find":
 	{
-		"height": 35.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -229,9 +411,49 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
+			"Convertr",
+			"Community",
+			"community",
+			"Community",
+			"community",
+			"`",
+			"#555",
+			"news",
+			"h5",
+			"top",
+			"height",
+			"dr",
+			"div",
+			"16px",
+			"exampleInputPassword2",
+			"exampleInputEmail2",
+			"search",
+			"admin",
+			"ref: '",
+			"type: Sc",
+			"err",
+			"Publication",
+			"size",
+			"webinar",
+			"cube-wrapper",
+			"nih-cube",
+			"Schema.Object",
+			"[{ type: Sche",
+			" col-md-4",
+			"col-xs-12",
+			"color-green",
+			".container {",
+			"ng-show=\"isLoggedIn\" ",
+			"vm.center",
+			"MEPLINCS",
+			"LINCSPCCSE",
+			"LINCSTranscriptomics",
+			"HMSLINCS",
+			"MEPLINCS",
+			"LINCSTranscriptomics",
 			"h5",
 			"h4",
 			"err",
@@ -262,7 +484,7 @@
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": true,
+		"regex": false,
 		"replace_history":
 		[
 			"k",
@@ -280,8 +502,316 @@
 	"groups":
 	[
 		{
+			"selected": 6,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "app/public/community/consortium/consortium.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 672,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								234,
+								234
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/public/nav/nav.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4921,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4142,
+								4142
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"is_xml": false,
+							"syntax": "Packages/AngularJS/AngularJS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1720.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/public/community/webinars/webinars.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 562,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								353,
+								353
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/public/community/fundingOpps/fundingOpps.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 595,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								372,
+								372
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "app/public/community/workshops/workshops.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 573,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								402,
+								402
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "app/public/home/home.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3797,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1980,
+								1980
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"is_xml": false,
+							"syntax": "Packages/AngularJS/AngularJS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 736.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "app/public/app.js",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 4134,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1663,
+								1663
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 802,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								511,
+								511
+							]
+						],
+						"settings":
+						{
+							"auto_complete": true,
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 50.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "app/backend/config/database.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 217,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								60,
+								60
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "app/public/nav/nav.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3359,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								555,
+								555
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Sass/Syntaxes/Sass.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2680.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -338,20 +868,224 @@
 		"selected_items":
 		[
 			[
-				"ex",
-				"app/public/extBootstrap.scss"
+				"navhtml",
+				"app/public/nav/nav.html"
 			],
 			[
-				"nav",
+				"data",
+				"app/backend/config/database.js"
+			],
+			[
+				"",
+				".gitignore"
+			],
+			[
+				"foot",
+				"app/public/partials/footer.html"
+			],
+			[
+				"navas",
 				"app/public/nav/nav.scss"
 			],
 			[
-				"center.sc",
-				"app/public/centers/centers.scss"
+				"basescs",
+				"app/public/_base.scss"
+			],
+			[
+				"app.js",
+				"app/public/app.js"
+			],
+			[
+				"inde",
+				"app/public/index.html"
+			],
+			[
+				"releasesover",
+				"app/public/releases/overview/overview.html"
+			],
+			[
+				"appjs",
+				"app/public/app.js"
+			],
+			[
+				"navjs",
+				"app/public/nav/nav.js"
+			],
+			[
+				"main.",
+				"app/public/main.scss"
+			],
+			[
+				"part",
+				"app/public/partials/partials.scss"
+			],
+			[
+				"footer",
+				"app/public/partials/footer.html"
+			],
+			[
+				"gulp",
+				"gulpfile.js"
+			],
+			[
+				"homejs",
+				"app/public/home/home.js"
+			],
+			[
+				"homsc",
+				"app/public/home/home.scss"
+			],
+			[
+				"navscs",
+				"app/public/nav/nav.scss"
+			],
+			[
+				"parti",
+				"app/public/partials/partials.scss"
+			],
+			[
+				"partia",
+				"app/public/partials/partials.scss"
+			],
+			[
+				"app",
+				"app/public/app.js"
+			],
+			[
+				"models",
+				"app/backend/models.js"
+			],
+			[
+				"datab",
+				"app/backend/config/database.js"
+			],
+			[
+				"even",
+				"app/backend/routes/events.js"
+			],
+			[
+				"release",
+				"app/backend/routes/releases.js"
+			],
+			[
+				"nav",
+				"app/public/nav/nav.html"
+			],
+			[
+				"nava",
+				"app/public/nav/nav.js"
+			],
+			[
+				"homscss",
+				"app/public/home/home.scss"
+			],
+			[
+				"releaseshomes",
+				"app/public/releases/home/releasesHome.scss"
+			],
+			[
+				"homscs",
+				"app/public/home/home.scss"
+			],
+			[
+				"homht",
+				"app/public/home/home.html"
+			],
+			[
+				"nav.ss",
+				"app/public/nav/nav.scss"
+			],
+			[
+				"home.htm",
+				"app/public/home/home.html"
+			],
+			[
+				"homescs",
+				"app/public/home/home.scss"
+			],
+			[
+				"par",
+				"app/public/partials/partials.scss"
+			],
+			[
+				"homehtml",
+				"app/public/home/home.html"
+			],
+			[
+				"appscss",
+				"app/public/main.scss"
+			],
+			[
+				"homoscs",
+				"app/public/home/home.scss"
+			],
+			[
+				"home.ht",
+				"app/public/home/home.html"
+			],
+			[
+				"_bas",
+				"app/public/_base.scss"
+			],
+			[
+				"navht",
+				"app/public/nav/nav.html"
+			],
+			[
+				"releasesscss",
+				"app/public/releases/home/releasesHome.scss"
+			],
+			[
+				"nav.js",
+				"app/public/nav/nav.js"
+			],
+			[
+				"nav.scs",
+				"app/public/nav/nav.scss"
+			],
+			[
+				"homeht",
+				"app/public/home/home.html"
+			],
+			[
+				"home.scs",
+				"app/public/home/home.scss"
+			],
+			[
+				"searchbar",
+				"app/public/partials/searchBar.html"
+			],
+			[
+				"home.t",
+				"app/public/home/home.html"
+			],
+			[
+				"navsc",
+				"app/public/nav/nav.scss"
+			],
+			[
+				"grps",
+				"app/public/services/groupsService.js"
+			],
+			[
+				"home.",
+				"app/public/home/home.html"
+			],
+			[
+				"group",
+				"app/public/services/groupsService.js"
 			],
 			[
 				"groups",
 				"app/backend/routes/groups.js"
+			],
+			[
+				"ex",
+				"app/public/extBootstrap.scss"
+			],
+			[
+				"center.sc",
+				"app/public/centers/centers.scss"
 			],
 			[
 				"home",
@@ -378,15 +1112,7 @@
 				"app/public/centers/centers.scss"
 			],
 			[
-				"app",
-				"app/public/app.js"
-			],
-			[
 				"foo",
-				"app/public/partials/footer.html"
-			],
-			[
-				"foot",
 				"app/public/partials/footer.html"
 			],
 			[
@@ -402,10 +1128,6 @@
 				".gitignore"
 			],
 			[
-				"models",
-				"app/backend/models.js"
-			],
-			[
 				"home.js",
 				"app/public/home/home.js"
 			],
@@ -416,10 +1138,6 @@
 			[
 				"hom",
 				"app/public/home/home.html"
-			],
-			[
-				"home.",
-				"app/public/home/home.js"
 			],
 			[
 				"nav.h",
@@ -440,10 +1158,6 @@
 			[
 				"main.les",
 				"app/public/style/less/main.less"
-			],
-			[
-				"",
-				"gulpfile.js"
 			]
 		],
 		"width": 0.0
@@ -451,7 +1165,7 @@
 	"select_project":
 	{
 		"height": 500.0,
-		"last_filter": "",
+		"last_filter": "lin",
 		"selected_items":
 		[
 		],
@@ -482,8 +1196,8 @@
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": false,
-	"side_bar_width": 244.0,
+	"side_bar_visible": true,
+	"side_bar_width": 238.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

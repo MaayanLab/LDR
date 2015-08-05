@@ -1,92 +1,115 @@
-<div class="row">
-  <div class="left-nav col-xs-3">
-    <ul>
-      <li><strong class="highlight-secondary">Data and Signature Generation Centers</strong>
-        <ul>
-          <li><a ui-sref="dsgcCenter({center: 'DTOXS'})">Drug Toxicity Signature Generation Center</a></li>
-          <li><a ui-sref="dsgcCenter({center: 'HMS-LINCS'})">HMS LINCS Center</a></li>
-          <li><a ui-sref="dsgcCenter({center: 'Broad-LINCS-Transcriptomics'})">LINCS Center for Transcriptomics</a></li>
-          <li><a ui-sref="dsgcCenter({center: 'Broad-LINCS-PCCSE'})">LINCS Proteomic Characterization Center for Signaling and Epigenetics</a></li>
-          <li><a ui-sref="dsgcCenter({center: 'MEP-LINCS'})">Microenvironment Perturbagen (MEP) LINCS Center</a></li>
-          <li><a ui-sref="dsgcCenter({center: 'NeuroLINCS'})">NeuroLINCS Center</a></li>
-        </ul>
-      </li>
-      <li><a ui-sref="dcic">BD2K-LINCS Data Coordination and Integration Center</a></li>
-      <li><a ui-sref="phaseOne">Pilot Phase 1 Centers</a></li>
-    </ul>
-    <div class="left-nav-btns text-center">
-      <button class="btn btn-primary left-nav-btn">Data Releases</button>
-      <button class="btn btn-primary left-nav-btn">Tools and Databases</button>
+<div class="container">
+  <div class="row">
+    <div class="left-nav col-xs-3">
+      <ul>
+        <li>
+          <strong class="highlight-secondary">Data and Signature Generation Centers</strong>
+          <ul>
+            <li>
+              <a ui-sref="dsgcCenter({center: 'DTOXS'})">Drug Toxicity Signature Generation Center</a>
+            </li>
+            <li>
+              <a ui-sref="dsgcCenter({center: 'HMS-LINCS'})">HMS LINCS Center</a>
+            </li>
+            <li>
+              <a ui-sref="dsgcCenter({center: 'Broad-LINCS-Transcriptomics'})">LINCS Center for Transcriptomics</a>
+            </li>
+            <li>
+              <a ui-sref="dsgcCenter({center: 'Broad-LINCS-PCCSE'})">LINCS Proteomic Characterization Center for Signaling and Epigenetics</a>
+            </li>
+            <li>
+              <a ui-sref="dsgcCenter({center: 'MEP-LINCS'})">Microenvironment Perturbagen (MEP) LINCS Center</a>
+            </li>
+            <li>
+              <a ui-sref="dsgcCenter({center: 'NeuroLINCS'})">NeuroLINCS Center</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a ui-sref="dcic">BD2K-LINCS Data Coordination and Integration Center</a>
+        </li>
+        <li>
+          <a ui-sref="phaseOne">Pilot Phase 1 Centers</a>
+        </li>
+      </ul>
+      <div class="left-nav-btns text-center">
+        <button class="btn btn-primary left-nav-btn">Data Releases</button>
+        <button class="btn btn-primary left-nav-btn">Tools and Databases</button>
+      </div>
     </div>
-  </div>
-  <div class="subpage-content col-xs-12 col-sm-9">
-    <h2 class="headline-info page-header">Data and Signature Generation Centers</h2>
-    <div class="row">
-      <div class="col-xs-12">
-        <p>
-          Building on a successful pilot project, the National Institutes of Health has awarded
-          grants to six research institutions to establish centers, collectively
-          called the Data and Signature Generation Centers. The National Human Genome
-          Research Institute (NHGRI) and the National Heart, Lung, and Blood Institute
-          (NHLBI), both part of NIH, administer the program on behalf of the NIH
-          Common Fund.
-        </p>
-        <a ui-sref="dsgcCenter({center: 'DTOXS'})">Drug Toxicity Signature Generation Center (Icahn School of Medicine at Mount Sinai)</a>
-        <p>
-          The Drug Toxicity Signature Generation Center aims to develop cell signatures that
-          will predict adverse events that might be caused by drugs and will identify
-          other drugs that might lessen these side effects. The center will leverage
-          the U.S. Food and Drug Administration’s (FDA) Adverse Event Reporting System
-          database to identify drugs that produce adverse events in heart, liver
-          and neuronal function, and to search for drugs that may mitigate these
-          events.
-        </p>
-        <a ui-sref="dsgcCenter({center: 'HMS-LINCS'})">HMS LINCS Center (Harvard Medical School)</a>
-        <p>
-          The HMS LINCS Center develops new measurement methods and computer algorithms to
-          detect and analyze perturbations induced by therapeutic drugs in healthy
-          and diseased human cells.
-        </p>
-        <a ui-sref="dsgcCenter({center: 'Broad-LINCS-Transcriptomics'})">LINCS Center for Transcriptomics (Broad Institute)</a>
-        <p>
-          The LINCS Center for Transcriptomics is studying up to 50 cell types perturbed by
-          a large number of chemical compounds and genetic reagents that activate
-          or deactivate genes. Each perturbation will produce about 1,000 gene-expression
-          readouts. By the project’s end, the center expects to have generated more
-          than 1 million profiles of how genes are expressed in different cells.
-        </p>
-        <a ui-sref="dsgcCenter({center: 'Broad-LINCS-PCCSE'})">LINCS Proteomic Characterization Center for Signaling and Epigenetics (Broad Institute)</a>
-        <p>
-          The LINCS Proteomic Characterization Center for Signaling and Epigenetics studies
-          cell disruption at the most basic levels: phosphorylation-mediated signaling
-          — that is, how cells communicate internally; and epigenetics, or how cells
-          perpetuate non-genetic information as they grow.
-        </p>
-        <a ui-sref="dsgcCenter({center: 'MEP-LINCS'})">Microenvironment Perturbagen (MEP) LINCS Center (Oregon Health and Science University)</a>
-        <p>
-          The MEP LINCS Center studies how both malignant and non-malignant cells are controlled
-          by the microenvironments in which they live. The researchers will provide
-          measurements of the impacts of thousands of different microenvironments
-          on cellular phenotypes, protein make-up and gene expression readouts in
-          cell lines.
-        </p>
-        <a ui-sref="dsgcCenter({center: 'NeuroLINCS'})">NeuroLINCS Center (University of California, Irvine)</a>
-        <p>
-          The NeuroLINCS Center concentrates on human brain cells, which are far less understood
-          than other cells in the body. The researchers believe it will be necessary
-          to study these cell types directly to understand the causes of neurological
-          disease and to develop new therapies. By applying LINCS-type perturbations
-          to studying an array of human brain cells, the researchers hope to identify
-          targets for developing drugs against neurodegenerative diseases such as
-          Parkinson’s disease, amyotrophic lateral sclerosis (ALS, also known as
-          Lou Gehrig’s disease), spinal muscular atrophy and Huntington’s disease.
-        </p>
-        <em>Press Release</em>
-        <p>
-          <a href="http://www.nih.gov/news/health/sep2014/nhgri-11.htm" target="_blank">
-    NIH awards aim to improve understanding of cell pathways, development of new therapies
-  </a>
-        </p>
+    <div class="subpage-content col-xs-12 col-sm-9">
+      <h2 class="headline-info page-header">Data and Signature Generation Centers</h2>
+      <div class="row">
+        <div class="col-xs-12">
+          <p>
+            Building on a successful pilot project, the National Institutes of Health has awarded
+            grants to six research institutions to establish centers, collectively
+            called the Data and Signature Generation Centers. The National Human
+            Genome Research Institute (NHGRI) and the National Heart, Lung, and Blood
+            Institute (NHLBI), both part of NIH, administer the program on behalf
+            of the NIH Common Fund.
+          </p>
+          <a ui-sref="dsgcCenter({center: 'DTOXS'})">Drug Toxicity Signature Generation Center (Icahn School of Medicine at
+            Mount Sinai)</a>
+          <p>
+            The Drug Toxicity Signature Generation Center aims to develop cell signatures that
+            will predict adverse events that might be caused by drugs and will identify
+            other drugs that might lessen these side effects. The center will leverage
+            the U.S. Food and Drug Administration’s (FDA) Adverse Event Reporting
+            System database to identify drugs that produce adverse events in heart,
+            liver and neuronal function, and to search for drugs that may mitigate
+            these events.
+          </p>
+          <a ui-sref="dsgcCenter({center: 'HMS-LINCS'})">HMS LINCS Center (Harvard Medical School)</a>
+          <p>
+            The HMS LINCS Center develops new measurement methods and computer algorithms to
+            detect and analyze perturbations induced by therapeutic drugs in healthy
+            and diseased human cells.
+          </p>
+          <a ui-sref="dsgcCenter({center: 'Broad-LINCS-Transcriptomics'})">LINCS Center for Transcriptomics (Broad Institute)</a>
+          <p>
+            The LINCS Center for Transcriptomics is studying up to 50 cell types perturbed by
+            a large number of chemical compounds and genetic reagents that activate
+            or deactivate genes. Each perturbation will produce about 1,000 gene-expression
+            readouts. By the project’s end, the center expects to have generated
+            more than 1 million profiles of how genes are expressed in different
+            cells.
+          </p>
+          <a ui-sref="dsgcCenter({center: 'Broad-LINCS-PCCSE'})">LINCS Proteomic Characterization Center for Signaling and Epigenetics (Broad
+            Institute)</a>
+          <p>
+            The LINCS Proteomic Characterization Center for Signaling and Epigenetics studies
+            cell disruption at the most basic levels: phosphorylation-mediated signaling
+            — that is, how cells communicate internally; and epigenetics, or how
+            cells perpetuate non-genetic information as they grow.
+          </p>
+          <a ui-sref="dsgcCenter({center: 'MEP-LINCS'})">Microenvironment Perturbagen (MEP) LINCS Center (Oregon Health and Science
+            University)</a>
+          <p>
+            The MEP LINCS Center studies how both malignant and non-malignant cells are controlled
+            by the microenvironments in which they live. The researchers will provide
+            measurements of the impacts of thousands of different microenvironments
+            on cellular phenotypes, protein make-up and gene expression readouts
+            in cell lines.
+          </p>
+          <a ui-sref="dsgcCenter({center: 'NeuroLINCS'})">NeuroLINCS Center (University of California, Irvine)</a>
+          <p>
+            The NeuroLINCS Center concentrates on human brain cells, which are far less understood
+            than other cells in the body. The researchers believe it will be necessary
+            to study these cell types directly to understand the causes of neurological
+            disease and to develop new therapies. By applying LINCS-type perturbations
+            to studying an array of human brain cells, the researchers hope to identify
+            targets for developing drugs against neurodegenerative diseases such
+            as Parkinson’s disease, amyotrophic lateral sclerosis (ALS, also known
+            as Lou Gehrig’s disease), spinal muscular atrophy and Huntington’s disease.
+          </p>
+          <em>Press Release</em>
+          <p>
+            <a href="http://www.nih.gov/news/health/sep2014/nhgri-11.htm" target="_blank">
+              NIH awards aim to improve understanding of cell pathways, development of new therapies
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   </div>

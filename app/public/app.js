@@ -134,7 +134,8 @@
   }
 
   /* @ngInject */
-  function ldrCtrl($state) {
+  function ldrCtrl($rootScope, $state) {
+    $rootScope.title = 'NIH LINCS Program';
     // Automatically add the hash and go to home state
     $state.go('home');
   }
