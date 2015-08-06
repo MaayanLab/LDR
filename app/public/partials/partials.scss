@@ -76,7 +76,7 @@ td.legend-color {
 
   .green {
     flex: 2;
-    background-color: $color-secondary;
+    background-color: $color-green;
   }
 
   .teal {
@@ -91,7 +91,7 @@ td.legend-color {
 }
 
 #footer {
-  height: 400px !important;
+  height: 240px !important;
   background: $color-purple-dark;
   color: white;
   bottom: 0;
@@ -99,14 +99,7 @@ td.legend-color {
   position: absolute;
   width: 100%;
   margin-top: 10px;
-  a {
-    font-size: 16px;
-    color: $color-primary;
-  }
-  p {
-    color: white;
-    font-size: 16px;
-  }
+
   .icon {
     svg {
       display: inline-block;
@@ -117,6 +110,17 @@ td.legend-color {
         fill: $color-primary;
       }
     }
+  }
+}
+
+.footer-col {
+  a {
+    font-size: 16px;
+    color: $color-primary;
+  }
+  p {
+    color: white;
+    font-size: 16px;
   }
 }
 
@@ -167,8 +171,18 @@ td.legend-color {
 }
 
 .footer-bottom {
-  margin-top: 120px;
-  float: left;
+  margin-top: 20px;
+  width: 100%;
+
+  a, p {
+    margin: 0;
+    font-size: 12px;
+  }
+
+  span {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 
   @media all and (max-width: 992px) {
     margin-top: 100px;

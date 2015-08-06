@@ -21,8 +21,16 @@
     });
   }
 
-  function WebinarsController() {
+  /* @ngInject */
+  function WebinarsController(events) {
     var vm = this;
+    vm.upcomingWebinars = [];
+    vm.pastWebinars = [];
+
+    function getUpcomingWebinars() {
+
+    }
+
   }
 
 }());
