@@ -4,8 +4,11 @@
       <a id="nih-logo" ui-sref="home"></a>
     </div>
     <div class="col-xs-12 col-md-7">
-      <ul class="nav navbar-nav pull-right username">
-        <li class="dropdown" ng-show="vm.isLoggedIn">
+      <p class="login-info" ng-show="!vm.isLoggedIn">
+        Login to Internal LINCS Data Registration System
+      </p>
+      <ul class="nav navbar-nav pull-right username" ng-show="vm.isLoggedIn">
+        <li class="dropdown">
           <a href="" class="dropdown-toggle user" data-toggle="dropdown" role="button" aria-expanded="false">
             {{vm.user.username}}
           </a>
@@ -44,9 +47,83 @@
         </li>
       </ul>
     </div>
+    <div class="col-xs-12 col-md-7 lp-nav">
+      <ul class="nav navbar-right">
+        <li class="dropdown">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Centers
+          </a>
+          <ul class="centers-menu dropdown-menu" role="menu">
+            <li>
+              <a ui-sref="centers">Centers Home</a>
+            </li>
+            <li>
+              <a ui-sref="dsgc">Data Signature Generation Centers</a>
+            </li>
+            <li>
+              <a ui-sref="dcic">BD2K-LINCS Data Coordination and Integration Center</a>
+            </li>
+            <li>
+              <a ui-sref="phaseOne">Pilot Phase 1 Centers</a>
+            </li>
+          </ul>
+        </li>
+        <li ng-show="!vm.isLoggedIn || vm.isLoggedInAdmin">
+          <a ui-sref="releasesHome">Data</a>
+        </li>
+        <li class="dropdown" ng-show="vm.isLoggedIn && !vm.isLoggedInAdmin">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Data
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li ng-show="!vm.isLoggedInAdmin">
+              <a ui-sref="releasesHome">Data Home</a>
+            </li>
+            <li ng-show="!vm.isLoggedInAdmin">
+              <a ui-sref="releasesOverview({groupId: vm.user.group._id})">Your Data</a>
+            </li>
+            <li ng-show="!vm.isLoggedInAdmin">
+              <a ui-sref="releasesCreate({id: ''})">Add New</a>
+            </li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Community
+          </a>
+          <ul class="comm-menu dropdown-menu" role="menu">
+            <li>
+              <a ui-sref="community">Community Home</a>
+            </li>
+            <li>
+              <a ui-sref="fundingOpps">Funding Opportunities</a>
+            </li>
+            <li>
+              <a ui-sref="consortium">LINCS Consortium Meetings</a>
+            </li>
+            <li>
+              <a ui-sref="webinars">Webinars</a>
+            </li>
+            <li>
+              <a ui-sref="workshops">Workshops and Symposia</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a ui-sref="publications">Publications</a>
+        </li>
+        <li>
+          <a ui-sref="news">News</a>
+        </li>
+        <li ng-show="vm.isLoggedInAdmin">
+          <a ui-sref="admin">Admin</a>
+        </li>
+      </ul>
+    </div>
   </div>
+  <!-- <div class="top-nav-divider"></div> -->
 </div>
-<div class="thin-navbar">
+<!-- <div class="thin-navbar">
   <div class="container">
     <nav class="container-full">
       <div>
@@ -120,12 +197,9 @@
           <li ng-show="vm.isLoggedInAdmin">
             <a ui-sref="admin">Admin</a>
           </li>
-          <!--<li>
-                <h5 ng-show="!vm.isLoggedIn && showErr && vm.showFailMessage"
-                    class="errorMsg">User/Password Incorrect.</h5>
-              </li>-->
         </ul>
       </div>
     </nav>
   </div>
 </div>
+ -->

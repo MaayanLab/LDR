@@ -36,9 +36,9 @@
 
     function getUpcoming() {
       events
-        .getNextFourEvents()
-        .success(function(nextEvents) {
-          vm.upcoming = nextEvents;
+        .getHomeEvents()
+        .success(function(homeEvents) {
+          vm.upcoming = homeEvents;
         })
         .error(function(resp) {
           console.log(resp);

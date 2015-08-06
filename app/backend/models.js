@@ -419,7 +419,8 @@ var eventSchema = new Schema({
   type: { type: String, required: true },
   url: String,
   description: String,
-  date: Date
+  date: Date,
+  showAtHome: Boolean
 });
 
 try {

@@ -3,116 +3,215 @@
 </div>
 <div class="home-top">
   <div class="container">
-    <div class="news-events">
-      <div class="news-events-inner">
-        <div class="row">
-          <div class="col-xs-12">
-            <h3 class="events-banner">
-              LINCS News &amp; Events
+    <div class="squares">
+      <div class="row">
+        <div class="col-xs-12 col-md-3">
+          <div class="home-sq cons-sq">
+            <h3 class="home-sq-title cons-sq-title">
+              Consortium <span class="glyphicon glyphicon-globe"></span>
             </h3>
-          </div>
-          <div class="events">
-            <div class="col-xs-12 col-md-6 event" ng-repeat="event in vm.upcoming">
-              <div class="date-block text-center">
-                <h4 class="date-month">
-                  {{event.date | date: 'MMM'}}
-                </h4>
-                <h4 class="date-day">
-                  {{event.date | date: 'd'}}
-                </h4>
-              </div>
-              <div class="event-info">
-                <a class="event-title" ng-if="!event.url" ui-sref="community">
-                  <h4>{{event.title}}</h4>
-                </a>
-                <a class="event-title" ng-if="event.url" ng-href="{{event.url}}">
-                  <h4>{{event.title}}</h4>
-                </a>
-                <h5 class="event-type">
-                  <em>{{event.type}}</em>
-                </h5>
-                <p class="event-deadline" ng-if="event.type === 'Funding Opportunity'">
-                  Application deadline is {{event.date | date: 'MMMM d, yyyy'}}
-                </p>
-                <p class="event-desc">{{event.description}}</p>
-              </div>
-            </div>
+            <!-- <p class="home-sq-desc">
+              Access LINCS data and view schedule of upcoming data releases.
+            </p> -->
+            <ul>
+              <li>
+                <a ui-sref="">Data Release Policy</a>
+              </li>
+              <li>
+                <a ui-sref="">Data Standards</a>
+              </li>
+              <li>
+                <a ui-sref="">Meetings</a>
+              </li>
+              <li>
+                <a ui-sref="">Publications</a>
+              </li>
+              <li>
+                <a ui-sref="">News</a>
+              </li>
+            </ul>
+            <button class="btn col-xs-10 col-xs-offset-1">
+              View Consortium
+            </button>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="intro">
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-12">
-          <h3>
-            The
-            <span>LINCS</span> Consortia
-          </h3>
-          <p>
-            LINCS aims to create a network-based understanding of biology by cataloging changes
-            in gene expression and other cellular processes that occur when cells
-            are exposed to a variety of perturbing agents, and by using computational
-            tools to integrate this diverse information into a comprehensive view
-            of normal and disease states that can be applied for the development
-            of new biomarkers and therapeutics.
-          </p>
-          <p>
-            By generating and making public data that indicates how cells respond to various
-            genetic and environmental stressors, the
-            <a ui-sref="about">LINCS project</a> will help us gain a more detailed understanding of
-            cell pathways and aid efforts to develop therapies that might restore
-            perturbed pathways and networks to their normal states.
-          </p>
-          <!-- <h4 class="questions text-center">
-      Questions about LINCS? <a ui-sref="contact">Contact us</a>
-    </h4> -->
+        <div class="col-xs-12 col-md-3">
+          <div class="home-sq center-sq">
+            <h3 class="home-sq-title center-sq-title">
+              Centers <span class="glyphicon glyphicon-education"></span>
+            </h3>
+            <!-- <p class="home-sq-desc">
+              Access LINCS data and view schedule of upcoming data releases.
+            </p> -->
+            <ul>
+              <li>
+                <a ui-sref="">BD2K-LINCS DCIC</a>
+              </li>
+              <li>
+                <a ui-sref="">Broad Transcriptomics</a>
+              </li>
+              <li>
+                <a ui-sref="">HMS LINCS</a>
+              </li>
+              <li>
+                <a ui-sref="">MEP LINCS</a>
+              </li>
+              <li>
+                <a ui-sref="">NeuroLINCS</a>
+              </li>
+              <li>
+                <a ui-sref="">Broad PCCSE</a>
+              </li>
+              <li>
+                <a ui-sref="">DToxS</a>
+              </li>
+            </ul>
+            <button class="btn col-xs-10 col-xs-offset-1">
+              View Centers
+            </button>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-3">
+          <div class="home-sq dr-sq">
+            <h3 class="home-sq-title dr-sq-title">
+              Data <span class="glyphicon glyphicon-stats"></span>
+            </h3>
+            <!-- <p class="home-sq-desc">
+              Access LINCS data and view schedule of upcoming data releases.
+            </p> -->
+            <ul>
+              <li>
+                <a ui-sref="">BD2K-LINCS DCIC</a>
+              </li>
+              <li>
+                <a ui-sref="">Broad Transcriptomics</a>
+              </li>
+              <li>
+                <a ui-sref="">HMS LINCS</a>
+              </li>
+              <li>
+                <a ui-sref="">MEP LINCS</a>
+              </li>
+              <li>
+                <a ui-sref="">NeuroLINCS</a>
+              </li>
+              <li>
+                <a ui-sref="">Broad PCCSE</a>
+              </li>
+              <li>
+                <a ui-sref="">DToxS</a>
+              </li>
+            </ul>
+            <button class="btn col-xs-10 col-xs-offset-1">
+              Access Data
+            </button>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-3">
+          <div class="home-sq td-sq">
+            <h3 class="home-sq-title td-sq-title">
+              Tools &amp; APIs <span class="glyphicon glyphicon-wrench"></span>
+            </h3>
+            <!-- <p class="home-sq-desc">
+              Query and browse LINCS data through multiple lenses.
+            </p> -->
+            <ul>
+              <li>
+                <a ui-sref="">BD2K-LINCS DCIC</a>
+              </li>
+              <li>
+                <a ui-sref="">Broad Transcriptomics</a>
+              </li>
+              <li>
+                <a ui-sref="">HMS LINCS</a>
+              </li>
+              <li>
+                <a ui-sref="">Sage Bionetworks</a>
+              </li>
+              <li>
+                <a ui-sref="">Panorama</a>
+              </li>
+              <li>
+                <a ui-sref="">Docent I</a>
+              </li>
+              <li>
+                <a ui-sref="">Docent II</a>
+              </li>
+            </ul>
+            <button class="btn col-xs-10 col-xs-offset-1">
+              Explore Tools
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<div class="container">
-  <div class="squares">
+<div class="intro">
+  <div class="container">
     <div class="row">
-      <div class="col-xs-12 col-md-4">
-        <div class="home-sq center-sq">
-          <h2 class="home-sq-title center-sq-title">
-            Centers
-          </h2>
-          <p class="home-sq-desc">
-            Access LINCS data and view schedule of upcoming data releases.
-          </p>
-          <button class="btn col-xs-10 col-xs-offset-1">
-            View Centers
-          </button>
-        </div>
+      <div class="col-xs-12">
+        <h3>
+          The
+          <span>LINCS</span> Consortia
+        </h3>
+        <p>
+          LINCS aims to create a network-based understanding of biology by cataloging changes
+          in gene expression and other cellular processes that occur when cells are
+          exposed to a variety of perturbing agents, and by using computational tools
+          to integrate this diverse information into a comprehensive view of normal
+          and disease states that can be applied for the development of new biomarkers
+          and therapeutics.
+        </p>
+        <p>
+          By generating and making public data that indicates how cells respond to various
+          genetic and environmental stressors, the
+          <a ui-sref="about">LINCS project</a> will help us gain a more detailed understanding of cell
+          pathways and aid efforts to develop therapies that might restore perturbed
+          pathways and networks to their normal states.
+        </p>
+        <!-- <h4 class="questions text-center">
+    Questions about LINCS? <a ui-sref="contact">Contact us</a>
+  </h4> -->
       </div>
-      <div class="col-xs-12 col-md-4">
-        <div class="home-sq dr-sq">
-          <h2 class="home-sq-title dr-sq-title">
-            Data
-          </h2>
-          <p class="home-sq-desc">
-            Access LINCS data and view schedule of upcoming data releases.
-          </p>
-          <button class="btn col-xs-10 col-xs-offset-1">
-            Access Data
-          </button>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="news-events">
+    <div class="news-events-inner">
+      <div class="row">
+        <div class="col-xs-12">
+          <h3 class="events-banner">
+            LINCS News &amp; Events
+          </h3>
         </div>
-      </div>
-      <div class="col-xs-12 col-md-4">
-        <div class="home-sq td-sq">
-          <h2 class="home-sq-title td-sq-title">
-            Tools
-          </h2>
-          <p class="home-sq-desc">
-            Query and browse LINCS data through multiple lenses.
-          </p>
-          <button class="btn col-xs-10 col-xs-offset-1">
-            Explore Tools
-          </button>
+        <div class="events">
+          <div class="col-xs-12 col-md-4 event" ng-repeat="event in vm.upcoming">
+            <div class="date-block text-center">
+              <h4 class="date-month">
+                {{event.date | date: 'MMM'}}
+              </h4>
+              <h4 class="date-day">
+                {{event.date | date: 'd'}}
+              </h4>
+            </div>
+            <div class="event-info">
+              <a class="event-title" ng-if="!event.url" ui-sref="community">
+                <h4>{{event.title}}</h4>
+              </a>
+              <a class="event-title" ng-if="event.url" ng-href="{{event.url}}" target="_blank">
+                <h4>{{event.title}}</h4>
+              </a>
+              <h5 class="event-type">
+                <em>{{event.type}}</em>
+              </h5>
+              <p class="event-deadline" ng-if="event.type === 'Funding Opportunity'">
+                Application deadline is {{event.date | date: 'MMMM d, yyyy'}}
+              </p>
+              <p class="event-desc">{{event.description}}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

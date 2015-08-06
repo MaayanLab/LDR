@@ -6,8 +6,7 @@
 (function() {
   'use strict';
   angular
-  .module('ldr.community', [
-    ])
+  .module('ldr.community', [])
   .config(communityConfig)
   .controller('CommunityController', CommunityController);
 

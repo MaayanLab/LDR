@@ -30,6 +30,25 @@ module.exports = function(app) {
       });
   });
 
+  // Get events for homepage
+  app.get(baseUrl + '/api/events/home', function(req, res) {
+    Event
+      .find({showAtHome: true})
+      .sort({
+        date: 1
+      })
+      .limit(3)
+      .lean()
+      .exec(function(err, events) {
+        if (err) {
+          console.log(err);
+          res.status(404).send('Error getting events for homepage.');
+        } else {
+          res.status(200).send(events);
+        }
+      });
+  });
+
   app.get(baseUrl + '/api/events', function(req, res) {
     Event
       .find({})
@@ -44,6 +63,24 @@ module.exports = function(app) {
         } else {
           res.status(200).send(events);
         }
-      });
+      }
+    );
+  });
+
+  app.get(baseUrl + '/api/events/webinars', function(req, res) {
+    Event
+      .find({type: 'Webinar'})
+      .sort({
+        date: 1
+      })
+      .exec(function(err, webinars) {
+        if (err) {
+          console.log(err);
+          res.status(404).send('Error getting webinars');
+        } else {
+          res.status(200).send(webinars);
+        }
+      }
+    );
   });
 };

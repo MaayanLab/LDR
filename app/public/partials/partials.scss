@@ -76,17 +76,17 @@ td.legend-color {
 
   .green {
     flex: 2;
-    background-color: #7E8134;
+    background-color: $color-secondary;
   }
 
   .teal {
     flex: 1;
-    background-color: #0E8282;
+    background-color: $color-teal;
   }
 
   .orange {
     flex: 6;
-    background-color: #ED9122;
+    background-color: $color-orange;
   }
 }
 

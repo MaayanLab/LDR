@@ -49,7 +49,7 @@ h1, h2, h3, h4, h5, h6 {
 #large-banner {
   background: url('../images/NIH-banner.jpg') no-repeat center;
   height: 245px;
-  border-bottom: 1px solid #ddd;
+  position: relative;
 
   @media all and (max-width: 1200px) {
     background: url('../images/NIH-banner-sm.jpg') no-repeat center;
@@ -60,6 +60,8 @@ h1, h2, h3, h4, h5, h6 {
 #small-banner {
   background: url('../images/NIH-banner-sm.jpg') no-repeat center;
   height: 59px;
+  position: relative;
+  box-shadow: 0 2px 8px 0 $color-primary-dark;
 }
 
 ::-webkit-scrollbar-track {

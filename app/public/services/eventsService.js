@@ -14,7 +14,8 @@
   function events(api) {
     return {
       getAllEvents: getAllEvents,
-      getNextFourEvents: getNextFourEvents
+      getNextFourEvents: getNextFourEvents,
+      getHomeEvents: getHomeEvents
     };
 
     //////////////
@@ -25,6 +26,10 @@
 
     function getNextFourEvents() {
       return api('events/upcoming').get();
+    }
+
+    function getHomeEvents() {
+      return api('events/home').get();
     }
 
   }
