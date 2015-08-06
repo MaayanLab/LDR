@@ -96,3 +96,6 @@ dist/
 
 # Temporary Excel Files
 ~$*.xlsx
+
+# Sublime Gulp
+.sublime-gulp*
