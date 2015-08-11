@@ -218,6 +218,10 @@
               <p class="event-deadline" ng-if="event.type === 'Funding Opportunity'">
                 Application deadline is {{event.date | date: 'MMMM d, yyyy'}}
               </p>
+              <div class="presenter" ng-if="event.presenter">
+                <p><strong>Presenter: </strong><a ng-href="{{event.presenter.url}}">{{event.presenter.name}}</a></p>
+                <p><strong>Affiliation: </strong>{{event.presenter.affiliation}}</p>
+              </div>
               <p class="event-desc">{{event.description}}</p>
             </div>
           </div>
