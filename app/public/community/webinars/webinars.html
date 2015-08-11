@@ -70,13 +70,33 @@
             For detailed information including the Discussion Group, please visit the wiki at
             <a href="https://sites.google.com/site/bd2klincsdatascience">https://sites.google.com/site/bd2klincsdatascience</a>
           </p>
-          <h4>Upcoming Webinars</h4>
           <div class="upcoming-webinars">
-            <div class="webinar" ng-repeat="webinar in upcomingWebinars">
-              <h5>
-                {{webinar.title}}
-              </h5>
-              <p><strong>{{webinar.date}}:</strong>{{webinar.description}}</p>
+            <h4>Upcoming Webinars</h4>
+            <div class="webinar" ng-repeat="webinar in vm.upcomingWebinars">
+              <a ng-if="!webinar.url">
+                <h5>{{webinar.title}}</h5>
+              </a>
+              <a ng-if="webinar.url" ng-href="{{webinar.url}}" target="_blank">
+                <h5>{{webinar.title}}</h5>
+              </a>
+              <p>
+                <strong>{{webinar.date | date: 'MMMM d, yyyy'}}: </strong>{{webinar.description}}</p>
+            </div>
+          </div>
+          <div class="dcic-youtube embed-responsive embed-responsive-4by3">
+              <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PL0Bwuj8819U-G9Ob0jIGHp5AtwpCghLV5"></iframe>
+          </div>
+          <div class="past-webinars">
+            <h4>Past Webinars</h4>
+            <div class="webinar" ng-repeat="webinar in vm.pastWebinars">
+              <a ng-if="!webinar.url">
+                <h5>{{webinar.title}}</h5>
+              </a>
+              <a ng-if="webinar.url" ng-href="{{webinar.url}}" target="_blank">
+                <h5>{{webinar.title}}</h5>
+              </a>
+              <p>
+                <strong>{{webinar.date | date: 'MMMM d, yyyy'}}: </strong>{{webinar.description}}</p>
             </div>
           </div>
         </div>

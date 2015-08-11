@@ -20,7 +20,7 @@ var SALT_WORK_FACTOR = 10;
 
 // Mongoose Models and Schemas
 var User, Group, Assay, CellLine, Perturbagen, Readout, Gene, Disease,
-  Organism, Tool, DataRelease, Publication, Event;
+  Organism, Tool, DataRelease, Publication, Webinar, Workshop, FundingOpp, Course;
 var Schema = mongoose.Schema;
 
 // User
@@ -414,20 +414,51 @@ try {
     publicationSchema, 'publications');
 }
 
-var eventSchema = new Schema({
-  title: String,
-  type: { type: String, required: true },
+
+var webinarSchema = new Schema({
+  title: { type: String, required: true },
+  showAtHome: { type: Boolean, required: true, default: false },
+  presenter: {
+    name: String,
+    affiliation: String,
+    url: String
+  },
   url: String,
-  description: String,
-  date: Date,
-  showAtHome: Boolean
+  date: Date
 });
 
 try {
-  Event = mongoose.model('Event');
+  Webinar = mongoose.model('Webinar');
 } catch (e) {
-  Event = mongoose.model('Event',
-    eventSchema, 'events');
+  Webinar = mongoose.model('Webinar',
+    webinarSchema, 'webinars');
+}
+
+var workshopSchema = new Schema({});
+
+try {
+  Workshop = mongoose.model('Workshop');
+} catch (e) {
+  Workshop = mongoose.model('Workshop',
+    workshopSchema, 'workshops');
+}
+
+var courseSchema = new Schema({});
+
+try {
+  Course = mongoose.model('Course');
+} catch (e) {
+  Course = mongoose.model('Course',
+    courseSchema, 'courses');
+}
+
+var fundingOppSchema = new Schema({});
+
+try {
+  FundingOpp = mongoose.model('FundingOpp');
+} catch (e) {
+  FundingOpp = mongoose.model('FundingOpp',
+    fundingOppSchema, 'fundingOpps');
 }
 
 /* beautify preserve:end */
@@ -445,5 +476,8 @@ module.exports = {
   Tool: Tool,
   DataRelease: DataRelease,
   Publication: Publication,
-  Event: Event
+  Webinar: Webinar,
+  Workshop: Workshop,
+  FundingOpp: FundingOpp,
+  Course: Course
 };

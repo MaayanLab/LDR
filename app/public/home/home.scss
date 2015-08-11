@@ -18,27 +18,40 @@
   background-color: white;
   width: 100%;
   padding: 1px 15px 30px 15px;
-  min-height: 300px;
+  min-height: 350px;
+  margin-bottom: 20px;
 
   box-shadow: 0 0 3px 0 $color-primary-dark;
+
+  ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+  }
+
+  li {
+      padding-left: 2em;
+      text-indent: -.7em;
+  }
+
+  li:before {
+      content: "• ";
+      padding-right: .5em;
+  }
 
   .glyphicon {
     margin-left: 10px;
   }
 
-  ul {
-    list-style: none;
-    margin-left: -20px;
-  }
   a, p {
     font-size: 14px;
     height: 60px;
   }
 
   button {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
-    top: 10px;
+    top: 60px;
     text-align: center;
   }
 
@@ -50,17 +63,22 @@
 }
 
 .cons-sq {
+  li:before {
+      color: $color-primary-dark;
+  }
   a {
     &:hover {
       color: $color-primary-dark;
     }
   }
   button {
-    top: 54px;
     color: white;
     background-color: $color-primary-dark;
     &:hover {
       color: $color-secondary;
+    }
+    @media all and (min-width: 992px) and (max-width: 1200px) {
+      top: 40px;
     }
   }
 
@@ -70,27 +88,10 @@
   }
 }
 
-.center-sq {
-  a {
-    &:hover {
-      color: $color-teal;
-    }
+.data-sq {
+  li:before {
+      color: $color-orange;
   }
-  button {
-    color: white;
-    background-color: $color-teal;
-    &:hover {
-      color: $color-primary-dark;
-    }
-  }
-
-  .center-sq-title {
-    color: $color-teal;
-    border-color: $color-teal;
-  }
-}
-
-.dr-sq {
   a {
     &:hover {
       color: $color-orange;
@@ -102,21 +103,28 @@
     &:hover {
       color: $color-secondary;
     }
+    @media all and (min-width: 992px) and (max-width: 1200px) {
+      top: 80px;
+    }
   }
 
-  .dr-sq-title {
+  .data-sq-title {
     color: $color-orange;
     border-color: $color-orange;
   }
 }
 
-.td-sq {
+.tool-sq {
+  li:before {
+      color: $color-green;
+  }
   a {
     &:hover {
       color: $color-green;
     }
   }
   button {
+    top: 40px;
     color: white;
     background-color: $color-green;
     &:hover {
@@ -124,9 +132,35 @@
     }
   }
 
-  .td-sq-title {
+  .tool-sq-title {
     color: $color-green;
     border-color: $color-green;
+  }
+}
+
+.pub-sq {
+  li:before {
+      color: $color-teal;
+  }
+  a {
+    &:hover {
+      color: $color-teal;
+    }
+  }
+  button {
+    color: white;
+    background-color: $color-teal;
+    &:hover {
+      color: $color-primary-dark;
+    }
+    @media all and (min-width: 992px) and (max-width: 1200px) {
+      top: 14px;
+    }
+  }
+
+  .pub-sq-title {
+    color: $color-teal;
+    border-color: $color-teal;
   }
 }
 

@@ -24,13 +24,30 @@
   /* @ngInject */
   function WebinarsController(events) {
     var vm = this;
+
     vm.upcomingWebinars = [];
     vm.pastWebinars = [];
 
-    function getUpcomingWebinars() {
-
+    function getPastWebinars() {
+      events
+        .getPastEvents('webinars')
+        .success(function(data) {
+          vm.pastWebinars = data;
+        }
+      );
     }
 
+    function getUpcomingWebinars() {
+      events
+        .getUpcomingEvents('webinars')
+        .success(function(data) {
+          vm.upcomingWebinars = data;
+        }
+      );
+    }
+
+    getPastWebinars();
+    getUpcomingWebinars();
   }
 
 }());

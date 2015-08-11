@@ -1,7 +1,7 @@
 {
-  "name": "LINCSDataRegistry",
+  "name": "NIHLINCSProgram",
   "version": "1.1.0",
-  "description": "The homepage for LINCS meta-data forms and display.",
+  "description": "The homepage for the NIH LINCS Program",
   "main": "server.js",
   "private": "true",
   "dependencies": {
@@ -70,17 +70,19 @@
   },
   "scripts": {
     "test": "karma start",
-    "build": "gulp build && boot2docker up && boot2docker shellinit && docker build -t 146.203.54.165:5000/ldr:$VERSION . | tee build.log || exit 1 && ID=$(tail -1 build.log | awk '{print $3;}') && docker tag -f $ID 146.203.54.165:5000/ldr:latest && rm build.log",
+    "build": "gulp build && boot2docker up && boot2docker shellinit && docker build -t 146.203.54.165:5000/lincsproject:$VERSION . | tee build.log || exit 1 && ID=$(tail -1 build.log | awk '{print $3;}') && docker tag -f $ID 146.203.54.165:5000/lincsproject:latest && rm build.log",
     "start": "node server.js",
-    "deploy": "docker push 146.203.54.165:5000/ldr:latest && curl -H \"Content-Type: application/json\" -X POST -d {} maayanlab:systemsbiology@146.203.54.165:8080/v2/apps/ldr/restart"
+    "deploy": "docker push 146.203.54.165:5000/lincsproject:latest && curl -H \"Content-Type: application/json\" -X POST -d {} maayanlab:systemsbiology@146.203.54.165:8080/v2/apps/lincsproject/restart"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/MaayanLab/LDR.git"
+    "url": "https://github.com/dcic/LDR.git"
   },
   "keywords": [
     "forms",
-    "ldr",
+    "NIH",
+    "LINCS",
+    "Program",
     "metadata",
     "DCIC",
     "Mount",

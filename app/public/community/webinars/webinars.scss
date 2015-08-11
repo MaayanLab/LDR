@@ -1,0 +1,23 @@
+@import '../../base';
+
+.upcoming-webinars, .past-webinars {
+
+  h4 {
+    margin-bottom: 20px;
+  }
+}
+
+.webinar {
+  margin-bottom: 20px;
+
+  h5 {
+    color: $color-primary;
+    padding-bottom: 3px;
+    border-bottom: 1px solid $color-secondary;
+  }
+}
+
+.dcic-youtube {
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
