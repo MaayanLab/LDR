@@ -17,6 +17,7 @@ var $ = require('gulp-load-plugins')();
 
 var SERVER_DIRECTORY = 'app/backend/';
 var SRC_DIRECTORY = 'app/public/';
+var FILE_DIRECTORY = 'app/files/'
 var BUILD_DIRECTORY = 'dist/';
 
 var mainBowerFiles = require('main-bower-files');
@@ -40,10 +41,23 @@ gulp.task('clean', del.bind(
 gulp.task('html', function() {
   return gulp.src([
       SRC_DIRECTORY + '*.html',
-      SRC_DIRECTORY + '**/*.html'
+      SRC_DIRECTORY + '**/*.html',
+      '!' + SRC_DIRECTORY + 'clustergram/**'
     ])
     .pipe($.plumber())
     .pipe(gulp.dest(BUILD_DIRECTORY));
+});
+
+gulp.task('clustergram', function() {
+  return gulp.src(SRC_DIRECTORY + 'clustergram/**')
+    .pipe($.plumber())
+    .pipe(gulp.dest(BUILD_DIRECTORY + 'clustergram/'))
+  })
+
+gulp.task('files', function() {
+  return gulp.src(FILE_DIRECTORY + '**')
+    .pipe($.plumber())
+    .pipe(gulp.dest(BUILD_DIRECTORY + 'files/'));
 });
 
 gulp.task('favIcons', function() {
@@ -92,7 +106,8 @@ gulp.task('serverJs', function() {
 gulp.task('js', function() {
   return gulp.src([
       SRC_DIRECTORY + '**/*.js',
-      '!' + SRC_DIRECTORY + 'vendor/**'
+      '!' + SRC_DIRECTORY + 'vendor/**',
+      '!' + SRC_DIRECTORY + 'clustergram/**'
     ])
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
@@ -180,8 +195,8 @@ gulp.task('vendor', function() {
 });
 
 gulp.task('build', ['clean'], function(callback) {
-  runSequence(['vendor', 'fonts', 'images', 'favIcons', 'html',
-    'scss', 'js', 'serverJs'
+  runSequence(['vendor', 'fonts', 'images', 'favIcons', 'html', 'clustergram',
+    'files', 'scss', 'js', 'serverJs'
   ], callback);
 });
 
@@ -191,6 +206,7 @@ gulp.task('build:watch', function(callback) {
     gulp.watch(SERVER_DIRECTORY + '**/*.js', ['serverJs']);
     gulp.watch('./server.js', ['serverJs']);
     gulp.watch(SRC_DIRECTORY + '**/*.html', ['html']);
+    gulp.watch(SRC_DIRECTORY + 'clustergram/**', ['clustergram']);
     gulp.watch(SRC_DIRECTORY + '**/*.scss', ['scss']);
     callback();
   });

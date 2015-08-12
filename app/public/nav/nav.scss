@@ -1,5 +1,4 @@
 @import '../base';
-
 a#group-nav-icon {
   height: 13px;
   width: 19px;
@@ -7,6 +6,7 @@ a#group-nav-icon {
   &:hover {
     background-position: -19px 0;
   }
+
 }
 
 .navbar-wrapper {
@@ -14,22 +14,7 @@ a#group-nav-icon {
   background: url('../images/bkg_header_top.jpg') repeat-x left top;
   border-bottom: 1px solid $color-primary-dark;
 
-  .navbar-inner {
-
-    #nih-logo {
-      float: left;
-      display: inline-block;
-      background: url('../images/nih-logo-title.jpg') no-repeat center;
-      background-size: contain;
-      height: 104px;
-      width: 373px;
-      @media all and (max-width: 432px) {
-        margin: 0 -30px;
-      }
-    }
-  }
   a {
-    font-size: 16px;
     color: white;
     &:focus {
       color: white;
@@ -37,94 +22,119 @@ a#group-nav-icon {
     &:hover {
       color: $color-secondary-light;
     }
+    @media all and (max-width: 515px) {
+      font-size: 12px;
+    }
+  }
+}
+
+.navbar-inner {}
+
+#nih-logo {
+  float: left;
+  display: inline-block;
+  background: url('../images/nih-logo-title.jpg') no-repeat center;
+  background-size: contain;
+  height: 104px;
+  width: 373px;
+  @media all and (max-width: 432px) {
+    margin: 0 -30px;
+  }
+  @media all and (max-width: 360px) {
+    height: 95px;
+    width: 357px;
+  }
+  @media all and (max-width: 340px) {
+    height: 84px;
+    width: 317px;
+  }
+}
+
+.login-info {
+  margin: 10px 0 0 0;
+  width: 400px;
+  text-align: left;
+  color: white;
+  float: right;
+  @media all and (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.username {
+  a {
+    @media all and (max-width: 992px) {
+      line-height: 0;
+    }
+  }
+}
+
+.ul-nav-login {
+  text-align: center;
+  float: right;
+  @media all and (max-width: 768px) {
+    float: none;
   }
 
-  .login-info {
-    margin: 10px 0 0 0;
-    width: 410px;
-    text-align: left;
+  li {
+    @media all and (max-width: 1200px) {
+      float: none;
+    }
+  }
+  a {
     color: white;
-    float: right;
-
-    @media all and (max-width: 768px) {
-      width: 100%;
-    }
+    margin: 0;
+    line-height: 29px;
   }
 
-  .username {
-    a {
-      @media all and (max-width: 992px) {
-        line-height: 0;
-      }
-    }
-  }
-
-  .ul-nav-login {
-    text-align: center;
-    float: right;
-    @media all and (min-width: 768px) and (max-width: 1200px) {
-      float: none;
-      width: 507px;
-      margin: 0 auto;
-    }
-
-    @media all and (max-width: 768px) {
-      float: none;
-    }
-
-    li {
-      @media all and (max-width: 1200px) {
-        float: none;
-      }
-    }
-
-    a {
-      color: white;
-      margin: 0;
-      line-height: 29px;
-    }
-  }
-
-  .user {
-    margin-top: 20px;
-  }
-
-  .username-menu {
-    a {
-      color: inherit;
-    }
-  }
-
-  .lp-nav {
-    margin-top: 4px;
-  }
-
-  .dropdown-menu {
-    li {
-      width: 100%;
-    }
-  }
-
-  .navbar-right {
-    li {
+  .form-group {
+    @media all and (max-width: 767px) {
+      width: 80%;
       float: left;
     }
   }
 }
 
+.user {
+  margin-top: 20px;
+}
+
+.username-menu {
+  a {
+    color: inherit;
+  }
+}
+
+.lp-nav {
+  margin-top: 4px;
+}
+
+.dropdown-menu {
+  li {
+    width: 100%;
+  }
+}
+
+.navbar-right {
+  li {
+    float: left;
+    a {
+      @media all and (max-width: 515px) {
+        padding: 5px 8px;
+      }
+    }
+  }
+}
 
 // .thin-navbar {
 //   font-size: 14px;
 //   font-weight: 600;
-
 //   li {
 //     float: left;
-
 //     a {
 //       color: $color-primary-dark;
 //       padding: 0 15px;
 //       font-size: 16px;
-
 //       &:focus, &:hover {
 //         color: $color-primary;
 //         background: transparent;
@@ -132,7 +142,6 @@ a#group-nav-icon {
 //     }
 //   }
 // }
-
 .top-nav-divider {
   width: 100%;
   height: 12px;
@@ -149,21 +158,17 @@ a#group-nav-icon {
 }
 
 .nav-login {
-
   form {
     margin: 0;
     padding: 0;
-
     @media all and (max-width: 768px) {
       float: none;
       width: 100%;
     }
-
   }
   input {
     height: 24px;
     margin-bottom: 3px;
-
     @media all and (max-width: 768px) {
       width: 100%;
     }
@@ -188,7 +193,6 @@ a#group-nav-icon {
 
 li.errorMsg {
   display: inline-block;
-
   float: none;
   h5 {
     margin: 0;
@@ -197,7 +201,8 @@ li.errorMsg {
   }
 }
 
-button.login-btn, button.register-btn {
+button.login-btn,
+button.register-btn {
   height: 24px;
   padding: 0 6px;
   background: transparent;
@@ -211,18 +216,20 @@ button.login-btn, button.register-btn {
     border: 1px solid $color-secondary-light;
     border-radius: 5px;
   }
+
+  @media (max-width: 767px) {
+    width: 20%;
+  }
 }
 
 #password-group {
   padding-right: 5px;
-
   @media all and (max-width: 768px) {
     padding-right: 0;
   }
 }
 
 .centers-menu {
-
   li {
     width: 100%;
   }

@@ -18,10 +18,14 @@
   background-color: white;
   width: 100%;
   padding: 1px 15px 30px 15px;
-  min-height: 350px;
+  height: 300px;
   margin-bottom: 20px;
 
   box-shadow: 0 0 3px 0 $color-primary-dark;
+
+  @media all and (min-width: 992px) and (max-width: 1200px) {
+    height: 320px;
+  }
 
   ul {
       list-style: none;
@@ -39,10 +43,6 @@
       padding-right: .5em;
   }
 
-  .glyphicon {
-    margin-left: 10px;
-  }
-
   a, p {
     font-size: 14px;
     height: 60px;
@@ -51,7 +51,7 @@
   button {
     font-size: 14px;
     font-weight: 700;
-    top: 60px;
+    top: 30px;
     text-align: center;
   }
 
@@ -78,7 +78,7 @@
       color: $color-secondary;
     }
     @media all and (min-width: 992px) and (max-width: 1200px) {
-      top: 40px;
+      top: 50px;
     }
   }
 
@@ -104,7 +104,7 @@
       color: $color-secondary;
     }
     @media all and (min-width: 992px) and (max-width: 1200px) {
-      top: 80px;
+      top: 50px;
     }
   }
 
@@ -124,11 +124,13 @@
     }
   }
   button {
-    top: 40px;
     color: white;
     background-color: $color-green;
     &:hover {
       color: $color-primary-dark;
+    }
+    @media all and (min-width: 992px) and (max-width: 1200px) {
+      top: 50px;
     }
   }
 
@@ -154,7 +156,7 @@
       color: $color-primary-dark;
     }
     @media all and (min-width: 992px) and (max-width: 1200px) {
-      top: 14px;
+      top: 10px;
     }
   }
 
@@ -166,7 +168,7 @@
 
 .intro {
   position: relative;
-  z-index: 10000;
+  z-index: 50;
   box-shadow: 0 0 10px 0 $color-primary-dark;
   background-color: $color-primary-dark;
   padding: 20px 0;
@@ -184,6 +186,9 @@
   p {
     font-size: 16px;
     color: white;
+    @media all and (max-width: 400px) {
+      font-size: 14px;
+    }
   }
 
   a {
@@ -192,6 +197,22 @@
     &:hover {
       color: $color-primary-light;
     }
+  }
+}
+
+.clust-wrapper{
+  background-color: $color-secondary;
+  padding-top: 40px;
+  padding-bottom: 20px;
+}
+
+.clustergram {
+  background-color: white;
+  padding-top: 10px;
+  box-shadow: 0 0 2px 0 $color-primary-dark;
+
+  @media all and (max-width: 992px) {
+    display: none;
   }
 }
 

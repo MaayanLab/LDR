@@ -1,0 +1,91 @@
+<div class="container">
+  <div class="row">
+    <div class="left-nav col-xs-3">
+      <ul>
+        <li>
+          <strong class="highlight-secondary">Funding Opportunities</strong>
+        </li>
+        <li>
+          <a ui-sref="consortiumMeetings">LINCS Consortium Meetings</a>
+        </li>
+        <li>
+          <a ui-sref="webinars">Webinars</a>
+        </li>
+        <li>
+          <a ui-sref="workshops">Workshops and Symposia</a>
+        </li>
+      </ul>
+      <div class="left-nav-btns text-center">
+        <button class="btn btn-primary left-nav-btn">Data Releases</button>
+        <button class="btn btn-primary left-nav-btn">Tools and Databases</button>
+      </div>
+    </div>
+    <div class="subpage-content col-xs-12 col-sm-9">
+      <h2 class="headline-info page-header">
+        Funding Opportunities
+      </h2>
+      <div class="row">
+        <div class="col-xs-12">
+          <h3 class="phase-header highlight-secondary">
+            Current Funding Opportunities
+          </h3>
+          <div class="funding-opp" ng-repeat="opp in vm.upcomingOpps">
+            <h4>{{opp.title}}</h4>
+            <p>{{opp.description}}</p>
+            <p ng-if="opp.url">For more information, <a ng-href="{{opp.url}}">click here</a>.</p>
+            <p><strong>Key Dates</strong></p>
+            <ul>
+              <li ng-if="opp.keyDates.release">
+                <strong>Release Date: </strong>{{opp.keyDates.release | date: 'MMMM d, yyyy'}}
+                </li>
+              <li ng-if="opp.keyDates.open">
+                <strong>Open Date (earliest submission): </strong>{{opp.keyDates.open | date: 'MMMM d, yyyy'}}
+              </li>
+              <li ng-if="opp.keyDates.due">
+                <strong>Application Due Date: </strong>{{opp.keyDates.due | date: 'MMMM d, yyyy'}}
+              </li>
+              <li ng-if="opp.keyDates.review">
+                <strong>Application Review: </strong>{{opp.keyDates.review | date: 'MMMM d, yyyy'}}
+              </li>
+              <li ng-if="opp.keyDates.announced">
+                <strong>Decision Announcement: </strong>{{opp.keyDates.announced | date: 'MMMM d, yyyy'}}
+              </li>
+              <li ng-if="opp.keyDates.start">
+                <strong>Earliest Start Date: </strong>{{opp.keyDates.start | date: 'MMMM d, yyyy'}}
+              </li>
+            </ul>
+          </div>
+          <h3 class="phase-header highlight-secondary">
+            Previous Funding Opportunities
+          </h3>
+          <div class="funding-opp" ng-repeat="opp in vm.pastOpps">
+           <h4>{{opp.title}}</h4>
+            <p>{{opp.description}}</p>
+            <p ng-if="opp.url">For more information, <a ng-href="{{opp.url}}">click here</a>.</p>
+            <p><strong>Key Dates</strong></p>
+            <ul>
+              <li ng-if="opp.keyDates.release">
+                <strong>Release Date: </strong>{{opp.keyDates.release | date: 'MMMM d, yyyy'}}
+                </li>
+              <li ng-if="opp.keyDates.open">
+                <strong>Open Date (earliest submission): </strong>{{opp.keyDates.open | date: 'MMMM d, yyyy'}}
+              </li>
+              <li ng-if="opp.keyDates.due">
+                <strong>Application Due Date: </strong>{{opp.keyDates.due | date: 'MMMM d, yyyy'}}
+              </li>
+              <li ng-if="opp.keyDates.review">
+                <strong>Application Review: </strong>{{opp.keyDates.review | date: 'MMMM d, yyyy'}}
+              </li>
+              <li ng-if="opp.keyDates.announced">
+                <strong>Decision Announcement: </strong>{{opp.keyDates.announced | date: 'MMMM d, yyyy'}}
+              </li>
+              <li ng-if="opp.keyDates.start">
+                <strong>Earliest Start Date: </strong>{{opp.keyDates.start | date: 'MMMM d, yyyy'}}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

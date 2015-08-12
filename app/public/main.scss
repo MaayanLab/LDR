@@ -23,9 +23,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #wrapper {
-  margin: 0 auto -240px; /* footer height + space */
+  margin: 0 auto -280px; /* footer height + space */
   min-height: 100%;
-  padding: 0 0 240px; /* footer height + space */
+  padding: 0 0 280px; /* footer height + space */
   position: relative;
 
   #content {
@@ -106,15 +106,12 @@ h1, h2, h3, h4, h5, h6 {
   margin-left: 12px;
 }
 
-span.stat-num {
-  color: $color-primary-dark;
-}
-
 .highlight {
   color: $color-red;
 }
 
-.highlight-primary {
+.highlight-primary,
+.page-header {
   color: $color-primary-dark;
 }
 
@@ -125,3 +122,4 @@ span.stat-num {
 .highlight-secondary {
   color: $color-secondary;
 }
+

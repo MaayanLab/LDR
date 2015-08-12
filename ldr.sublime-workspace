@@ -148,21 +148,34 @@
 	"buffers":
 	[
 		{
-			"file": "app/public/community/webinars/webinars.html",
+			"file": "app/public/home/home.scss",
 			"settings":
 			{
-				"buffer_size": 4093,
+				"buffer_size": 4370,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "/**\n * @author Michael McDermott\n * Created on 7/28/15.\n */\n\n(function() {\n  'use strict';\n  angular\n  .module('ldr.community.webinars', [\n    ])\n  .config(webinarsConfig)\n  .controller('WebinarsController', WebinarsController);\n\n  /* @ngInject */\n  function webinarsConfig($stateProvider) {\n    $stateProvider.state('webinars', {\n      url: '/community/webinars',\n      templateUrl: 'community/webinars/webinars.html',\n      controller: 'WebinarsController',\n      controllerAs: 'vm'\n    });\n  }\n\n  /* @ngInject */\n  function WebinarsController(events) {\n    var vm = this;\n\n    vm.upcomingWebinars = [];\n    vm.pastWebinars = [];\n\n    function getPastWebinars() {\n      events\n        .getPastEvents('webinars')\n        .success(function(data) {\n          vm.pastWebinars = data;\n        }\n      );\n    }\n\n    function getUpcomingWebinars() {\n      events\n        .getUpcomingEvents('webinars')\n        .success(function(data) {\n          vm.upcomingWebinars = data;\n        }\n      );\n    }\n\n    getPastWebinars();\n    getUpcomingWebinars();\n  }\n\n}());\n",
-			"file": "app/public/community/webinars/webinars.js",
-			"file_size": 1055,
-			"file_write_time": 130834340760000000,
+			"file": "app/backend/config/database.js",
 			"settings":
 			{
-				"buffer_size": 1056,
+				"buffer_size": 194,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "package.json",
+			"settings":
+			{
+				"buffer_size": 2786,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/public/partials/footer.html",
+			"settings":
+			{
+				"buffer_size": 7626,
 				"line_ending": "Unix"
 			}
 		},
@@ -170,50 +183,8 @@
 			"file": "app/public/home/home.html",
 			"settings":
 			{
-				"buffer_size": 7244,
+				"buffer_size": 7850,
 				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/backend/models.js",
-			"settings":
-			{
-				"buffer_size": 12808,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/backend/routes/events.js",
-			"settings":
-			{
-				"buffer_size": 3448,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/usr/local/Cellar/postgresql/9.4.4/homebrew.mxcl.postgresql.plist",
-			"settings":
-			{
-				"buffer_size": 722,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": ".jsbeautifyrc",
-			"settings":
-			{
-				"buffer_size": 3975,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\"><head>\n  <title>Hack This Site!</title>\n  <meta name=\"verify-v1\" content=\"s/YXn7eQrMBoF9PL5jLJDiWpAxEXpJzE9JLg/zM4C2Y=\">\n  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n  <meta name=\"Author\" content=\"HackThisSite.org Crew.\">\n  <meta name=\"Description\" content=\"HackThisSite! is a legal and safe network security resource where users test their hacking skills on various challenges and learn about hacking and network security. Also provided are articles, comprehensive and active forums, and guides and tutorials. Learn how to hack!\">\n  <meta name=\"KeyWords\" content=\"challenge, computer, culture, deface, digital, ethics, games, guide, hack, hack forums, hacker, hackers, hacking, hacking challenges, hacking forums, mission, net, programming, radical, revolution, root, rooting, security, site, society, tutorial, tutorials, war, wargame, wargames, web, website\">\n    <link rel=\"icon\" href=\"https://data.htscdn.org/favicon.ico\" type=\"image/x-icon\">\n  <link rel=\"shortcut icon\" href=\"https://data.htscdn.org/favicon.ico\" type=\"image/x-icon\">\n  <link href=\"https://data.htscdn.org/themes/Dark/Dark.css\" rel=\"stylesheet\" type=\"text/css\">\n  <link href=\"https://www.hackthissite.org/pages/hts.rss.php\" rel=\"alternate\" type=\"application/rss+xml\" title=\"HTS RSS feed\">\n  <base href=\"https://www.hackthissite.org\">\n  <script src=\"https://asset.pagefair.net/ads.min.js\"></script><script src=\"https://asset.pagefair.com/measure.min.js\"></script><script type=\"text/javascript\" async=\"\" src=\"https://d1agz031tafz8n.cloudfront.net/thedaywefightback.js/widget.min.js\"></script><script type=\"text/javascript\" src=\"https://data.htscdn.org/js/jquery-1.8.1.min.js\"></script>\n<script type=\"text/javascript\">\n(function() {\n  function async_load(script_url){\n    var protocol = ('https:' == document.location.protocol ? 'https://' : 'http://');\n    var s = document.createElement('script'); s.src = protocol + script_url;\n    var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);\n  }\n  bm_website_code = '3CBA71AF7B7E4145';\n  jQuery(document).ready(function(){async_load('asset.pagefair.com/measure.min.js')});\n  jQuery(document).ready(function(){async_load('asset.pagefair.net/ads.min.js')});\n})();\n</script>\n  </head>\n<body>\n<span id=\"blank-element\" style=\"display: none\"></span>\n\n<div id=\"topbar\" align=\"center\">\n<a href=\"https://www.hackthissite.org\" id=\"active\">HackThisSite</a> - <a href=\"irc://irc.hackthissite.org:+7000/\">IRC</a> - <a href=\"https://www.hackthissite.org/forums\">Forums</a> - <a href=\"http://radio.hackthissite.org\">Radio</a> - <a href=\"http://hts.io/x/http://www.cafepress.com/htsstore\" target=\"_new\">Store</a> - <a href=\"http://hts.io\" target=\"_new\">URL Shortener</a>&nbsp;&nbsp;&nbsp;---&nbsp;&nbsp;&nbsp;<a href=\"http://hts.io/x/https://www.facebook.com/hackthissite\" target=\"_new\">Like Us</a> - <a href=\"http://hts.io/x/https://twitter.com/#!/hackthissite\" target=\"_new\">Follow Us</a></div>\n<div class=\"hts-header\">\n<a href=\"/\"><img src=\"https://data.htscdn.org/themes/Dark/images/header.jpg\" alt=\"Hack This Site\" border=\"0\"></a>\n<br>\n<a href=\"https://www.hackthissite.org/CFHfoL5p8052W4Ps7382qgQH3zH5T04hx99H3O4mM3S332ErAdG4uu4T4Aw2HU56FX5ua5fYvv289m2zcQ9CkI\" target=\"_blank\"><img src=\"https://www.hackthissite.org/5D4uv9n0997YH9T15gjDm6D514TbL4HiTeml4KQaU51hKWhD01c5SuOJE5105p26RIO92kzo9214F8GYx39vYp2yDA6MG0fRbAkyQL41HYGL7DjXFTH5anm7JLOI867M2y64zp0FcX63m1XSOIed\" alt=\"Mavituna Security - Netsparker Vulnerability Scanner\" id=\"atpimg\" class=\"abstaimg\" title=\"Mavituna Security - Netsparker Vulnerability Scanner\" border=\"0\"></a><br>[<a href=\"https://www.hackthissite.org/advertise/\">Advertise With HackThisSite.org</a>]</div>\n  <table width=\"780\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"siteheader cmTable\">\n    <tbody><tr>\n      <td class=\"sitetopheader\"><blockquote>Natural ability without education has more often attained to glory and virtue than education without natural ability.</blockquote></td>\n    </tr>\n    <tr>\n      <td><table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n        <tbody><tr>\n          <td width=\"160\" valign=\"top\" class=\"navbar\"><div align=\"center\">\n            <br>\n            <div style=\"margin-right: 7px; border: 3px double #555555; background-color: #006600; font-weight: bold\">\n<img src=\"https://data.htscdn.org/images/lock.png\" style=\"float: left; margin: 4px 0 0 5px\">\nYou are browsing HackThisSite over SSL\n</div>\n<br>  <div>Hello, <a href=\"/user/view/mgmcdermott/\">mgmcdermott</a><br>\n    <a href=\"/user/edit/2094024/\">Settings</a> - <a href=\"/?logout&amp;nce=6EnZDG0zieCuKMX0yjU9ZCg0hA9opX6B7qNh53plIP\">Logout</a><br><br>\n    <a class=\"nav\" href=\"/user/themes/\"> Skin Chooser</a><br><br>\n  <a class=\"nav\" href=\"http://www.hackthissite.org/forums/ucp.php?i=pm\">Private Messages</a><br>\n  <a class=\"nav\" href=\"/pages/messages/msys/\">HTS Messages Center</a><br>\n  You have 0 new messages.<br>\n  </div>\n\n  <h4 class=\"header\">Donate</h4>\n<p>\n  <a href=\"https://www.hackthissite.org/donate/\">\n    <img src=\"https://data.htscdn.org/images/donate.png\" border=\"0\" title=\"Donate to HackThisSite.org\" alt=\"Donate to HackThisSite.org\">\n  </a>\n  <br>\n  HTS costs up to $300 a month to operate. We <strong>need</strong> your help!\n</p>\n<h4 class=\"header\">Challenges</h4>\n<ul class=\"navigation\">\n  <li><a class=\"nav\" href=\"/missions/basic/\">Basic missions</a></li><li><a class=\"nav\" href=\"/missions/realistic/\">Realistic missions</a></li><li><a class=\"nav\" href=\"/missions/application/\">Application missions</a></li><li><a class=\"nav\" href=\"/missions/programming/\">Programming missions</a></li><li><a class=\"nav\" href=\"/missions/phonephreaking/\">Phonephreaking missions</a></li><li><a class=\"nav\" href=\"/missions/javascript/\">Javascript missions</a></li><li><a class=\"nav\" href=\"/missions/forensic/\">Forensic missions</a></li><li><a class=\"nav\" href=\"/missions/playit/extbasic/0/\">Extbasic missions</a></li><li><a class=\"nav\" href=\"/missions/playit/stego/0/\">Stego missions</a></li><li><a class=\"nav\" href=\"irc://irc.hackthissite.org/htb\">Irc missions</a></li></ul>\n\n<h4 class=\"header\">Get Informed</h4><ul class=\"navigation\"><li><a class=\"nav\" href=\"/blogs\">Blogs</a></li><li><a class=\"nav\" href=\"/news\">News</a></li><li><a class=\"nav\" href=\"/pages/articles/article.php\">Articles</a></li><li><a class=\"nav\" href=\"/lectures\">Lectures</a></li><li><a class=\"nav\" href=\"/pages/programs/programs.php\">Useful Stuff</a></li><!--<li><a class=\"nav\" href=\"ebooks\">E-books</a></li>--><li><a class=\"nav\" href=\"http://mirror.hackthissite.org/hackthiszine/\">HackThisZine</a></li><li><a class=\"nav\" href=\"\"></a></li></ul><h4 class=\"header\">Get Involved</h4><ul class=\"navigation\"><li><a class=\"nav\" href=\"/donate\"><span class=\"completed\">Donate to HackThisSite!</span></a></li><li><a class=\"nav\" href=\"http://www.cafepress.com/htsstore\">Store</a></li><li><a class=\"nav\" href=\"/submit/article\">Submit Article</a></li><li><a class=\"nav\" href=\"/pages/bugManagement/index.php\">Submit Bug Report</a></li><li><a class=\"nav\" href=\"/submit/lecture\">Submit Lecture</a></li><li><a class=\"nav\" href=\"/pages/programs/insert.php\">Submit Useful Stuff</a></li><!--<li><a class=\"nav\" href=\"/pages/showsource/loopdeloop.php\">We Want You!</a></li>--><li><a class=\"nav\" href=\"\"></a></li></ul><h4 class=\"header\">Communicate</h4><ul class=\"navigation\"><li><a class=\"nav\" href=\"/forums\">Forums</a></li><li><a class=\"nav\" href=\"https://www.hackthissite.org/forums/ucp.php?i=pm\">Private Messages</a></li><li><a class=\"nav\" href=\"http://www.irc.hackthissite.org/idlerpg\">IRC IdleRPG</a></li><li><a class=\"nav\" href=\"https://www.hackthissite.org/irc/stats.php\">IRC Stats</a></li><li><a class=\"nav\" href=\"http://qdb.hackthissite.org\">IRC Quotes</a></li><li><a class=\"nav\" href=\"/user/search\">Search Users</a></li><li><a class=\"nav\" href=\"/user/gallery\">User Pictures</a></li><li><a class=\"nav\" href=\"/user/online\">Who is Online</a></li><li><a class=\"nav\" href=\"/user/rankings/\">Rankings</a></li><li><a class=\"nav\" href=\"/pages/irc/irc.php\">IRC Chat</a></li><li><a class=\"nav\" href=\"/pages/irc/reference.php\">IRC Command Reference</a></li><li><a class=\"nav\" href=\"\"></a></li></ul><h4 class=\"header\">About HTS</h4><ul class=\"navigation\"><li><a class=\"nav\" href=\"/info/about\">About the Project</a></li><li><a class=\"nav\" href=\"/info/billofrights\">Bill of Rights</a></li><li><a class=\"nav\" href=\"/info/legal\">Legal Disclaimer</a></li><li><a class=\"nav\" href=\"/info/privacy\">Privacy Statements</a></li><li><a class=\"nav\" href=\"/pages/info/staff\">Meet the Staff</a></li><li><a class=\"nav\" href=\"/info/underthehood\">Under the Hood</a></li><li><a class=\"nav\" href=\"/advertise\">Advertise with HTS</a></li><li><a class=\"nav\" href=\"/ipv6\">IPv6</a></li><li><a class=\"nav\" href=\"/hof\">Hall of Fame</a></li><li><a class=\"nav\" href=\"\"></a></li></ul><h4 class=\"header\"></h4><ul class=\"navigation\"><li><a class=\"nav\" href=\"\"></a></li></ul>\n<br>\n<a href=\"/\">\n  <img src=\"https://data.htscdn.org/images/hts_80x15.gif\" width=\"80\" height=\"15\" border=\"0\" alt=\"\">\n</a>\n<br>\n<a class=\"nav\" href=\"https://www.hackthissite.org/pages/info/linktous.php\">\n  Link to us!\n</a>\n\n<h4 class=\"header\">\n  Partners\n</h4>\n<br>\n<a target=\"_new\" href=\"http://hts.io/x/http://affiliates.mozilla.org/link/banner/8528\">\n  <img src=\"//affiliates.mozilla.org/media/uploads/banners/ac502446d8392cea778bcdaf8b3e07f8958a0216.png\" alt=\"Download Firefox\" width=\"88\">\n</a>\n<br>\n<a class=\"nav\" target=\"_new\" href=\"http://hts.io/x/http://www.hackbloc.org/\">\n  <img src=\"https://data.htscdn.org/images/linkhb.gif\" border=\"0\" alt=\"Hackbloc\" width=\"88\" height=\"31\">\n</a>\n<br>\n<a class=\"nav\" target=\"_new\" href=\"http://hts.io/x/http://www.hellboundhackers.org/\">\n  <img src=\"https://data.htscdn.org/images/hbhlogo.jpg\" width=\"88\" height=\"31\" border=\"0\" alt=\"Hellbound Hackers\">\n</a>\n<br>\n<a class=\"nav\" target=\"_new\" href=\"http://hts.io/x/https://www.netsparker.com/blog\">\n  <img src=\"https://data.htscdn.org/images/netsparker.gif\" alt=\"Netsparker Security Blog\" width=\"88\" height=\"31\" border=\"0\">\n</a>\n<br>\n<a class=\"nav\" target=\"_new\" href=\"http://hts.io/x/http://www.acunetix.com/blog\">\n  <img src=\"https://data.htscdn.org/images/acunetixblog.gif\" alt=\"Acunetix Security Blog\" width=\"88\" height=\"31\" border=\"0\">\n</a>\n<br>\n<a class=\"nav\" target=\"_new\" href=\"http://hts.io/x/http://www.buddyns.com\">\n<img src=\"https://data.htscdn.org/images/buddyns88x31.png\" alt=\"BuddyNS Secondary DNS\" width=\"88\" height=\"31\" border=\"0\">\n</a>\n<br>\n\n          </div></td>\n          <td valign=\"top\" class=\"sitebuffer\">\n  <br>\n    <br><center>\n<br><center><b>Enter password</b><br>Please enter a password to gain access to level 10<br><br><b>Password:</b><br>\n             <form action=\"/missions/basic/10/index.php\" method=\"post\">\n             <input type=\"password\" name=\"password\"><br><br>\n             <input type=\"submit\" value=\"submit\"></form></center>\n</center></td>\n        </tr>\n      </tbody></table></td>\n    </tr>\n <tr>\n      <td class=\"sitebottomheader\"><img src=\"https://data.htscdn.org/themes/Dark/images/hts_bottomheadern.jpg\" alt=\"End Footer\" width=\"780\" height=\"60\"></td>\n    </tr>\n  </tbody></table>\n  <br>\n<div align=\"center\" style=\"font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; color:#CCCCCC\">HackThisSite is is the collective work of the HackThisSite staff, licensed under a <a rel=\"license\" href=\"http://hts.io/x/http://creativecommons.org/licenses/by-nc/3.0/\" target=\"_new\">CC BY-NC</a> license.<br>\nWe ask that you inform us upon sharing or distributing.<br><br>\n<sub>Page Generated: Mon, 10 Aug 2015 14:51:11 +0000<br>Web Node: www2 | Page Gen: 0.051s | DB: 16q<br>Current Code Revision: <a href=\"https://www.hackthissite.org/CHANGELOG\">v3.2.3\n (Fri, 27 Jun 2014 20:13:10 +0000)</a></sub><br>\n</div>\n\n<div align=\"center\">\n  <p>\n   <a target=\"_new\" href=\"http://hts.io/x/http://creativecommons.org/licenses/by-nc/3.0/\"><img src=\"https://data.htscdn.org/images/cc_80x15.png\" width=\"80\" height=\"15\" border=\"0\" alt=\"\"></a>\n   <a target=\"_new\" href=\"http://hts.io/x/http://validator.w3.org/check?uri=referer\"><img src=\"https://data.htscdn.org/images/xhtml10.png\" width=\"80\" height=\"15\" border=\"0\" alt=\"\"></a>&nbsp;\n   <a target=\"_new\" href=\"http://hts.io/x/http://jigsaw.w3.org/css-validator/check/referer\"><img src=\"https://data.htscdn.org/images/css.png\" width=\"80\" height=\"15\" border=\"0\" alt=\"\"></a> \n   <a target=\"_new\" href=\"http://hts.io/x/http://www.php.net/\"> <img src=\"https://data.htscdn.org/images/phppow.gif\" width=\"80\" height=\"15\" border=\"0\" alt=\"\"></a>\n   <!--<a href=\"http://www.linux.com/\"> <img src=\"../../images/linux2.gif\" width=\"80\" height=\"15\" border=\"0\" alt=\"\" /></a>-->\n   <a target=\"_new\" href=\"http://hts.io/x/http://www.freebsd.org/\"> <img src=\"https://data.htscdn.org/images/freebsd.png\" width=\"80\" height=\"15\" border=\"0\" alt=\"\"></a>\n   <img src=\"https://data.htscdn.org/images/counter.php\" height=\"14\" border=\"0\" alt=\"Page View Counter\">\n  </p>\n</div>\n<a href=\"http://hackthissite.org/hp.php\"></a><script type=\"text/javascript\">\nvar gaJsHost = ((\"https:\" == document.location.protocol) ? \"https://ssl.\" : \"http://www.\");\ndocument.write(unescape(\"%3Cscript src='\" + gaJsHost + \"google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E\"));\n</script><script src=\"https://ssl.google-analytics.com/ga.js\" type=\"text/javascript\"></script>\n<script type=\"text/javascript\">\nvar pageTracker = _gat._getTracker(\"UA-2391176-1\");\npageTracker._initData();\npageTracker._trackPageview();\n</script>\n<!--[if !(lt IE 8)]><!-->\n<script type=\"text/javascript\">\n  var tdwfb_config = {greeting: 'Dear HackThisSite User'};\n  (function(){\n    var e = document.createElement('script'); e.type='text/javascript'; e.async = true;\n    e.src = document.location.protocol + '//d1agz031tafz8n.cloudfront.net/thedaywefightback.js/widget.min.js';\n    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(e, s);\n  })();\n</script>\n<!--<![endif]-->\n    \n\n</body></html>",
-			"settings":
-			{
-				"buffer_size": 14007,
-				"line_ending": "Unix",
-				"name": "Package Control Messages",
-				"scratch": true
 			}
 		}
 	],
@@ -359,21 +330,26 @@
 	],
 	"file_history":
 	[
+		"/Users/mmcdermott/.zshrc",
+		"/Users/mmcdermott/.bash_profile",
+		"/Users/mmcdermott/.profile",
+		"/Users/mmcdermott/Work/ldr/app/backend/routes/events.js",
+		"/Users/mmcdermott/Work/ldr/app/backend/models.js",
+		"/Users/mmcdermott/Work/ldr/app/public/community/webinars/webinars.html",
+		"/Users/mmcdermott/Work/ldr/app/public/community/webinars/webinars.js",
+		"/Users/mmcdermott/Work/ldr/app/public/home/home.html",
+		"/usr/local/Cellar/postgresql/9.4.4/homebrew.mxcl.postgresql.plist",
 		"/Users/mmcdermott/Desktop/events.json",
 		"/Users/mmcdermott/Work/ldr/app/backend/config/database.js",
-		"/Users/mmcdermott/.zshrc",
 		"/Users/mmcdermott/Work/ldr/app/public/services/eventsService.js",
 		"/Users/mmcdermott/Work/ldr/app/public/community/webinars/webinars.scss",
-		"/Users/mmcdermott/Work/ldr/app/backend/models.js",
 		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
 		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/Users/mmcdermott/Work/ldr/app/public/app.js",
-		"/Users/mmcdermott/Work/ldr/app/public/community/webinars/webinars.js",
 		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/User/Tern.sublime-settings",
 		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/tern_for_sublime/Tern.sublime-settings",
 		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/User/SublimeCodeIntel.sublime-settings",
 		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/SublimeCodeIntel/SublimeCodeIntel.sublime-settings",
-		"/Users/mmcdermott/Work/ldr/app/public/home/home.html",
 		"/Users/mmcdermott/Work/ldr/app/public/home/home.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.scss",
 		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/tern_for_sublime/Tern.sublime-keymap",
@@ -382,7 +358,6 @@
 		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/SublimeCodeIntel/Default (OSX).sublime-mousemap",
 		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-mousemap",
 		"/Users/mmcdermott/Work/ldr/app/backend/routes/metadata.js",
-		"/Users/mmcdermott/Work/ldr/app/backend/routes/events.js",
 		"/Users/mmcdermott/Work/ldr/app/public/main.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/community/community.js",
 		"/Users/mmcdermott/Google Drive/Sublime/User/mongooseFind.sublime-snippet",
@@ -393,7 +368,6 @@
 		"/Users/mmcdermott/Work/ldr/app/public/index.html",
 		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.html",
 		"/Users/mmcdermott/Work/ldr/app/public/home/home.js",
-		"/Users/mmcdermott/Work/ldr/app/public/community/webinars/webinars.html",
 		"/Users/mmcdermott/Work/ldr/app/public/group/home/home.js",
 		"/Users/mmcdermott/Google Drive/Sublime/User/resStatusSend.sublime-snippet",
 		"/Users/mmcdermott/Work/ldr/app/public/centers/centers.html",
@@ -483,9 +457,7 @@
 		"/Users/mmcdermott/Work/ldr/app/public/msgModal/msgModal.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/group/home/home.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/partials/legend.scss",
-		"/Users/mmcdermott/Work/ldr/app/public/style/main.scss",
-		"/Users/mmcdermott/Work/ldr/package.json",
-		"/Users/mmcdermott/Work/ldr/app/public/style/less/main.less"
+		"/Users/mmcdermott/Work/ldr/app/public/style/main.scss"
 	],
 	"find":
 	{
@@ -506,6 +478,7 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"ldr",
 			"submit",
 			"getEvents",
 			"numFinished",
@@ -641,61 +614,118 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "app/public/community/webinars/webinars.html",
+					"file": "app/public/home/home.scss",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4093,
+						"buffer_size": 4370,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3285,
-								3285
+								332,
+								332
 							]
 						],
 						"settings":
 						{
-							"auto_complete": false,
-							"is_xml": false,
-							"syntax": "Packages/AngularJS/AngularJS.tmLanguage",
+							"syntax": "Packages/Sass/Syntaxes/Sass.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1949.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "app/public/community/webinars/webinars.js",
+					"file": "app/backend/config/database.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1056,
+						"buffer_size": 194,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								107,
-								107
+								79,
+								79
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
+							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "package.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2786,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								21,
+								21
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Seti_UI/Langs/npm JSON.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/public/partials/footer.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7626,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7564,
+								7564
+							]
+						],
+						"settings":
+						{
+							"is_xml": false,
+							"syntax": "Packages/AngularJS/AngularJS.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
@@ -707,20 +737,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 4,
 					"file": "app/public/home/home.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7244,
+						"buffer_size": 7850,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6809,
-								6531
+								7631,
+								7631
 							]
 						],
 						"settings":
@@ -731,162 +761,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 3590.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "app/backend/models.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 12808,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								12239,
-								12239
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 8710.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "app/backend/routes/events.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3448,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 4.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "/usr/local/Cellar/postgresql/9.4.4/homebrew.mxcl.postgresql.plist",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 722,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/XML/XML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 3609.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": ".jsbeautifyrc",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 3975,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 14007,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7096,
-								7102
-							]
-						],
-						"settings":
-						{
-							"auto_indent": false,
-							"default_dir": "/Users/mmcdermott/Work/ldr",
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true,
-							"word_wrap": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -949,8 +827,24 @@
 		"selected_items":
 		[
 			[
+				"home",
+				"app/public/home/home.html"
+			],
+			[
+				"foot",
+				"app/public/partials/footer.html"
+			],
+			[
+				"packa",
+				"package.json"
+			],
+			[
 				"data",
 				"app/backend/config/database.js"
+			],
+			[
+				"homscss",
+				"app/public/home/home.scss"
 			],
 			[
 				"even",
@@ -1077,14 +971,6 @@
 				"app/public/home/home.js"
 			],
 			[
-				"home",
-				"app/public/group/home/home.js"
-			],
-			[
-				"homscss",
-				"app/public/home/home.scss"
-			],
-			[
 				"index",
 				"app/public/index.html"
 			],
@@ -1139,10 +1025,6 @@
 			[
 				"navhtml",
 				"app/public/nav/nav.html"
-			],
-			[
-				"foot",
-				"app/public/partials/footer.html"
 			],
 			[
 				"navas",
@@ -1389,7 +1271,7 @@
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": true,
+	"side_bar_visible": false,
 	"side_bar_width": 238.0,
 	"status_bar_visible": true,
 	"template_settings":

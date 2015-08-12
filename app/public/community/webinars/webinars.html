@@ -3,13 +3,16 @@
     <div class="left-nav col-xs-3">
       <ul>
         <li>
-          <a ui-sref="dsgc">Data and Signature Generation Centers</a>
+          <a ui-sref="fundingOpps">Funding Opportunities</a>
         </li>
         <li>
-          <a ui-sref="dcic">BD2K-LINCS Data Coordination and Integration Center</a>
+          <a ui-sref="consortiumMeetings">LINCS Consortium Meetings</a>
         </li>
         <li>
-          <a ui-sref="phaseOne">Pilot Phase 1 Centers</a>
+          <strong class="highlight-secondary">Webinars</strong>
+        </li>
+        <li>
+          <a ui-sref="workshops">Workshops and Symposia</a>
         </li>
       </ul>
       <div class="left-nav-btns text-center">
@@ -18,7 +21,7 @@
       </div>
     </div>
     <div class="subpage-content col-xs-12 col-sm-9">
-      <h2 class="headline-info page-header">
+      <h2 class="headline-info page-header highlight-primary">
         Webinars
       </h2>
       <div class="row">
@@ -79,12 +82,20 @@
               <a ng-if="webinar.url" ng-href="{{webinar.url}}" target="_blank">
                 <h5>{{webinar.title}}</h5>
               </a>
-              <p>
-                <strong>{{webinar.date | date: 'MMMM d, yyyy'}}: </strong>{{webinar.description}}</p>
+              <p><strong>{{webinar.date | date: 'MMMM d, yyyy'}}</strong></p>
+              <p class="webinar-presenter">
+                <span>{{webinar.presenter.name}}</span>
+                <br />
+                <span>{{webinar.presenter.affiliation}}</span>
+              </p>
             </div>
           </div>
-          <div class="dcic-youtube embed-responsive embed-responsive-4by3">
-              <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PL0Bwuj8819U-G9Ob0jIGHp5AtwpCghLV5"></iframe>
+          <div class="col-xs-12">
+            <div class="col-xs-8 col-xs-offset-2">
+              <div class="dcic-youtube embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PL0Bwuj8819U-G9Ob0jIGHp5AtwpCghLV5"></iframe>
+              </div>
+            </div>
           </div>
           <div class="past-webinars">
             <h4>Past Webinars</h4>
@@ -95,8 +106,12 @@
               <a ng-if="webinar.url" ng-href="{{webinar.url}}" target="_blank">
                 <h5>{{webinar.title}}</h5>
               </a>
-              <p>
-                <strong>{{webinar.date | date: 'MMMM d, yyyy'}}: </strong>{{webinar.description}}</p>
+              <p><strong>{{webinar.date | date: 'MMMM d, yyyy'}}</strong></p>
+              <p class="webinar-presenter">
+                <span>{{webinar.presenter.name}}</span>
+                <br />
+                <span>{{webinar.presenter.affiliation}}</span>
+              </p>
             </div>
           </div>
         </div>

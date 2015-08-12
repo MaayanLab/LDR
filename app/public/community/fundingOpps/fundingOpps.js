@@ -21,8 +21,31 @@
     });
   }
 
-  function FundingOppsController() {
+  function FundingOppsController(events) {
     var vm = this;
-  }
 
+    vm.upcomingOpps = [];
+    vm.pastOpps = [];
+
+    function getPastOpps() {
+      events
+        .getPastEvents('fundingOpps')
+        .success(function(data) {
+          vm.pastOpps = data;
+        }
+      );
+    }
+
+    function getUpcomingOpps() {
+      events
+        .getUpcomingEvents('fundingOpps')
+        .success(function(data) {
+          vm.upcomingOpps = data;
+        }
+      );
+    }
+
+    getPastOpps();
+    getUpcomingOpps();
+  }
 }());

@@ -1,0 +1,23 @@
+@import '../base';
+
+#button_container {
+  // width: 124px;
+  // margin: 0 auto;
+  margin-left: 2px;
+
+  label {
+    opacity: 0.5;
+  }
+  .active {
+    opacity: 1;
+  }
+}
+
+#svg_div {
+  height: 400px;
+  width: 100%;
+
+  text[text-anchor="center"] {
+    fill: $color-primary-dark;
+  }
+}

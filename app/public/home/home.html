@@ -19,10 +19,10 @@
                 <a ui-sref="">LINCS Project</a>
               </li>
               <li>
-                <a ui-sref="">Data Coordinating Center</a>
+                <a ui-sref="">DCIC</a>
               </li>
               <li>
-                <a ui-sref="">Data Generation Centers</a>
+                <a ui-sref="">DSGCs</a>
               </li>
               <li>
                 <a ui-sref="">Data Release Policy</a>
@@ -90,7 +90,7 @@
             </p> -->
             <ul>
               <li>
-                <a ui-sref="">Global Visualization of LINCS</a>
+                <a ui-sref="">Viz of LINCS Data</a>
               </li>
               <li>
                 <a ui-sref="">Data Repository</a>
@@ -108,7 +108,7 @@
                 <a ui-sref="">Pathway Explorer</a>
               </li>
               <li>
-                <a ui-sref="">Drug Response Visualization</a>
+                <a ui-sref="">Drug Response Viz</a>
               </li>
             </ul>
             <button class="btn col-xs-10 col-xs-offset-1">
@@ -179,11 +179,13 @@
           cell pathways and aid efforts to develop therapies that might restore perturbed
           pathways and networks to their normal states.
         </p>
-        <!-- <h4 class="questions text-center">
-    Questions about LINCS? <a ui-sref="contact">Contact us</a>
-  </h4> -->
       </div>
     </div>
+  </div>
+</div>
+<div class="container">
+  <div class="col-xs-12 clust-wrapper">
+    <div class="clustergram" ng-include="'clustergram/clustergram.html'"></div>
   </div>
 </div>
 <div class="container">
@@ -215,12 +217,19 @@
               <h5 class="event-type">
                 <em>{{event.type}}</em>
               </h5>
-              <p class="event-deadline" ng-if="event.type === 'Funding Opportunity'">
-                Application deadline is {{event.date | date: 'MMMM d, yyyy'}}
+              <p class="event-deadline" ng-if="event.dates.due">
+                Application deadline is {{event.dates.due | date: 'MMMM d, yyyy'}}
               </p>
               <div class="presenter" ng-if="event.presenter">
-                <p><strong>Presenter: </strong><a ng-href="{{event.presenter.url}}">{{event.presenter.name}}</a></p>
-                <p><strong>Affiliation: </strong>{{event.presenter.affiliation}}</p>
+                <p ng-if="!event.presenter.url">
+                  <strong>Presenter: </strong>{{event.presenter.name}}</p>
+                <p ng-if="event.presenter.url">
+                  <strong>Presenter: </strong>
+                  <a ng-href="{{event.presenter.url}}">{{event.presenter.name}}</a>
+                </p>
+                <p>
+                  <strong>Affiliation:
+                  </strong>{{event.presenter.affiliation}}</p>
               </div>
               <p class="event-desc">{{event.description}}</p>
             </div>

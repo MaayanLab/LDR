@@ -91,7 +91,7 @@ td.legend-color {
 }
 
 #footer {
-  height: 240px !important;
+  height: 280px !important;
   background: $color-purple-dark;
   color: white;
   bottom: 0;
@@ -117,6 +117,9 @@ td.legend-color {
   a {
     font-size: 16px;
     color: $color-primary;
+    @media all and (max-width: 768px) {
+      font-size: 12px;
+    }
   }
   p {
     color: white;
@@ -174,7 +177,8 @@ td.legend-color {
   margin-top: 20px;
   width: 100%;
 
-  a, p {
+  a,
+  p {
     margin: 0;
     font-size: 12px;
   }
@@ -185,18 +189,12 @@ td.legend-color {
   }
 
   @media all and (max-width: 992px) {
-    margin-top: 100px;
+    margin-top: 20px;
   }
 
   @media all and (max-width: 768px) {
     float: none;
     text-align: center;
-    margin-top: 50px;
-  }
-
-  @media all and (max-width: 610px) {
-    float: none;
-    text-align: center;
-    margin-top: 30px;
+    margin-top: 10px;
   }
 }
