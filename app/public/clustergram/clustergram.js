@@ -1,0 +1,74 @@
+/**
+ * @author Michael McDermott
+ * Created on 7/28/15.
+ */
+
+(function() {
+  'use strict';
+  angular
+    .module('ldr.clustergram', [])
+    .controller('ClustergramController', ClustergramController);
+
+  /* @ngInject */
+  function ClustergramController(d3Clust, d3Data) {
+    var vm = this;
+    vm.reorder = d3Clust.reorder;
+
+    var landscapeData = d3Data;
+
+    // new way of making clustergram
+    var outerMargins = {
+      'top': 'inherit',
+      'bottom': 'inherit',
+      'left': 'inherit',
+      'right': 'inherit'
+    };
+
+    // define callback function for clicking on tile
+    function clickTileCallback(tileInfo) {
+      console.log('my callback');
+      console.log('clicking on ' + tileInfo.row + ' row and ' +
+        tileInfo.col +
+        ' col with value ' + String(tileInfo.value));
+    }
+
+    // define arguments object
+    var argumentsObj = {
+      networkData: landscapeData,
+      svgDivId: 'svg-div',
+      rowLabel: 'Assays',
+      colLabel: 'Cell Lines',
+      outerMargins: outerMargins,
+      opacityScale: 'log',
+      inputDomain: 0.1,
+      tileColors: ['#6A9CCD', '#ED9124'],
+      titleTile: true,
+      clickTile: clickTileCallback,
+      // 'click_group': click_group_callback
+      resize: false,
+      order: 'rank',
+      transpose: false
+    };
+
+    function renderClust() {
+      if (angular.element(window).width() > 992) {
+        argumentsObj.transpose = false;
+        d3Clust.makeClust(argumentsObj);
+      } else if (angular.element(window).width() < 992 && angular.element(window).width() >
+        580) {
+        argumentsObj.transpose = true;
+        d3Clust.makeClust(argumentsObj);
+      }
+    }
+
+
+    var runIt;
+    angular.element(window).resize(function() {
+      clearTimeout(runIt);
+      runIt = setTimeout(renderClust(), 100);
+    });
+
+    renderClust();
+  }
+
+}());

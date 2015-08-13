@@ -200,18 +200,24 @@
   }
 }
 
-.clust-wrapper{
+.clust-wrapper {
   background-color: $color-secondary;
   padding-top: 40px;
   padding-bottom: 20px;
 }
 
+.clust-inner {
+  background-color: $color-secondary;
+  padding-bottom: 20px;
+}
+
 .clustergram {
+  overflow: hidden;
   background-color: white;
   padding-top: 10px;
   box-shadow: 0 0 2px 0 $color-primary-dark;
 
-  @media all and (max-width: 992px) {
+  @media all and (max-width: 580px) {
     display: none;
   }
 }

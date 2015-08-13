@@ -41,18 +41,11 @@ gulp.task('clean', del.bind(
 gulp.task('html', function() {
   return gulp.src([
       SRC_DIRECTORY + '*.html',
-      SRC_DIRECTORY + '**/*.html',
-      '!' + SRC_DIRECTORY + 'clustergram/**'
+      SRC_DIRECTORY + '**/*.html'
     ])
     .pipe($.plumber())
     .pipe(gulp.dest(BUILD_DIRECTORY));
 });
-
-gulp.task('clustergram', function() {
-  return gulp.src(SRC_DIRECTORY + 'clustergram/**')
-    .pipe($.plumber())
-    .pipe(gulp.dest(BUILD_DIRECTORY + 'clustergram/'))
-  })
 
 gulp.task('files', function() {
   return gulp.src(FILE_DIRECTORY + '**')
@@ -107,7 +100,6 @@ gulp.task('js', function() {
   return gulp.src([
       SRC_DIRECTORY + '**/*.js',
       '!' + SRC_DIRECTORY + 'vendor/**',
-      '!' + SRC_DIRECTORY + 'clustergram/**'
     ])
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
@@ -149,8 +141,9 @@ gulp.task('karma', function(callback) {
 });
 
 gulp.task('jshint', function() {
-  return gulp.src([SRC_DIRECTORY + '**/*.js', '!' + SRC_DIRECTORY +
-      'vendor/**'
+  return gulp.src([SRC_DIRECTORY + '**/*.js',
+    '!' + SRC_DIRECTORY + 'vendor/**',
+    '!' + SRC_DIRECTORY + '**/lib/**'
     ])
     .pipe($.plumber())
     .pipe($.jshint())
@@ -195,7 +188,7 @@ gulp.task('vendor', function() {
 });
 
 gulp.task('build', ['clean'], function(callback) {
-  runSequence(['vendor', 'fonts', 'images', 'favIcons', 'html', 'clustergram',
+  runSequence(['vendor', 'fonts', 'images', 'favIcons', 'html',
     'files', 'scss', 'js', 'serverJs'
   ], callback);
 });
@@ -206,7 +199,6 @@ gulp.task('build:watch', function(callback) {
     gulp.watch(SERVER_DIRECTORY + '**/*.js', ['serverJs']);
     gulp.watch('./server.js', ['serverJs']);
     gulp.watch(SRC_DIRECTORY + '**/*.html', ['html']);
-    gulp.watch(SRC_DIRECTORY + 'clustergram/**', ['clustergram']);
     gulp.watch(SRC_DIRECTORY + '**/*.scss', ['scss']);
     callback();
   });

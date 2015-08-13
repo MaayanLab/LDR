@@ -6,6 +6,7 @@
       'ldr.nav',
       'ldr.home',
       'ldr.bar',
+      'ldr.clustergram',
       'ldr.community.consortiumMeetings',
       'ldr.community.webinars',
       'ldr.community.fundingOpps',

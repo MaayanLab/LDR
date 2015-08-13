@@ -70,8 +70,8 @@
   },
   "scripts": {
     "test": "karma start",
-    "build": "gulp build && boot2docker up && boot2docker shellinit && docker build -t 146.203.54.165:5000/lincsproject:$VERSION . | tee build.log || exit 1 && ID=$(tail -1 build.log | awk '{print $3;}') && docker tag -f $ID 146.203.54.165:5000/lincsproject:latest && rm build.log",
-    "start": "node server.js",
+    "build": "boot2docker up && boot2docker shellinit && docker build -t 146.203.54.165:5000/lincsproject:$VERSION . | tee build.log || exit 1 && ID=$(tail -1 build.log | awk '{print $3;}') && docker tag -f $ID 146.203.54.165:5000/lincsproject:latest && rm build.log",
+    "start": "node dist/server.js",
     "deploy": "docker push 146.203.54.165:5000/lincsproject:latest && curl -H \"Content-Type: application/json\" -X POST -d {} maayanlab:systemsbiology@146.203.54.165:8080/v2/apps/lincsproject/restart"
   },
   "repository": {
