@@ -1,59 +1,48 @@
 {
-  "name": "LINCS Data Registry",
-  "version": "1.0.0",
+  "name": "NIHLINCSprogram",
+  "version": "1.8.5",
+  "homepage": "https://github.com/dcic/LDR",
   "authors": [
-    "Michael McDermott <michael.mcdermott@mssm.edu>"
+    "Michael McDermott <michael@mgmcdermott.com>"
   ],
-  "description": "The homepage for LINCS meta-data forms and display.",
-  "main": "server.js",
+  "description": "The homepage of the NIH LINCS program",
+  "main": "dist/server.js",
   "keywords": [
-    "forms",
-    "ldr",
-    "metadata",
-    "DCIC",
-    "Mount",
-    "Sinai"
+    "NIH",
+    "LINCS",
+    "program"
   ],
   "license": "MIT",
-  "homepage": "amp.pharm.mssm.edu/LDR",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "public/vendor",
-    "test",
-    "tests"
-  ],
+  "ignore": [],
   "dependencies": {
-    "angular-bootstrap": "~0.12.1",
-    "angular-ui-bootstrap-bower": ">=0.8.0",
-    "angular-ui-router": "~0.2.13",
-    "bootstrap": "~3.3.4",
-    "ng-lodash": "~0.2.0",
-    "pickadate": "~3.5.6",
-    "ui-router": "~0.2.13",
-    "angular-ui-utils": "~0.2.3",
-    "normalize.css": "~3.0.3",
-    "fontawesome": "~4.3.0",
     "a0-angular-storage": "~0.0.10",
-    "angular-sanitize": "~1.3.15",
-    "ng-tags-input": "~2.3.0",
     "angular-jwt": "~0.0.7",
+    "angular-bootstrap": "~0.13.3",
     "angular-mocks": "~1.3.15",
+    "angular-route": "~1.3.15",
+    "angular-sanitize": "~1.3.15",
+    "angular-ui-router": "~0.2.13",
+    "angular-ui-utils": "~0.2.3",
     "angular-chart.js": "~0.7.1",
-    "jquery": "~2.1.4",
+    "fontawesome": "~4.3.0",
+    "bootstrap": "~3.3.4",
+    "jquery-ui": "~1.11.4",
     "ng-file-upload": "~5.0.9",
-    "jquery-ui": "~1.11.4"
-  },
-  "resolutions": {
-    "angular": "1.3.15"
+    "ng-tags-input": "~2.3.0",
+    "pickadate": "~3.5.6",
+    "normalize.css": "~3.0.3",
+    "ng-lodash": "~0.2.0",
+    "ui-router": "~0.2.13"
   },
   "overrides": {
-    "jquery": {
-      "ignore": true
-    },
-    "angular": {
-      "ignore": true
+      "jquery": {
+        "ignore": true
+      },
+      "angular": {
+        "ignore": true
+      },
+      "bootstrap": {
+        "main": "dist/css/bootstrap.min.css"
+      }
     }
-  }
 }

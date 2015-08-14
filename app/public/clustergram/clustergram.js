@@ -26,7 +26,6 @@
 
     // define callback function for clicking on tile
     function clickTileCallback(tileInfo) {
-      console.log(tileInfo);
       $modal
         .open({
           templateUrl: 'clustergram/clustModal/clustModal.html',

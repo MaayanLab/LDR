@@ -90,6 +90,7 @@ node_modules/*
 
 # Bower directory
 app/public/vendor/
+app/public/vendor/*
 
 # Build directory
 dist/

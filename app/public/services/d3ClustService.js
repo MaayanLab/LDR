@@ -729,6 +729,7 @@
           if (params.highlight === 1) {
             params.matrix[link.source][link.target].highlight = link.highlight;
           }
+          params.matrix[link.source][link.target].perts = link.perts;
         });
       }
 
@@ -1677,6 +1678,7 @@
             tileInfo.row = d3Clustergram.networkData.rowNodes[d.posY].name;
             tileInfo.col = d3Clustergram.networkData.colNodes[d.posX].name;
             tileInfo.value = d.value;
+            tileInfo.perts = d.perts;
             // run the user supplied callback function
             params.clickTile(tileInfo);
           });
@@ -1793,6 +1795,7 @@
             tileInfo.row = d3Clustergram.networkData.rowNodes[d.posY].name;
             tileInfo.col = d3Clustergram.networkData.colNodes[d.posX].name;
             tileInfo.value = d.value;
+            tileInfo.perts = d.perts;
             // run the user supplied callback function
             params.clickTile(tileInfo);
           });
