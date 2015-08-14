@@ -10,7 +10,7 @@
     .controller('ClustergramController', ClustergramController);
 
   /* @ngInject */
-  function ClustergramController(d3Clust, d3Data) {
+  function ClustergramController($modal, d3Clust, d3Data) {
     var vm = this;
     vm.reorder = d3Clust.reorder;
 
@@ -26,10 +26,20 @@
 
     // define callback function for clicking on tile
     function clickTileCallback(tileInfo) {
-      console.log('my callback');
-      console.log('clicking on ' + tileInfo.row + ' row and ' +
-        tileInfo.col +
-        ' col with value ' + String(tileInfo.value));
+      console.log(tileInfo);
+      $modal
+        .open({
+          templateUrl: 'clustergram/clustModal/clustModal.html',
+          controller: 'ClustModalInstanceCtrl',
+          controllerAs: 'vm',
+          resolve: {
+            config: function() {
+              return {
+                tileInfo: tileInfo
+              };
+            }
+          }
+        });
     }
 
     // define arguments object
@@ -54,8 +64,8 @@
       if (angular.element(window).width() > 992) {
         argumentsObj.transpose = false;
         d3Clust.makeClust(argumentsObj);
-      } else if (angular.element(window).width() < 992 && angular.element(window).width() >
-        580) {
+      } else if (angular.element(window).width() < 992 &&
+        angular.element(window).width() > 580) {
         argumentsObj.transpose = true;
         d3Clust.makeClust(argumentsObj);
       }

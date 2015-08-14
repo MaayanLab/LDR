@@ -1,0 +1,26 @@
+<div class="modal-body">
+  <form name="returnForm" class="modal-form-input">
+    <div class="form-group">
+      <table class="table">
+        <tr class="text-center">
+          <th class="highlight-primary">Name</th>
+          <th class="highlight-primary">Status</th>
+        </tr>
+        <tr ng-repeat="pert in vm.perturbagens">
+          <td>{{pert.name}}</td>
+          <td class="highlight-green" ng-if="pert.release">
+            Released
+          </td>
+          <td class="highlight-orange" ng-if="!pert.release">
+            Awaiting Release
+          </td>
+        </tr>
+      </table>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" ng-click="vm.close()">
+    Close
+  </button>
+</div>
