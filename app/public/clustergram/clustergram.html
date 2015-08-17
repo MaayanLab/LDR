@@ -1,10 +1,12 @@
 <div ng-controller="ClustergramController as clust">
   <div id='button-container'>
     <div id='toggle-order' class="btn-group" data-toggle="buttons">
-      <label class="btn btn-primary prot-class" ng-click="clust.reorder('clust');">
-        <input type="radio" name="options" id="clust-button" autocomplete="off" checked>Cluster
+      <label ng-class="clust.active == 'clust' ? 'active' : '';" class="btn btn-primary prot-class"
+      ng-click="clust.setOrder('clust');">
+        <input type="radio" name="options" id="clust-button" autocomplete="off" checked> Cluster
       </label>
-      <label class="btn btn-primary active prot-class" ng-click="clust.reorder('rank');">
+      <label ng-class="clust.active == 'rank' ? 'active' : '';" class="btn btn-primary prot-class"
+      ng-click="clust.setOrder('rank');">
         <input type="radio" name="options" id="rank-button" autocomplete="off"> Rank
       </label>
     </div>

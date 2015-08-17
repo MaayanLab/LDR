@@ -139,9 +139,21 @@
   }
 
   /* @ngInject */
-  function ldrCtrl($rootScope, $state) {
+  function ldrCtrl($rootScope, $state, api) {
     $rootScope.title = 'NIH LINCS Program';
     // Automatically add the hash and go to home state
     $state.go('home');
+
+    $rootScope.version = '';
+
+    function getVersion() {
+      api('version')
+        .get()
+        .success(function(version) {
+          $rootScope.version = version;
+        });
+    }
+
+    getVersion();
   }
 })();

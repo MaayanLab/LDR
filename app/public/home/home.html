@@ -185,9 +185,19 @@
 </div>
 <div class="container">
   <div class="clust-wrapper">
-    <h3 class="events-banner">
-      Data Visualization
-    </h3>
+    <div class="clust-info">
+      <h3>
+        Data Visualization
+      </h3>
+      <p>
+        Below is a clustergram visualization of the LINCS datasets. On one axis are assays
+        and the other cell lines. The tiles that mark their intersection are colored
+        based on their release status, with orange being released and blue being
+        awaiting release. You may order the clustergram by rank or by clusters. Hover
+        over a tile to get some descriptive counts of the datasets and click on a
+        tile to show the corresponding datasets.
+      </p>
+    </div>
     <div class="col-xs-12 clust-inner">
       <div class="clustergram">
         <div ng-include="'clustergram/clustergram.html'"></div>

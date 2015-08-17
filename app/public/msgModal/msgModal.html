@@ -3,17 +3,17 @@
         <div class="msg-panel">
             <div class="msg-panel-heading">
                 <button id="msg-close-btn" type="button"
-                        ng-click="close();">
+                        ng-click="vm.close();">
                     <span class="glyphicon glyphicon-remove"></span>
                 </button>
                 <h4 class="text-left">
                     <label for="btn-input" class="control-label msg-header">
-                        Messages about {{header}}
+                        Messages about {{vm.header}}
                     </label>
                 </h4>
             </div>
             <div class="panel-body">
-                <div ng-repeat="msg in messages track by $index">
+                <div ng-repeat="msg in vm.messages track by $index">
                     <p ng-if="msg.date.getDate() !== messages[$index - 1].date.getDate()"
                        class="text-center col-xs-12">
                         {{msg.date | date: 'MM-dd-yyyy'}}
@@ -46,7 +46,7 @@
                         <button id="msg-send-btn"
                                 class="btn btn-warning btn-sm"
                                 ng-disabled="msgForm.$invalid"
-                                ng-click="post();">
+                                ng-click="vm.post();">
                             Send
                         </button>
                     </span>

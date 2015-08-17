@@ -3,8 +3,6 @@
  * Created on 7/29/15.
  */
 
-'use strict';
-
 var _ = require('lodash'),
   Models = require('../models'),
   Workshop = Models.Workshop,
@@ -14,6 +12,7 @@ var _ = require('lodash'),
   baseUrl = require('../config/baseUrl').baseUrl;
 
 module.exports = function(app) {
+  'use strict';
 
   // Async function for getting event information
   // Provide Model, options (date, upcoming, past, and lean), and a cb function

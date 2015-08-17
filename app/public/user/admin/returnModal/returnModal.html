@@ -1,25 +1,26 @@
 <div class="modal-body">
-    <form name="returnForm" class="modal-form-input">
-        <div class="form-group">
-            <h3>
-                <label for="returnMsg" class="control-label">
-                    Reason for Returning
-                </label>
-            </h3>
-            <p><em>20 characters minimum</em></p>
-            <textarea id="returnMsg" type="text"  ng-model="vm.message"
-                      class="return-textarea form-control"
-                     ng-required="true" ng-minlength="20">
-            </textarea>
-        </div>
-    </form>
+  <form name="returnForm" class="modal-form-input">
+    <div class="form-group">
+      <h3>
+        <label for="returnMsg" class="control-label">
+          Reason for Returning
+        </label>
+      </h3>
+      <p>
+        <em>20 characters minimum</em>
+      </p>
+      <textarea id="returnMsg" type="text" ng-model="vm.message"
+      class="return-textarea form-control" ng-required="true" ng-minlength="20">
+      </textarea>
+    </div>
+  </form>
 </div>
 <div class="modal-footer">
-    <button type="submit" class="btn btn-primary"
-            ng-disabled="returnForm.$invalid" ng-click="vm.returnRelease()">
-        Return Release
-    </button>
-    <button type="button" class="btn btn-danger" ng-click="vm.cancel()">
-        Cancel
-    </button>
+  <button type="submit" class="btn btn-primary"
+    ng-disabled="returnForm.$invalid" ng-click="vm.returnRelease()">
+    Return Release
+  </button>
+  <button type="button" class="btn btn-danger" ng-click="vm.cancel()">
+    Cancel
+  </button>
 </div>

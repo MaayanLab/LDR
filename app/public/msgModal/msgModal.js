@@ -15,8 +15,9 @@
     config, messages, releases) {
 
     var vm = this;
+    console.log(config.form);
     vm.messages = angular.copy(config.form.messages);
-    vm.header = formatText(angular.copy(config.form.datasetName));
+    vm.header = angular.copy(config.form.datasetName);
     vm.newMessage = '';
     vm.removeMsg = removeMsg;
     vm.post = post;
@@ -38,8 +39,7 @@
         })
         .error(function(resp) {
           console.log(resp);
-          alert('There was an error saving the data. ' +
-            'Please try again later.');
+          alert('There was an error saving the data. Please try again later.');
           close();
         });
     }
@@ -52,8 +52,7 @@
         })
         .error(function(resp) {
           console.log(resp);
-          alert('There was an error saving the data. ' +
-            'Please try again later.');
+          alert('There was an error saving the data. Please try again later.');
           close();
         });
     }
@@ -62,14 +61,6 @@
       angular.forEach(vm.messages, function(msg) {
         msg.date = new Date(msg.date);
       });
-    }
-
-    function formatText(name) {
-      var MAX = 50;
-      if (name.length < MAX) {
-        return name;
-      }
-      return name.slice(0, MAX) + '...';
     }
 
     var toPromise;

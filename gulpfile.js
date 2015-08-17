@@ -13,15 +13,16 @@ var del = require('del');
 var karma = require('karma').server;
 var minifyCss = require('gulp-minify-css');
 var ngAnnotate = require('gulp-ng-annotate');
+var argv = require('minimist')(process.argv.slice(2));
 var $ = require('gulp-load-plugins')();
 
 var SERVER_DIRECTORY = 'app/backend/';
 var SRC_DIRECTORY = 'app/public/';
-var FILE_DIRECTORY = 'app/files/'
+var FILE_DIRECTORY = 'app/files/';
 var BUILD_DIRECTORY = 'dist/';
 
 var mainBowerFiles = require('main-bower-files');
-var BOWER_DIRECTORY = SRC_DIRECTORY + 'vendor/';
+var BOWER_DIRECTORY = 'vendor/';
 var BOWER_JSON_DIRECTORY = './bower.json';
 var BOWER_RC_DIRECTORY = './.bowerrc';
 
@@ -61,7 +62,10 @@ gulp.task('favIcons', function() {
 });
 
 gulp.task('fonts', function() {
-  return gulp.src(SRC_DIRECTORY + '**/*.{svg,ttf,woff,woff2}')
+  return gulp.src([
+    SRC_DIRECTORY + '**/*.{svg,ttf,woff,woff2}',
+    BOWER_DIRECTORY + '**/*.{svg,ttf,woff,woff2}'
+    ])
     .pipe($.plumber())
     .pipe($.changed(BUILD_DIRECTORY + 'fonts/'))
     .pipe($.flatten())
@@ -97,25 +101,21 @@ gulp.task('serverJs', function() {
 });
 
 gulp.task('js', function() {
-  return gulp.src([
+  var jsChain = gulp.src([
       SRC_DIRECTORY + '**/*.js',
       '!' + SRC_DIRECTORY + 'vendor/**',
     ])
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
-    .pipe($.concat('bundle.min.js', {
-      newLine: ';'
-    }))
-    .pipe(ngAnnotate({
-      // true helps add where @ngInject is not used. It infers.
-      // Doesn't work with resolve, so we must be explicit there
-      add: true
-    }))
-    .pipe($.uglify({
-      mangle: true
-    }))
-    .pipe($.sourcemaps.write())
-    .pipe(gulp.dest(BUILD_DIRECTORY));
+    .pipe($.concat('bundle.min.js', { newLine: ';' }))
+    .pipe(ngAnnotate({ add: true }));
+    // Only uglify if production
+    if (argv.production) {
+      jsChain.pipe($.uglify({ mangle: true }));
+    }
+    return jsChain
+      .pipe($.sourcemaps.write())
+      .pipe(gulp.dest(BUILD_DIRECTORY));
 });
 
 gulp.task('scss', function() {
@@ -135,7 +135,7 @@ gulp.task('scss', function() {
 
 gulp.task('karma', function(callback) {
   return karma.start({
-    configFile: __dirname + '/karma.conf.js',
+    configFile: path.join(__dirname, 'karma.conf.js'),
     singleRun: true
   }, callback);
 });

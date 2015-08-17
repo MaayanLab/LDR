@@ -1,5 +1,6 @@
 var jwt = require('express-jwt'),
-  config = require('../config/database');
+    baseUrl = require('../config/baseUrl').baseUrl,
+    config = require('../config/database');
 
 var jwtCheck = jwt({
   secret: config.secret
@@ -7,6 +8,11 @@ var jwtCheck = jwt({
 
 module.exports = function(app) {
   'use strict';
+
+  app.get(baseUrl + '/api/version', function(req, res) {
+    console.log('GETTING VERSION');
+    res.status(200).send(require('../../../package.json').version);
+  });
 
   app.use('/api/secure', jwtCheck);
 
@@ -19,5 +25,6 @@ module.exports = function(app) {
   require('./groups')(app);
   require('./metadata')(app);
   require('./releases')(app);
+  require('./common')(app);
 
 };

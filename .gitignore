@@ -89,8 +89,8 @@ node_modules/
 node_modules/*
 
 # Bower directory
-app/public/vendor/
-app/public/vendor/*
+vendor/
+vendor/*
 
 # Build directory
 dist/
@@ -100,3 +100,7 @@ dist/
 
 # Sublime Gulp
 .sublime-gulp*
+
+# TernJS
+.tern-port
+

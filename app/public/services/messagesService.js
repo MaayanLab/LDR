@@ -25,6 +25,7 @@
         .open({
           templateUrl: 'msgModal/msgModal.html',
           controller: 'MsgModalInstanceCtrl',
+          controllerAs: 'vm',
           resolve: {
             config: function() {
               return {

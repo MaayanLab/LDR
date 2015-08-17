@@ -30,6 +30,12 @@ a#group-nav-icon {
 
 .navbar-inner {}
 
+#homeLink {
+  @media all and (max-width: 515px) {
+    display: none;
+  }
+}
+
 #nih-logo {
   float: left;
   display: inline-block;
@@ -59,6 +65,10 @@ a#group-nav-icon {
   @media all and (max-width: 768px) {
     width: 100%;
   }
+}
+
+.user-wrapper {
+  min-height: 60px;
 }
 
 .username {

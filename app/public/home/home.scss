@@ -17,15 +17,11 @@
 .home-sq {
   background-color: white;
   width: 100%;
-  padding: 1px 15px 30px 15px;
+  padding: 1px 10px 30px 10px;
   height: 300px;
   margin-bottom: 20px;
 
   box-shadow: 0 0 3px 0 $color-primary-dark;
-
-  @media all and (min-width: 992px) and (max-width: 1200px) {
-    height: 320px;
-  }
 
   ul {
       list-style: none;
@@ -34,7 +30,7 @@
   }
 
   li {
-      padding-left: 2em;
+      padding-left: 1em;
       text-indent: -.7em;
   }
 
@@ -51,7 +47,7 @@
   button {
     font-size: 14px;
     font-weight: 700;
-    top: 30px;
+    top: 20px;
     text-align: center;
   }
 
@@ -77,9 +73,6 @@
     &:hover {
       color: $color-secondary;
     }
-    @media all and (min-width: 992px) and (max-width: 1200px) {
-      top: 50px;
-    }
   }
 
   .cons-sq-title {
@@ -102,9 +95,6 @@
     background-color: $color-orange;
     &:hover {
       color: $color-secondary;
-    }
-    @media all and (min-width: 992px) and (max-width: 1200px) {
-      top: 50px;
     }
   }
 
@@ -129,9 +119,6 @@
     &:hover {
       color: $color-primary-dark;
     }
-    @media all and (min-width: 992px) and (max-width: 1200px) {
-      top: 50px;
-    }
   }
 
   .tool-sq-title {
@@ -154,9 +141,6 @@
     background-color: $color-teal;
     &:hover {
       color: $color-primary-dark;
-    }
-    @media all and (min-width: 992px) and (max-width: 1200px) {
-      top: 10px;
     }
   }
 
@@ -197,6 +181,15 @@
     &:hover {
       color: $color-primary-light;
     }
+  }
+}
+
+.clust-info {
+  @extend .intro;
+  padding: 20px;
+  margin-bottom: 20px;
+  h3 {
+    border-bottom: 0;
   }
 }
 

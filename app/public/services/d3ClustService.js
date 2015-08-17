@@ -857,11 +857,15 @@
         .on('click', reorderClickRow)
         .on('mouseover', function() {
           // highlight text
-          d3.select(this).select('text').attr('font-family', 'Avenir Next')
+          d3.select(this).select('text')
+            .style('cursor', 'pointer')
+            .attr('font-family', 'Avenir Next')
             .style('font-weight', 'bold');
         })
         .on('mouseout', function mouseout() {
-          d3.select(this).select('text').attr('font-family', 'Avenir Next')
+          d3.select(this).select('text')
+            .style('cursor', 'pointer')
+            .attr('font-family', 'Avenir Next')
             .style('font-weight', 'normal');
           // reset highlighted col
           d3.select('#clicked-row')
@@ -1086,11 +1090,15 @@
           ',' + xOffsetClick + ') rotate(45)')
         .on('click', reorderClickCol)
         .on('mouseover', function() {
-          d3.select(this).select('text').attr('font-family', 'Avenir Next')
+          d3.select(this).select('text')
+            .style('cursor', 'pointer')
+            .attr('font-family', 'Avenir Next')
             .style('font-weight', 'bold');
         })
         .on('mouseout', function mouseout() {
-          d3.select(this).select('text').attr('font-family', 'Avenir Next')
+          d3.select(this).select('text')
+            .style('cursor', 'pointer')
+            .attr('font-family', 'Avenir Next')
             .style('font-weight', 'normal');
           d3.select('#clicked-col')
             .style('font-weight', 'bold');
@@ -1455,15 +1463,15 @@
 
       // disable double-click zoom: double click should reset zoom level
       // do this for all svg elements
-      d3.selectAll('svg').on('dblclick.zoom', null);
+      // d3.selectAll('svg').on('dblclick.zoom', null);
 
       // double click to reset zoom - add transition
-      d3.select('#main-svg')
-        .on('dblclick', function() {
-          // apply the following two translate zoom to reset zoom
-          // programatically
-          twoTranslateZoom(0, 0, 1);
-        });
+      // d3.select('#main-svg')
+      //   .on('dblclick', function() {
+      //     // apply the following two translate zoom to reset zoom
+      //     // programatically
+      //     twoTranslateZoom(0, 0, 1);
+      //   });
     }
 
 
@@ -2120,6 +2128,7 @@
       // change the font size of the labels
       d3.selectAll('.row-label-text')
         .select('text')
+        .style('cursor', 'pointer')
         .attr('font-family', 'Avenir Next')
         .style('font-size', finFont);
 
@@ -2139,6 +2148,7 @@
       // change the font size of the labels
       d3.selectAll('.col-label-text')
         .select('text')
+        .style('cursor', 'pointer')
         .attr('font-family', 'Avenir Next')
         .style('font-size', fFont);
 
@@ -2341,6 +2351,7 @@
           .transition()
           .duration(searchDuration)
           .select('text')
+          .style('cursor', 'pointer')
           .attr('font-family', 'Avenir Next')
           .style('font-size', finFont);
 
@@ -2362,7 +2373,8 @@
         d3.selectAll('.col-label-text')
           .transition()
           .duration(searchDuration)
-          .select('text').attr('font-family', 'Avenir Next')
+          .select('text')
+          .style('cursor', 'pointer')
           .attr('font-family', 'Avenir Next')
           .style('font-size', fFont);
 
@@ -2421,14 +2433,18 @@
 
       // highlight clicked column
       // first un-highlight all others
-      d3.selectAll('.rol-label-text').select('text').attr('font-family', 'Avenir Next')
+      d3.selectAll('.rol-label-text').select('text')
+        .style('cursor', 'pointer')
+        .attr('font-family', 'Avenir Next')
         .style('font-weight', 'normal');
       // remove previous id
       d3.select('#clicked-row')
         .attr('id', '');
 
       // highlight current
-      d3.select(this).select('text').attr('font-family', 'Avenir Next')
+      d3.select(this).select('text')
+        .style('cursor', 'pointer')
+        .attr('font-family', 'Avenir Next')
         .style('font-weight', 'bold')
         .attr('id', 'clicked-row');
 
@@ -2512,14 +2528,18 @@
 
       // highlight clicked column
       // first un-highlight all others
-      d3.selectAll('.col-label-text').select('text').attr('font-family', 'Avenir Next')
+      d3.selectAll('.col-label-text').select('text')
+        .style('cursor', 'pointer')
+        .attr('font-family', 'Avenir Next')
         .style('font-weight', 'normal');
       // remove previous id
       d3.select('#clicked-col')
         .attr('id', '');
 
       // highlight current
-      d3.select(this).select('text').attr('font-family', 'Avenir Next')
+      d3.select(this).select('text')
+        .style('cursor', 'pointer')
+        .attr('font-family', 'Avenir Next')
         .style('font-weight', 'bold')
         .attr('id', 'clicked-col');
 
@@ -2638,6 +2658,7 @@
       // unhighlight and unbold all genes
       d3.selectAll('.row-label-text')
         .select('text')
+        .style('cursor', 'pointer')
         .attr('font-family', 'Avenir Next')
         .style('font-weight', 'normal');
       d3.selectAll('.row-label-text')
@@ -2656,6 +2677,7 @@
           return d.name === searchGene;
         })
         .select('text')
+        .style('cursor', 'pointer')
         .attr('font-family', 'Avenir Next')
         .style('font-weight', 'bold');
       // highlight row name
@@ -2713,6 +2735,9 @@
         }
         if (lodash.has(link, 'valueDn')) {
           instLink.valueDn = link.valueDn;
+        }
+        if (lodash.has(link, 'perts')) {
+          instLink.perts = link.perts;
         }
         tnet.links.push(instLink);
       });

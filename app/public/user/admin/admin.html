@@ -90,8 +90,8 @@
             {{form.releaseDates.upcoming | date:'MM-dd-yyyy' }}
           </td>
           <td>
-            <div class="btn-group">
-              <a class="btn btn-default dropdown-toggle" ng-class="form.released ? 'tr-released-btn' :
+            <div class="btn-group" dropdown>
+              <a dropdown-toggle class="btn btn-default" ng-class="form.released ? 'tr-released-btn' :
             !form.approved && !form.needsEdit ? 'tr-awaiting-approval-btn' :
             form.approved && !form.needsEdit ? 'tr-approved-btn' :
             form.needsEdit ? 'tr-needs-edit-btn' : ''" data-toggle="dropdown" ng-href="">

@@ -18,6 +18,7 @@
       getAllRel: getAllRel,
       getApprovedRel: getApprovedRel,
       getAfterRel: getAfterRel,
+      getMetaRel: getMetaRel,
       postRel: postRel,
       edit: edit,
       editUrls: editUrls,
@@ -46,6 +47,10 @@
 
     function getAfterRel(afterId) {
       return api('releases/approved/' + afterId).get();
+    }
+
+    function getMetaRel(sample, ids) {
+      return api('releases/samples/' + sample.toString() + '?ids=' + ids.join(',')).get();
     }
 
     function postRel(form) {

@@ -1,26 +1,48 @@
 <div class="modal-body">
+  <button id="close-btn" type="button" ng-click="vm.close()">
+    <span class="glyphicon glyphicon-remove"></span>
+  </button>
   <form name="returnForm" class="modal-form-input">
     <div class="form-group">
+      <h3>
+        <label class="control-label">
+          Datasets
+        </label>
+      </h3>
       <table class="table">
         <tr class="text-center">
           <th class="highlight-primary">Name</th>
           <th class="highlight-primary">Status</th>
+          <th></th>
         </tr>
-        <tr ng-repeat="pert in vm.perturbagens">
-          <td>{{pert.name}}</td>
-          <td class="highlight-green" ng-if="pert.release">
+        <tr ng-repeat-start="form in vm.releases">
+          <td>{{form.datasetName}}</td>
+          <td class="highlight-green" ng-if="form.released">
             Released
           </td>
-          <td class="highlight-orange" ng-if="!pert.release">
+          <td class="highlight-orange" ng-if="!form.released">
             Awaiting Release
+          </td>
+          <td>
+            <a ng-click="form.collapsed = !form.collapsed">
+              <span ng-if="!form.collapsed" class="glyphicon glyphicon-plus">
+              </span>
+              <span ng-if="form.collapsed" class="glyphicon glyphicon-minus">
+              </span>
+            </a>
+          </td>
+        </tr>
+        <tr class="release-details animate" ng-show="form.collapsed">
+          <td colspan="3">
+            <div ng-include="'partials/expand.html'"></div>
+          </td>
+        </tr>
+        <tr ng-repeat-end="" ng-if="vm.releases.length === 0">
+          <td colspan="5" class="col-md-12">
+            There are no releases to display.
           </td>
         </tr>
       </table>
     </div>
   </form>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-danger" ng-click="vm.close()">
-    Close
-  </button>
 </div>

@@ -4,12 +4,12 @@
     {
         "path": ".",
         "folder_exclude_patterns": [
-        ".idea",
-        "app/public/vendor",
-        "node_modules",
-         "dist",
-         "resources"
-         ]
+            ".idea",
+            "vendor",
+            "node_modules",
+            "dist",
+            "resources"
+        ]
     }
     ]
 }

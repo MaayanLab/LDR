@@ -12,7 +12,8 @@
   /* @ngInject */
   function ClustergramController($modal, d3Clust, d3Data) {
     var vm = this;
-    vm.reorder = d3Clust.reorder;
+    vm.setOrder = setOrder;
+    vm.active = 'clust';
 
     var landscapeData = d3Data;
 
@@ -23,6 +24,11 @@
       'left': 'inherit',
       'right': 'inherit'
     };
+
+    function setOrder(orderString) {
+      vm.active = orderString;
+      d3Clust.reorder(orderString);
+    }
 
     // define callback function for clicking on tile
     function clickTileCallback(tileInfo) {
@@ -55,7 +61,7 @@
       clickTile: clickTileCallback,
       // 'click_group': click_group_callback
       resize: false,
-      order: 'rank',
+      order: vm.active,
       transpose: false
     };
 

@@ -1,0 +1,25 @@
+@import '../../base';
+
+#close-btn {
+  float: right !important;
+  cursor: default;
+  border: 0;
+  background-color: transparent;
+  height: 0;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+  span {
+    cursor: pointer;
+    color: $color-red;
+    top: -5px;
+    left: 5px;
+    font-size: 1.3em;
+
+    &:hover {
+      color: $color-orange;
+    }
+  }
+}

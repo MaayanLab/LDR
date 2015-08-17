@@ -9,6 +9,8 @@ var jwt = require('jsonwebtoken'),
   DataRelease = require('../models').DataRelease;
 
 module.exports = function(app) {
+  'use strict';
+
   app.post(baseUrl +
     '/api/secure/admin/:releaseId/:action(approve|unapprove|return)',
     function(req, res) {
@@ -43,18 +45,18 @@ module.exports = function(app) {
               function(err, release) {
                 if (err) {
                   res.status(404).send('There was an error ' +
-                    'approving the release. Please try again.')
+                    'approving the release. Please try again.');
                 } else {
                   res.status(200).send(release);
                 }
               }
-            )
+            );
         } else {
           res.status(401).send('You are not authorized to access ' +
-            'this URL.')
+            'this URL.');
         }
       } else {
-        res.status(401).send('Token or URL are invalid. Try again.')
+        res.status(401).send('Token or URL are invalid. Try again.');
       }
     }
   );
