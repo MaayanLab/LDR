@@ -1,6 +1,6 @@
 {
   "name": "NIHLINCSProgram",
-  "version": "1.8.73",
+  "version": "1.8.74",
   "description": "The homepage for the NIH LINCS Program",
   "main": "server.js",
   "private": "true",
