@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"subliem",
+				"Sublime-Workspace"
+			],
+			[
 				"find_",
 				"find_one_and_update"
 			],
@@ -159,79 +163,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "app/backend/routes/index.js",
-			"settings":
-			{
-				"buffer_size": 701,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/mmcdermott/.zshrc",
-			"settings":
-			{
-				"buffer_size": 3801,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/public/app.js",
-			"settings":
-			{
-				"buffer_size": 4515,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/public/partials/footer.html",
-			"settings":
-			{
-				"buffer_size": 7657,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "ldr.sublime-project",
-			"settings":
-			{
-				"buffer_size": 226,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/mmcdermott/Work/ansible-mesos-playbook/mesos_primaries.yml",
-			"settings":
-			{
-				"buffer_size": 1408,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/mmcdermott/Work/ansible-mesos-playbook/mesos_workers.yml",
-			"settings":
-			{
-				"buffer_size": 621,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/backend/routes/events.js",
-			"settings":
-			{
-				"buffer_size": 4698,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/mmcdermott/Work/temp-proxy/Dockerfile",
-			"settings":
-			{
-				"buffer_size": 60,
-				"line_ending": "Unix",
-				"name": "FROM nginx"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -377,15 +308,23 @@
 	],
 	"file_history":
 	[
+		"/Users/mmcdermott/Work/ldr/app/backend/routes/index.js",
+		"/Users/mmcdermott/.zshrc",
+		"/Users/mmcdermott/Work/ldr/app/public/app.js",
+		"/Users/mmcdermott/Work/ldr/app/public/partials/footer.html",
+		"/Users/mmcdermott/Work/ldr/ldr.sublime-project",
+		"/Users/mmcdermott/Work/ldr/app/backend/routes/events.js",
+		"/Users/mmcdermott/Work/ldr/package.json",
+		"/Users/mmcdermott/Work/temp-proxy/Dockerfile",
+		"/Users/mmcdermott/Work/ldr/.gitignore",
+		"/Users/mmcdermott/Work/ansible-mesos-playbook/mesos_workers.yml",
+		"/Users/mmcdermott/Work/ansible-mesos-playbook/mesos_primaries.yml",
 		"/Users/mmcdermott/Work/temp-proxy/nginx.conf",
 		"/Users/mmcdermott/.profile",
-		"/Users/mmcdermott/Work/ldr/package.json",
 		"/Users/mmcdermott/Work/ldr/app/backend/routes/common.js",
-		"/Users/mmcdermott/Work/ldr/ldr.sublime-project",
 		"/Users/mmcdermott/Work/ldr/dist/backend/routes/events.js",
 		"/Users/mmcdermott/Work/ldr/dist/backend/routes/admin.js",
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/clustergram.js",
-		"/Users/mmcdermott/Work/ldr/app/public/partials/footer.html",
 		"/Users/mmcdermott/Work/ldr/app/public/msgModal/msgModal.js",
 		"/Users/mmcdermott/Work/ldr/app/public/services/messagesService.js",
 		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.html",
@@ -424,17 +363,13 @@
 		"/Users/mmcdermott/Work/ldr/app/backend/routes/news.js",
 		"/Users/mmcdermott/Work/ldr/app/backend/routes/publications.js",
 		"/Users/mmcdermott/Work/ldr/app/backend/routes/admin.js",
-		"/Users/mmcdermott/Work/ldr/app/backend/routes/index.js",
-		"/Users/mmcdermott/Work/ldr/app/backend/routes/events.js",
 		"/Users/mmcdermott/Work/ldr/app/backend/routes/users.js",
 		"/Users/mmcdermott/Work/ldr/bower.json",
-		"/Users/mmcdermott/Work/ldr/.gitignore",
 		"/Users/mmcdermott/Work/ldr/.bowerrc",
 		"/Users/mmcdermott/Work/ldr/app/public/user/admin/returnModal/returnModal.html",
 		"/Users/mmcdermott/Work/ldr/app/public/main.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/user/admin/returnModal/returnModal.js",
 		"/Users/mmcdermott/Work/ldr/app/public/services/d3.js",
-		"/Users/mmcdermott/Work/ldr/app/public/app.js",
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/static/js/d3-clustergram.js",
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/static/lib/js/d3.min.js",
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/static/lib/js/jquery-ui.js",
@@ -467,7 +402,6 @@
 		"/Users/mmcdermott/Work/ldr/app/public/partials/partials.scss",
 		"/Users/mmcdermott/Work/ldr/dist/style/vendor.min.css",
 		"/Users/mmcdermott/Work/ldr/dist/style/bundle.min.css",
-		"/Users/mmcdermott/.zshrc",
 		"/Users/mmcdermott/.bash_profile",
 		"/usr/local/Cellar/postgresql/9.4.4/homebrew.mxcl.postgresql.plist",
 		"/Users/mmcdermott/Desktop/events.json",
@@ -501,10 +435,7 @@
 		"/Users/mmcdermott/Work/ldr/app/public/community/workshops/workshops.js",
 		"/Users/mmcdermott/Work/ChEA2/deploy.json",
 		"/Users/mmcdermott/Work/ChEA2/.gitignore",
-		"/Users/mmcdermott/Work/ChEA2/Dockerfile",
-		"/Users/mmcdermott/Work/Convertr/Dockerfile",
-		"/Users/mmcdermott/Work/Convertr/.gitignore.json",
-		"/Users/mmcdermott/Work/pom.xml"
+		"/Users/mmcdermott/Work/ChEA2/Dockerfile"
 	],
 	"find":
 	{
@@ -711,278 +642,8 @@
 	"groups":
 	[
 		{
-			"selected": 7,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "app/backend/routes/index.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 701,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								360,
-								360
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/Users/mmcdermott/.zshrc",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3801,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2971,
-								2971
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 1429.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "app/public/app.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4515,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4170,
-								4170
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "app/public/partials/footer.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7657,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								726,
-								726
-							]
-						],
-						"settings":
-						{
-							"is_xml": false,
-							"syntax": "Packages/AngularJS/AngularJS.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "ldr.sublime-project",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 226,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								177,
-								177
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "/Users/mmcdermott/Work/ansible-mesos-playbook/mesos_primaries.yml",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1408,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/YAML/YAML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "/Users/mmcdermott/Work/ansible-mesos-playbook/mesos_workers.yml",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 621,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								293,
-								293
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/YAML/YAML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "app/backend/routes/events.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4698,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								119,
-								119
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "/Users/mmcdermott/Work/temp-proxy/Dockerfile",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 60,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								23,
-								23
-							]
-						],
-						"settings":
-						{
-							"auto_name": "FROM nginx",
-							"is_xml": false,
-							"syntax": "Packages/Seti_UI/Langs/DockerFile.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -1042,6 +703,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"pakc",
+				"package.json"
+			],
 			[
 				"footer",
 				"app/public/partials/footer.html"
@@ -1549,10 +1214,6 @@
 			[
 				"nava",
 				"app/public/nav/nav.js"
-			],
-			[
-				"releaseshomes",
-				"app/public/releases/home/releasesHome.scss"
 			]
 		],
 		"width": 0.0
