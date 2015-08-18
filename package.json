@@ -1,6 +1,6 @@
 {
   "name": "NIHLINCSProgram",
-  "version": "1.8.78",
+  "version": "1.8.74",
   "description": "The homepage for the NIH LINCS Program",
   "main": "server.js",
   "private": "true",
@@ -69,12 +69,12 @@
     "superagent": "^1.2.0"
   },
   "scripts": {
-    "version": "git add -A .",
+    "version": "npm run build && git add -A .",
     "postversion": "git push origin lincsproject && git push origin lincsproject --tags",
     "test": "karma start",
-    "build": "boot2docker up && boot2docker shellinit && docker build -t 146.203.54.165:5000/lincsproject:$VERSION . | tee build.log || exit 1 && ID=$(tail -1 build.log | awk '{print $3;}') && docker tag -f $ID 146.203.54.165:5000/lincsproject:latest && rm build.log",
+    "build": "boot2docker up && boot2docker shellinit && npm version | tee build.log || exit 1 && VERSION=$(head -1 build.log | awk '{print substr($3, 2, length($3) - 3);}') && docker build -t 146.203.54.165:5000/lincsproject:$VERSION . && rm build.log",
     "start": "node dist/server.js",
-    "deploy": "docker push 146.203.54.165:5000/lincsproject:$VERSION && curl -H \"Content-Type: application/json\" -X POST -d {\"docker\":{\"image\": \"146.203.54.165:5000/lincsproject:$VERSION\"} maayanlab:systemsbiology@146.203.54.165:8080/v2/apps/lincsproject"
+    "deploy": "npm version | tee build.log || exit 1 && VERSION=$(head -1 build.log | awk '{print substr($3, 2, length($3) - 3);}') && docker push 146.203.54.165:5000/lincsproject:$VERSION && curl -H \"Content-Type: application/json\" -X PUT -d '{ \"container\": { \"docker\": { \"image\": \"146.203.54.165:5000/lincsproject:\"'\"$VERSION\"' } } }' maayanlab:systemsbiology@146.203.54.165:8080/v2/apps/lincsproject && rm build.log"
   },
   "repository": {
     "type": "git",

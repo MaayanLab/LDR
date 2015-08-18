@@ -25,6 +25,5 @@ module.exports = function(app) {
   require('./groups')(app);
   require('./metadata')(app);
   require('./releases')(app);
-  require('./common')(app);
 
 };
