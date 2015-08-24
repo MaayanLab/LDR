@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"ng-bind",
+				"ng-bind-html	AngularJS"
+			],
+			[
+				"location",
+				"$locationProvider	AngularJS"
+			],
+			[
+				"brow",
+				"browserSync"
+			],
+			[
 				"subliem",
 				"Sublime-Workspace"
 			],
@@ -172,16 +184,24 @@
 	"command_palette":
 	{
 		"height": 400.0,
-		"last_filter": "remove ",
+		"last_filter": "",
 		"selected_items":
 		[
 			[
-				"remove ",
+				"remove",
 				"Package Control: Remove Package"
 			],
 			[
 				"ssxjava",
 				"Set Syntax: JavaScript (Babel)"
+			],
+			[
+				"enable",
+				"SublimeLinter: Enable Linting"
+			],
+			[
+				"remove ",
+				"Package Control: Remove Package"
 			],
 			[
 				"ssxphp",
@@ -194,10 +214,6 @@
 			[
 				"install",
 				"Package Control: Install Package"
-			],
-			[
-				"remove",
-				"Package Control: Remove Package"
 			],
 			[
 				"isntall",
@@ -280,7 +296,7 @@
 				"Project: Save As"
 			]
 		],
-		"width": 538.0
+		"width": 592.0
 	},
 	"console":
 	{
@@ -304,15 +320,66 @@
 	[
 		"/Users/mmcdermott/Work/ldr",
 		"/Users/mmcdermott/Work/ldr/app",
-		"/Users/mmcdermott/Work/ldr/app/public"
+		"/Users/mmcdermott/Work/ldr/app/public",
+		"/Users/mmcdermott/Work/ldr/app/public/services",
+		"/Users/mmcdermott/Work/ldr/app/public/wordpress"
 	],
 	"file_history":
 	[
+		"/Users/mmcdermott/Work/ldr/app/public/services/d3ClustService.js",
+		"/Users/mmcdermott/Work/ldr/app/public/wordpress/wpPage/wpPage.js",
+		"/Users/mmcdermott/Work/ldr/app/public/wordpress/wpPage/wpPage.html",
+		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.html",
+		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.js",
+		"/Users/mmcdermott/Work/wp-lincsproject/wp-config.php",
+		"/Users/mmcdermott/Work/ldr/app/public/services/wordpressService.js",
+		"/Users/mmcdermott/Work/ldr/app/public/home/home.js",
+		"/Users/mmcdermott/Work/ldr/app/public/main.scss",
+		"/Users/mmcdermott/Work/ldr/app/public/_legacy.scss",
+		"/Users/mmcdermott/Work/ldr/app/public/clustergram/_clustergram.scss",
+		"/Users/mmcdermott/Work/ldr/gulpfile.js",
+		"/Users/mmcdermott/Work/ldr/.scss-lint.yml",
+		"/Users/mmcdermott/Google Drive/Sublime/User/snippets/var-req.sublime-snippet",
+		"/Users/mmcdermott/Google Drive/Sublime/User/snippets/gulp-pipe.sublime-snippet",
+		"/Users/mmcdermott/Google Drive/Sublime/User/snippets/gulp-task.sublime-snippet",
+		"/Users/mmcdermott/Work/ldr/app/public/nav/_nav.scss",
+		"/Users/mmcdermott/Work/ldr/app/public/clustergram/clustModal/_clustModal.scss",
+		"/Users/mmcdermott/Work/ldr/app/public/_base.scss",
+		"/Users/mmcdermott/Work/ldr/app/public/app.js",
+		"/Users/mmcdermott/Work/ldr/ldr.sublime-project",
+		"/Users/mmcdermott/Work/ldr/app/public/wordpress/pages/pages.js",
+		"/Users/mmcdermott/Work/ldr/app/public/home/home.html",
+		"/Users/mmcdermott/Work/ldr/app/public/index.html",
+		"/Users/mmcdermott/Work/ldr/dist/index.php",
+		"/Users/mmcdermott/Work/ldr/app/public/centers/centers.js",
+		"/Users/mmcdermott/Work/ldr/app/public/group/settings/groupSettings.js",
+		"/Users/mmcdermott/Work/ldr/app/public/group/home/groupHome.js",
+		"/Users/mmcdermott/Work/ldr/app/public/user/admin/admin.js",
+		"/Users/mmcdermott/Work/ldr/app/public/user/registration/registration.js",
+		"/Users/mmcdermott/Work/ldr/app/public/group/create/groupCreate.js",
+		"/Users/mmcdermott/Work/ldr/app/public/clustergram/clustergram.js",
+		"/Users/mmcdermott/Work/ldr/app/public/user/settings/changePassword/changePassword.js",
+		"/Users/mmcdermott/Work/ldr/app/public/user/settings/main/main.js",
+		"/Users/mmcdermott/Work/ldr/app/public/user/admin/returnModal/returnModal.js",
+		"/Users/mmcdermott/Work/ldr/app/public/services/messagesService.js",
+		"/Users/mmcdermott/Work/ldr/app/public/services/passwordValidate.js",
+		"/Users/mmcdermott/Work/ldr/app/public/services/releasesService.js",
+		"/Users/mmcdermott/Work/ldr/app/public/services/userService.js",
+		"/Users/mmcdermott/Work/ldr/app/public/services/metadataService.js",
+		"/Users/mmcdermott/Work/ldr/app/public/releases/home/releasesHome.js",
+		"/Users/mmcdermott/Work/ldr/app/public/releases/overview/overview.js",
+		"/Users/mmcdermott/Work/ldr/app/public/services/adminService.js",
+		"/Users/mmcdermott/Work/ldr/app/public/services/api.js",
+		"/Users/mmcdermott/Work/ldr/app/public/search/search.js",
+		"/Users/mmcdermott/Work/ldr/app/public/releases/formField/formField.js",
+		"/Users/mmcdermott/Work/ldr/app/public/releases/datePicker/datePicker.js",
+		"/Users/mmcdermott/Work/ldr/app/public/releases/create/create.js",
+		"/Users/mmcdermott/Work/ldr/app/public/releases/addModal/addModal.js",
+		"/Users/mmcdermott/.Trash/tempDb.py",
+		"/Users/mmcdermott/Work/ldr/app/public/index.php",
 		"/Users/mmcdermott/Work/ldr/app/backend/routes/index.js",
 		"/Users/mmcdermott/.zshrc",
-		"/Users/mmcdermott/Work/ldr/app/public/app.js",
 		"/Users/mmcdermott/Work/ldr/app/public/partials/footer.html",
-		"/Users/mmcdermott/Work/ldr/ldr.sublime-project",
 		"/Users/mmcdermott/Work/ldr/app/backend/routes/events.js",
 		"/Users/mmcdermott/Work/ldr/package.json",
 		"/Users/mmcdermott/Work/temp-proxy/Dockerfile",
@@ -324,18 +391,12 @@
 		"/Users/mmcdermott/Work/ldr/app/backend/routes/common.js",
 		"/Users/mmcdermott/Work/ldr/dist/backend/routes/events.js",
 		"/Users/mmcdermott/Work/ldr/dist/backend/routes/admin.js",
-		"/Users/mmcdermott/Work/ldr/app/public/clustergram/clustergram.js",
 		"/Users/mmcdermott/Work/ldr/app/public/msgModal/msgModal.js",
-		"/Users/mmcdermott/Work/ldr/app/public/services/messagesService.js",
-		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.html",
 		"/Users/mmcdermott/Work/ldr/app/public/releases/overview/overview.html",
-		"/Users/mmcdermott/Work/ldr/app/public/releases/overview/overview.js",
 		"/Users/mmcdermott/Work/ldr/Dockerfile",
 		"/Users/mmcdermott/Work/ldr/app/public/msgModal/msgModal.html",
-		"/Users/mmcdermott/Work/ldr/app/public/index.html",
 		"/Users/mmcdermott/Work/ldr/dist/vendor.js",
 		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.scss",
-		"/Users/mmcdermott/Work/ldr/gulpfile.js",
 		"/Users/mmcdermott/Work/ldr/app/public/user/admin/admin.html",
 		"/Users/mmcdermott/Work/ldr/app/backend/routes/releases.js",
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/clustModal/clustModal.js",
@@ -346,14 +407,11 @@
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/clustModal/clustModal.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/clustergram.html",
 		"/Users/mmcdermott/Work/ldr/app/public/msgModal/msgModal.scss",
-		"/Users/mmcdermott/Work/ldr/app/public/home/home.html",
-		"/Users/mmcdermott/Work/ldr/app/public/services/releasesService.js",
 		"/Users/mmcdermott/Work/ldr/server.js",
 		"/Users/mmcdermott/Work/ldr/app/public/services/d3DataService.js",
 		"/Users/mmcdermott/Work/LDRgram/static/networks/LDR_as_cl.json",
 		"/Users/mmcdermott/Work/DSGC-data/db-ldr-consolidated.py",
 		"/Users/mmcdermott/Desktop/newLDR.json",
-		"/Users/mmcdermott/Work/ldr/app/public/services/d3ClustService.js",
 		"/Users/mmcdermott/Work/ldr/app/public/home/home.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/clustModal/clustModal.html",
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/clustergram.scss",
@@ -367,8 +425,6 @@
 		"/Users/mmcdermott/Work/ldr/bower.json",
 		"/Users/mmcdermott/Work/ldr/.bowerrc",
 		"/Users/mmcdermott/Work/ldr/app/public/user/admin/returnModal/returnModal.html",
-		"/Users/mmcdermott/Work/ldr/app/public/main.scss",
-		"/Users/mmcdermott/Work/ldr/app/public/user/admin/returnModal/returnModal.js",
 		"/Users/mmcdermott/Work/ldr/app/public/services/d3.js",
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/static/js/d3-clustergram.js",
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/static/lib/js/d3.min.js",
@@ -377,7 +433,6 @@
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/static/networks/LDR-as-cl.json",
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/static/js/d3Clustergram.js",
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/static/networks/LDR_as_cl.json",
-		"/Users/mmcdermott/Work/ldr/app/public/_base.scss",
 		"/Users/mmcdermott/Work/ldr/.eslintignore",
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/static/js/d3_clustergram.js",
 		"/Users/mmcdermott/Work/ldr/app/public/community/consortiumMeetings/consortiumMeetings.js",
@@ -398,44 +453,7 @@
 		"/Users/mmcdermott/Work/ldr/app/public/community/webinars/webinars.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/services/eventsService.js",
 		"/Users/mmcdermott/Work/ldr/app/public/community/community.scss",
-		"/Users/mmcdermott/Work/ldr/app/public/centers/dcic/dcic.html",
-		"/Users/mmcdermott/Work/ldr/app/public/partials/partials.scss",
-		"/Users/mmcdermott/Work/ldr/dist/style/vendor.min.css",
-		"/Users/mmcdermott/Work/ldr/dist/style/bundle.min.css",
-		"/Users/mmcdermott/.bash_profile",
-		"/usr/local/Cellar/postgresql/9.4.4/homebrew.mxcl.postgresql.plist",
-		"/Users/mmcdermott/Desktop/events.json",
-		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/tern_for_sublime/Tern.sublime-settings",
-		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/User/SublimeCodeIntel.sublime-settings",
-		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/SublimeCodeIntel/SublimeCodeIntel.sublime-settings",
-		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/tern_for_sublime/Tern.sublime-keymap",
-		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/SublimeCodeIntel/Default (OSX).sublime-keymap",
-		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/SublimeCodeIntel/Default (OSX).sublime-mousemap",
-		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-mousemap",
-		"/Users/mmcdermott/Work/ldr/app/public/community/community.js",
-		"/Users/mmcdermott/Google Drive/Sublime/User/mongooseFind.sublime-snippet",
-		"/Users/mmcdermott/Work/ldr/app/public/home/home.js",
-		"/Users/mmcdermott/Work/ldr/app/public/group/home/home.js",
-		"/Users/mmcdermott/Google Drive/Sublime/User/resStatusSend.sublime-snippet",
-		"/Users/mmcdermott/Work/ldr/app/public/centers/centers.html",
-		"/Users/mmcdermott/Work/ldr/TODO.txt",
-		"/Users/mmcdermott/Work/ldr/app/public/group/settings/settings.html",
-		"/Users/mmcdermott/Work/ldr/app/public/group/home/home.html",
-		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgc/dsgc.html",
-		"/Users/mmcdermott/Work/ldr/app/public/centers/dsgcCenter/dsgcCenter.html",
-		"/Users/mmcdermott/Work/ldr/app/public/centers/phaseOne/phaseOne.html",
-		"/Users/mmcdermott/Work/ldr/app/public/group/create/create.html",
-		"/Users/mmcdermott/Work/ldr/app/public/releases/create/create.html",
-		"/Users/mmcdermott/Work/ldr/app/public/releases/home/releasesHome.html",
-		"/Users/mmcdermott/Work/ldr/app/public/search/search.html",
-		"/Users/mmcdermott/Work/ldr/app/public/user/registration/registration.html",
-		"/Users/mmcdermott/Work/ldr/app/public/user/settings/changePassword/changePassword.html",
-		"/Users/mmcdermott/Work/ldr/app/public/user/settings/main/main.html",
-		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/Emmet/Default (OSX).sublime-keymap",
-		"/Users/mmcdermott/Work/ldr/app/public/community/workshops/workshops.js",
-		"/Users/mmcdermott/Work/ChEA2/deploy.json",
-		"/Users/mmcdermott/Work/ChEA2/.gitignore",
-		"/Users/mmcdermott/Work/ChEA2/Dockerfile"
+		"/Users/mmcdermott/Work/ldr/app/public/centers/dcic/dcic.html"
 	],
 	"find":
 	{
@@ -457,6 +475,23 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"scaleFontSize",
+			"defaultFsRow",
+			"font-size",
+			"#fff",
+			"fff",
+			"ffffff",
+			"white",
+			"ldrHomeConfig",
+			"unsafe",
+			"/**",
+			"pageId",
+			"rendered",
+			"$scope",
+			"clustergram/clustergram",
+			"partials/home",
+			"html",
+			"files",
 			"\"",
 			"build",
 			"VERSIONION",
@@ -567,24 +602,7 @@
 			"'[A-Z]'",
 			"rowLabelTriangles'",
 			"rowLabelTriangles",
-			"_",
-			"hightlight",
-			"tileColors",
-			"clickedRow'",
-			"Row'",
-			"Row",
-			"Row'",
-			"row'",
-			"Row'",
-			"row'",
-			"Row'",
-			"color",
-			"svgDivId",
-			"make_clust",
-			"d3Clustergram",
-			"LabelText",
-			"Highlight'",
-			"Rect'"
+			"_"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -704,6 +722,34 @@
 		"selected_items":
 		[
 			[
+				"gulpfile",
+				"gulpfile.js"
+			],
+			[
+				"base",
+				"app/public/_base.scss"
+			],
+			[
+				"navscs",
+				"app/public/nav/nav.scss"
+			],
+			[
+				"app",
+				"app/public/app.js"
+			],
+			[
+				"wordpres",
+				"app/public/services/wordpressService.js"
+			],
+			[
+				"home",
+				"app/public/home/home.js"
+			],
+			[
+				"gulpf",
+				"gulpfile.js"
+			],
+			[
 				"pakc",
 				"package.json"
 			],
@@ -764,10 +810,6 @@
 				"app/public/nav/nav.html"
 			],
 			[
-				"navscs",
-				"app/public/nav/nav.scss"
-			],
-			[
 				"cluster",
 				"app/public/clustergram/clustergram.js"
 			],
@@ -818,10 +860,6 @@
 			[
 				"homescs",
 				"app/public/home/home.scss"
-			],
-			[
-				"home",
-				"app/public/home/home.html"
 			],
 			[
 				"clusterg",
@@ -900,10 +938,6 @@
 				"app/public/main.scss"
 			],
 			[
-				"gulpf",
-				"gulpfile.js"
-			],
-			[
 				"d3da",
 				"app/public/services/d3DataService.js"
 			],
@@ -950,10 +984,6 @@
 			[
 				"pack",
 				"package.json"
-			],
-			[
-				"base",
-				"app/public/_base.scss"
 			],
 			[
 				"homhtml",
@@ -1202,18 +1232,6 @@
 			[
 				"partia",
 				"app/public/partials/partials.scss"
-			],
-			[
-				"app",
-				"app/public/app.js"
-			],
-			[
-				"datab",
-				"app/backend/config/database.js"
-			],
-			[
-				"nava",
-				"app/public/nav/nav.js"
 			]
 		],
 		"width": 0.0
@@ -1257,7 +1275,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": false,
-	"side_bar_width": 345.0,
+	"side_bar_width": 232.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
