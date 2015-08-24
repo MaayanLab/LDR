@@ -117,24 +117,10 @@ module.exports = function(app) {
     });
 
     app.get(baseUrl + '/api/releases/filter', function(req, res) {
-        var assayName = req.query.assay;
-        var assayId = '';
+        var dsName = req.query.dataset;
         var cellLineName = req.query.cellLine;
-        var cellLineId = '';
+        var cellLineIds = [];
         var perturbagenIds = req.query.perturbagens.split(',');
-
-        function getAssayId() {
-            Assay
-              .findOne({'name': assayName})
-              .exec(function(err, assay) {
-                if (err) {
-                  res.status(404).send('Assay could not be found');
-                } else {
-                  assayId = assay._id;
-                  getCellLineId();
-                }
-              });
-        }
 
         function getCellLineId() {
             CellLine
@@ -143,7 +129,7 @@ module.exports = function(app) {
                 if (err) {
                   res.status(404).send('Cell line could not be found');
                 } else {
-                  cellLineId = cLine._id;
+                  cellLineIds.push(cLine._id);
                   findReleases();
                 }
               });
@@ -152,8 +138,8 @@ module.exports = function(app) {
         function findReleases() {
             DataRelease
                 .find({})
-                .where('metadata.assay[0]').eq(assayId)
-                .where('metadata.cellLines').eq(cellLineId)
+                .where('abbr').eq(dsName)
+                .where('metadata.cellLines').in(cellLineId)
                 .where('metadata.perturbagens').in(perturbagenIds)
                 .populate([
                     { path: 'group', model: 'Group' },
@@ -176,6 +162,8 @@ module.exports = function(app) {
                     }
                 });
         }
+
+        getCellLineId();
     });
 
     // Returns empty release for initialization on front-end
