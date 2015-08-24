@@ -5,6 +5,7 @@ var jwt = require('express-jwt'),
     Q = require('q'),
     secret = require('../config/database').secret,
     Models = require('../models'),
+    Assay = Models.Assay,
     DataRelease = Models.DataRelease,
     Group = Models.Group,
     baseUrl = require('../config/baseUrl').baseUrl,
@@ -113,6 +114,68 @@ module.exports = function(app) {
                 );
             }
         );
+    });
+
+    app.get(baseUrl + '/api/releases/filter', function(req, res) {
+        var assayName = req.query.assay;
+        var assayId = '';
+        var cellLineName = req.query.cellLine;
+        var cellLineId = '';
+        var perturbagenIds = req.query.perturbagens.split(',');
+
+        function getAssayId() {
+            Assay
+              .findOne({'name': assayName})
+              .exec(function(err, assay) {
+                if (err) {
+                  res.status(404).send('Assay could not be found');
+                } else {
+                  assayId = assay._id;
+                  getCellLineId();
+                }
+              });
+        }
+
+        function getCellLineId() {
+            CellLine
+              .findOne({'name': cellLineName})
+              .exec(function(err, cLine) {
+                if (err) {
+                  res.status(404).send('Cell line could not be found');
+                } else {
+                  cellLineId = cLine._id;
+                  findReleases();
+                }
+              });
+        }
+
+        function findReleases() {
+            DataRelease
+                .find({})
+                .where('metadata.assay[0]').eq(assayId)
+                .where('metadata.cellLines').eq(cellLineId)
+                .where('metadata.perturbagens').in(perturbagenIds)
+                .populate([
+                    { path: 'group', model: 'Group' },
+                    { path: 'messages.user', model: 'User' },
+                    { path: 'metadata.assay', model: 'Assay' },
+                    { path: 'metadata.readouts', model: 'Readout' },
+                    { path: 'metadata.organism', model: 'Organism' },
+                    { path: 'metadata.analysisTools', model: 'Tool' },
+                    { path: 'metadata.cellLines', model: 'CellLine' },
+                    { path: 'metadata.manipulatedGene', model: 'Gene' },
+                    { path: 'metadata.relevantDisease', model: 'Disease' },
+                    { path: 'metadata.perturbagens', model: 'Perturbagen' }
+                ])
+                .exec(function(err, results) {
+                    if (err) {
+                        console.log(err);
+                        res.status(404).send('Error message');
+                    } else {
+                        res.status(200).send(results);
+                    }
+                });
+        }
     });
 
     // Returns empty release for initialization on front-end
