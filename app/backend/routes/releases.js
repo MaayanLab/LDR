@@ -5,7 +5,7 @@ var jwt = require('express-jwt'),
     Q = require('q'),
     secret = require('../config/database').secret,
     Models = require('../models'),
-    Assay = Models.Assay,
+    CellLine = Models.CellLine,
     DataRelease = Models.DataRelease,
     Group = Models.Group,
     baseUrl = require('../config/baseUrl').baseUrl,
@@ -120,27 +120,40 @@ module.exports = function(app) {
         var dsName = req.query.dataset;
         var cellLineName = req.query.cellLine;
         var cellLineIds = [];
-        var perturbagenIds = req.query.perturbagens.split(',');
+        var perturbagenIds = [];
+        if (req.query.perturbagens) {
+            perturbagenIds = req.query.perturbagens.split(',');
+        }
 
         function getCellLineId() {
             CellLine
-              .findOne({'name': cellLineName})
-              .exec(function(err, cLine) {
+              .find({'name': cellLineName})
+              .lean()
+              .exec(function(err, cLines) {
                 if (err) {
                   res.status(404).send('Cell line could not be found');
                 } else {
-                  cellLineIds.push(cLine._id);
+                  cellLineIds = _.map(cLines, function(line) {
+                    return line._id;
+                  })
                   findReleases();
                 }
               });
         }
 
         function findReleases() {
-            DataRelease
-                .find({})
-                .where('abbr').eq(dsName)
-                .where('metadata.cellLines').in(cellLineId)
-                .where('metadata.perturbagens').in(perturbagenIds)
+            console.log(cellLineIds);
+            var chain = DataRelease.find({});
+            if (!_.isUndefined(dsName)) {
+                chain = chain.where('abbr').equals(dsName);
+            }
+            if (cellLineIds.length > 0) {
+                chain = chain.where('metadata.cellLines').in(cellLineIds)
+            }
+            if (perturbagenIds.length > 0) {
+                chain = chain.where('metadata.perturbagens').in(perturbagenIds);
+            }
+            chain
                 .populate([
                     { path: 'group', model: 'Group' },
                     { path: 'messages.user', model: 'User' },
@@ -163,7 +176,11 @@ module.exports = function(app) {
                 });
         }
 
-        getCellLineId();
+        if (!_.isUndefined(cellLineName)) {
+            getCellLineId();
+        } else {
+            findReleases();
+        }
     });
 
     // Returns empty release for initialization on front-end

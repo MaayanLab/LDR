@@ -88,6 +88,7 @@ Session.vim
 node_modules/
 
 *.sublime-workspace
+.tern-port
 
 # Bower directory
 app/public/vendor/
