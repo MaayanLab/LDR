@@ -1,0 +1,54 @@
+@import '../base';
+
+#button-container {
+  // width: 124px;
+  // margin: 0 auto;
+  text-align: left;
+  margin-left: 2px;
+
+  label {
+    opacity: 0.5;
+  }
+  .active {
+    opacity: 1;
+  }
+}
+
+#svg-div {
+  height: 400px;
+  width: 100%;
+
+  text[text-anchor="center"] {
+    fill: $color-primary-dark;
+  }
+
+  @media all and (max-width: 992px) {
+    margin: 0 auto;
+    width: 550px;
+    height: 1000px;
+  }
+}
+
+#close-btn {
+  float: right !important;
+  cursor: default;
+  border: 0;
+  background-color: transparent;
+  height: 0;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+  span {
+    cursor: pointer;
+    color: $color-red;
+    top: -5px;
+    left: 5px;
+    font-size: 1.3em;
+
+    &:hover {
+      color: $color-orange;
+    }
+  }
+}

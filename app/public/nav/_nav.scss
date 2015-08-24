@@ -1,0 +1,228 @@
+@import '../base';
+
+#group-nav-icon {
+  background: url('../images/group-icon.png') no-repeat left top;
+  height: 13px;
+  width: 19px;
+  &:hover {
+    background-position: -19px 0;
+  }
+
+}
+
+.navbar-wrapper {
+  background: url('../images/bkg_header_top.jpg') repeat-x left top;
+  border-bottom: 1px solid $color-primary-dark;
+
+  a {
+    color: $color-white;
+
+    &:focus {
+      color: $color-white;
+    }
+
+    &:hover {
+      color: $color-secondary-light;
+    }
+
+    @media all and (max-width: 540px) {
+      font-size: 12px;
+    }
+  }
+}
+
+#nih-logo {
+  background: url('../images/nih-logo-title.jpg') no-repeat center;
+  background-size: contain;
+  float: left;
+  display: inline-block;
+  height: 104px;
+  width: 373px;
+  @media all and (max-width: 432px) {
+    margin: 0 -30px;
+  }
+  @media all and (max-width: 360px) {
+    height: 95px;
+    width: 357px;
+  }
+  @media all and (max-width: 340px) {
+    height: 84px;
+    width: 317px;
+  }
+}
+
+.login-info {
+  color: $color-white;
+  float: right;
+  margin: 10px 0 0;
+  text-align: left;
+  width: 400px;
+  @media all and (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.user-wrapper {
+  min-height: 60px;
+}
+
+.username {
+  a {
+    @media all and (max-width: 992px) {
+      line-height: 0;
+    }
+  }
+}
+
+.ul-nav-login {
+  float: right;
+  text-align: center;
+  @media all and (max-width: 768px) {
+    float: none;
+  }
+
+  li {
+    @media all and (max-width: 1200px) {
+      float: none;
+    }
+  }
+
+  a {
+    color: $color-white;
+    line-height: 29px;
+    margin: 0;
+  }
+
+  .form-group {
+    @media all and (max-width: 767px) {
+      float: left;
+      width: 80%;
+    }
+  }
+}
+
+.user {
+  margin-top: 10px;
+}
+
+.username-menu {
+  a {
+    color: inherit;
+  }
+}
+
+.lp-nav {
+  margin-top: 4px;
+}
+
+.dropdown-menu {
+  border-radius: 0;
+
+  li {
+    width: 100%;
+  }
+}
+
+.navbar-right {
+  li {
+    float: left;
+
+    a {
+      @media all and (max-width: 515px) {
+        padding: 5px 8px;
+      }
+    }
+  }
+}
+
+.top-nav-divider {
+  background-color: $color-secondary;
+  border-bottom: 1px solid $color-primary-dark;
+  border-top: 1px solid $color-primary-dark;
+  height: 12px;
+  width: 100%;
+}
+
+.nav > li.dropdown.active.open > a,
+.nav > li.dropdown.open > a,
+.nav > li > a:hover,
+.nav > li > a:focus {
+  background: transparent;
+}
+
+.nav-login {
+  form {
+    margin: 0;
+    padding: 0;
+    @media all and (max-width: 768px) {
+      float: none;
+      width: 100%;
+    }
+  }
+
+  input {
+    height: 24px;
+    margin-bottom: 3px;
+    @media all and (max-width: 768px) {
+      width: 100%;
+    }
+  }
+}
+
+.nav-items {
+  display: inline-flex;
+  height: 100%;
+  margin-top: 5px;
+  vertical-align: middle;
+}
+
+.title-bar {
+  margin: 0 auto;
+  vertical-align: middle;
+}
+
+.errorMsg {
+  display: inline-block;
+  float: none;
+
+  h5 {
+    color: $color-white;
+    cursor: default;
+    margin: 0;
+  }
+}
+
+.login-btn,
+.register-btn {
+  background: transparent;
+  border: 1px solid $color-white;
+  border-radius: 5px;
+  color: $color-white;
+  height: 24px;
+  padding: 0 6px;
+
+  &:hover,
+  &:focus {
+    border: 1px solid $color-secondary-light;
+    border-radius: 5px;
+    color: $color-secondary-light;
+    text-decoration: none;
+  }
+
+  @media (max-width: 767px) {
+    width: 20%;
+  }
+}
+
+#password-group {
+  padding-right: 5px;
+  @media all and (max-width: 768px) {
+    padding-right: 0;
+  }
+}
+
+.centers-menu {
+  li {
+    width: 100%;
+  }
+}

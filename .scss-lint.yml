@@ -1,0 +1,2 @@
+scss_files: 'app/**/*.scss'
+exclude: 'app/**/_legacy.scss'
