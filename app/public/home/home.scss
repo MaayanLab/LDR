@@ -1,5 +1,4 @@
 @import '../base';
-
 .search-count {
   border-bottom: 1px solid #ddd;
   margin-bottom: 19px;
@@ -11,173 +10,176 @@
 
 .squares {
   background-color: $color-secondary;
-  padding: 20px 20px;
+  padding: 20px;
 }
 
 .home-sq {
-  background-color: white;
+  background-color: $color-white;
   width: 100%;
-  padding: 1px 10px 30px 10px;
+  padding: 1px 10px 30px;
   height: 300px;
   margin-bottom: 20px;
-
   box-shadow: 0 0 3px 0 $color-primary-dark;
-
   ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
-
   li {
-      padding-left: 1em;
-      text-indent: -.7em;
+    padding-left: 1em;
+    text-indent: -.7em;
   }
-
   li:before {
-      content: "• ";
-      padding-right: .5em;
+    content: "• ";
+    padding-right: .5em;
   }
 
-  a, p {
+  a,
+  p {
     font-size: 14px;
     height: 60px;
   }
-
   button {
     font-size: 14px;
     font-weight: 700;
-    top: 20px;
     text-align: center;
+    top: 20px;
   }
-
   .home-sq-title {
-    padding-bottom: 10px;
-    margin-bottom: 20px;
     border-bottom: 2px solid;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
   }
 }
 
 .cons-sq {
   li:before {
-      color: $color-primary-dark;
+    color: $color-primary-dark;
   }
+
   a {
     &:hover {
       color: $color-primary-dark;
     }
   }
+
   button {
-    color: white;
+    color: $color-white;
     background-color: $color-primary-dark;
+
     &:hover {
       color: $color-secondary;
     }
   }
-
   .cons-sq-title {
-    color: $color-primary-dark;
     border-color: $color-primary-dark;
+    color: $color-primary-dark;
   }
 }
 
 .data-sq {
   li:before {
-      color: $color-orange;
+    color: $color-orange;
   }
+
   a {
     &:hover {
       color: $color-orange;
     }
   }
+
   button {
-    color: white;
     background-color: $color-orange;
+    color: $color-white;
+
     &:hover {
       color: $color-secondary;
     }
   }
-
   .data-sq-title {
-    color: $color-orange;
     border-color: $color-orange;
+    color: $color-orange;
   }
 }
 
 .tool-sq {
   li:before {
-      color: $color-green;
+    color: $color-green;
   }
+
   a {
     &:hover {
       color: $color-green;
     }
   }
+
   button {
-    color: white;
     background-color: $color-green;
+    color: $color-white;
+
     &:hover {
       color: $color-primary-dark;
     }
   }
-
   .tool-sq-title {
-    color: $color-green;
     border-color: $color-green;
+    color: $color-green;
   }
 }
 
 .pub-sq {
   li:before {
-      color: $color-teal;
+    color: $color-teal;
   }
+
   a {
     &:hover {
       color: $color-teal;
     }
   }
+
   button {
-    color: white;
     background-color: $color-teal;
+    color: $color-white;
+
     &:hover {
       color: $color-primary-dark;
     }
   }
-
   .pub-sq-title {
-    color: $color-teal;
     border-color: $color-teal;
+    color: $color-teal;
   }
 }
 
 .intro {
+  background-color: $color-primary-dark;
+  box-shadow: 0 0 10px 0 $color-primary-dark;
+  padding: 20px 0;
   position: relative;
   z-index: 50;
-  box-shadow: 0 0 10px 0 $color-primary-dark;
-  background-color: $color-primary-dark;
-  padding: 20px 0;
 
   h3 {
-    color: white;
-    padding-bottom: 5px;
     border-bottom: 1px solid $color-primary-light;
+    color: $color-white;
+    padding-bottom: 5px;
+
     span {
-      font-weight: 700 !important;
       color: $color-orange;
+      font-weight: 700 !important;
     }
   }
-
   p {
+    color: $color-white;
     font-size: 16px;
-    color: white;
     @media all and (max-width: 400px) {
       font-size: 14px;
     }
   }
-
   a {
     color: $color-primary-light;
     font-weight: 700;
+
     &:hover {
       color: $color-primary-light;
     }
@@ -186,28 +188,37 @@
 
 .clust-info {
   @extend .intro;
-  padding: 20px;
   margin-bottom: 20px;
+  padding: 20px;
+
   h3 {
     border-bottom: 0;
   }
 }
 
 .push {
-  height: 40px;
   background-color: $color-secondary;
+  height: 40px;
 }
 
 .search-wrapper {
   background-color: $color-teal;
-  box-shadow: 0 0 3px 0 $color-primary-dark;
+  box-shadow: 0 0 4px 0 $color-teal;
   padding: 20px 20px 60px;
   position: relative;
 
   h3 {
+    color: $color-white;
     margin: 0;
-    color: #ffffff;
     padding-bottom: 40px;
+  }
+
+  h4 {
+    color: $color-white;
+  }
+
+  a {
+    color: $color-primary-light;
   }
 }
 
@@ -218,8 +229,8 @@
 
 .clust-wrapper {
   background-color: $color-secondary;
-  padding-top: 40px;
   padding-bottom: 20px;
+  padding-top: 40px;
 }
 
 .clust-inner {
@@ -228,27 +239,26 @@
 }
 
 .clustergram {
-  overflow: hidden;
-  background-color: white;
-  padding-top: 10px;
+  background-color: $color-white;
   box-shadow: 0 0 2px 0 $color-primary-dark;
-
+  overflow: hidden;
+  padding-top: 10px;
   @media all and (max-width: 580px) {
     display: none;
   }
 }
 
 .news-events {
-  padding-top: 20px;
   background-color: $color-secondary;
+  padding-top: 20px;
 }
 
 .events-banner {
-  color: white;
+  color: $color-white;
   background-color: $color-primary-dark;
   box-shadow: 0 0 2px 0 $color-primary-dark;
   padding: 20px;
-  margin: 0 0 40px 0;
+  margin: 0 0 40px;
 }
 
 .news-events-inner {
@@ -257,11 +267,9 @@
 
 $block-width: 280px;
 $num-blocks: 4;
-
 .events {
   padding-left: 15px;
   padding-right: 15px;
-
   @media (max-width: 992px) {
     .event:last-child {
       margin-bottom: 180px;
@@ -273,19 +281,30 @@ $num-blocks: 4;
   // width: $block-width * $num-blocks;
   // animation-delay: 10s;
   // animation: horizscroll 30s infinite;
-
   &:hover {
     animation-play-state: paused;
   }
 }
 
 @keyframes horizscroll {
-  0% {   margin-left: 0; }
-  25% {  margin-left: -1 * $block-width; }
-  50% {  margin-left: -2 * $block-width; }
-  75% {  margin-left: -3 * $block-width; }
-  80% {  margin-left: 0; }
-  100% { margin-left: 0; }
+  0% {
+    margin-left: 0;
+  }
+  25% {
+    margin-left: -1 * $block-width;
+  }
+  50% {
+    margin-left: -2 * $block-width;
+  }
+  75% {
+    margin-left: -3 * $block-width;
+  }
+  80% {
+    margin-left: 0;
+  }
+  100% {
+    margin-left: 0;
+  }
 }
 
 .event {
@@ -293,29 +312,28 @@ $num-blocks: 4;
 }
 
 .date-block {
-  height: 50px;
-  width: 50px;
-  margin-bottom: 20px;
-  padding: 0px;
-  float: left;
-  color: white;
   background-color: $color-teal;
   box-shadow: -2px 0 1px 0 $color-teal;
+  float: left;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 20px;
+  padding: 0;
+  color: $color-white;
 
   h4 {
-    color: white;
     margin: 0;
+    color: $color-white;
     line-height: 25px;
   }
 }
 
 .event-info {
-  background-color: white;
-  min-height: 150px;
-  margin-left: 50px;
-  padding: 10px;
+  background-color: $color-white;
   box-shadow: 0 0 3px 0 $color-primary-dark;
-
+  margin-left: 50px;
+  min-height: 230px;
+  padding: 10px;
   a {
     color: $color-primary-dark;
   }
