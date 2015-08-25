@@ -1,3 +1,5 @@
+/*eslint camelcase: 0*/
+
 /**
  * @author Michael McDermott
  * Created on 7/28/15.
@@ -49,16 +51,16 @@
 
     // define arguments object
     var argumentsObj = {
-      networkData: landscapeData,
-      svgDivId: 'svg-div',
-      rowLabel: 'Assays',
-      colLabel: 'Cell Lines',
-      outerMargins: outerMargins,
-      opacityScale: 'log',
-      inputDomain: 0.1,
-      tileColors: ['#6A9CCD', '#ED9124'],
-      titleTile: true,
-      clickTile: clickTileCallback,
+      network_data: landscapeData,
+      svg_div_id: 'svg-div',
+      row_label: 'Assays',
+      col_label: 'Cell Lines',
+      outer_margins: outerMargins,
+      opacity_scale: 'log',
+      input_domain: 0.1,
+      tile_colors: ['#6A9CCD', '#ED9124'],
+      title_tile: true,
+      click_tile: clickTileCallback,
       // 'click_group': click_group_callback
       resize: false,
       order: vm.active,
@@ -68,11 +70,11 @@
     function renderClust() {
       if (angular.element(window).width() > 992) {
         argumentsObj.transpose = false;
-        d3Clust.makeClust(argumentsObj);
+        d3Clust.make_clust(argumentsObj);
       } else if (angular.element(window).width() < 992 &&
         angular.element(window).width() > 580) {
         argumentsObj.transpose = true;
-        d3Clust.makeClust(argumentsObj);
+        d3Clust.make_clust(argumentsObj);
       }
     }
 

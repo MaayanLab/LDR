@@ -70,11 +70,11 @@
   },
   "scripts": {
     "version": "npm run build && git add -A .",
-    "postversion": "git push origin lincsproject && git push origin lincsproject --tags",
+    "postversion": "",
     "test": "karma start",
     "build": "npm version | tee build.log || exit 1 && VERSION=$(head -1 build.log | awk '{print substr($3, 2, length($3) - 3);}') && docker build -t 146.203.54.165:5000/lincsproject:$VERSION . && rm build.log",
     "start": "node dist/server.js",
-    "deploy": "npm version | tee build.log || exit 1 && VERSION=$(head -1 build.log | awk '{print substr($3, 2, length($3) - 3);}') && echo \"$VERSION\" && docker push 146.203.54.165:5000/lincsproject:$VERSION && curl -H \"Content-Type: application/json\" -X PUT -d '{ \"instances\": 1, \"cpus\": 1, \"mem\": 2048, \"container\": { \"type\": \"DOCKER\", \"docker\": { \"image\": \"146.203.54.165:5000/lincsproject:'\"$VERSION\"'\", \"forcePullImage\": true, \"network\": \"BRIDGE\", \"portMappings\": [ { \"containerPort\": 3001, \"hostPort\": 0, \"protocol\": \"tcp\" } ] }, \"volumes\": [ {\"containerPath\": \"/usr/src/app/hdfs\", \"hostPath\": \"/hadoop/hdfs-mount/apps/ldr/uploads\", \"mode\": \"RW\"} ] }, \"healthChecks\": [ { \"protocol\": \"HTTP\", \"path\": \"/lincsproject\", \"gracePeriodSeconds\": 10, \"intervalSeconds\": 60, \"portIndex\": 0, \"timeoutSeconds\": 10, \"maxConsecutiveFailures\": 3 }], \"labels\": { \"public\": \"true\" } }' maayanlab:systemsbiology@146.203.54.165:8080/v2/apps/lincsproject && rm build.log"
+    "deploy": "npm version | tee build.log || exit 1 && VERSION=$(head -1 build.log | awk '{print substr($3, 2, length($3) - 3);}') && echo \"$VERSION\" && docker push 146.203.54.165:5000/lincsproject:$VERSION && curl -H \"Content-Type: application/json\" -X PUT -d '{ \"instances\": 1, \"cpus\": 1, \"mem\": 2048, \"container\": { \"type\": \"DOCKER\", \"docker\": { \"image\": \"146.203.54.165:5000/lincsproject:'\"$VERSION\"'\", \"forcePullImage\": false, \"network\": \"BRIDGE\", \"portMappings\": [ { \"containerPort\": 3001, \"hostPort\": 0, \"protocol\": \"tcp\" } ] }, \"volumes\": [ {\"containerPath\": \"/usr/src/app/hdfs\", \"hostPath\": \"/hadoop/hdfs-mount/apps/ldr/uploads\", \"mode\": \"RW\"} ] }, \"healthChecks\": [ { \"protocol\": \"HTTP\", \"path\": \"/lincsproject\", \"gracePeriodSeconds\": 10, \"intervalSeconds\": 60, \"portIndex\": 0, \"timeoutSeconds\": 10, \"maxConsecutiveFailures\": 3 }], \"labels\": { \"public\": \"true\" } }' maayanlab:systemsbiology@146.203.54.165:8080/v2/apps/lincsproject && rm build.log"
   },
   "repository": {
     "type": "git",
