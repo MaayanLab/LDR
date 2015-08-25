@@ -155,7 +155,7 @@ gulp.task('vendor', function() {
   gulp.src([
       BOWER_DIRECTORY + 'jquery/dist/jquery.min.js',
       BOWER_DIRECTORY + 'jquery/dist/jquery.min.map',
-      BOWER_DIRECTORY + 'angular/angular.js',
+      BOWER_DIRECTORY + 'angular/angular.min.js',
       BOWER_DIRECTORY + 'angular/angular.min.js.map'
     ])
     .pipe(gulp.dest(BUILD_DIRECTORY));
