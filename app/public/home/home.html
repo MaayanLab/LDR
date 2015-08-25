@@ -1,6 +1,3 @@
-<div class="row">
-  <!-- <div ng-include="'partials/searchBar.html'"></div> -->
-</div>
 <div class="home-top">
   <div class="container">
     <div class="squares">
@@ -184,13 +181,28 @@
   </div>
 </div>
 <div class="container">
+  <div class="push"></div>
+</div>
+<div class="container">
+  <div class="search-wrapper">
+    <h3>Search LINCS Assays, Experiment Data, and Projects</h3>
+    <div class="search" ng-include="'partials/searchBar.html'"></div>
+  </div>
+</div>
+<div class="container">
   <div class="clust-wrapper">
     <div class="clust-info">
       <h3>
         Overview of LINCS Existing and Future Datasets by Assay and Cell Type
       </h3>
       <p>
-        The grid below provides an overview of the LINCS consortium existing and future dataset release milestones parsed by cell types and assays. Each tiles is marked as planned (blue) or available (orange) LINCS datasets. The visualization is interactive. The tiles can be sorted by frequency (Rank) or ordered by similarity (Cluster). Hovering over a tile provides a brief description about the dataset, and clicking on a tile invokes a search of the LINCS milestones database.
+        The grid below provides an overview of the LINCS consortium existing and future dataset
+        release milestones parsed by cell types and assays. Each tiles is marked
+        as planned (blue) or available (orange) LINCS datasets. The visualization
+        is interactive. The tiles can be sorted by frequency (Rank) or ordered by
+        similarity (Cluster). Hovering over a tile provides a brief description about
+        the dataset, and clicking on a tile invokes a search of the LINCS milestones
+        database.
       </p>
     </div>
     <div class="col-xs-12 clust-inner">

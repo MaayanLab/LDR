@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"mon",
+				"mongfind	Find documents with Mongoose"
+			],
+			[
 				"ng-bind",
 				"ng-bind-html	AngularJS"
 			],
@@ -175,6 +179,25 @@
 	},
 	"buffers":
 	[
+		{
+			"contents": "/**\n * @author Michael McDermott\n * Created on 5/27/15.\n */\n\n(function() {\n  'use strict';\n\n  angular\n    .module('ldr.home', [\n      'ldr.api',\n      'ui.router',\n      'angular-storage',\n      'ngLodash',\n      'ui.bootstrap'\n    ])\n    .config(ldrHomeConfig)\n    .controller('LDRHomeController', LDRHomeController);\n\n  /* @ngInject */\n  function ldrHomeConfig($stateProvider) {\n    $stateProvider.state('home', {\n      url: '/',\n      templateUrl: 'home/home.html',\n      controller: 'LDRHomeController',\n      controllerAs: 'vm'\n    });\n  }\n\n  /* @ngInject */\n  function LDRHomeController(events) {\n\n    var vm = this;\n    vm.query = '';\n    vm.upcoming = [];\n\n    function getUpcoming() {\n      events\n        .getHomeEvents()\n        .success(function(homeEvents) {\n          vm.upcoming = homeEvents;\n        })\n        .error(function(resp) {\n          console.log(resp);\n        }\n      );\n    }\n\n    getUpcoming();\n  }\n})();\n",
+			"file": "app/public/home/home.js",
+			"file_size": 2368,
+			"file_write_time": 130849967100000000,
+			"settings":
+			{
+				"buffer_size": 935,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/public/home/home.scss",
+			"settings":
+			{
+				"buffer_size": 4597,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -184,9 +207,21 @@
 	"command_palette":
 	{
 		"height": 400.0,
-		"last_filter": "",
+		"last_filter": "save",
 		"selected_items":
 		[
+			[
+				"save",
+				"Project: Save As"
+			],
+			[
+				"ssxjavas",
+				"Set Syntax: JavaScript (Babel)"
+			],
+			[
+				"ssxhtml",
+				"Set Syntax: HTML"
+			],
 			[
 				"remove",
 				"Package Control: Remove Package"
@@ -290,13 +325,9 @@
 			[
 				"edit ",
 				"Project: Edit Project"
-			],
-			[
-				"save",
-				"Project: Save As"
 			]
 		],
-		"width": 592.0
+		"width": 538.0
 	},
 	"console":
 	{
@@ -318,22 +349,53 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/mmcdermott/Work/ldr",
-		"/Users/mmcdermott/Work/ldr/app",
-		"/Users/mmcdermott/Work/ldr/app/public",
-		"/Users/mmcdermott/Work/ldr/app/public/services",
-		"/Users/mmcdermott/Work/ldr/app/public/wordpress"
+		"/Users/mmcdermott/Work/ldr"
 	],
 	"file_history":
 	[
-		"/Users/mmcdermott/Work/ldr/app/public/services/d3ClustService.js",
-		"/Users/mmcdermott/Work/ldr/app/public/wordpress/wpPage/wpPage.js",
-		"/Users/mmcdermott/Work/ldr/app/public/wordpress/wpPage/wpPage.html",
-		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.html",
-		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.js",
+		"/Users/mmcdermott/Work/ldr/ldr.sublime-project",
+		"/Users/mmcdermott/Work/wp-lincsproject/lincsproject.sublime-project",
+		"/Users/mmcdermott/Work/docentv3/app/clustergram.js",
+		"/Users/mmcdermott/Work/docentv3/app/services/d3DataService.js",
+		"/Users/mmcdermott/Work/docentv3/app/app.scss",
+		"/Users/mmcdermott/Work/docentv3/app/index.html",
+		"/Users/mmcdermott/Work/docentv3/app/services/d3ClustService.js",
+		"/Users/mmcdermott/Work/d3_clustergram/d3_clustergram.js",
+		"/Users/mmcdermott/Work/docentv3/.eslintrc",
+		"/Users/mmcdermott/Work/docentv3/d3_clustergram.js",
+		"/Users/mmcdermott/Desktop/d3_clustergram.js",
+		"/Users/mmcdermott/Work/docentv3/ldr.sublime-project",
+		"/Users/mmcdermott/Work/ldr/app/backend/routes/releases.js",
+		"/Users/mmcdermott/Work/ldr/bower.json",
+		"/Users/mmcdermott/Work/ldr/.eslintrc",
+		"/Users/mmcdermott/Work/ldr/.gitignore",
+		"/Users/mmcdermott/Work/ldr/.jsbeautifyrc",
+		"/Users/mmcdermott/Work/wp-lincsproject/app/public/wordpress/wpPage/wpPage.html",
+		"/Users/mmcdermott/Work/wp-lincsproject/app/public/wordpress/wpPage/wpPage.js",
+		"/Users/mmcdermott/Work/wp-lincsproject/app/public/nav/nav.html",
+		"/Users/mmcdermott/Work/ldr/.tern-project",
+		"/Users/mmcdermott/Work/wp-lincsproject/app/public/wordpress/wpSidebar/wpSidebar.html",
+		"/Users/mmcdermott/Work/wp-lincsproject/app/public/wordpress/wpSidebar/wpSidebar.js",
+		"/Users/mmcdermott/Work/wp-lincsproject/app/public/home/home.js",
+		"/Users/mmcdermott/Work/wp-lincsproject/app/public/clustergram/clustergram.js",
+		"/Users/mmcdermott/Work/wp-lincsproject/app/public/services/metadataService.js",
+		"/Users/mmcdermott/Work/wp-lincsproject/app/public/nav/nav.js",
+		"/Users/mmcdermott/Work/wp-lincsproject/app/public/services/adminService.js",
+		"/Users/mmcdermott/Work/wp-lincsproject/app/public/services/wordpressService.js",
+		"/Users/mmcdermott/Work/wp-lincsproject/app/public/bar/bar.js",
+		"/Users/mmcdermott/Work/wp-lincsproject/app/public/services/messagesService.js",
+		"/Users/mmcdermott/Work/wp-lincsproject/app/public/services/releasesService.js",
+		"/Users/mmcdermott/Work/wp-lincsproject/app/public/index.php",
+		"/Users/mmcdermott/Work/wp-lincsproject/app/public/functions.php",
+		"/Users/mmcdermott/Work/wp-lincsproject/.eslintrc",
+		"/Users/mmcdermott/Work/wp-lincsproject/gulpfile.js",
+		"/Users/mmcdermott/Work/wp-lincsproject/.htaccess",
 		"/Users/mmcdermott/Work/wp-lincsproject/wp-config.php",
+		"/Users/mmcdermott/Work/wp-lincsproject/.gitignore",
 		"/Users/mmcdermott/Work/ldr/app/public/services/wordpressService.js",
+		"/Users/mmcdermott/Work/ldr/app/public/wordpress/wpPage/wpPage.js",
 		"/Users/mmcdermott/Work/ldr/app/public/home/home.js",
+		"/Users/mmcdermott/Work/ldr/app/public/wordpress/wpPage/wpPage.html",
 		"/Users/mmcdermott/Work/ldr/app/public/main.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/_legacy.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/_clustergram.scss",
@@ -346,7 +408,6 @@
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/clustModal/_clustModal.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/_base.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/app.js",
-		"/Users/mmcdermott/Work/ldr/ldr.sublime-project",
 		"/Users/mmcdermott/Work/ldr/app/public/wordpress/pages/pages.js",
 		"/Users/mmcdermott/Work/ldr/app/public/home/home.html",
 		"/Users/mmcdermott/Work/ldr/app/public/index.html",
@@ -366,6 +427,7 @@
 		"/Users/mmcdermott/Work/ldr/app/public/services/releasesService.js",
 		"/Users/mmcdermott/Work/ldr/app/public/services/userService.js",
 		"/Users/mmcdermott/Work/ldr/app/public/services/metadataService.js",
+		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.js",
 		"/Users/mmcdermott/Work/ldr/app/public/releases/home/releasesHome.js",
 		"/Users/mmcdermott/Work/ldr/app/public/releases/overview/overview.js",
 		"/Users/mmcdermott/Work/ldr/app/public/services/adminService.js",
@@ -383,7 +445,6 @@
 		"/Users/mmcdermott/Work/ldr/app/backend/routes/events.js",
 		"/Users/mmcdermott/Work/ldr/package.json",
 		"/Users/mmcdermott/Work/temp-proxy/Dockerfile",
-		"/Users/mmcdermott/Work/ldr/.gitignore",
 		"/Users/mmcdermott/Work/ansible-mesos-playbook/mesos_workers.yml",
 		"/Users/mmcdermott/Work/ansible-mesos-playbook/mesos_primaries.yml",
 		"/Users/mmcdermott/Work/temp-proxy/nginx.conf",
@@ -392,13 +453,13 @@
 		"/Users/mmcdermott/Work/ldr/dist/backend/routes/events.js",
 		"/Users/mmcdermott/Work/ldr/dist/backend/routes/admin.js",
 		"/Users/mmcdermott/Work/ldr/app/public/msgModal/msgModal.js",
+		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.html",
 		"/Users/mmcdermott/Work/ldr/app/public/releases/overview/overview.html",
 		"/Users/mmcdermott/Work/ldr/Dockerfile",
 		"/Users/mmcdermott/Work/ldr/app/public/msgModal/msgModal.html",
 		"/Users/mmcdermott/Work/ldr/dist/vendor.js",
 		"/Users/mmcdermott/Work/ldr/app/public/nav/nav.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/user/admin/admin.html",
-		"/Users/mmcdermott/Work/ldr/app/backend/routes/releases.js",
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/clustModal/clustModal.js",
 		"/Users/mmcdermott/Desktop/tempDb.py",
 		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
@@ -412,52 +473,18 @@
 		"/Users/mmcdermott/Work/LDRgram/static/networks/LDR_as_cl.json",
 		"/Users/mmcdermott/Work/DSGC-data/db-ldr-consolidated.py",
 		"/Users/mmcdermott/Desktop/newLDR.json",
+		"/Users/mmcdermott/Work/ldr/app/public/services/d3ClustService.js",
 		"/Users/mmcdermott/Work/ldr/app/public/home/home.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/clustModal/clustModal.html",
 		"/Users/mmcdermott/Work/ldr/app/public/clustergram/clustergram.scss",
 		"/Users/mmcdermott/Work/ldr/app/public/services/exportService.js",
 		"/Users/mmcdermott/Work/ldr/app/public/partials/expand.html",
 		"/Users/mmcdermott/Work/ldr/app/backend/routes/metadata.js",
-		"/Users/mmcdermott/Work/ldr/app/backend/routes/news.js",
-		"/Users/mmcdermott/Work/ldr/app/backend/routes/publications.js",
-		"/Users/mmcdermott/Work/ldr/app/backend/routes/admin.js",
-		"/Users/mmcdermott/Work/ldr/app/backend/routes/users.js",
-		"/Users/mmcdermott/Work/ldr/bower.json",
-		"/Users/mmcdermott/Work/ldr/.bowerrc",
-		"/Users/mmcdermott/Work/ldr/app/public/user/admin/returnModal/returnModal.html",
-		"/Users/mmcdermott/Work/ldr/app/public/services/d3.js",
-		"/Users/mmcdermott/Work/ldr/app/public/clustergram/static/js/d3-clustergram.js",
-		"/Users/mmcdermott/Work/ldr/app/public/clustergram/static/lib/js/d3.min.js",
-		"/Users/mmcdermott/Work/ldr/app/public/clustergram/static/lib/js/jquery-ui.js",
-		"/Users/mmcdermott/Work/ldr/app/backend/config/database.js",
-		"/Users/mmcdermott/Work/ldr/app/public/clustergram/static/networks/LDR-as-cl.json",
-		"/Users/mmcdermott/Work/ldr/app/public/clustergram/static/js/d3Clustergram.js",
-		"/Users/mmcdermott/Work/ldr/app/public/clustergram/static/networks/LDR_as_cl.json",
-		"/Users/mmcdermott/Work/ldr/.eslintignore",
-		"/Users/mmcdermott/Work/ldr/app/public/clustergram/static/js/d3_clustergram.js",
-		"/Users/mmcdermott/Work/ldr/app/public/community/consortiumMeetings/consortiumMeetings.js",
-		"/Users/mmcdermott/Work/ldr/app/public/community/consortiumMeetings/consortiumMeetings.scss",
-		"/Users/mmcdermott/Work/ldr/app/public/community/consortiumMeetings/consortiumMeetings.html",
-		"/Users/mmcdermott/Work/ldr/app/public/clustergram/static/css/custom.css",
-		"/Users/mmcdermott/Work/ldr/app/public/community/webinars/webinars.js",
-		"/Users/mmcdermott/Work/ldr/app/public/community/webinars/webinars.html",
-		"/Users/mmcdermott/Work/ldr/app/public/clustergram/clutergram.html",
-		"/Users/mmcdermott/Work/ldr/dist/partials/expand.html",
-		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
-		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
-		"/Users/mmcdermott/Library/Application Support/Sublime Text 3/Packages/User/Tern.sublime-settings",
-		"/Users/mmcdermott/Work/ldr/app/public/community/consortium/consortium.html",
-		"/Users/mmcdermott/Work/ldr/app/public/community/consortium/consortium.js",
-		"/Users/mmcdermott/Work/ldr/app/public/community/fundingOpps/fundingOpps.js",
-		"/Users/mmcdermott/Work/ldr/app/public/community/fundingOpps/fundingOpps.html",
-		"/Users/mmcdermott/Work/ldr/app/public/community/webinars/webinars.scss",
-		"/Users/mmcdermott/Work/ldr/app/public/services/eventsService.js",
-		"/Users/mmcdermott/Work/ldr/app/public/community/community.scss",
-		"/Users/mmcdermott/Work/ldr/app/public/centers/dcic/dcic.html"
+		"/Users/mmcdermott/Work/ldr/app/backend/routes/news.js"
 	],
 	"find":
 	{
-		"height": 34.0
+		"height": 28.0
 	},
 	"find_in_files":
 	{
@@ -475,9 +502,99 @@
 		"case_sensitive": true,
 		"find_history":
 		[
-			"scaleFontSize",
-			"defaultFsRow",
-			"font-size",
+			"_.",
+			"div",
+			"// switch the color based on up/dn value",
+			"/// switch the color based on up/dn value",
+			"        // switch the color based on up/dn value\n",
+			"1",
+			"switch the color based on up/dn value",
+			"300",
+			"14px",
+			"border",
+			"rect",
+			"zoom",
+			"valueDn",
+			"valueUp",
+			"Nodes",
+			"rowNodes",
+			"makeClust",
+			"_.",
+			"d",
+			"\"",
+			"i",
+			" == ",
+			"_.",
+			"#fff",
+			"mainSvg'",
+			"geneSearchBox'",
+			"cellHighlight'",
+			"highlightingRect'",
+			"rowTriangleGroup'",
+			"colClassGroup'",
+			"clickedCol'",
+			"rowLabelTriangles'",
+			"colLabels'",
+			"colLabels",
+			"colClass'",
+			"colClass",
+			"colLabelClick'",
+			"colBars'",
+			"colBars",
+			"rowLabels'",
+			"rowLabels",
+			"rowLabelText",
+			".rowLabelText",
+			" == ",
+			"\"",
+			"_z",
+			"_y",
+			"_x",
+			"_w",
+			"_v",
+			"_u",
+			"_t",
+			"_s",
+			"_r",
+			"_q",
+			"_p",
+			"_o",
+			"_n",
+			"_m",
+			"_l",
+			"_k",
+			"_j",
+			"_i",
+			"_h",
+			"_g",
+			"_f",
+			"_e",
+			"_d",
+			"_c",
+			"_b",
+			"_a",
+			"_f",
+			"_e",
+			"_d",
+			"_c",
+			"_b",
+			"_a",
+			"vm",
+			"assay",
+			"2",
+			"ldrNav",
+			"wordpress",
+			"currentScriptPath",
+			"templateUrl",
+			"_enqueue",
+			"_scripts",
+			"<!-- .* -->",
+			"ng-binding\"",
+			"ng-repeat=\".*?\"",
+			"ng-href=\".*?\"",
+			"ng-if=\".*?\"",
+			"ng-scope\"",
+			"class=\"ng-.*?\"",
 			"#fff",
 			"fff",
 			"ffffff",
@@ -512,97 +629,7 @@
 			"_d",
 			"_u",
 			"_n",
-			"\"",
-			"row_nodes",
-			"value",
-			" { ",
-			"sId",
-			"d._id",
-			"meta",
-			"select('text'",
-			"'text'",
-			"])\n",
-			"rel",
-			"sample",
-			"qId",
-			"type",
-			"req.query.q",
-			"req.query.q.",
-			"req.query.q",
-			"err",
-			"form",
-			"formatData",
-			"chain",
-			"results",
-			"releaseType",
-			"releaseId",
-			"req.params.type",
-			"err",
-			"reorder",
-			"valueDown",
-			"\"",
-			"_node",
-			"_dn",
-			"_up",
-			"link.highlight",
-			"tileInfo.col",
-			"Return",
-			"params.clickT",
-			"params.click",
-			"perts",
-			"\"",
-			"_dn",
-			"_up",
-			"_n",
-			"less",
-			"onclick",
-			"$",
-			"_.",
-			"vm",
-			"clust",
-			"$",
-			"        networkData: landscapeData,\n",
-			"networkData",
-			"$",
-			"_",
-			"\"",
-			"Community",
-			"community",
-			"cluster",
-			"total",
-			"title",
-			"'title' ",
-			"total'",
-			"select('text')",
-			"')\n",
-			".select('text')",
-			"font",
-			"'total",
-			"3000px",
-			"white-bars",
-			"fill', BACKGROUN",
-			"network.links[i]",
-			"value_dn",
-			"value_up",
-			"inst_link",
-			"net",
-			"_nodes",
-			"row_nodes",
-			"params.matrix",
-			"console.log",
-			"_nodes",
-			"row_nodes",
-			"value_up",
-			"value_dn",
-			"tileCol",
-			"('.*[A-Z].*')",
-			"'.*[A-Z].*'",
-			"'[A-Z]*'",
-			"'*[A-Z]*'",
-			"'[A-Z]'",
-			"rowLabelTriangles'",
-			"rowLabelTriangles",
-			"_"
+			"\""
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -610,6 +637,50 @@
 		"regex": false,
 		"replace_history":
 		[
+			"row_nodes",
+			"gene-search-box'",
+			"cell-highlight'",
+			"highlighting-rect'",
+			"row-triangle-group'",
+			"col-class-group'",
+			"clicked-col'",
+			"row-label-triangles'",
+			"col-labels'",
+			"col-class'",
+			"col-label-click'",
+			"col-bars'",
+			"row-labels'",
+			"'",
+			"Z",
+			"Y",
+			"X",
+			"W",
+			"V",
+			"U",
+			"T",
+			"S",
+			"R",
+			"Q",
+			"P",
+			"O",
+			"N",
+			"L",
+			"K",
+			"J",
+			"I",
+			"H",
+			"G",
+			"F",
+			"E",
+			"D",
+			"C",
+			"B",
+			"A",
+			"G",
+			"E",
+			"D",
+			"C",
+			"B",
 			"D",
 			"U",
 			"N",
@@ -660,14 +731,75 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "app/public/home/home.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 935,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								756,
+								756
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 349.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/public/home/home.scss",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 4597,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Sass/Syntaxes/Sass.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 34.0
+		"height": 28.0
 	},
 	"input":
 	{
@@ -712,7 +844,7 @@
 	"project": "ldr.sublime-project",
 	"replace":
 	{
-		"height": 64.0
+		"height": 52.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -721,6 +853,18 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"d3data",
+				"app/services/d3DataService.js"
+			],
+			[
+				"clustser",
+				"app/services/d3ClustService.js"
+			],
+			[
+				"navhtml",
+				"app/public/nav/nav.html"
+			],
 			[
 				"gulpfile",
 				"gulpfile.js"
@@ -928,10 +1072,6 @@
 			[
 				"gulpfi",
 				"gulpfile.js"
-			],
-			[
-				"d3data",
-				"app/public/services/d3DataService.js"
 			],
 			[
 				"mainss",
@@ -1194,10 +1334,6 @@
 				"app/public/home/home.scss"
 			],
 			[
-				"navhtml",
-				"app/public/nav/nav.html"
-			],
-			[
 				"navas",
 				"app/public/nav/nav.scss"
 			],
@@ -1228,10 +1364,6 @@
 			[
 				"homsc",
 				"app/public/home/home.scss"
-			],
-			[
-				"partia",
-				"app/public/partials/partials.scss"
 			]
 		],
 		"width": 0.0
@@ -1239,12 +1371,24 @@
 	"select_project":
 	{
 		"height": 500.0,
-		"last_filter": "",
+		"last_filter": "ld",
 		"selected_items":
 		[
 			[
+				"ld",
+				"~/Work/ldr/ldr.sublime-project"
+			],
+			[
 				"",
-				"~/dev/mgmcdermott.com/mgmcdermott.sublime-project"
+				"~/Work/ldr/ldr.sublime-project"
+			],
+			[
+				"ldr",
+				"~/Work/ldr/ldr.sublime-workspace"
+			],
+			[
+				"lincs",
+				"~/Work/wp-lincsproject/lincsproject.sublime-workspace"
 			]
 		],
 		"width": 380.0
@@ -1261,20 +1405,11 @@
 	"selected_group": 0,
 	"settings":
 	{
-		"last_automatic_layout":
-		[
-			[
-				0,
-				0,
-				1,
-				1
-			]
-		]
 	},
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": false,
+	"side_bar_visible": true,
 	"side_bar_width": 232.0,
 	"status_bar_visible": true,
 	"template_settings":

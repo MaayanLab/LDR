@@ -19,8 +19,6 @@ td.legend-color {
 
 // searchBar.html
 #release-search {
-  margin-top: 20px;
-  margin-bottom: 20px;
   position: relative;
   height: 47px;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -58,7 +56,7 @@ td.legend-color {
     background-size: 16px 16px;
 
     &:hover {
-      background: $color-primary-dark url('../images/ico-search-hover.svg') no-repeat 50% 50%;
+      background: $color-orange url('../images/ico-search-hover.svg') no-repeat 50% 50%;
       background-size: 16px 16px;
     }
   }
