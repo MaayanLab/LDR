@@ -171,8 +171,8 @@
         </p>
         <p>
           By generating and making public data that indicates how cells respond to various
-          genetic and environmental stressors,
-          <a ui-sref="about">the LINCS project</a> will help us gain a more detailed understanding of
+          genetic and environmental stressors, the
+          <a ui-sref="about">LINCS project</a> will help us gain a more detailed understanding of
           cell pathways and aid efforts to develop therapies that might restore perturbed
           pathways and networks to their normal states.
         </p>
@@ -185,25 +185,28 @@
 </div>
 <div class="container">
   <div class="search-wrapper">
-    <h3>Search the lincsproject.org website pages and data releases</h3>
+    <h3>Search the lincsproject.org website and database</h3>
     <div class="search" ng-include="'partials/searchBar.html'"></div>
-    <h4 class="text-center">Examples: <a href="">MCF7</a>, <a href="">Webinars</a>, <a href="">KINOMEscan</a></h4>
+    <h4 class="text-center">Examples:
+      <a href="">MCF7</a>,
+      <a href="">Webinars</a>,
+      <a href="">KINOMEscan</a>
+    </h4>
   </div>
 </div>
 <div class="container">
   <div class="clust-wrapper">
     <div class="clust-info">
       <h3>
-        Overview of LINCS Existing and Future Datasets by Assay and Cell Type
+        Overview of LINCS Consortium's Datasets by Assay and Cell Type
       </h3>
       <p>
-        The grid below provides an overview of the LINCS consortium existing and future dataset
-        release milestones parsed by cell types and assays. Each tile represents
-        planned (blue) or available (orange) LINCS datasets. The visualization
-        is interactive. The tiles can be sorted by frequency (Rank) or ordered by
-        similarity (Cluster). Hovering over a tile provides a brief description about
-        the dataset, and clicking on a tile invokes a search of the LINCS milestones
-        database.
+        The grid below provides an overview of the LINCS consortium existing and future datasets
+        parsed by cell type and assay. Each tile represents planned (blue) or available
+        (orange) LINCS datasets. The visualization is interactive. The tiles can
+        be sorted by frequency (Rank) or ordered by similarity (Cluster). Hovering
+        over a tile provides a brief description about the dataset, and clicking
+        on a tile invokes a search of the LINCS milestones database.
       </p>
     </div>
     <div class="col-xs-12 clust-inner">
@@ -219,7 +222,7 @@
       <div class="row">
         <div class="col-xs-12">
           <h3 class="events-banner">
-            LINCS News &amp; Events
+            News &amp; Events
           </h3>
         </div>
         <div class="events">
@@ -252,8 +255,10 @@
                   <strong>Presenter: </strong>
                   <a ng-href="{{event.presenter.url}}">{{event.presenter.name}}</a>
                 </p>
-                <p><strong>Affiliation: </strong>{{event.presenter.affiliation}}</p>
-                <p><strong>Time: </strong>3pm EST</p>
+                <p>
+                  <strong>Affiliation: </strong>{{event.presenter.affiliation}}</p>
+                <p>
+                  <strong>Time: </strong>3pm EDT</p>
                 <a href="">Join Now</a>
               </div>
               <p class="event-desc">{{event.description}}</p>

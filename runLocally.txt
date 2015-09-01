@@ -1,0 +1,11 @@
+Instructions on running lincsproject locally
+
+1. Unzip the lincsproject.zip file.
+2. Install nodejs by visiting https://nodejs.org/. This will install npm on your machine.
+3. Open up a terminal and change directories into the folder that was unzipped from step 1.
+4. Run the following commands (These will take a decent amount of time to complete):
+  - npm install -g gulp bower
+  - npm install
+  - bower install
+5. After that, all dependencies will be installed. From the same directory in your terminal,
+run "gulp" (without the quotes) and the application should be built and even opened in your browser. If not, you may find it at http://localhost:3001/lincsproject
