@@ -18,10 +18,9 @@ COPY .bowerrc $SOURCE_DIR/
 
 # 1. Install all npm dependencies (including dev dependencies)
 # 2. Set NODE_ENV=production
-# 3. Globally install bower
+# 3. Globally install gulp and bower
 # 4. Install bower dependencies
 #    (--allow-root needed because user in container is root)
-# 5. Globally install gulp
 RUN npm install && \
     npm config set production && \
     npm install -g gulp bower && \
