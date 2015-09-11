@@ -12,7 +12,7 @@
 .slick-slider,
 .slick-list,
 .slick-track {
-  height: 280px;
+  height: 200px;
 }
 
 .slick-prev,
@@ -43,23 +43,23 @@
 .slick-has-center {
   transition: all 300ms ease;
   @media all and (min-width: 768px) {
-    margin-top: 40px;
+    margin-top: 5px;
   }
 
   .well-release {
-    height: 270px;
+    height: 190px;
     margin: 5px auto 0;
-    max-width: 270px;
+    max-width: 190px;
 
     @media all and (min-width: 768px) {
       margin: 0;
-      height: 200px;
+      height: 190px;
       opacity: .7;
       transform: scale(.7);
       transition: all 300ms ease;
     }
     @media all and (min-width: 1200px) {
-      max-width: 200px;
+      max-width: 190px;
     }
   }
 }
@@ -72,9 +72,9 @@
   }
 
   .well-release {
-    height: 270px;
+    height: 190px;
     margin: 5px auto 0;
-    max-width: 270px;
+    max-width: 190px;
   }
 }
 
@@ -84,10 +84,10 @@
   .well-release {
     opacity: 1;
     @media all and (min-width: 768px) {
-      transform: scale(1.25);
+      transform: scale(1);
     }
     @media all and (min-width: 1100px) {
-      transform: scale(1.35);
+      transform: scale(1);
     }
   }
 }
