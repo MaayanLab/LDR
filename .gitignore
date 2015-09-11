@@ -91,7 +91,7 @@ node_modules/
 .tern-port
 
 # Bower directory
-app/public/vendor/
+vendor/
 
 # Build directory
 dist/
