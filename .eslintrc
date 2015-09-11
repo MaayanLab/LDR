@@ -1,7 +1,7 @@
 {
     "rules": {
         "indent": [
-            4,
+            2,
             2
         ],
         "quotes": [
@@ -24,10 +24,10 @@
     },
     "env": {
         "browser": true,
+        "jQuery": true,
         "node": true
     },
     "globals": {
-        "angular": true,
-        "themeLocals": true
+        "angular": true
     }
 }

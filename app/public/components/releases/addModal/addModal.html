@@ -1,0 +1,175 @@
+<div class="modal-body">
+  <form ng-model="vm.modalForm" class="modal-form-input" ng-show="vm.name === 'assay'">
+    <div class="form-group">
+      <label for="assay-name" class="control-label">
+        Name
+      </label>
+      <input id="assay-name" type="text" class="form-control" ng-model="vm.newTag.name"
+      />
+    </div>
+    <div class="form-group">
+      <label for="assay-desc" class="control-label">
+        Description
+      </label>
+      <input id="assay-desc" type="text" class="form-control" ng-model="vm.newTag.description"
+      />
+    </div>
+  </form>
+  <form ng-model="vm.modalForm" class="modal-form-input" ng-show="vm.name === 'cellLines'">
+    <div class="form-group">
+      <label for="cell-name" class="control-label">
+        Name
+      </label>
+      <input id="cell-name" type="text" class="form-control" ng-model="vm.newTag.name"
+      />
+    </div>
+    <div class="form-group">
+      <label for="cell-type" class="control-label">
+        Type (Cell line or Cancer line)
+      </label>
+      <input id="cell-type" type="text" class="form-control" ng-model="vm.newTag.type"
+      />
+    </div>
+    <div class="form-group">
+      <label for="cell-class" class="control-label">
+        Class (Normal or iPSC-differentiated)
+      </label>
+      <input id="cell-class" type="text" class="form-control" ng-model="vm.newTag.class"
+      />
+    </div>
+    <div class="form-group">
+      <label for="cell-tissue" class="control-label">
+        Tissue
+      </label>
+      <input id="cell-tissue" type="text" class="form-control" ng-model="vm.newTag.tissue"
+      />
+    </div>
+  </form>
+  <form ng-model="vm.modalForm" class="modal-form-input" ng-show="vm.name === 'perturbagens'">
+    <div class="form-group">
+      <label for="pert-name" class="control-label">
+        Name
+      </label>
+      <input id="pert-name" type="text" class="form-control" ng-model="vm.newTag.name"
+      />
+    </div>
+    <div class="form-group">
+      <label for="pert-type" class="control-label">
+        Type
+      </label>
+      <input id="pert-type" type="text" class="form-control" ng-model="vm.newTag.type"
+      />
+    </div>
+  </form>
+  <form ng-model="vm.modalForm" class="modal-form-input" ng-show="vm.name === 'readouts'">
+    <div class="form-group">
+      <label for="readout-name" class="control-label">Name</label>
+      <input id="readout-name" type="text" class="form-control" ng-model="vm.newTag.name"
+      />
+    </div>
+    <div class="form-group">
+      <label class="control-label">
+        Data Type
+      </label>
+      <input type="text" class="form-control" ng-model="vm.newTag.datatype" />
+    </div>
+  </form>
+  <form ng-model="vm.modalForm" class="modal-form-input" ng-show="vm.name === 'manipulatedGene'">
+    <div class="form-group">
+      <label for="gene-name" class="control-label">
+        Name
+      </label>
+      <input id="gene-name" type="text" class="form-control" ng-model="vm.newTag.name"
+      />
+    </div>
+    <div class="form-group">
+      <label for="gene-org" class="control-label">
+        Organism
+      </label>
+      <input id="gene-org" type="text" class="form-control" ng-model="vm.newTag.organism"
+      />
+    </div>
+    <div class="form-group">
+      <label for="gene-url" class="control-label">
+        URL
+      </label>
+      <input id="gene-url" type="text" class="form-control" ng-model="vm.newTag.url" />
+    </div>
+    <div class="form-group">
+      <label for="gene-desc" class="control-label">
+        Description
+      </label>
+      <input id="gene-desc" type="text" class="form-control" ng-model="vm.newTag.description"
+      />
+    </div>
+    <div class="form-group">
+      <label for="gene-ref" class="control-label">
+        Reference
+      </label>
+      <input id="gene-ref" type="text" class="form-control" ng-model="vm.newTag.reference"
+      />
+    </div>
+  </form>
+  <form ng-model="vm.modalForm" class="modal-form-input" ng-show="vm.name === 'organism'">
+    <div class="form-group">
+      <label for="org-sci-name" class="control-label">
+        Scientific Name
+      </label>
+      <input id="org-sci-name" type="text" class="form-control" ng-model="vm.newTag.name"
+      />
+    </div>
+    <div class="form-group">
+      <label for="org-com-name" class="control-label">
+        Common Name
+      </label>
+      <input id="org-com-name" type="text" class="form-control" ng-model="vm.newTag.commonName"
+      />
+    </div>
+  </form>
+  <form ng-model="vm.modalForm" class="modal-form-input" ng-show="vm.name === 'relevantDisease'">
+    <div class="form-group">
+      <label for="disease-name" class="control-label">
+        Name
+      </label>
+      <input id="disease-name" type="text" class="form-control" ng-model="vm.newTag.name"
+      />
+    </div>
+    <div class="form-group">
+      <label for="disease-desc" class="control-label">
+        Description
+      </label>
+      <input id="disease-desc" type="text" class="form-control" ng-model="vm.newTag.description"
+      />
+    </div>
+  </form>
+  <form ng-model="vm.modalForm" class="modal-form-input" ng-show="vm.name === 'analysisTools'">
+    <div class="form-group">
+      <label for="tool-title" class="control-label">
+        Title
+      </label>
+      <input id="tool-title" type="text" class="form-control" ng-model="vm.newTag.name"
+      />
+    </div>
+    <div class="form-group">
+      <label for="tool-desc" class="control-label">
+        Description
+      </label>
+      <input id="tool-desc" type="text" class="form-control" ng-model="vm.newTag.description"
+      />
+    </div>
+    <div class="form-group">
+      <label for="tool-url" class="control-label">
+        URL
+      </label>
+      <input id="tool-url" type="text" class="form-control" ng-model="vm.newTag.url" />
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-primary" ng-click="vm.ok();">
+    Save
+  </button>
+  <button type="button" class="btn btn-danger" ng-click="vm.cancel();">
+    Cancel
+  </button>
+</div>

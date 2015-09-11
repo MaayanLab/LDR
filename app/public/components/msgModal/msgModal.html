@@ -1,0 +1,50 @@
+<form name="msgForm" class="modal-form-input">
+  <div class="msg-modal-body">
+    <div class="msg-panel">
+      <div class="msg-panel-heading">
+        <button id="msg-close-btn" type="button" ng-click="vm.close();">
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
+        <h4 class="text-left">
+          <label for="btn-input" class="control-label msg-header">
+            Messages about {{vm.header}}
+          </label>
+        </h4>
+      </div>
+      <div class="panel-body">
+        <div ng-repeat="msg in vm.messages track by $index">
+          <p ng-if="msg.date.getDate() !== messages[$index - 1].date.getDate()" class="text-center col-xs-12">
+            {{msg.date | date: 'MM-dd-yyyy'}}
+          </p>
+          <p class="col-xs-12 message">
+            <span class="col-xs-9">
+              <strong ng-class="msg.user.admin ? 'admin-msg-label' : 'msg-label'">
+                {{msg.user.username}}:
+              </strong>
+              {{msg.message}}
+            </span>
+            <span class="text-right text-muted col-xs-3">
+              {{msg.date | date: 'h:mm a'}}
+              <button id="msg-delete-btn" type="button" ng-click="removeMsg(msg);">
+                <span class="glyphicon glyphicon-remove"></span>
+              </button>
+            </span>
+          </p>
+        </div>
+      </div>
+      <div ng-repeat-end="" class="panel-footer">
+        <div class="input-group">
+          <input id="btn-input" type="text" ng-model="newMessage" class="form-control input-sm"
+          ng-required="true" ng-minlength="1" placeholder="Type your message here..."
+          />
+          <span class="input-group-btn">
+            <button id="msg-send-btn" class="btn btn-warning btn-sm" ng-disabled="msgForm.$invalid"
+            ng-click="vm.post();">
+              Send
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

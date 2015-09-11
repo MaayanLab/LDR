@@ -1,0 +1,21 @@
+<div class="col-sm-6 form-div">
+  <div class="row">
+    <h5 class="col-xs-6">
+      {{vm.title}}
+      <span ng-if="isRequired">*</span>
+    </h5>
+    <span class="dataset-error-msg col-xs-6 text-right" ng-show="vm.showErrors && vm.isRequired && vm.ngModel.length < 1">
+      This field is required.
+    </span>
+  </div>
+  <tags-input ng-if="vm.useAutocomplete" ng-model="vm.ngModel" allow-leftover-text="false"
+  ldr-enforce-max-tags max-tags="{{vm.maxTags}}" placeholder="{{vm.placeholder}}"
+  add-from-autocomplete-only="true" replace-spaces-with-dashes="false" on-tag-adding="vm.addNew($tag);">
+    <auto-complete source="vm.autocompleteSource($query, vm.autocompleteEndpoint)">
+    </auto-complete>
+  </tags-input>
+  <tags-input ng-if="!vm.useAutocomplete" ng-model="vm.ngModel" allow-leftover-text="false"
+  ldr-enforce-max-tags max-tags="{{vm.maxTags}}" placeholder="{{vm.placeholder}}"
+  replace-spaces-with-dashes="false" on-tag-adding="vm.addNew($tag);">
+  </tags-input>
+</div>

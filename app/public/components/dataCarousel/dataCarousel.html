@@ -1,0 +1,49 @@
+<div class="carousels">
+  <div class="ldr-carousel" ng-repeat="group in vm.carouselData.centerOrder">
+    <h2>{{group}}</h2>
+    <slick arrows="true" responsive="vm.carouselData[group].breakpoints"
+      variable-width="false" center-mode="{{vm.carouselData[group].centerMode}}"
+      slides-to-show="{{vm.carouselData[group].slidesToShow}}"
+      slides-to-scroll="{{vm.carouselData[group].slidesToScroll}}"
+      init-onload="true" data="vm.carouselData" autoplay="false" autoplay-speed="5000">
+      <div ng-repeat="release in vm.carouselData[group].releasesArr"
+        ng-class="vm.carouselData[group].centerMode ? 'slick-has-center' : 'slick-no-center'">
+        <div class="well well-sm well-release" ng-class="release.released ? 'well-release-released' : 'well-release-prod'">
+            <div class="text-center col-xs-10 col-xs-offset-1 group-icon-wrapper">
+              <div class="text-center group-icon"
+                style="background-image: url(http://amp.pharm.mssm.edu/LDR/api/group/{{release.group._id}}/icon/)">
+              </div>
+            </div>
+            <div class="col-xs-10 col-xs-offset-1">
+              <h6 class="">{{release.datasetName}}</h6>
+              <p>
+                <!-- <span>
+                  <i class="card-glyph glyphicon glyphicon-user"></i> {{release.group.name}}
+                </span>
+                <br/> -->
+                <span ng-if="!release.released" class="in-production">
+                  <i class="card-glyph-prod glyphicon glyphicon-wrench"></i> In Production
+                  <br/>
+                </span>
+                <span ng-if="release.released" class="released">
+                  <i class="card-glyph-released glyphicon glyphicon-ok"></i> Released
+                  <br/>
+                </span>
+                <span ng-if="release.released" class="released">
+                  <i class="card-glyph-released glyphicon glyphicon-link"></i>
+                  <a ng-href="{{release.urls.dataUrl}}" target="_blank">
+                    <strong>Access data</strong>
+                  </a>
+                </span>
+                <br/>
+                <span ng-if="release.released">
+                  <i class="card-glyph glyphicon glyphicon-calendar"></i> {{release.releaseDates.upcoming
+                  | date: 'MMMM dd, yyyy'}}
+                </span>
+                <br/>
+              </p>
+          </div>
+        </div>
+    </slick>
+    </div>
+  </div>

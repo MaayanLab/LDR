@@ -1,0 +1,52 @@
+<div class="col-sm-12">
+  <h4 class="text-center assay-title">
+    {{vm.form.datasetName}}
+  </h4>
+  <p class="col-sm-12">{{vm.form.description}}</p>
+  <div class="col-sm-12">
+    <h5>Cell Lines</h5>
+    <ul class="list-inline">
+      <li ng-repeat="line in vm.form.metadata.cellLines">
+        {{line.name}}
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-12">
+    <h5>Perturbagens</h5>
+    <ul class="list-inline">
+      <li ng-repeat="pert in vm.form.metadata.perturbagens">
+        {{pert.name}}
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-12">
+    <h5>Readouts</h5>
+    <ul class="list-inline">
+      <li ng-repeat="rOut in vm.form.metadata.readouts">
+        {{rOut.name}}
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-12">
+    <h5>Release Dates</h5>
+    <ul class="list-inline">
+      <li ng-repeat="(level,date) in vm.form.releaseDates" ng-if="date !== '' && level !== 'upcoming'">
+        <strong class="info-release-lvl">
+          {{level}}:
+        </strong>
+        {{date | date:'MM-dd-yyyy'}}
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-12">
+    <h5>URLs</h5>
+    <ul class="list-inline">
+      <li ng-repeat="(label,url) in vm.form.urls" ng-if="url !== ''">
+        <strong class="info-release-lvl">
+          {{label}}:
+        </strong>
+        <a ng-href={{url}}>{{url}}</a>
+      </li>
+    </ul>
+  </div>
+</div>
