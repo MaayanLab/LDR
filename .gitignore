@@ -98,3 +98,5 @@ dist/
 
 # Temporary Excel Files
 ~$*.xlsx
+
+app/backend/config/database.js

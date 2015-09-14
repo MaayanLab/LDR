@@ -27,8 +27,8 @@
       var centerOrder = [
         'Broad-LINCS-Transcriptomics',
         'HMS-LINCS',
-        'MEP-LINCS',
         'NeuroLINCS',
+        'MEP-LINCS',
         'Broad-LINCS-PCCSE',
         'DTOXS'
       ];
@@ -45,29 +45,29 @@
                 var rCount = vm.carouselData[key].releasesArr.length;
                 var centerMode = !!(rCount > 4);
                 var breakpoints = [];
-                var smBreakpoint = {
-                  breakpoint: 768,
+                // var smBreakpoint = {
+                //   breakpoint: 768,
+                //   settings: {
+                //     slidesToShow: 1,
+                //     slidesToScroll: 1
+                //   }
+                // };
+                var lgBreakpoint = {
+                  breakpoint: 1100,
                   settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1
                   }
                 };
-                var lgBreakpoint = {
-                  breakpoint: 1100,
-                  settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1
-                  }
-                };
                 var useSmBreakpoint = !!(rCount > 1);
                 var useLgBreakpoint = !!(rCount > 2);
-                if (!!(rCount > 1)) {
-                  breakpoints.push(smBreakpoint);
-                }
+                // if (!!(rCount > 1)) {
+                //   breakpoints.push(smBreakpoint);
+                // }
                 if (!!(rCount > 2)) {
                   breakpoints.push(lgBreakpoint);
                 }
-                var slidesToShow = centerMode ? 5 : rCount;
+                var slidesToShow = centerMode ? 3 : rCount;
                 vm.carouselData[key].centerMode = centerMode;
                 vm.carouselData[key].breakpoints = breakpoints;
                 vm.carouselData[key].slidesToShow = slidesToShow;
