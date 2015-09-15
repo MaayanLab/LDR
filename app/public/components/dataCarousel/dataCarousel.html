@@ -4,7 +4,8 @@
       <h3 class="col-xs-12 col-sm-3">{{group}}</h3>
       <slick class="col-xs-12 col-sm-9" arrows="true" responsive="vm.carouselData[group].breakpoints"
       variable-width="false" center-mode="{{vm.carouselData[group].centerMode}}"
-      slides-to-show="{{vm.carouselData[group].slidesToShow}}" slides-to-scroll="{{vm.carouselData[group].slidesToScroll}}"
+      slides-to-show="{{vm.carouselData[group].slidesToShow}}" dots="true"
+      slides-to-scroll="{{vm.carouselData[group].slidesToScroll}}"
       init-onload="true" data="vm.carouselData" autoplay="false" autoplay-speed="5000">
         <div ng-repeat="release in vm.carouselData[group].releasesArr" ng-class="vm.carouselData[group].centerMode ? 'slick-has-center' : 'slick-no-center'">
           <div class="well well-sm well-release" ng-class="release.released ? 'well-release-released' : 'well-release-prod'">

@@ -22,11 +22,11 @@
 }
 
 .slick-prev {
-  left: -3px;
+  left: 12px;
 }
 
 .slick-next {
-  right: 0;
+  right: 15px;;
 }
 
 .slick-prev:before,
@@ -74,7 +74,7 @@
   .well-release {
     height: 190px;
     margin: 5px auto 0;
-    max-width: 190px;
+    max-width: 232px;
   }
 }
 
@@ -88,6 +88,19 @@
     }
     @media all and (min-width: 1100px) {
       transform: scale(1);
+    }
+  }
+}
+
+.slick-dots {
+  position: inherit;
+  bottom: inherit;
+
+  li {
+    margin: 0;
+
+    button {
+      padding: 0;
     }
   }
 }

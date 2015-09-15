@@ -717,42 +717,19 @@ module.exports = function(app) {
     var stream = fs.createWriteStream(path.join(__dirname, '/', randName + '.txt'));
 
     DataRelease
-      .find({
-        _id: {
-          $in: ids
-        }
-      })
-      .populate([{
-        path: 'group',
-        model: 'Group'
-      }, {
-        path: 'messages.user',
-        model: 'User'
-      }, {
-        path: 'metadata.assay',
-        model: 'Assay'
-      }, {
-        path: 'metadata.cellLines',
-        model: 'CellLine'
-      }, {
-        path: 'metadata.perturbagens',
-        model: 'Perturbagen'
-      }, {
-        path: 'metadata.readouts',
-        model: 'Readout'
-      }, {
-        path: 'metadata.manipulatedGene',
-        model: 'Gene'
-      }, {
-        path: 'metadata.organism',
-        model: 'Organism'
-      }, {
-        path: 'metadata.relevantDisease',
-        model: 'Disease'
-      }, {
-        path: 'metadata.analysisTools',
-        model: 'Tool'
-      }])
+      .find({ _id: { $in: ids } })
+      .populate([
+        { path: 'group', model: 'Group' },
+        { path: 'messages.user', model: 'User' },
+        { path: 'metadata.assay', model: 'Assay' },
+        { path: 'metadata.cellLines', model: 'CellLine' },
+        { path: 'metadata.perturbagens', model: 'Perturbagen' },
+        { path: 'metadata.readouts', model: 'Readout' },
+        { path: 'metadata.manipulatedGene', model: 'Gene' },
+        { path: 'metadata.organism', model: 'Organism' },
+        { path: 'metadata.relevantDisease', model: 'Disease' },
+        { path: 'metadata.analysisTools', model: 'Tool' }
+      ])
       .lean()
       .exec(function(err, releases) {
         if (err) {

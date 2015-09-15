@@ -52,6 +52,7 @@ h1, h2, h3, h4, h5, h6 {
 #wrapper {
   min-height: 100%;
   position: relative;
+  padding-bottom: 40px;
 }
 
 .pointer, .nav, .dropdown-menu > li > a {
@@ -854,6 +855,7 @@ span.stat-num {
 .group-icon-upload {
   @extends .group-icon;
   max-width: 350px;
+  cursor: pointer;
 }
 
 .card-release {

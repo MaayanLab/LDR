@@ -43,15 +43,8 @@
                 var key = release.group.name;
                 vm.carouselData[key].releasesArr.push(release);
                 var rCount = vm.carouselData[key].releasesArr.length;
-                var centerMode = !!(rCount > 4);
+                var centerMode = !!(rCount > 3);
                 var breakpoints = [];
-                // var smBreakpoint = {
-                //   breakpoint: 768,
-                //   settings: {
-                //     slidesToShow: 1,
-                //     slidesToScroll: 1
-                //   }
-                // };
                 var lgBreakpoint = {
                   breakpoint: 1100,
                   settings: {
@@ -59,12 +52,7 @@
                     slidesToScroll: 1
                   }
                 };
-                var useSmBreakpoint = !!(rCount > 1);
-                var useLgBreakpoint = !!(rCount > 2);
-                // if (!!(rCount > 1)) {
-                //   breakpoints.push(smBreakpoint);
-                // }
-                if (!!(rCount > 2)) {
+                if (!!(rCount > 1)) {
                   breakpoints.push(lgBreakpoint);
                 }
                 var slidesToShow = centerMode ? 3 : rCount;
