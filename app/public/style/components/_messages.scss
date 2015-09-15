@@ -1,0 +1,93 @@
+.modal-content {
+  border-radius: 0;
+}
+
+.msg-modal-body {
+  position: relative;
+  padding: 5px;
+}
+
+.msg-label {
+  color: $color-primary;
+}
+
+.admin-msg-label {
+  @extend .msg-label;
+  color: $color-red;
+}
+
+.msg-panel {
+  background-color: #fff;
+  border: 1px solid $color-primary;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  .msg-panel-heading {
+    color: #fff;
+    background-color: $color-primary;
+    border-color: $color-primary;
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+}
+
+.message {
+  margin-bottom: 10px;
+  padding: 5px;
+  border-bottom: 1px dotted #B3A9A9;
+}
+
+#msg-close-btn {
+  float: right!important;
+  cursor: default;
+  border: 0;
+  background-color: transparent;
+  height: 0;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+  span {
+    cursor: pointer;
+    color: white;
+    top: -5px;
+    left: 10px;
+
+    &:hover {
+      color: $color-primary-light;
+    }
+  }
+}
+
+#msg-send-btn {
+  line-height: 1.7;
+}
+
+#msg-delete-btn {
+  cursor: default;
+  border: 0;
+  background-color: transparent;
+  height: 0;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+  span {
+    cursor: pointer;
+    color: darkgrey;
+    top: 1px;
+    left: 20px;
+
+    &:hover {
+      color: $color-primary-light;
+    }
+  }
+}
+
+.panel-body {
+  height: 300px;
+  overflow-y: scroll;
+}

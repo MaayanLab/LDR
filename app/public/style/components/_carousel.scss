@@ -4,6 +4,14 @@
     font-size: 12px;
   }
 
+  h4 {
+    margin-top: 24px;
+
+    @media all and (min-width: 768px) {
+      margin-top: 24px;
+    }
+  }
+
   .group-icon {
     height: 60px;
   }
@@ -26,7 +34,7 @@
 }
 
 .slick-next {
-  right: 15px;;
+  right: 15px;
 }
 
 .slick-prev:before,
@@ -52,8 +60,8 @@
     max-width: 230px;
 
     @media all and (min-width: 768px) {
-      margin: 0 auto;
       height: 190px;
+      margin: 0 auto;
       opacity: .7;
       transform: scale(.7);
       transition: all 300ms ease;
@@ -74,7 +82,7 @@
   .well-release {
     height: 190px;
     margin: 5px auto 0;
-    max-width: 232px;
+    max-width: 260px;
   }
 }
 
@@ -93,14 +101,18 @@
 }
 
 .slick-dots {
-  position: inherit;
   bottom: inherit;
+  position: inherit;
 
   li {
     margin: 0;
 
     button {
       padding: 0;
+    }
+
+    button:before {
+      font-size: 10px;
     }
   }
 }

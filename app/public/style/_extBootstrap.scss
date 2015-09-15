@@ -1,0 +1,69 @@
+.form-control {
+  border-radius: 0;
+}
+
+.pointer, .nav, .dropdown-menu > li > a {
+  cursor: pointer;
+}
+
+.btn-danger {
+  background-color: #b82c28;
+  border-color: #67201e;
+}
+
+.dropdown-menu {
+  border-radius: 0;
+}
+
+.btn {
+  border-radius: 0;
+  border: none;
+  &:hover,
+  &:active,
+  &:focus {
+    border: transparent;
+  }
+}
+
+.btn-danger {
+  background-color: $color-red;
+  outline: none;
+}
+
+.btn-success,
+.btn-primary {
+  background-color: $color-primary;
+  outline: none;
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: $color-primary-dark;
+    outline: none;
+  }
+}
+
+.btn-success[disabled] {
+  background-color: $color-primary;
+  outline: none;
+}
+
+.btn-info {
+  background-color: $color-yellow;
+  outline: none;
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: $color-yellow-dark;
+    outline: none;
+  }
+}
+
+.normal {
+  font-weight: normal;
+}
+
+.table > tbody > tr > td, .table > tbody > tr > th,
+.table > tfoot > tr > td, .table > tfoot > tr > th,
+.table > thead > tr > td, .table > thead > tr > th {
+  vertical-align: inherit;
+}

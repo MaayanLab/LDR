@@ -1,0 +1,45 @@
+.group-data, .meta-data {
+  border-top: 1px solid #eee;
+}
+
+.chart-container {
+  text-align: center;
+}
+
+span.stat-num {
+  color: $color-primary;
+}
+
+#create-group-tag {
+  margin-left: 12px;
+}
+
+.group {
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+.group-info {
+  min-width: 425px !important;
+}
+
+.group-about {
+  margin-top: 10px;
+}
+
+.group-icon {
+  background: no-repeat center;
+  background-size: contain;
+  height: 150px;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.group-icon-upload {
+  @extends .group-icon;
+  cursor: pointer;
+  max-width: 350px;
+}

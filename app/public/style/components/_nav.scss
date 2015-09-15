@@ -1,0 +1,133 @@
+
+.thin-navbar {
+  height: 24px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 25px;
+  text-align: right;
+  background: $color-primary;
+  border-bottom: 1px solid $color-primary-dark;
+  overflow: hidden;
+
+  a,
+  p {
+    display: inline-block;
+    line-height: 22px;
+    padding: 0 10px;
+    margin: 0;
+    color: white;
+    text-decoration: none;
+  }
+
+  a {
+
+    &:hover {
+      color: $color-primary-light;
+    }
+  }
+}
+
+.thin-navbar {
+}
+
+a#group-nav-icon {
+  height: 13px;
+  width: 19px;
+  background: url('../images/group-icon.png') no-repeat left top;
+  &:hover {
+    background-position: -19px 0;
+  }
+}
+
+.navbar-wrapper {
+  background-color: $color-gray-light;
+  border-bottom: 1px solid rgba(170, 170, 170, .55);
+  padding: 5px 15px 0;
+
+  a {
+    color: $color-primary;
+
+    &:focus {
+      color: $color-primary;
+    }
+
+    &:hover {
+      color: $color-primary-light;
+    }
+  }
+
+  h1 {
+    line-height: 50px;
+    margin: 0;
+
+    a {
+      font-size: 30px;
+
+      &:hover,
+      &:focus {
+        color: $color-primary;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .form-control {
+    border: none;
+    height: 32px;
+  }
+}
+
+.nav > li > a:focus,
+.nav > li > a:hover {
+  background: $color-gray-light;
+}
+
+.nav > li.dropdown.active.open > a,
+.nav > li.dropdown.open > a {
+  background: $color-gray-light;
+  border-color: white;
+}
+
+.nav-items {
+  display: inline-flex;
+  height: 100%;
+  margin-top: 5px;
+  vertical-align: middle;
+}
+
+.title-bar {
+  margin: 0 auto;
+  vertical-align: middle;
+}
+
+.errorMsg {
+  color: $color-primary;
+  cursor: default;
+  margin: 0;
+  padding: 15px;
+}
+
+.login-btn,
+.register-btn {
+  background: transparent;
+  border: 1px solid $color-gray-light;
+  border-radius: 5px;
+  color: $color-primary;
+
+  &:hover,
+  &:focus {
+    border: 1px solid $color-primary;
+    border-radius: 5px;
+    color: $color-primary;
+    text-decoration: none;
+  }
+}
+
+.login-btn {
+  margin-right: 5px;
+}
+
+#password-group {
+  padding-right: 5px;
+}

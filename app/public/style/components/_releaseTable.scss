@@ -1,0 +1,118 @@
+.meta-data {
+  display: inline-block;
+  width: 100%;
+}
+
+table.meta-data-table {
+  width: 90%;
+  float: right;
+  cursor: default;
+}
+
+h4.meta-header {
+  margin-top: 40px;
+}
+
+table.legend {
+  margin-top: 20px;
+}
+
+td.legend-color {
+  width: 150px;
+  height: 20px;
+  border: 1px solid black;
+}
+
+.legend-label {
+  line-height: 20px;
+  margin: 0;
+}
+
+.tr-selected, #selected {
+  background-color: $color-selected;
+}
+
+.tr-approved, #approved {
+  background-color: $color-approved;
+}
+
+.tr-released, #released {
+  background-color: $color-released;
+}
+
+.tr-needs-edit, #needs-edit {
+  background-color: $color-needs-edit;
+}
+
+.tr-awaiting-approval, #awaiting-approval {
+  background-color: $color-awaiting-approval;
+}
+
+div.btn-group > .tr-approved-btn,
+div.btn-group.open > .tr-approved-btn {
+  background-color: transparent;
+  &:hover, &:active, &:focus {
+    background-color: $color-approved-hover;
+  }
+}
+
+div.btn-group > .tr-awaiting-approval-btn {
+  background-color: transparent;
+  &:hover, &:active, &:focus {
+    background-color: $color-awaiting-approval-hover;
+  }
+}
+
+div.btn-group.open > .tr-approved-btn {
+  background-color: $color-approved-hover;
+}
+
+div.btn-group.open > .tr-awaiting-approval-btn {
+  background-color: $color-awaiting-approval-hover;
+}
+
+div.btn-group > .tr-released-btn,
+div.btn-group.open > .tr-released-btn {
+  background-color: transparent;
+  &:hover, &:active, &:focus {
+    background-color: $color-released-hover;
+  }
+}
+
+div.btn-group > .tr-needs-edit-btn {
+  background-color: transparent;
+  &:hover, &:active, &:focus {
+    background-color: $color-needs-edit-hover;
+  }
+}
+
+div.btn-group.open > .tr-released-btn {
+  background-color: $color-released-hover;
+}
+
+div.btn-group.open > .tr-needs-edit-btn {
+  background-color: $color-needs-edit-hover;
+}
+
+.release-details {
+  border-left: 2px solid #ccc;
+  border-right: 2px solid #ccc;
+}
+
+.assay-title {
+  margin: 20px 0;
+}
+
+.info-release-lvl {
+  text-transform: capitalize;
+}
+
+.release-table {
+  width: 95%;
+  margin: 0 auto;
+}
+
+#description {
+  min-height: 125px;
+  resize: vertical;
+}

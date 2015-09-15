@@ -1,0 +1,252 @@
+span.url-error-msg {
+  float: right;
+  line-height: 20px;
+}
+
+.form-div {
+  min-height: 110px;
+}
+
+.dataset-title, label.url-label {
+  float: left;
+}
+
+.dataset-error-msg {
+  float: right;
+  line-height: 35px;
+}
+
+.dataset-error-msg, .error-msg, span.url-error-msg {
+  color: $color-red;
+}
+
+.tab-content > .tab-pane, .pill-content > .pill-pane {
+  display: none;
+}
+
+.tab-content > .active, .pill-content > .active {
+  display: block;
+}
+
+.tab-content {
+  min-width: 75%;
+  float: left;
+}
+
+.tab-pane-data {
+  display: inline-block;
+}
+
+#metadataForm section {
+  padding: 20px 0;
+  border-bottom: 1px solid $color-gray-light;
+}
+
+.form-table-head, .form-table-data {
+  border-bottom: 2px solid #cccccc;
+}
+
+.form-table-item {
+  padding: 2px 5px;
+}
+
+.form-info-block {
+  float: right;
+  margin-top: 120px;
+  width: 45%;
+}
+
+.form-block {
+  padding-top: 40px;
+}
+
+.form-select {
+  cursor: default;
+  width: 90%;
+}
+
+button#form-reset {
+  float: left;
+}
+
+button#form-submit {
+  margin-left: 10px;
+}
+
+a#clear-btn {
+  top: 2px;
+}
+
+a.add-new-btn {
+  color: black;
+}
+
+a#add-new-btn-paragraph, a.clear-btn {
+  color: black;
+}
+
+a.add-new-btn:hover, a.clear-btn:hover {
+  text-decoration: none;
+  color: gray;
+}
+
+a#add-new-btn-paragraph:hover {
+  text-decoration: none;
+  color: black;
+  cursor: text;
+}
+
+p.input-group {
+  margin: 14px 0;
+}
+
+.input-group-btn {
+  padding-left: 1px;
+}
+
+.form-center {
+  width: 100%;
+  margin-top: 0;
+}
+
+.form-title {
+  margin-top: 20px;
+  float: left;
+}
+
+.form-count {
+  width: 45%;
+  margin-top: 20px;
+  float: left;
+  text-align: right;
+}
+
+.form-date {
+  width: 90%;
+  display: inline-block;
+}
+
+.post-button {
+  float: left;
+  text-align: right;
+  width: 90%;
+}
+
+tags-input {
+  width: 100% !important;
+  .autocomplete {
+    .suggestion-item.selected,
+    .suggestion-item.selected em {
+      color: #fff;
+      background-color: #286090;
+    }
+  }
+  .tags {
+
+    .tag-list {
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+
+      .tag-item {
+        display: inline-table;
+        background: #f1f1f1;
+        border-radius: 0;
+        font: 14px $font-family-primary;
+        line-height: 25px;
+        .remove-button {
+          text-decoration: none;
+        }
+        &.selected {
+          color: white;
+          background: $color-red;
+          border: 1px solid $color-red-dark;
+          .remove-button {
+            color: white;
+          }
+        }
+      }
+    }
+    .input {
+      font: 14px $font-family-primary;
+    }
+  }
+}
+
+.dataset-name {
+  position: relative;
+  -webkit-appearance: textfield;
+  overflow: hidden;
+  word-wrap: break-word;
+  cursor: text;
+  border: 1px solid rgb(169, 169, 169);
+  box-shadow: rgb(211, 211, 211) 1px 1px 1px 0 inset;
+  margin: 5px 0 0 0;
+  background-color: rgb(255, 255, 255);
+  width: 100% !important;
+  outline: 0;
+  padding: 7px;
+  float: left;
+  font: 14px $font-family-primary;
+
+  &:focus {
+    -webkit-box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+    -moz-box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+    box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+  }
+}
+
+textarea.experiment {
+  &:focus {
+    -webkit-box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+    -moz-box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+    box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+  }
+  -webkit-appearance: textfield;
+  overflow: hidden;
+  word-wrap: break-word;
+  cursor: text;
+  border: 1px solid rgb(169, 169, 169);
+  box-shadow: rgb(211, 211, 211) 1px 1px 1px 0 inset;
+  margin: 0;
+  min-height: 100px;
+  background-color: rgb(255, 255, 255);
+  width: 100% !important;
+  height: 100px;
+  outline: 0;
+  padding: 7px;
+  float: left;
+  font: 14px $font-family-primary;
+}
+
+#data-registration-form {
+  section {
+    border-top: 1px solid #eee;
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+  input {
+    width: 100%;
+  }
+  #submit {
+  }
+  label {
+    font-weight: normal;
+  }
+  #releaseDates,
+  #urls {
+    input {
+      border: 1px solid #a9a9a9;
+      box-shadow: 1px 1px 1px 0 #d3d3d3 inset;
+      height: 34px;
+      padding: 6px 12px;
+      &:focus {
+        outline: 0;
+        -webkit-box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+        -moz-box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+        box-shadow: 0 0 3px 1px rgba(5, 139, 242, .6);
+      }
+    }
+  }
+  padding-bottom: 20px;
+}

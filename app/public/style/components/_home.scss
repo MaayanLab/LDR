@@ -1,0 +1,43 @@
+.export {
+  margin-top: 20px;
+}
+
+.content {
+  margin: 20px auto;
+}
+
+.intro {
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.search-count {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 19px;
+}
+
+.headline-info {
+  font-weight: 400 !important;
+  span {
+    font-weight: 700 !important;
+    color: $color-primary;
+  }
+}
+
+.headline-info-margins {
+  @extend .headline-info;
+  margin: 0 0 20px 0;
+
+  span {
+    font-weight: 700 !important;
+    color: $color-primary;
+  }
+}
+
+.home-stats {
+
+  li {
+    padding: 0 12px;
+  }
+}
