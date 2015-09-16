@@ -1,16 +1,21 @@
 {
-    "folders":
-    [
-    {
-        "path": ".",
-        "file_exclude_patterns": [".gulp-cache", ".tern-port"],
-        "folder_exclude_patterns": [
-            ".idea",
-            "node_modules",
-            "vendor",
-            "dist",
-            "resources"
-        ]
-    }
-    ]
+	"folders":
+	[
+		{
+			"file_exclude_patterns":
+			[
+				".gulp-cache",
+				".tern-port"
+			],
+			"folder_exclude_patterns":
+			[
+				".idea",
+				"node_modules",
+				"vendor",
+				"dist",
+				"resources"
+			],
+			"path": "."
+		}
+	]
 }

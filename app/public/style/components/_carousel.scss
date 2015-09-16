@@ -1,3 +1,7 @@
+$track-height: 190px;
+$well-height: 170px;
+$inner-margin-top: ($track-height - $well-height) / 2;
+
 .ldr-carousel {
 
   p {
@@ -8,7 +12,7 @@
     margin-top: 24px;
 
     @media all and (min-width: 768px) {
-      margin-top: 24px;
+      margin-top: 0;
     }
   }
 
@@ -20,7 +24,7 @@
 .slick-slider,
 .slick-list,
 .slick-track {
-  height: 200px;
+  height: $track-height;
 }
 
 .slick-prev,
@@ -46,6 +50,16 @@
 .slick-list {
   background-color: $color-gray-light;
   border: 1px solid $color-gray;
+
+  .well-release {
+    height: $well-height;
+    margin: $inner-margin-top auto 0;
+    max-width: 230px;
+
+    @media all and (min-width: 1100px) {
+      max-width: 190px;
+    }
+  }
 }
 
 .slick-has-center {
@@ -55,19 +69,10 @@
   }
 
   .well-release {
-    height: 190px;
-    margin: 5px auto 0;
-    max-width: 230px;
-
     @media all and (min-width: 768px) {
-      height: 190px;
-      margin: 0 auto;
       opacity: .7;
       transform: scale(.7);
       transition: all 300ms ease;
-    }
-    @media all and (min-width: 1100px) {
-      max-width: 190px;
     }
   }
 }
@@ -77,12 +82,6 @@
   h6,
   p {
     font-size: 14px;
-  }
-
-  .well-release {
-    height: 190px;
-    margin: 5px auto 0;
-    max-width: 260px;
   }
 }
 
@@ -114,5 +113,14 @@
     button:before {
       font-size: 10px;
     }
+  }
+}
+
+.ngrs-range-slider {
+
+  .ngrs-join {
+
+    background-color: $color-primary;
+    background-image: linear-gradient($color-primary-light, $color-primary, $color-primary-dark);
   }
 }

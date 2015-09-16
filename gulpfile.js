@@ -139,7 +139,7 @@ gulp.task('vendorJs', function() {
   gulp.src([
     BOWER_DIRECTORY + 'jquery/dist/jquery.min.js',
     BOWER_DIRECTORY + 'jquery/dist/jquery.min.map',
-    BOWER_DIRECTORY + 'angular/angular.min.js',
+    BOWER_DIRECTORY + 'angular/angular.js',
     BOWER_DIRECTORY + 'angular/angular.min.js.map'
   ])
     .pipe(gulp.dest(BUILD_DIRECTORY));
@@ -256,14 +256,10 @@ gulp.task('sync', ['serve'], function(cb) {
   browserSync = require('browser-sync');
 
   browserSync({
+    browser: 'Google Chrome Canary',
+    https: false,
     logPrefix: 'LDR',
     notify: true,
-    // Run as an https by setting 'https: true'
-    // Note: this uses an unsigned certificate which on first access
-    //       will present a certificate warning in the browser.
-    https: false,
-    // Informs browser-sync to proxy our Express app which would run
-    // at the following location
     proxy: 'localhost:3001/ldr-dev/'
   }, cb);
 

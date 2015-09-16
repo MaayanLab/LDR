@@ -5,6 +5,7 @@
     'ldr.nav',
     'ldr.home',
     'ldr.bar',
+    'ldr.carousel',
     'ldr.group.home',
     'ldr.group.create',
     'ldr.group.settings',
@@ -18,7 +19,6 @@
     'ui.router',
     'ui.bootstrap',
     'ngTouch',
-    'slick',
     'angular-storage',
     'angular-jwt'
   ])

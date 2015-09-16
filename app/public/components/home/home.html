@@ -24,5 +24,8 @@
       placeholder="search releases" tabindex="1" autocomplete="off">
     <input type="submit" id="search-btn" ui-sref="search({q: vm.query})" />
   </form>
+  <h4 class="col-xs-12 text-center headline-info">
+    Some examples are: <a ui-sref="search({q: 'KINOMEscan'})">KINOMEscan</a>, <a ui-sref="search({q: 'Broad'})">Broad</a>
+  </h4>
 </div>
 <ldr-carousel result-promise="vm.appRelPromise"></ldr-carousel>
