@@ -3,7 +3,7 @@
 
   angular
     .module('ldr.carousel', [
-      'slick',
+      'slickCarousel',
       'ui-rangeSlider'
     ])
     .filter('monthName', monthName)
@@ -37,16 +37,21 @@
     /////////////////////////////////////////
 
     /* @ngInject */
-    function LDRCarouselController($scope, lodash) {
+    function LDRCarouselController($scope, $timeout, lodash) {
 
       var vm = this;
       vm.initCarousel = initCarousel;
       vm.carouselData = {};
       vm.slider = {
         disabled: false,
-        handleChange: function() {
+        handleUp: function() {
+          vm.loaded = false;
           rebuildCarousel();
+          vm.loaded = true;
           $scope.$apply();
+        },
+        handleDown: function() {
+          vm.loaded = false;
         },
         min: 0,
         max: 23,
@@ -55,7 +60,7 @@
       };
 
       // Need this to maintain proper order on homepage
-      var centerOrder = [
+      vm.centerOrder = [
         'Broad-LINCS-Transcriptomics',
         'HMS-LINCS',
         'NeuroLINCS',
@@ -65,7 +70,7 @@
       ];
 
       // Key-name: Center-declared Acronym
-      var centerMap = {
+      vm.centerMap = {
         'Broad-LINCS-Transcriptomics': 'BroadT LINCS',
         'HMS-LINCS': 'HMS LINCS',
         'NeuroLINCS': 'NeuroLINCS',
@@ -82,9 +87,9 @@
         return dates;
       }
 
-      function rebuildCarousel() {
-        vm.carouselData.doneLoading = false;
+      function rebuildCarousel(callback) {
         angular.forEach(vm.carouselData, function(obj, groupName) {
+          obj.slides = [];
           angular.forEach(obj.releasesArr, function(release) {
             var rCount = obj.releasesArr.length;
             var currMonth = release.releaseDates.upcoming.getMonth();
@@ -95,13 +100,7 @@
               release.hideInSlides = true;
               rCount--;
             } else {
-              release.hideInSlides = false;
-              console.log('Center: ' + groupName);
-              console.log('Release Count: ' + rCount);
-              console.log(release.datasetName);
-              console.log('Filter Index: ' + filterIndex);
-              console.log('Slider Min: ' + vm.slider.min);
-              console.log('Slider Max: ' + vm.slider.max);
+              obj.slides.push(release);
             }
             var breakpoints = [{
               breakpoint: 1200,
@@ -110,23 +109,21 @@
                 slidesToScroll: 1
               }
             }];
+
             var centerMode = !!(rCount > 4);
             var slidesToShow = centerMode ? 5 : rCount;
-            obj.centerMode = centerMode;
-            obj.slidesToShow = slidesToShow;
-            obj.slidesToScroll = slidesToShow;
-            obj.breakpoints = rCount > 1 ? breakpoints : [];
+            obj.slick.centerMode = centerMode;
+            obj.slick.slidesToShow = slidesToShow;
+            obj.slick.slidesToScroll = slidesToShow;
+            obj.slick.responsive = rCount > 1 ? breakpoints : [];
           });
         });
-        vm.carouselData.doneLoading = true;
       }
 
       function initCarousel() {
-        vm.carouselData.doneLoading = false;
+        vm.loaded = true;
         vm.resultPromise
           .success(function(releaseArray) {
-            vm.carouselData.centerMap = centerMap;
-            vm.carouselData.centerOrder = centerOrder;
             angular.forEach(releaseArray, function(release) {
               if (!release.released) {
                 return;
@@ -136,6 +133,7 @@
               var key = release.group.name;
               if (lodash.has(vm.carouselData, release.group.name)) {
                 vm.carouselData[key].releasesArr.push(release);
+                vm.carouselData[key].slides.push(release);
                 var rCount = vm.carouselData[key].releasesArr.length;
 
                 var breakpoints = [{
@@ -147,22 +145,26 @@
                 }];
                 var centerMode = !!(rCount > 4);
                 var slidesToShow = centerMode ? 5 : rCount;
-                vm.carouselData[key].centerMode = centerMode;
-                vm.carouselData[key].slidesToShow = slidesToShow;
-                vm.carouselData[key].slidesToScroll = slidesToShow;
-                vm.carouselData[key].breakpoints = rCount > 1 ? breakpoints : [];
+                vm.carouselData[key].slick.centerMode = centerMode;
+                vm.carouselData[key].slick.slidesToShow = slidesToShow;
+                vm.carouselData[key].slick.slidesToScroll = slidesToShow;
+                vm.carouselData[key].slick.responsive = rCount > 1 ? breakpoints : [];
               } else {
                 vm.carouselData[key] = {
-                  breakpoints: [],
-                  centerMode: false,
-                  slidesToShow: 1,
-                  slidesToScroll: 1,
+                  slick: {
+                    dots: true,
+                    arrows: true,
+                    responsive: [],
+                    centerMode: true,
+                    slidesToScroll: 1,
+                    slidesToShow: 1,
+                  },
+                  slides: [release],
                   releasesArr: [release]
                 };
               }
             });
           });
-        vm.carouselData.doneLoading = true;
       }
 
       initCarousel();

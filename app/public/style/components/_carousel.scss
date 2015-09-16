@@ -21,6 +21,12 @@ $inner-margin-top: ($track-height - $well-height) / 2;
   }
 }
 
+.slick-loading {
+  .slick-list {
+    background: url('ajax-loader.gif') center center no-repeat $color-gray-google;
+  }
+}
+
 .slick-slider,
 .slick-list,
 .slick-track {
@@ -31,6 +37,7 @@ $inner-margin-top: ($track-height - $well-height) / 2;
 .slick-next {
   height: 60px;
   width: 60px;
+  z-index: 10;
 }
 
 .slick-prev {
@@ -48,7 +55,7 @@ $inner-margin-top: ($track-height - $well-height) / 2;
 }
 
 .slick-list {
-  background-color: $color-gray-light;
+  background-color: $color-gray-google;
   border: 1px solid $color-gray;
 
   .well-release {
@@ -96,6 +103,13 @@ $inner-margin-top: ($track-height - $well-height) / 2;
     @media all and (min-width: 1100px) {
       transform: scale(1);
     }
+  }
+}
+
+.slick-slide {
+
+  &:focus {
+    outline: 0;
   }
 }
 

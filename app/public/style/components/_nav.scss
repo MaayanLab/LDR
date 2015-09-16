@@ -1,7 +1,6 @@
 
 .thin-navbar {
   height: 24px;
-  color: #fff;
   font-size: 14px;
   font-weight: 600;
   line-height: 25px;
@@ -16,7 +15,7 @@
     line-height: 22px;
     padding: 0 10px;
     margin: 0;
-    color: white;
+    color: $color-white;
     text-decoration: none;
   }
 
@@ -28,13 +27,11 @@
   }
 }
 
-.thin-navbar {
-}
-
-a#group-nav-icon {
+#group-nav-icon {
+  background: url('../images/group-icon.png') no-repeat left top;
   height: 13px;
   width: 19px;
-  background: url('../images/group-icon.png') no-repeat left top;
+
   &:hover {
     background-position: -19px 0;
   }
@@ -73,7 +70,7 @@ a#group-nav-icon {
   }
 
   .form-control {
-    border: none;
+    border: 0;
     height: 32px;
   }
 }
@@ -86,7 +83,7 @@ a#group-nav-icon {
 .nav > li.dropdown.active.open > a,
 .nav > li.dropdown.open > a {
   background: $color-gray-light;
-  border-color: white;
+  border-color: $color-white;
 }
 
 .nav-items {
