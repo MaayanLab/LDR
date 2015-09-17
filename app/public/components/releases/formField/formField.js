@@ -29,12 +29,16 @@
       bindToController: true
     };
 
-    function LDRFormFieldController() {
+    /* @ngInject */
+    function LDRFormFieldController(metadata) {
 
       var vm = this;
       vm.addNew = addNew;
 
       function addNew(newTag) {
+        if (!newTag.newField) {
+          return true;
+        }
         metadata
           .addNew(newTag, vm.name, vm.ngModel, vm.element)
           .then(function() {}, function() {

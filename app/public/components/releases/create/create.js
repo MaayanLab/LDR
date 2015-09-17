@@ -208,12 +208,12 @@
       .getOneRel($stateParams.id)
       .success(function(form) {
         formInit = angular.copy(form);
-        lodash.each(formInit.metadata, function(arr, key) {
+        angular.forEach(formInit.metadata, function(arr, key) {
           formInit.metadata[key] = lodash.map(arr, function(obj) {
             return obj._id;
           });
         });
-        lodash.each(formInit.releaseDates, function(str, key) {
+        angular.forEach(formInit.releaseDates, function(str, key) {
           formInit.releaseDates[key] =
             (str === null || str === '') ? null : new Date(str);
         });
@@ -223,19 +223,19 @@
         vm.form.description.model = form.description;
         vm.form.datasetName.model = form.datasetName;
 
-        lodash.each(vm.form.releaseDates, function(obj) {
+        angular.forEach(vm.form.releaseDates, function(obj) {
           var date = form.releaseDates['level' + obj.level];
           obj.model = (date === null || date === '') ?
             null : new Date(date);
         });
 
-        lodash.each(vm.form.urls, function(obj) {
+        angular.forEach(vm.form.urls, function(obj) {
           obj.model = form.urls[obj.name];
         });
 
-        lodash.each(vm.form.metadata, function(obj) {
+        angular.forEach(vm.form.metadata, function(obj) {
           var newData = form.metadata[obj.name];
-          lodash.each(newData, function(newObj) {
+          angular.forEach(newData, function(newObj) {
             if (newObj.name) {
               newObj.text = formatText(newObj.name);
             }
@@ -274,17 +274,19 @@
     }
 
     function cancel() {
-      $state.go('releasesOverview');
+      $state.go('releasesOverview', { groupId: vm.user.group._id });
     }
 
     function validate() {
-      lodash.each(vm.form.metadata, function(obj) {
+      angular.forEach(vm.form.metadata, function(obj) {
         if (obj.isRequired && !obj.model.length) {
+          console.log(obj);
           vm.showErrors = true;
         }
       });
-      lodash.each(vm.form.releaseDates, function(obj) {
+      angular.forEach(vm.form.releaseDates, function(obj) {
         if (obj.isRequired && obj.model === '') {
+          console.log(obj);
           vm.showErrors = true;
         }
       });
@@ -299,14 +301,20 @@
         datasetName: vm.form.datasetName.model,
         user: vm.user._id,
         group: vm.user.group._id,
-        did: vm.form.did,
         description: vm.form.description.model,
         metadata: {},
         releaseDates: {},
         urls: {}
       };
 
-      lodash.each(vm.form.metadata, function(obj) {
+      if (vm.form._id) {
+        form._id = vm.form._id;
+      }
+      if (vm.form.did) {
+        form.did = vm.form.did;
+      }
+
+      angular.forEach(vm.form.metadata, function(obj) {
         form.metadata[obj.name] = lodash.map(obj.model, function(modObj) {
           if (Object.keys(modObj).length === 1 && modObj.text) {
             return modObj.text;
@@ -316,24 +324,22 @@
           }
         });
       });
-      lodash.each(vm.form.releaseDates, function(obj) {
+      angular.forEach(vm.form.releaseDates, function(obj) {
         form.releaseDates['level' + obj.level] =
           lodash.isUndefined(obj.model) ? '' : obj.model;
       });
-      lodash.each(vm.form.urls, function(obj) {
+      angular.forEach(vm.form.urls, function(obj) {
         form.urls[obj.name] = lodash.isUndefined(obj.model) ?
           '' : obj.model;
-        console.log(obj.model);
       });
 
-      console.log(form);
       releases
         .postRel(form)
         .error(function(err) {
           throw new Error(err);
         })
         .success(function() {
-          $state.go('releasesOverview');
+          $state.go('releasesOverview', { groupId: vm.user.group._id });
         });
     }
   }

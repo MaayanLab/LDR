@@ -30,7 +30,7 @@
   <div class="col-sm-12">
     <h5>Release Dates</h5>
     <ul class="list-inline">
-      <li ng-repeat="(level,date) in form.releaseDates" ng-if="date !== '' && level !== 'upcoming'">
+      <li ng-repeat="(level,date) in form.releaseDates" ng-if="!!date && level !== 'upcoming'">
         <strong class="info-release-lvl">
           {{level}}:
         </strong>

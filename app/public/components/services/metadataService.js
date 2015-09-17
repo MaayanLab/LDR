@@ -21,9 +21,6 @@
     ///////////////////
 
     function addNew(newTag, name, model, element) {
-      if (!newTag.newField) {
-        return true;
-      }
       return $modal
         .open({
           templateUrl: 'partials/addModal.html',

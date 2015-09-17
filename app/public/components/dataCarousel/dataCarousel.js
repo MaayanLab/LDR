@@ -106,7 +106,7 @@
               }
             }];
             var slideCount = obj.slides.length;
-            var centerMode = !!(slideCount > 5);
+            var centerMode = (slideCount > 5);
             var slidesToShow = centerMode ? 5 : slideCount;
             obj.slick.centerMode = centerMode;
             obj.slick.slidesToShow = slidesToShow;
@@ -139,7 +139,7 @@
                     slidesToScroll: 1
                   }
                 }];
-                var centerMode = !!(rCount > 5);
+                var centerMode = (rCount > 5);
                 var slidesToShow = centerMode ? 5 : rCount;
                 vm.carouselData[key].slick.centerMode = centerMode;
                 vm.carouselData[key].slick.slidesToShow = slidesToShow;

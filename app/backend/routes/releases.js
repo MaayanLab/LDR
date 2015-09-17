@@ -421,7 +421,7 @@ module.exports = function(app) {
     }
   );
 
-  // Releases endpoint to get 25 latest approved releases
+  // Releases endpoint to get latest approved releases
   app.get(baseUrl + '/api/releases/approved/', function(req, res) {
     DataRelease
       .find({
@@ -549,51 +549,102 @@ module.exports = function(app) {
       });
   });
 
-  var formatData = function(inputData) {
-    inputData.approved = true;
-    inputData.dateModified = new Date();
+  // Temporary solution to generate DID.
+  // Get first letter of first three words in dataset name
+  var generateDid = function(dataset, cb) {
 
-    _.each(inputData.releaseDates, function(date) {
+  };
+
+  var exists = function(input) {
+    return input !== '' && input !== null && !!input;
+  };
+
+  var formatDates = function(releaseDates) {
+    _.each(releaseDates, function(date) {
       if (date) {
         date = new Date(date);
+      } else {
+        date = '';
       }
       return date;
     });
-    inputData.releaseDates.upcoming = inputData.releaseDates.level1 !== '' ?
-      inputData.releaseDates.level1 : inputData.releaseDates.level2 !== '' ?
-      inputData.releaseDates.level2 : inputData.releaseDates.level3 !== '' ?
-      inputData.releaseDates.level3 : inputData.releaseDates.level4 !== '' ?
-      inputData.releaseDates.level4 : '';
-    inputData.releaseDates.upcoming = new Date(inputData.releaseDates.upcoming);
-    return inputData;
+
+    releaseDates.upcoming = exists(releaseDates.level1) ?
+      releaseDates.level1 : exists(releaseDates.level2) ?
+      releaseDates.level2 : exists(releaseDates.level3) ?
+      releaseDates.level3 : exists(releaseDates.level4) ?
+      releaseDates.level4 : '';
+    releaseDates.upcoming = new Date(releaseDates.upcoming);
+    return releaseDates;
+  };
+
+  var formatData = function(inputData, cb) {
+    DataRelease
+      .find({})
+      .count()
+      .exec(function(err, drCnt) {
+        if (err) {
+          console.log(err);
+          res.status(404).send('Number of releases could not be found');
+        }
+        Group
+          .findOne({_id: inputData.group })
+          .lean()
+          .exec(function(groupErr, group) {
+            if (groupErr) {
+              console.log(groupErr);
+              res.status(404).send('Release\'s group could not be found');
+            }
+            // Add one to the number of releases because this is being added
+            if (!inputData.did) {
+              drCnt++;
+              var did = 'LINCS_' + group.name + '_';
+              var wordArr = inputData.datasetName.split(' ');
+              var dNameAbbr = '';
+              wordArr.forEach(function(word) {
+                dNameAbbr += word[0].toUpperCase();
+              });
+              var drStr = drCnt < 100 ? '0' + drCnt.toString() : drCnt.toString();
+              did += dNameAbbr.substr(0, 3) + '_' + drStr;
+              inputData.did = did;
+            }
+            inputData.approved = true;
+            inputData.dateModified = new Date();
+            inputData.releaseDates = formatDates(inputData.releaseDates);
+            cb(inputData);
+          });
+      });
   };
 
   // Post release without id and save it to the database
   app.post(baseUrl + '/api/secure/releases/form/', function(req, res) {
-    var inputData = formatData(req.body);
-
-    DataRelease.create(inputData, function(err, form) {
-      if (err) {
-        console.log(err);
-        res.status(400).send('A ' + err.name + ' occurred while ' +
-          'saving JSON to database. Please confirm that your JSON ' +
-          'is formatted properly. Visit http://www.jsonlint.com ' +
-          'to confirm.');
-      } else {
-        res.status(200).send(form);
-      }
+    var inputData = formatData(req.body, function(inputData) {
+      DataRelease.create(inputData, function(err, form) {
+        if (err) {
+          console.log(err);
+          res.status(400).send('A ' + err.name + ' occurred while ' +
+            'saving JSON to database. Please confirm that your JSON ' +
+            'is formatted properly. Visit http://www.jsonlint.com ' +
+            'to confirm.');
+        } else {
+          res.status(200).send(form);
+        }
+      });
     });
   });
 
   // POST release with id, find it and update.
   app.post(baseUrl + '/api/secure/releases/form/:id', function(req, res) {
     var inputData = formatData(req.body);
+    console.log(inputData);
 
-    // Check if released. If so, do not set approved to false.
-    // Should never be released here.
-    if (!inputData.released) {
-      inputData.approved = false;
-    }
+    // Updated so now everything is approved. May revert back
+    //
+    // // Check if released. If so, do not set approved to false.
+    // // Should never be released here.
+    // if (!inputData.released) {
+    //   inputData.approved = false;
+    // }
     inputData.needsEdit = false;
     var query = {
       _id: req.params.id
