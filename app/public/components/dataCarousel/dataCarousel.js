@@ -87,19 +87,15 @@
         return dates;
       }
 
-      function rebuildCarousel(callback) {
+      function rebuildCarousel() {
         angular.forEach(vm.carouselData, function(obj, groupName) {
           obj.slides = [];
           angular.forEach(obj.releasesArr, function(release) {
-            var rCount = obj.releasesArr.length;
             var currMonth = release.releaseDates.upcoming.getMonth();
             var currYear = release.releaseDates.upcoming.getFullYear();
             var filterIndex = (currYear === 2016) ? currMonth + 12 :
               (currYear === 2015) ? currMonth : -1;
-            if (filterIndex < vm.slider.min || filterIndex > vm.slider.max) {
-              release.hideInSlides = true;
-              rCount--;
-            } else {
+            if (filterIndex > vm.slider.min && filterIndex < vm.slider.max) {
               obj.slides.push(release);
             }
             var breakpoints = [{
@@ -109,13 +105,13 @@
                 slidesToScroll: 1
               }
             }];
-
-            var centerMode = !!(rCount > 4);
-            var slidesToShow = centerMode ? 5 : rCount;
+            var slideCount = obj.slides.length;
+            var centerMode = !!(slideCount > 5);
+            var slidesToShow = centerMode ? 5 : slideCount;
             obj.slick.centerMode = centerMode;
             obj.slick.slidesToShow = slidesToShow;
-            obj.slick.slidesToScroll = slidesToShow;
-            obj.slick.responsive = rCount > 1 ? breakpoints : [];
+            obj.slick.slidesToScroll = 1;
+            obj.slick.responsive = slideCount > 1 ? breakpoints : [];
           });
         });
       }
@@ -143,19 +139,19 @@
                     slidesToScroll: 1
                   }
                 }];
-                var centerMode = !!(rCount > 4);
+                var centerMode = !!(rCount > 5);
                 var slidesToShow = centerMode ? 5 : rCount;
                 vm.carouselData[key].slick.centerMode = centerMode;
                 vm.carouselData[key].slick.slidesToShow = slidesToShow;
-                vm.carouselData[key].slick.slidesToScroll = slidesToShow;
+                vm.carouselData[key].slick.slidesToScroll = 1;
                 vm.carouselData[key].slick.responsive = rCount > 1 ? breakpoints : [];
               } else {
                 vm.carouselData[key] = {
                   slick: {
-                    dots: true,
+                    dots: false,
                     arrows: true,
                     responsive: [],
-                    centerMode: true,
+                    centerMode: false,
                     slidesToScroll: 1,
                     slidesToShow: 1,
                   },
