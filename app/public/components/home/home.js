@@ -31,8 +31,16 @@
   function LDRHomeController($scope, events, releases, metadata) {
 
     var vm = this;
+    vm.firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
     vm.query = '';
     vm.appRelPromise = releases.getApprovedRel();
+
+    function getReleases() {
+      vm.appRelPromise
+        .success(function(releases) {
+          vm.releases = releases;
+        });
+    }
 
     vm.summary = {
       //Users: 0,
@@ -80,5 +88,6 @@
     }
 
     getCounts();
+    getReleases();
   }
 })();
