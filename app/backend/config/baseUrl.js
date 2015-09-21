@@ -1,3 +1,3 @@
 module.exports = {
-  'baseUrl': '/ldr-dev'
+  'baseUrl': '/LDR'
 };
