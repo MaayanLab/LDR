@@ -46,7 +46,7 @@
           rebuildCarousel();
           $timeout(function() {
             scope.loaded = true;
-          }, 1500);
+          });
           scope.$apply();
         },
         handleDown: function() {
@@ -159,7 +159,7 @@
             });
             $timeout(function() {
               scope.loaded = true;
-            }, 1500);
+            });
           });
       }
 
