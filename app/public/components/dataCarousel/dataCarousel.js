@@ -22,36 +22,35 @@
     };
   }
 
-  function ldrCarousel() {
+  function ldrCarousel($timeout, lodash) {
     return {
-      bindToController: true,
-      controller: LDRCarouselController,
-      controllerAs: 'vm',
       restrict: 'E',
       scope: {
         resultPromise: '='
       },
-      templateUrl: 'partials/dataCarousel.html'
+      templateUrl: 'partials/dataCarousel.html',
+      link: ldrCarouselLink,
     };
 
     /////////////////////////////////////////
 
     /* @ngInject */
-    function LDRCarouselController($scope, $timeout, lodash) {
+    function ldrCarouselLink(scope) {
 
-      var vm = this;
-      vm.initCarousel = initCarousel;
-      vm.carouselData = {};
-      vm.slider = {
+      scope.initCarousel = initCarousel;
+      scope.carouselData = {};
+      scope.slider = {
         disabled: false,
         handleUp: function() {
-          vm.loaded = false;
+          scope.loaded = false;
           rebuildCarousel();
-          vm.loaded = true;
-          $scope.$apply();
+          $timeout(function() {
+            scope.loaded = true;
+          }, 1500);
+          scope.$apply();
         },
         handleDown: function() {
-          vm.loaded = false;
+          scope.loaded = false;
         },
         min: 0,
         max: 23,
@@ -60,17 +59,17 @@
       };
 
       // Need this to maintain proper order on homepage
-      vm.centerOrder = [
+      scope.centerOrder = [
         'Broad-LINCS-Transcriptomics',
         'HMS-LINCS',
         'NeuroLINCS',
-        // 'MEP-LINCS',
+        'MEP-LINCS',
         'Broad-LINCS-PCCSE',
         'DTOXS'
       ];
 
       // Key-name: Center-declared Acronym
-      vm.centerMap = {
+      scope.centerMap = {
         'Broad-LINCS-Transcriptomics': 'BroadT LINCS',
         'HMS-LINCS': 'HMS LINCS',
         'NeuroLINCS': 'NeuroLINCS',
@@ -88,14 +87,14 @@
       }
 
       function rebuildCarousel() {
-        angular.forEach(vm.carouselData, function(obj, groupName) {
+        angular.forEach(scope.carouselData, function(obj, groupName) {
           obj.slides = [];
           angular.forEach(obj.releasesArr, function(release) {
             var currMonth = release.releaseDates.upcoming.getMonth();
             var currYear = release.releaseDates.upcoming.getFullYear();
             var filterIndex = (currYear === 2016) ? currMonth + 12 :
               (currYear === 2015) ? currMonth : -1;
-            if (filterIndex > vm.slider.min && filterIndex < vm.slider.max) {
+            if (filterIndex > scope.slider.min && filterIndex < scope.slider.max) {
               obj.slides.push(release);
             }
             var breakpoints = [{
@@ -117,17 +116,17 @@
       }
 
       function initCarousel() {
-        vm.loaded = false;
-        vm.resultPromise
+        scope.loaded = false;
+        scope.resultPromise
           .success(function(releaseArray) {
             angular.forEach(releaseArray, function(release) {
               // Convert strings to actual date objects
               release.releaseDates = strToDates(release.releaseDates);
               var key = release.group.name;
-              if (lodash.has(vm.carouselData, release.group.name)) {
-                vm.carouselData[key].releasesArr.push(release);
-                vm.carouselData[key].slides.push(release);
-                var rCount = vm.carouselData[key].releasesArr.length;
+              if (lodash.has(scope.carouselData, release.group.name)) {
+                scope.carouselData[key].releasesArr.push(release);
+                scope.carouselData[key].slides.push(release);
+                var rCount = scope.carouselData[key].releasesArr.length;
 
                 var breakpoints = [{
                   breakpoint: 1200,
@@ -138,12 +137,12 @@
                 }];
                 var centerMode = (rCount > 5);
                 var slidesToShow = centerMode ? 5 : rCount;
-                vm.carouselData[key].slick.centerMode = centerMode;
-                vm.carouselData[key].slick.slidesToShow = slidesToShow;
-                vm.carouselData[key].slick.slidesToScroll = 1;
-                vm.carouselData[key].slick.responsive = rCount > 1 ? breakpoints : [];
+                scope.carouselData[key].slick.centerMode = centerMode;
+                scope.carouselData[key].slick.slidesToShow = slidesToShow;
+                scope.carouselData[key].slick.slidesToScroll = 1;
+                scope.carouselData[key].slick.responsive = rCount > 1 ? breakpoints : [];
               } else {
-                vm.carouselData[key] = {
+                scope.carouselData[key] = {
                   slick: {
                     dots: false,
                     arrows: true,
@@ -151,13 +150,16 @@
                     centerMode: false,
                     slidesToScroll: 1,
                     slidesToShow: 1,
+                    event: {}
                   },
                   slides: [release],
                   releasesArr: [release]
                 };
               }
             });
-            vm.loaded = true;
+            $timeout(function() {
+              scope.loaded = true;
+            }, 1500);
           });
       }
 
