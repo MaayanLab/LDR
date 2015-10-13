@@ -167,7 +167,7 @@ module.exports = function(app) {
         _id: id
       };
       sample
-        .find(query)
+        .findOne(query)
         .lean()
         .exec(function(err, results) {
           if (err) {

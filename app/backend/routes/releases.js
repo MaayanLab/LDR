@@ -23,62 +23,31 @@ module.exports = function(app) {
     //    id found in step 1.
     // 3. Find releases matching query.
     Group
-      .find({
-        name: new RegExp(query, 'i')
-      })
+      .find({ name: new RegExp(query, 'i') })
       .lean()
       .exec(function(err, groups) {
         if (err) {
-          res.status(500).send(
-            'There was an error searching for releases.'
-          );
+          res.status(500).send('There was an error searching for releases.');
         }
 
         // _.map() and _.pluck do not work for mongoose arrays
         var ids = [];
-        _.each(groups, function(obj) {
-          ids.push(obj._id);
-        });
+        _.each(groups, function(obj) { ids.push(obj._id); });
         DataRelease
-          .find({
-            group: {
-              $in: ids
-            }
-          })
-          .sort({
-            dateModified: -1
-          })
-          .populate([{
-            path: 'group',
-            model: 'Group'
-          }, {
-            path: 'messages.user',
-            model: 'User'
-          }, {
-            path: 'metadata.assay',
-            model: 'Assay'
-          }, {
-            path: 'metadata.cellLines',
-            model: 'CellLine'
-          }, {
-            path: 'metadata.perturbagens',
-            model: 'Perturbagen'
-          }, {
-            path: 'metadata.readouts',
-            model: 'Readout'
-          }, {
-            path: 'metadata.manipulatedGene',
-            model: 'Gene'
-          }, {
-            path: 'metadata.organism',
-            model: 'Organism'
-          }, {
-            path: 'metadata.relevantDisease',
-            model: 'Disease'
-          }, {
-            path: 'metadata.analysisTools',
-            model: 'Tool'
-          }])
+          .find({ group: { $in: ids } })
+          .sort({ dateModified: -1 })
+          .populate([
+            { path: 'group', model: 'Group' },
+            { path: 'messages.user', model: 'User' },
+            { path: 'metadata.assay', model: 'Assay' },
+            { path: 'metadata.cellLines', model: 'CellLine' },
+            { path: 'metadata.perturbagens', model: 'Perturbagen' },
+            { path: 'metadata.readouts', model: 'Readout' },
+            { path: 'metadata.manipulatedGene', model: 'Gene' },
+            { path: 'metadata.organism', model: 'Organism' },
+            { path: 'metadata.relevantDisease', model: 'Disease' },
+            { path: 'metadata.analysisTools', model: 'Tool' }
+          ])
           .lean()
           .exec(function(drgErr, drgResults) {
             if (drgErr) {
@@ -87,47 +56,23 @@ module.exports = function(app) {
             }
 
             DataRelease
-              .find({
-                $or: [{
-                  datasetName: new RegExp(query, 'i')
-                }, {
-                  'assay.name': new RegExp(query, 'i')
-                }]
-              })
-              .sort({
-                dateModified: -1
-              })
-              .populate([{
-                path: 'group',
-                model: 'Group'
-              }, {
-                path: 'messages.user',
-                model: 'User'
-              }, {
-                path: 'metadata.assay',
-                model: 'Assay'
-              }, {
-                path: 'metadata.cellLines',
-                model: 'CellLine'
-              }, {
-                path: 'metadata.perturbagens',
-                model: 'Perturbagen'
-              }, {
-                path: 'metadata.readouts',
-                model: 'Readout'
-              }, {
-                path: 'metadata.manipulatedGene',
-                model: 'Gene'
-              }, {
-                path: 'metadata.organism',
-                model: 'Organism'
-              }, {
-                path: 'metadata.relevantDisease',
-                model: 'Disease'
-              }, {
-                path: 'metadata.analysisTools',
-                model: 'Tool'
-              }])
+              .find({ $or: [
+                  { datasetName: new RegExp(query, 'i') },
+                  { 'assay.name': new RegExp(query, 'i') }
+              ]})
+              .sort({ dateModified: -1 })
+              .populate([
+                { path: 'group', model: 'Group' },
+                { path: 'messages.user', model: 'User' },
+                { path: 'metadata.assay', model: 'Assay' },
+                { path: 'metadata.cellLines', model: 'CellLine' },
+                { path: 'metadata.perturbagens', model: 'Perturbagen' },
+                { path: 'metadata.readouts', model: 'Readout' },
+                { path: 'metadata.manipulatedGene', model: 'Gene' },
+                { path: 'metadata.organism', model: 'Organism' },
+                { path: 'metadata.relevantDisease', model: 'Disease' },
+                { path: 'metadata.analysisTools', model: 'Tool' }
+              ])
               .lean()
               .exec(function(resultErr, results) {
                 if (resultErr) {
