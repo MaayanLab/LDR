@@ -280,7 +280,7 @@ gulp.task('sync', ['serve'], function(cb) {
     https: false,
     logPrefix: 'LDR',
     notify: true,
-    proxy: 'localhost:3001/LDR/'
+    proxy: 'localhost:3001/ldr-dev/'
   }, cb);
 
   process.on('exit', function() {
