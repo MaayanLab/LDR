@@ -1,6 +1,6 @@
 {
   "name": "LINCSDatasetRegistry",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "The homepage for LINCS meta-data forms and display.",
   "main": "server.js",
   "private": "true",
@@ -60,6 +60,7 @@
     "karma-sinon-chai": "^0.3.0",
     "karma-sourcemap-loader": "^0.3.4",
     "main-bower-files": "^2.7.0",
+    "minimist": "^1.2.0",
     "mocha": "^2.2.4",
     "object-assign": "^4.0.1",
     "run-sequence": "^1.1.0",

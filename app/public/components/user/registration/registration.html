@@ -41,7 +41,7 @@
         </p>
         <input id="password" type="password" name="password"
                class="form-control" ng-model="vm.user.password"
-               password-strength="user.password" required/>
+               password-strength="vm.user.password" required/>
         <span class="help-inline error-msg"
               data-ng-show='registerForm.password.$dirty && !passwordIsValid'
               data-ng-class="medium">
@@ -53,7 +53,7 @@
         <input id="passwordConfirm" type="password"
                ng-model="vm.user.passwordConfirm"
                name="passwordConfirm" class="form-control"
-               compare-password-to="user.password" required/>
+               compare-password-to="vm.user.password" required/>
         <span class="help-inline error-msg"
               data-ng-show="registerForm.passwordConfirm.$error.comparePasswordTo">
             Passwords do not match!
@@ -63,7 +63,7 @@
         <label>Group*</label>
         <input type="text" ng-model="vm.user.group" name="group"
                placeholder="Please select a group"
-               typeahead="group as group.name for group in groups | filter:$viewValue | limitTo:8"
+               typeahead="group as group.name for group in vm.groups | filter:$viewValue | limitTo:8"
                typeahead-editable="false" class="form-control">
         <i ng-show="loadingGroups" class="glyphicon glyphicon-refresh"></i>
 

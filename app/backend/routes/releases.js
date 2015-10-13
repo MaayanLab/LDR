@@ -144,8 +144,14 @@ module.exports = function(app) {
   });
 
   app.get(baseUrl + '/api/releases/filter', function(req, res) {
-    var dsName = req.query.dataset;
-    var cellLineName = req.query.cellLine;
+    var dsName;
+    var cellLineName;
+    if (req.query.dataset) {
+      dsName = new RegExp(req.query.dataset, 'i');
+    }
+    if (req.query.cellLine) {
+      cellLineName = new RegExp(req.query.cellLine, 'i');
+    }
     var cellLineIds = [];
     var perturbagenIds = [];
     if (req.query.perturbagens) {
@@ -171,7 +177,6 @@ module.exports = function(app) {
     }
 
     function findReleases() {
-      console.log(cellLineIds);
       var chain = DataRelease.find({});
       if (!_.isUndefined(dsName)) {
         chain = chain.where('abbr').equals(dsName);
@@ -552,7 +557,6 @@ module.exports = function(app) {
   // Temporary solution to generate DID.
   // Get first letter of first three words in dataset name
   var generateDid = function(dataset, cb) {
-
   };
 
   var exists = function(input) {
@@ -618,7 +622,7 @@ module.exports = function(app) {
 
   // Post release without id and save it to the database
   app.post(baseUrl + '/api/secure/releases/form/', function(req, res) {
-    var inputData = formatData(req.body, function(inputData) {
+    formatData(req.body, function(inputData) {
       DataRelease.create(inputData, function(err, form) {
         if (err) {
           console.log(err);
@@ -635,31 +639,31 @@ module.exports = function(app) {
 
   // POST release with id, find it and update.
   app.post(baseUrl + '/api/secure/releases/form/:id', function(req, res) {
-    var inputData = formatData(req.body);
-    console.log(inputData);
+    formatData(req.body, function(inputData) {
 
-    // Updated so now everything is approved. May revert back
-    //
-    // // Check if released. If so, do not set approved to false.
-    // // Should never be released here.
-    // if (!inputData.released) {
-    //   inputData.approved = false;
-    // }
-    inputData.needsEdit = false;
-    var query = {
-      _id: req.params.id
-    };
-    // Can't update _id field
-    delete inputData._id;
-    DataRelease.update(query, inputData, function(err, release) {
-      if (err) {
-        console.log(err);
-        res.status(400).send(
-          'There was an error updating entry with ' +
-          'id ' + query._id + '. Please try again');
-      } else {
-        res.status(202).send(release);
-      }
+      // Updated so now everything is approved. May revert back
+      //
+      // // Check if released. If so, do not set approved to false.
+      // // Should never be released here.
+      // if (!inputData.released) {
+      //   inputData.approved = false;
+      // }
+      inputData.needsEdit = false;
+      var query = {
+        _id: req.params.id
+      };
+      // Can't update _id field
+      delete inputData._id;
+      DataRelease.update(query, inputData, function(err, release) {
+        if (err) {
+          console.log(err);
+          res.status(400).send(
+            'There was an error updating entry with ' +
+            'id ' + query._id + '. Please try again');
+        } else {
+          res.status(202).send(release);
+        }
+      });
     });
   });
 
