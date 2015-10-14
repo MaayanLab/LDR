@@ -1,6 +1,6 @@
 {
   "name": "LINCSDatasetRegistry",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "The homepage for LINCS meta-data forms and display.",
   "main": "server.js",
   "private": "true",
