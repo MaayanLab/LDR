@@ -596,7 +596,7 @@ dataReleaseSchema.pre('save', function(next) {
       if (id === null) {
         next(new Error('An id in the ' + key + ' array was null!'));
       }
-    })
+    });
   });
 
   //if (!rel.did || rel.did === '' || rel.isNew) {

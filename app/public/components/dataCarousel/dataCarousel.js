@@ -120,6 +120,9 @@
         scope.resultPromise
           .success(function(releaseArray) {
             angular.forEach(releaseArray, function(release) {
+              if (!release.released) {
+                return;
+              }
               // Convert strings to actual date objects
               release.releaseDates = strToDates(release.releaseDates);
               var key = release.group.name;

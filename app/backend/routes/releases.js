@@ -319,6 +319,52 @@ module.exports = function(app) {
       });
   });
 
+  // Multiple releases endpoint for all releases
+  app.get(baseUrl + '/api/releases/released', function(req, res) {
+    DataRelease
+      .find({ released: true })
+      .populate([{
+        path: 'group',
+        model: 'Group'
+      }, {
+        path: 'messages.user',
+        model: 'User'
+      }, {
+        path: 'metadata.assay',
+        model: 'Assay'
+      }, {
+        path: 'metadata.cellLines',
+        model: 'CellLine'
+      }, {
+        path: 'metadata.perturbagens',
+        model: 'Perturbagen'
+      }, {
+        path: 'metadata.readouts',
+        model: 'Readout'
+      }, {
+        path: 'metadata.manipulatedGene',
+        model: 'Gene'
+      }, {
+        path: 'metadata.organism',
+        model: 'Organism'
+      }, {
+        path: 'metadata.relevantDisease',
+        model: 'Disease'
+      }, {
+        path: 'metadata.analysisTools',
+        model: 'Tool'
+      }])
+      .lean()
+      .exec(function(err, allData) {
+        if (err) {
+          console.log(err);
+          res.status(404).send('Releases could not be found.');
+        } else {
+          res.status(200).send(allData);
+        }
+      });
+  });
+
   // Multiple releases endpoint for specific group or user
   app.get(baseUrl + '/api/releases/:type(group|user)/:id',
     function(req, res) {
