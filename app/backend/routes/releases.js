@@ -58,7 +58,8 @@ module.exports = function(app) {
             DataRelease
               .find({ $or: [
                   { datasetName: new RegExp(query, 'i') },
-                  { 'assay.name': new RegExp(query, 'i') }
+                  { 'assay.name': new RegExp(query, 'i') },
+                  { 'abbr': new RegExp(query, 'i') }
               ]})
               .sort({ dateModified: -1 })
               .populate([
