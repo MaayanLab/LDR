@@ -91,12 +91,12 @@ module.exports = function(app) {
 
   app.get(baseUrl + '/api/releases/filter', function(req, res) {
     var dsName;
-    var cellLineName;
+    var cellLineQuery;
     if (req.query.dataset) {
       dsName = new RegExp(req.query.dataset, 'i');
     }
     if (req.query.cellLine) {
-      cellLineName = new RegExp(req.query.cellLine, 'i');
+      cellLineQuery = new RegExp(req.query.cellLine, 'i');
     }
     var cellLineIds = [];
     var perturbagenIds = [];
@@ -106,9 +106,10 @@ module.exports = function(app) {
 
     function getCellLineId() {
       CellLine
-        .find({
-          'name': cellLineName
-        })
+        .find({ $or: [
+          { name: new RegExp(cellLineQuery, 'i') },
+          { abbr: new RegExp(cellLineQuery, 'i') }
+        ]})
         .lean()
         .exec(function(err, cLines) {
           if (err) {
@@ -181,7 +182,7 @@ module.exports = function(app) {
         });
     }
 
-    if (!_.isUndefined(cellLineName)) {
+    if (!_.isUndefined(cellLineQuery)) {
       getCellLineId();
     } else {
       findReleases();
