@@ -122,15 +122,19 @@ module.exports = function(app) {
     }
 
     function findReleases() {
+      var sendResults = false;
       var chain = DataRelease.find({});
       if (!_.isUndefined(dsName)) {
         chain = chain.where('abbr').equals(dsName);
+        sendResults = true;
       }
       if (cellLineIds.length > 0) {
         chain = chain.where('metadata.cellLines').in(cellLineIds);
+        sendResults = true;
       }
       if (perturbagenIds.length > 0) {
         chain = chain.where('metadata.perturbagens').in(perturbagenIds);
+        sendResults = true;
       }
       chain
         .populate([{
@@ -168,8 +172,10 @@ module.exports = function(app) {
           if (err) {
             console.log(err);
             res.status(404).send('Error message');
-          } else {
+          } else if (sendResults) {
             res.status(200).send(results);
+          } else {
+            res.status(240).send([]);
           }
         });
     }
