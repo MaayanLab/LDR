@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:0.12.7
 
 # Set SOURCE_DIR variable, make the directory, and set it as work directory
 ENV SOURCE_DIR /usr/src

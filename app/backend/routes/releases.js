@@ -107,8 +107,8 @@ module.exports = function(app) {
     function getCellLineId() {
       CellLine
         .find({ $or: [
-          { name: new RegExp(cellLineQuery, 'i') },
-          { abbr: new RegExp(cellLineQuery, 'i') }
+          { name: cellLineQuery },
+          { abbr: cellLineQuery }
         ]})
         .lean()
         .exec(function(err, cLines) {
