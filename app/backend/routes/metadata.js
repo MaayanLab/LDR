@@ -203,31 +203,6 @@ module.exports = function(app) {
               DataRelease
                 .find({})
                 .lean()
-                .populate([{
-                  path: 'metadata.assay',
-                  model: 'Assay'
-                }, {
-                  path: 'metadata.cellLines',
-                  model: 'CellLine'
-                }, {
-                  path: 'metadata.perturbagens',
-                  model: 'Perturbagen'
-                }, {
-                  path: 'metadata.readouts',
-                  model: 'Readout'
-                }, {
-                  path: 'metadata.manipulatedGene',
-                  model: 'Gene'
-                }, {
-                  path: 'metadata.organism',
-                  model: 'Organism'
-                }, {
-                  path: 'metadata.relevantDisease',
-                  model: 'Disease'
-                }, {
-                  path: 'metadata.analysisTools',
-                  model: 'Tool'
-                }])
                 .exec(function(dataErr, releases) {
                   if (dataErr) {
                     console.log(dataErr);
@@ -257,6 +232,69 @@ module.exports = function(app) {
                         .organisms, organisms));
                       genes = _.uniq(_.union(release.metadata
                         .genes, genes));
+                    });
+
+                    summary.dataReleases = releases.length;
+                    summary.assays = assays.length;
+                    summary.cellLines = cellLines.length;
+                    summary.perturbagens = perturbagens.length;
+                    summary.readouts = readouts.length;
+                    summary.diseases = diseases.length;
+                    summary.organisms = organisms.length;
+                    summary.genes = genes.length;
+
+                    res.status(200).send(summary);
+                  }
+                });
+            }
+          });
+      }
+    });
+  });
+
+  app.get(baseUrl + '/api/counts/released', function(req, res) {
+    var summary = {};
+    User.count(function(err, uCount) {
+      if (err) {
+        console.log(err);
+        res.status(404).send('An error occurred obtaining counts.');
+      } else {
+        summary.users = uCount;
+        Group
+          .where('name')
+          .ne('NIH')
+          .count(function(groupErr, gCount) {
+            if (groupErr) {
+              console.log(groupErr);
+              res.status(404).send(
+                'An error occurred obtaining counts.');
+            } else {
+              // Subtract 1 for the NIH
+              summary.groups = gCount;
+              DataRelease
+                .find({ released: true })
+                .lean()
+                .exec(function(dataErr, releases) {
+                  if (dataErr) {
+                    console.log(dataErr);
+                    res.status(404).send('An error occurred obtaining counts.');
+                  } else {
+                    var assays = [];
+                    var cellLines = [];
+                    var perturbagens = [];
+                    var readouts = [];
+                    var diseases = [];
+                    var genes = [];
+                    var organisms = [];
+
+                    _.each(releases, function(release) {
+                      assays = _.uniq(_.union(release.metadata.assay, assays));
+                      cellLines = _.uniq(_.union(release.metadata.cellLines, cellLines));
+                      perturbagens = _.uniq(_.union(release.metadata.perturbagens, perturbagens));
+                      readouts = _.uniq(_.union(release.metadata.readouts, readouts));
+                      diseases = _.uniq(_.union(release.metadata.diseases, diseases));
+                      organisms = _.uniq(_.union(release.metadata.organisms, organisms));
+                      genes = _.uniq(_.union(release.metadata.genes, genes));
                     });
 
                     summary.dataReleases = releases.length;
