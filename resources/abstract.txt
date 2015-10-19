@@ -1,0 +1,1 @@
+The process of releasing datasets for data in the NIH LINCS Program consists of submitting a Microsoft Excel workbook 
