@@ -14,7 +14,7 @@
   function metadata($modal, api) {
     return {
       addNew: addNew,
-      getCounts: getCounts,
+      getReleasedCounts: getReleasedCounts,
       autocomplete: autocomplete
     };
 
@@ -40,8 +40,8 @@
         .result;
     }
 
-    function getCounts() {
-      return api('counts').get();
+    function getReleasedCounts() {
+      return api('counts/released').get();
     }
 
     function autocomplete(endpoint, query) {

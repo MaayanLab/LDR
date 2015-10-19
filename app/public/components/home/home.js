@@ -71,7 +71,7 @@
     function getCounts() {
       var counts = {};
       metadata
-        .getCounts()
+        .getReleasedCounts()
         .success(function(countsObj) {
           counts = countsObj;
           //countUpTo('Users', 0, counts.Users, 1, 50);
