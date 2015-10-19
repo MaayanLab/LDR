@@ -1,5 +1,5 @@
 # LDR #
-LINCS Data Registry Webpage
+LINCS Dataset Registry Webpage
 
 ## Develop ##
 Note that gulp is required to build: `npm install -g gulp`
