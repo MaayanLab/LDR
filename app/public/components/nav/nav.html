@@ -1,11 +1,11 @@
 <div class="thin-navbar">
   <div class="container">
     <nav>
-      <p ng-show="vm.isLoggedIn">{{ vm.user.username }}</p>
-      <a ng-show="vm.isLoggedIn" ui-sref="userSettings({id: vm.user._id})" class="glyphicon glyphicon-cog"></a>
-      <a ng-show="vm.isLoggedIn && vm.isAdmitted" ui-sref="groupHome({id: vm.user.group._id})"
+      <p ng-show="isLoggedIn">{{ user.username }}</p>
+      <a ng-show="isLoggedIn" ui-sref="userSettings({id: user._id})" class="glyphicon glyphicon-cog"></a>
+      <a ng-show="isLoggedIn && isAdmitted" ui-sref="groupHome({id: user.group._id})"
       id="group-nav-icon" class="glyphicon"></a>
-      <a ng-show="vm.isLoggedIn" ng-click="vm.logout()" class="glyphicon glyphicon-log-out"></a>
+      <a ng-show="isLoggedIn" ng-click="logout()" class="glyphicon glyphicon-log-out"></a>
     </nav>
   </div>
 </div>
@@ -30,20 +30,20 @@
       <div>
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <h5 ng-show="!vm.isLoggedIn && showErr && showFailMessage" class="errorMsg">
+            <h5 ng-show="!isLoggedIn && showErr && showFailMessage" class="errorMsg">
               User/Password Incorrect.
             </h5>
           </li>
-          <li ng-show="vm.isLoggedInAdmin">
+          <li ng-show="isLoggedInAdmin">
             <a ui-sref="admin">Admin</a>
           </li>
-          <li dropdown ng-show="vm.isLoggedIn && !vm.isLoggedInAdmin">
+          <li dropdown ng-show="isLoggedIn && !isLoggedInAdmin">
             <a dropdown-toggle href="" data-toggle="dropdown" role="button" aria-expanded="false">
               Dataset Releases <span class="caret"></span>
             </a>
             <ul class="dropdown-menu" role="menu">
               <li>
-                <a ui-sref="releasesOverview({groupId: vm.user.group._id})">Overview</a>
+                <a ui-sref="releasesOverview({groupId: user.group._id})">Overview</a>
               </li>
               <li>
                 <a ui-sref="releasesCreate({id: ''})">Add New
@@ -51,19 +51,19 @@
               </li>
             </ul>
           </li>
-          <li ng-show="!vm.isLoggedIn">
+          <li ng-show="!isLoggedIn">
             <form name="loginForm" class="navbar-form navbar-right">
               <div class="form-group">
                 <input ng-focus="showErr=false" ng-blur="showErr=true" name="username" type="text"
-                class="form-control" ng-model="vm.user.username" id="username" placeholder="Username">
+                class="form-control" ng-model="user.username" id="username" placeholder="Username">
               </div>
               <div id="password-group" class="form-group">
                 <input ng-focus="showErr=false" ng-blur="showErr=true" name="password" type="password"
-                class="form-control" id="password" ng-model="vm.user.password" placeholder="Password">
+                class="form-control" id="password" ng-model="user.password" placeholder="Password">
               </div>
-              <button type="button" class="btn pull-right register-btn" ng-click="vm.register()">Register
+              <button type="button" class="btn pull-right register-btn" ng-click="register()">Register
               </button>
-              <button type="submit" class="btn pull-right login-btn" ng-click="vm.login()">Login
+              <button type="submit" class="btn pull-right login-btn" ng-click="login()">Login
               </button>
             </form>
           </li>

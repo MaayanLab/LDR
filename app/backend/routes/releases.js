@@ -563,6 +563,7 @@ module.exports = function(app) {
   };
 
   var formatDates = function(releaseDates) {
+    var releaseDates = releaseDates || {};
     _.each(releaseDates, function(date) {
       if (date) {
         date = new Date(date);
@@ -596,13 +597,18 @@ module.exports = function(app) {
           .exec(function(groupErr, group) {
             if (groupErr) {
               console.log(groupErr);
-              res.status(404).send('Release\'s group could not be found');
+              cb('Release\'s group could not be found', null);
             }
             // Add one to the number of releases because this is being added
-            if (!inputData.did) {
+            if (!inputData.did && !!group) {
               drCnt++;
               var did = 'LINCS_' + group.name + '_';
-              var wordArr = inputData.datasetName.split(' ');
+              var wordArr = [];
+              if (inputData.datasetName) {
+                wordArr = inputData.datasetName.split(' ');
+              } else {
+                cb('Release does not have a dataset name', null);
+              }
               var dNameAbbr = '';
               wordArr.forEach(function(word) {
                 dNameAbbr += word[0].toUpperCase();
@@ -610,18 +616,24 @@ module.exports = function(app) {
               var drStr = drCnt < 100 ? '0' + drCnt.toString() : drCnt.toString();
               did += dNameAbbr.substr(0, 3) + '_' + drStr;
               inputData.did = did;
+            } else if (!group) {
+              cb('Release does not have an associated group', null);
             }
             inputData.approved = true;
             inputData.dateModified = new Date();
             inputData.releaseDates = formatDates(inputData.releaseDates);
-            cb(inputData);
+            cb(null, inputData);
           });
       });
   };
 
   // Post release without id and save it to the database
   app.post(baseUrl + '/api/secure/releases/form/', function(req, res) {
-    formatData(req.body, function(inputData) {
+    console.log(req.body);
+    formatData(req.body, function(err, inputData) {
+      if (err) {
+        res.status(400).send(err);
+      }
       DataRelease.create(inputData, function(err, form) {
         if (err) {
           console.log(err);
@@ -638,7 +650,10 @@ module.exports = function(app) {
 
   // POST release with id, find it and update.
   app.post(baseUrl + '/api/secure/releases/form/:id', function(req, res) {
-    formatData(req.body, function(inputData) {
+    formatData(req.body, function(err, inputData) {
+      if (err) {
+        res.status(500).send(err);
+      }
 
       // Updated so now everything is approved. May revert back
       //

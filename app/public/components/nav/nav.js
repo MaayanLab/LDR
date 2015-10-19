@@ -5,63 +5,59 @@
     .module('ldr.nav', [])
     .directive('ldrNav', ldrNav);
 
-  function ldrNav() {
+  /* @ngInject */
+  function ldrNav($http, $state, store) {
     return {
       restrict: 'E',
       templateUrl: 'partials/nav.html',
-      controller: LDRNavController,
-      controllerAs: 'vm',
-      bindToController: true
+      link: LDRNavLink
     };
 
     ///////////////////
 
-    /* @ngInject */
-    function LDRNavController($http, $state, store, jwtHelper) {
+    function LDRNavLink(scope, elem, attrs) {
 
-      var vm = this;
-      vm.user = getCurrentUser();
-      vm.showFailMessage = false;
-
-      vm.register = register;
-      vm.login = login;
-      vm.logout = logout;
-      vm.getCurrentUser = getCurrentUser;
-      vm.setCurrentUser = setCurrentUser;
+      scope.showFailMessage = false;
+      scope.register = register;
+      scope.login = login;
+      scope.logout = logout;
+      scope.getCurrentUser = getCurrentUser;
+      scope.setCurrentUser = setCurrentUser;
 
       function getCurrentUser() {
         var user;
-        var loggedIn = !!(store.get('jwt') && !jwtHelper.isTokenExpired(store.get('jwt')));
+        var loggedIn = (store.get('jwt') &&
+          !jwtHelper.isTokenExpired(store.get('jwt')));
         if (loggedIn) {
           user = store.get('currentUser');
-          vm.isLoggedIn = true;
-          vm.isLoggedInAdmin = user.admin;
-          vm.isAdmitted = user.admitted;
+          scope.isLoggedIn = true;
+          scope.isLoggedInAdmin = user.admin;
+          scope.isAdmitted = user.admitted;
         } else {
           user = {};
-          vm.isLoggedIn = false;
-          vm.isLoggedInAdmin = false;
-          vm.isAdmitted = false;
+          scope.isLoggedIn = false;
+          scope.isLoggedInAdmin = false;
+          scope.isAdmitted = false;
         }
         return user;
       }
 
       function setCurrentUser(user, token) {
-        vm.user = user;
+        scope.user = user;
         store.set('currentUser', user);
         if (token) {
           store.set('jwt', token);
         }
-        vm.isLoggedIn = true;
-        vm.isLoggedInAdmin = user.admin;
-        vm.isAdmitted = user.admitted;
+        scope.isLoggedIn = true;
+        scope.isLoggedInAdmin = user.admin;
+        scope.isAdmitted = user.admitted;
       }
 
       function register() {
-        vm.isLoggedIn = false;
-        vm.isLoggedInAdmin = false;
-        vm.isAdmitted = false;
-        vm.showFailMessage = false;
+        scope.isLoggedIn = false;
+        scope.isLoggedInAdmin = false;
+        scope.isAdmitted = false;
+        scope.showFailMessage = false;
         $state.go('userRegistration');
       }
 
@@ -69,7 +65,7 @@
         $http({
           url: 'login',
           method: 'POST',
-          data: user || vm.user
+          data: user || scope.user
         }).then(function(result) {
           if (result) {
             // No error: authentication OK
@@ -77,26 +73,26 @@
             setCurrentUser(result.data.user, result.data.id_token);
             $state.go('home');
           } else {
-            vm.showFailMessage = true;
+            scope.showFailMessage = true;
             // This will be removed for a better error notification
             alert('The username or password you entered was ' +
               'incorrect. Please try again.');
           }
         }, function() {
-          vm.showFailMessage = true;
-          // This will be removed for a better error notification
-          alert('The username or password you entered was ' +
-            'incorrect. Please try again.');
-        });
+            scope.showFailMessage = true;
+            // This will be removed for a better error notification
+            alert('The username or password you entered was ' +
+              'incorrect. Please try again.');
+          });
       }
 
       function logout() {
-        vm.isLoggedIn = false;
-        vm.isLoggedInAdmin = false;
-        vm.isAdmitted = false;
+        scope.isLoggedIn = false;
+        scope.isLoggedInAdmin = false;
+        scope.isAdmitted = false;
         store.remove('currentUser');
         store.remove('jwt');
-        vm.showFailMessage = false;
+        scope.showFailMessage = false;
         $state.go('home');
       }
 

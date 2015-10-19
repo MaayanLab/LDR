@@ -52,6 +52,7 @@ module.exports = function(app) {
           name: new RegExp(req.query.q, 'i')
         })
         .lean()
+        .limit(10)
         .exec(function(err, results) {
           if (err) {
             console.log(err);
