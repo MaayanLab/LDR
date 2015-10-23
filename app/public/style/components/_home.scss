@@ -41,8 +41,34 @@
 }
 
 .home-stats {
-
   li {
     padding: 0 12px;
   }
+}
+
+.home-table > thead > tr > th {
+  border-bottom: 0;
+}
+
+.rel-home-selected {
+  background-color: $color-primary-v-light;
+  border-left: 1px solid $color-primary-dark;
+
+  .home-expand-btn {
+    border-right: 1px solid $color-primary-dark;
+  }
+
+  td {
+    border-top: 1px solid $color-primary-dark !important;
+    border-bottom: 1px solid $color-primary-dark !important;
+  }
+}
+
+.home-expand,
+.home-expand td {
+  border: 1px solid $color-primary-dark;
+}
+
+.home-export {
+  float: right;
 }

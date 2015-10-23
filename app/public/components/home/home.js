@@ -28,22 +28,51 @@
   }
 
   /* @ngInject */
-  function LDRHomeController($scope, events, releases, metadata) {
+  function LDRHomeController($scope, store, events, releases, metadata, exportReleases) {
 
     var vm = this;
-    vm.firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+    // vm.firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
     vm.query = '';
-    vm.appRelPromise = releases.getApprovedRel();
+    vm.releases = [];
+    vm.sortType = ['released', 'accepted', 'datasetName'];
+    vm.sortReverse = false;
+    vm.allSelected = false;
+    vm.releasesLoaded = false;
+    vm.selectRel = selectRel;
+
+    vm.selectAll = selAll;
+    vm.unselectAll = unselAll;
+    vm.export = expRel;
+    vm.releases = releases;
+
+    function selectRel(release) {
+      release.selected = !release.selected;
+      return release;
+    }
+
+    function selAll() {
+      vm.allSelected = exportReleases.selectAll(vm.releases);
+    }
+
+    function unselAll() {
+      vm.allSelected = exportReleases.unselectAll(vm.releases);
+    }
+
+    function expRel() {
+      exportReleases.exportRel(vm.releases);
+    }
 
     function getReleases() {
-      vm.appRelPromise
+      releases.getReleasedRel()
         .success(function(releases) {
           vm.releases = releases;
+          // Call UnselectAll to initialize selected as false
+          unselAll();
+          vm.releasesLoaded = true;
         });
     }
 
     vm.summary = {
-      //Users: 0,
       Centers: 0,
       Assays: 0,
       'Cell lines': 0,
@@ -74,7 +103,6 @@
         .getReleasedCounts()
         .success(function(countsObj) {
           counts = countsObj;
-          //countUpTo('Users', 0, counts.Users, 1, 50);
           countUpTo('Data Releases', 0, counts.dataReleases, 3, 50);
           countUpTo('Centers', 0, counts.groups, 1, 50);
           countUpTo('Assays', 0, counts.assays, 1, 50);

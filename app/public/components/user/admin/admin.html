@@ -55,74 +55,74 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat-start="form in vm.allForms | orderBy: vm.sortType : vm.sortReverse"
-      ng-click="form.selected = !form.selected;" ng-class="form.selected ? 'tr-selected' :
-            form.released ? 'tr-released' :
-            !form.approved && !form.needsEdit ? 'tr-awaiting-approval' :
-            form.approved && !form.needsEdit ? 'tr-approved' :
-            form.needsEdit ? 'tr-needs-edit' : ''" class="form-table-data text-center">
-        <td id="text-left">{{form.did}}</td>
+      <tr ng-repeat-start="rel in vm.allForms | orderBy: vm.sortType : vm.sortReverse"
+      ng-click="rel.selected = !rel.selected;" ng-class="rel.selected ? 'tr-selected' :
+            rel.released ? 'tr-released' :
+            !rel.approved && !rel.needsEdit ? 'tr-awaiting-approval' :
+            rel.approved && !rel.needsEdit ? 'tr-approved' :
+            rel.needsEdit ? 'tr-needs-edit' : ''" class="rel-table-data text-center">
+        <td id="text-left">{{rel.did}}</td>
         <td class="" id="status">
-          <span ng-if="form.released">
+          <span ng-if="rel.released">
             Released
           </span>
-          <span ng-if="form.approved && !form.released">
+          <span ng-if="rel.approved && !rel.released">
             Approved
           </span>
-          <span ng-if="!form.approved && !form.needsEdit">
+          <span ng-if="!rel.approved && !rel.needsEdit">
             Pending approval
           </span>
-          <span ng-if="!form.approved && form.needsEdit">
+          <span ng-if="!rel.approved && rel.needsEdit">
             Awaiting Changes
           </span>
         </td>
         <td class="col-sm-2 text-left" id="center">
-          <a ng-href="{{form.group.homepage}}">{{form.group.name}}</a>
+          <a ng-href="{{rel.group.homepage}}">{{rel.group.name}}</a>
         </td>
         <td class="text-left" id="assay-name">
-          {{form.datasetName}}
+          {{rel.datasetName}}
         </td>
         <!--<td class="col-sm-1" id="readout-count">
-                {{form.metadata.readouts.length}}
+                {{rel.metadata.readouts.length}}
             </td>-->
         <td class="col-sm-2" id="release-date">
-          {{form.releaseDates.upcoming | date:'MM-dd-yyyy' }}
+          {{rel.releaseDates.upcoming | date:'MM-dd-yyyy' }}
         </td>
         <td>
           <div class="btn-group" dropdown>
-            <a dropdown-toggle class="btn btn-default" ng-class="form.released ? 'tr-released-btn' :
-            !form.approved && !form.needsEdit ? 'tr-awaiting-approval-btn' :
-            form.approved && !form.needsEdit ? 'tr-approved-btn' :
-            form.needsEdit ? 'tr-needs-edit-btn' : ''" data-toggle="dropdown" ng-href="">
+            <a dropdown-toggle class="btn btn-default" ng-class="rel.released ? 'tr-released-btn' :
+            !rel.approved && !rel.needsEdit ? 'tr-awaiting-approval-btn' :
+            rel.approved && !rel.needsEdit ? 'tr-approved-btn' :
+            rel.needsEdit ? 'tr-needs-edit-btn' : ''" data-toggle="dropdown" ng-href="">
               Action
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
               <li>
-                <a ng-click="vm.viewMessages(form)">View Messages</a>
+                <a ng-click="vm.viewMessages(rel)">View Messages</a>
               </li>
-              <li ng-if="!form.approved">
-                <a ng-click="vm.approve(form)">Approve</a>
+              <li ng-if="!rel.approved">
+                <a ng-click="vm.approve(rel)">Approve</a>
               </li>
-              <li ng-if="form.approved">
-                <a ng-click="vm.unApprove(form)">Unapprove</a>
+              <li ng-if="rel.approved">
+                <a ng-click="vm.unApprove(rel)">Unapprove</a>
               </li>
-              <li ng-if="!form.approved">
-                <a ng-click="vm.returnRel(form)">Return To Center</a>
+              <li ng-if="!rel.approved">
+                <a ng-click="vm.returnRel(rel)">Return To Center</a>
               </li>
             </ul>
           </div>
         </td>
         <td>
-          <a ng-click="form.collapsed = !form.collapsed">
-            <span ng-if="!form.collapsed" class="glyphicon glyphicon-plus">
+          <a ng-click="rel.collapsed = !rel.collapsed">
+            <span ng-if="!rel.collapsed" class="glyphicon glyphicon-plus">
             </span>
-            <span ng-if="form.collapsed" class="glyphicon glyphicon-minus">
+            <span ng-if="rel.collapsed" class="glyphicon glyphicon-minus">
             </span>
           </a>
         </td>
       </tr>
-      <tr class="release-details animate" ng-show="form.collapsed">
+      <tr class="release-details animate" ng-show="rel.collapsed">
         <td colspan="10">
           <div ng-include="'partials/expand.html'"></div>
         </td>

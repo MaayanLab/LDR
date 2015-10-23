@@ -17,6 +17,7 @@
       getOneRel: getOneRel,
       getAllRel: getAllRel,
       getApprovedRel: getApprovedRel,
+      getReleasedRel: getReleasedRel,
       getAfterRel: getAfterRel,
       getMetaRel: getMetaRel,
       postRel: postRel,
@@ -43,6 +44,10 @@
 
     function getApprovedRel() {
       return api('releases/approved/').get();
+    }
+
+    function getReleasedRel() {
+      return api('releases/released/').get();
     }
 
     function getAfterRel(afterId) {

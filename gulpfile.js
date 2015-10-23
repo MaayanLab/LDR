@@ -52,7 +52,7 @@ gulp.task('favIcons', function() {
 });
 
 gulp.task('fonts', function() {
-  gulp.src(BOWER_DIRECTORY + '**/bootstrap/**/*.{svg,ttf,woff,woff2}')
+  gulp.src(BOWER_DIRECTORY + '**/{bootstrap,font-awesome}/**/*.{svg,ttf,woff,woff2}')
     .pipe($.plumber())
     .pipe($.changed(BUILD_DIRECTORY + 'fonts/'))
     .pipe($.flatten())

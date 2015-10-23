@@ -1,20 +1,23 @@
 <div class="col-sm-12">
   <h4 class="text-center assay-title">
-    {{form.datasetName}}
+    {{rel.datasetName}}
   </h4>
-  <p class="col-sm-12">{{form.description}}</p>
+  <p class="col-sm-12">{{rel.description}}</p>
   <div class="col-sm-12">
     <h5>Cell Lines</h5>
     <ul class="list-inline">
-      <li ng-repeat="line in form.metadata.cellLines">
+      <li ng-repeat="line in rel.metadata.cellLines">
         {{line.name}}
+      </li>
+      <li ng-if="rel.metadata.cellLines.length === 0">
+        Cell Free
       </li>
     </ul>
   </div>
   <div class="col-sm-12">
     <h5>Perturbagens</h5>
     <ul class="list-inline">
-      <li ng-repeat="pert in form.metadata.perturbagens">
+      <li ng-repeat="pert in rel.metadata.perturbagens">
         {{pert.name}}
       </li>
     </ul>
@@ -22,7 +25,7 @@
   <div class="col-sm-12">
     <h5>Readouts</h5>
     <ul class="list-inline">
-      <li ng-repeat="rOut in form.metadata.readouts">
+      <li ng-repeat="rOut in rel.metadata.readouts">
         {{rOut.name}}
       </li>
     </ul>
@@ -30,18 +33,36 @@
   <div class="col-sm-12">
     <h5>Release Dates</h5>
     <ul class="list-inline">
-      <li ng-repeat="(level,date) in form.releaseDates" ng-if="!!date && level !== 'upcoming'">
+      <li ng-if="!!rel.releaseDates.level1">
         <strong class="info-release-lvl">
-          {{level}}:
+          level1:
         </strong>
-        {{date | date:'MM-dd-yyyy'}}
+        {{rel.releaseDates.level1 | date:'MM-dd-yyyy'}}
+      </li>
+      <li ng-if="!!rel.releaseDates.level2">
+        <strong class="info-release-lvl">
+          level2:
+        </strong>
+        {{rel.releaseDates.level2 | date:'MM-dd-yyyy'}}
+      </li>
+      <li ng-if="!!rel.releaseDates.level3">
+        <strong class="info-release-lvl">
+          level3:
+        </strong>
+        {{rel.releaseDates.level3 | date:'MM-dd-yyyy'}}
+      </li>
+      <li ng-if="!!rel.releaseDates.level4">
+        <strong class="info-release-lvl">
+          level4:
+        </strong>
+        {{rel.releaseDates.level4 | date:'MM-dd-yyyy'}}
       </li>
     </ul>
   </div>
   <div class="col-sm-12">
     <h5>URLs</h5>
     <ul class="list-inline">
-      <li ng-repeat="(label,url) in form.urls" ng-if="url !== ''">
+      <li ng-repeat="(label,url) in rel.urls" ng-if="url !== ''">
         <strong class="info-release-lvl">
           {{label}}:
         </strong>

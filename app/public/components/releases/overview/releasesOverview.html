@@ -58,72 +58,72 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat-start="form in vm.forms | orderBy: vm.sortType : vm.sortReverse" ng-click="form.selected = !form.selected"
-        ng-class="form.selected ? 'tr-selected' :
-            form.released ? 'tr-released' :
-            !form.approved && !form.needsEdit ? 'tr-awaiting-approval' :
-            form.approved && !form.needsEdit ? 'tr-approved' :
-            form.needsEdit ? 'tr-needs-edit' : ''" class="form-table-data text-center">
-          <td id="text-left">{{form.did}}</td>
+        <tr ng-repeat-start="rel in vm.forms | orderBy: vm.sortType : vm.sortReverse" ng-click="rel.selected = !rel.selected"
+        ng-class="rel.selected ? 'tr-selected' :
+            rel.released ? 'tr-released' :
+            !rel.approved && !rel.needsEdit ? 'tr-awaiting-approval' :
+            rel.approved && !rel.needsEdit ? 'tr-approved' :
+            rel.needsEdit ? 'tr-needs-edit' : ''" class="rel-table-data text-center">
+          <td id="text-left">{{rel.did}}</td>
           <td class="text-left" id="dcic-assay-name">
-            {{form.datasetName}}
+            {{rel.datasetName}}
           </td>
           <td class="col-sm-3" id="release-date">
-            {{form.releaseDates.upcoming | date: 'MM-dd-yyyy'}}
+            {{rel.releaseDates.upcoming | date: 'MM-dd-yyyy'}}
           </td>
           <td class="col-sm-1" id="status">
-            <span ng-if="form.released">
+            <span ng-if="rel.released">
               Released
             </span>
-            <span ng-if="form.approved && !form.released">
+            <span ng-if="rel.approved && !rel.released">
               Approved
             </span>
-            <span ng-if="!form.approved && !form.needsEdit">
+            <span ng-if="!rel.approved && !rel.needsEdit">
               Pending approval
             </span>
-            <span ng-if="!form.approved && form.needsEdit">
+            <span ng-if="!rel.approved && rel.needsEdit">
               Needs Editing
             </span>
           </td>
           <td>
             <div class="btn-group" dropdown>
-              <a dropdown-toggle class="btn btn-default text-center" ng-class="form.released ? 'tr-released-btn' :
-                 !form.approved && !form.needsEdit ? 'tr-awaiting-approval-btn' :
-                 form.approved && !form.needsEdit ? 'tr-approved-btn' :
-                 form.needsEdit ? 'tr-needs-edit-btn' : ''" data-toggle="dropdown"
+              <a dropdown-toggle class="btn btn-default text-center" ng-class="rel.released ? 'tr-released-btn' :
+                 !rel.approved && !rel.needsEdit ? 'tr-awaiting-approval-btn' :
+                 rel.approved && !rel.needsEdit ? 'tr-approved-btn' :
+                 rel.needsEdit ? 'tr-needs-edit-btn' : ''" data-toggle="dropdown"
               ng-href="">
                 Action
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu">
                 <li>
-                  <a ng-click="vm.viewMessages(form)">View Messages</a>
+                  <a ng-click="vm.viewMessages(rel)">View Messages</a>
                 </li>
-                <!--<li ng-if="form.released">
-                            <a ng-click="vm.editUrls(form)">Edit URLs</a>
+                <!--<li ng-if="rel.released">
+                            <a ng-click="vm.editUrls(rel)">Edit URLs</a>
                         </li>-->
-                <li ng-if="!form.released && !form.needsEdit">
-                  <a ng-click="vm.rel(form)">Release</a>
+                <li ng-if="!rel.released && !rel.needsEdit">
+                  <a ng-click="vm.rel(rel)">Release</a>
                 </li>
                 <li>
-                  <a ng-click="vm.releases.edit(form._id)">Edit</a>
+                  <a ng-click="vm.releases.edit(rel._id)">Edit</a>
                 </li>
                 <li>
-                  <a ng-click="vm.del(form)">Delete</a>
+                  <a ng-click="vm.del(rel)">Delete</a>
                 </li>
               </ul>
             </div>
           </td>
           <td>
-            <a ng-click="form.collapsed = !form.collapsed">
-              <span ng-if="!form.collapsed" class="glyphicon glyphicon-plus">
+            <a ng-click="rel.collapsed = !rel.collapsed">
+              <span ng-if="!rel.collapsed" class="glyphicon glyphicon-plus">
               </span>
-              <span ng-if="form.collapsed" class="glyphicon glyphicon-minus">
+              <span ng-if="rel.collapsed" class="glyphicon glyphicon-minus">
               </span>
             </a>
           </td>
         </tr>
-        <tr class="release-details animate" ng-show="form.collapsed">
+        <tr class="release-details animate" ng-show="rel.collapsed">
           <td colspan="10">
             <div ng-include="'partials/expand.html'"></div>
           </td>
