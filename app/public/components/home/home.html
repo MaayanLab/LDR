@@ -20,16 +20,18 @@
 </div>
 <div class="row">
   <form id="release-search" class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
-    <input ng-model="vm.query" name="q" value="" type="search" id="search-bar"
-      placeholder="search releases" tabindex="1" autocomplete="off">
+    <input ng-model="vm.query" name="q" value="" type="search" id="search-bar" placeholder="search releases"
+    tabindex="1" autocomplete="off">
     <input type="submit" id="search-btn" ui-sref="search({q: vm.query})" />
   </form>
   <h4 class="col-xs-12 text-center headline-info headline-examples">
-    Some examples are: <a ui-sref="search({q: 'KINOMEscan'})">KINOMEscan</a>, <a ui-sref="search({q: 'Broad'})">Broad</a>
+    Some examples are:
+    <a ui-sref="search({q: 'KINOMEscan'})">KINOMEscan</a>,
+    <a ui-sref="search({q: 'Broad'})">Broad</a>
   </h4>
 </div>
-<div class="container">
-  <div class="content col-xs-12">
+<div class="row">
+  <div class="col-xs-12">
     <table class="table home-table">
       <thead>
         <tr>
@@ -39,8 +41,10 @@
           <th class="text-center">
             <a href="" ng-click="vm.sortType = 'datasetName'; vm.sortReverse = !vm.sortReverse">
               Dataset
-              <span ng-show="vm.sortType === 'datasetName' && vm.sortReverse" class="fa fa-caret-down"></span>
-              <span ng-show="vm.sortType === 'datasetName' && !vm.sortReverse" class="fa fa-caret-up"></span>
+              <span ng-show="vm.sortType === 'datasetName' && vm.sortReverse" class="fa fa-caret-down">
+              </span>
+              <span ng-show="vm.sortType === 'datasetName' && !vm.sortReverse" class="fa fa-caret-up">
+              </span>
             </a>
           </th>
           <th class="text-center">
@@ -76,9 +80,8 @@
       </thead>
       <tbody ng-show="vm.releasesLoaded">
         <tr ng-repeat-start="rel in vm.releases | orderBy: vm.sortType : vm.sortReverse"
-          ng-click="vm.selectRel(rel)"
-          ng-class="rel.selected || rel.collapsed ? 'rel-home-selected' : ''"
-          class="rel-table-data rel-home text-center">
+        ng-click="vm.selectRel(rel)" ng-class="rel.selected || rel.collapsed ? 'rel-home-selected' : ''"
+        class="rel-table-data rel-home text-center">
           <td id="text-left">{{rel.did}}</td>
           <td class="text-left col-sm-5" id="dcic-assay-name">
             {{rel.datasetName}}

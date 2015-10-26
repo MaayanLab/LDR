@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <h4 class="modal-title">Select Multiple</h4>
+</div>
+<div class="modal-body">
+  <form ng-model="vm.modalForm" class="modal-form-input">
+    <div class="form-group">
+      <select name="multipleSelect" id="multipleSelect" ng-model="vm.selected" multiple>
+        <option ng-repeat="opt in vm.options" value="{{opt}}">{{opt.name}}</option>
+      </select>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-primary" ng-click="vm.ok()">
+    Save
+  </button>
+  <button type="button" class="btn btn-danger" ng-click="vm.cancel()">
+    Cancel
+  </button>
+</div>

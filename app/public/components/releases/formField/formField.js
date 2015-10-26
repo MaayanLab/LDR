@@ -34,6 +34,15 @@
 
       var vm = this;
       vm.addNew = addNew;
+      vm.selectMultiple = selectMultiple;
+
+      function selectMultiple() {
+        console.log(vm.name);
+        metadata
+          .selectMultiple(vm.name)
+          .then(function() {});
+
+      }
 
       function addNew(newTag) {
         if (!newTag.newField) {

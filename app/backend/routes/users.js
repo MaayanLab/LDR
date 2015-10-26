@@ -39,9 +39,7 @@ module.exports = function(app) {
   app.put(baseUrl + '/api/secure/user/:id/update/', function(req, res) {
     var userId = req.params.id;
     var updatedUser = req.body;
-    var query = {
-      _id: userId
-    };
+    var query = { _id: userId };
     User.update(query, updatedUser, function(err) {
       if (err) {
         console.log(err);
@@ -59,9 +57,7 @@ module.exports = function(app) {
       var enteredPassword = req.body.old;
       var newPassword = req.body.new;
 
-      var query = {
-        _id: userId
-      };
+      var query = { _id: userId };
       User
         .findOne(query)
         .exec(function(err, user) {
@@ -97,9 +93,7 @@ module.exports = function(app) {
 
   app.post(baseUrl + '/login', function(req, res) {
     User
-      .findOne({
-        username: req.body.username
-      })
+      .findOne({ username: req.body.username })
       .populate('group')
       .exec(function(err, user) {
         if (err) {
@@ -113,9 +107,9 @@ module.exports = function(app) {
               if (pwErr || !isMatch) {
                 res.status(401).send('Error logging user in.');
               } else if (isMatch) {
-                var userWOPassword = _.omit(user.toObject(), [
-                  'password', '__v'
-                ]);
+                var userWOPassword = _.omit(user.toObject(),
+                  ['password', '__v']
+                );
                 var token = createToken(userWOPassword);
 
                 var userBlob = {
@@ -147,9 +141,9 @@ module.exports = function(app) {
       if (err) {
         console.log('Error creating User: ' + err);
       } else {
-        var userWOPass = _.omit(user.toObject(), ['password', 'passwordConfirm',
-          '__v'
-        ]);
+        var userWOPass = _.omit(user.toObject(),
+          ['password', 'passwordConfirm', '__v']
+        );
         var token = createToken(userWOPass);
         userWOPass.group = groupObj;
         var newUserBlob = {

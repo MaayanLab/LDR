@@ -1,2 +1,2 @@
-VERSION=x.x.x npm run build
+npm version (patch|minor|major)
 npm run deploy

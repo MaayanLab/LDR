@@ -3,10 +3,10 @@
 
   angular
     .module('ldr')
-    .controller('ModalInstanceCtrl', ModalInstanceCtrl);
+    .controller('AddModalInstanceCtrl', AddModalInstanceCtrl);
 
   /* @ngInject */
-  function ModalInstanceCtrl($modalInstance, config, api) {
+  function AddModalInstanceCtrl($modalInstance, config, api) {
     // name = assay, cellLines, readouts, perturbagens, relevantDisease
 
     var vm = this;

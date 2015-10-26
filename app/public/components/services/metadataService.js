@@ -14,17 +14,36 @@
   function metadata($modal, api) {
     return {
       addNew: addNew,
+      autocomplete: autocomplete,
       getReleasedCounts: getReleasedCounts,
-      autocomplete: autocomplete
+      getSamples: getSamples,
+      selectMultiple: selectMultiple
     };
 
     ///////////////////
+
+    function selectMultiple(sampleName) {
+      return $modal
+        .open({
+          templateUrl: 'partials/multipleModal.html',
+          controller: 'MultipleModalInstanceCtrl',
+          controllerAs: 'vm',
+          resolve: {
+            config: function() {
+              return {
+                sample: sampleName,
+              };
+            }
+          }
+        })
+        .result;
+    }
 
     function addNew(newTag, name, model, element) {
       return $modal
         .open({
           templateUrl: 'partials/addModal.html',
-          controller: 'ModalInstanceCtrl',
+          controller: 'AddModalInstanceCtrl',
           controllerAs: 'vm',
           resolve: {
             config: function() {
@@ -45,9 +64,11 @@
     }
 
     function autocomplete(endpoint, query) {
-      return api('autocomplete/' + endpoint).get({
-        q: query
-      });
+      return api('autocomplete/' + endpoint).get({ q: query });
+    }
+
+    function getSamples(pluralSampleName) {
+      return api(pluralSampleName + '/').get();
     }
   }
 

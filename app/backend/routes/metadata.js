@@ -95,8 +95,7 @@ module.exports = function(app) {
         .exec(function(err, results) {
           if (err) {
             console.log(err);
-            res.status(404).send(
-              'There was an error completing your request');
+            res.status(404).send('There was an error completing your request');
           } else {
             res.status(200).send(results);
           }

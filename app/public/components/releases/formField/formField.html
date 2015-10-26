@@ -2,7 +2,7 @@
   <div class="row">
     <h5 class="col-xs-6">
       {{vm.title}}
-      <span ng-if="isRequired">*</span>
+      <span ng-if="vm.isRequired">*</span>
     </h5>
     <span class="dataset-error-msg col-xs-6 text-right" ng-show="vm.showErrors && vm.isRequired && vm.ngModel.length < 1">
       This field is required.
@@ -18,4 +18,8 @@
   ldr-enforce-max-tags max-tags="{{vm.maxTags}}" placeholder="{{vm.placeholder}}"
   replace-spaces-with-dashes="false" on-tag-adding="vm.addNew($tag);">
   </tags-input>
+  <button type="button" class="btn btn-default list-icon"
+    ng-if="vm.useAutocomplete" ng-click="vm.selectMultiple()">
+    <i class="fa fa-list"></i>
+  </button>
 </div>
