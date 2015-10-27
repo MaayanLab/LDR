@@ -67,8 +67,8 @@
       return api('autocomplete/' + endpoint).get({ q: query });
     }
 
-    function getSamples(pluralSampleName) {
-      return api(pluralSampleName + '/').get();
+    function getSamples(pluralSampleName, limitNum) {
+      return api(pluralSampleName + '/').get({ limit: limitNum });
     }
   }
 

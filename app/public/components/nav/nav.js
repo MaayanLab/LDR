@@ -6,7 +6,7 @@
     .directive('ldrNav', ldrNav);
 
   /* @ngInject */
-  function ldrNav($http, $state, store) {
+  function ldrNav($http, $state, jwtHelper, store) {
     return {
       restrict: 'E',
       templateUrl: 'partials/nav.html',
@@ -17,6 +17,7 @@
 
     function LDRNavLink(scope, elem, attrs) {
 
+      scope.user = getCurrentUser();
       scope.showFailMessage = false;
       scope.register = register;
       scope.login = login;
@@ -74,15 +75,9 @@
             $state.go('home');
           } else {
             scope.showFailMessage = true;
-            // This will be removed for a better error notification
-            alert('The username or password you entered was ' +
-              'incorrect. Please try again.');
           }
         }, function() {
             scope.showFailMessage = true;
-            // This will be removed for a better error notification
-            alert('The username or password you entered was ' +
-              'incorrect. Please try again.');
           });
       }
 

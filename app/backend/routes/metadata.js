@@ -69,6 +69,7 @@ module.exports = function(app) {
     '/api/:sample(assays|cellLines|perturbagens|readouts|genes|diseases|organisms|tools)',
     function(req, res) {
       var s = req.params.sample;
+      var limit = req.query.limit;
       var sample;
 
       if (s === 'assays') {
@@ -89,9 +90,11 @@ module.exports = function(app) {
         sample = Tool;
       }
 
-      sample
-        .find({})
-        .lean()
+      var sampleChain = sample.find({}).lean();
+      if (!!limit) {
+        sampleChain = sampleChain.limit(limit);
+      }
+      sampleChain
         .exec(function(err, results) {
           if (err) {
             console.log(err);

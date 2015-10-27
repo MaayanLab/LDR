@@ -35,6 +35,7 @@
 
     var vm = this;
     vm.user = store.get('currentUser');
+    console.log(vm.user);
     vm.group = vm.user.group;
     vm.showErrors = false;
 
@@ -42,7 +43,7 @@
     vm.validate = validate;
     vm.cancel = cancel;
 
-    var MAX_TAGS = 10000;
+    var MAX_TAGS = 10000000;
     vm.form = {
       datasetName: {
         name: 'datasetName',
@@ -53,13 +54,14 @@
       metadata: [
         // DO NOT REARRANGE ORDER
         {
-          name: 'assay',
+          name: 'assays',
           title: 'Assay',
           modalTitle: 'Assay',
           placeholder: 'Select an assay...',
-          maxTags: 1,
+          maxTags: MAX_TAGS,
           autocompleteEndpoint: 'assays',
           useAutocomplete: true,
+          allowSelectMultiple: true,
           autocompleteOnly: true,
           isRequired: true,
           model: []
@@ -68,9 +70,10 @@
           title: 'Cell Lines',
           modalTitle: 'Cell Line',
           placeholder: 'Select cell line(s)...',
-          maxTags: 100,
+          maxTags: MAX_TAGS,
           autocompleteEndpoint: 'cellLines',
           useAutocomplete: true,
+          allowSelectMultiple: true,
           autocompleteOnly: true,
           isRequired: true,
           model: []
@@ -93,41 +96,44 @@
           maxTags: MAX_TAGS,
           autocompleteEndpoint: 'readouts',
           useAutocomplete: true,
+          allowSelectMultiple: true,
           autocompleteOnly: true,
           isRequired: true,
           model: []
         }, {
-          name: 'manipulatedGene',
+          name: 'genes',
           title: 'Manipulated Gene(s)',
           modalTitle: 'Manipulated Gene',
           placeholder: 'Select manipulated gene(s)...',
-          maxTags: 100,
+          maxTags: MAX_TAGS,
           autocompleteEndpoint: 'genes',
           useAutocomplete: true,
           autocompleteOnly: true,
           model: []
         }, {
-          name: 'organism',
-          title: 'Organism',
+          name: 'organisms',
+          title: 'Organism(s)',
           modalTitle: 'Organism',
-          placeholder: 'Select an organism...',
-          maxTags: 1,
+          placeholder: 'Select organism(s)...',
+          maxTags: MAX_TAGS,
           autocompleteEndpoint: 'organisms',
           useAutocomplete: true,
+          allowSelectMultiple: true,
           autocompleteOnly: true,
           model: []
         }, {
-          name: 'relevantDisease',
-          title: 'Relevant Disease',
+          name: 'diseases',
+          title: 'Relevant Disease(s)',
           modalTitle: 'Relevant Disease',
-          placeholder: 'Select a relevant disease...',
-          maxTags: 1,
+          placeholder: 'Select relevant disease(s)...',
+          maxTags: MAX_TAGS,
           autocompleteEndpoint: 'diseases',
           useAutocomplete: true,
+          allowSelectMultiple: true,
           autocompleteOnly: true,
           model: []
         }, {
-          name: 'analysisTools',
+          name: 'tools',
           title: 'Analysis Tools',
           modalTitle: 'Analysis Tool',
           placeholder: 'Select analysis tools used...',
@@ -280,18 +286,18 @@
     function validate() {
       angular.forEach(vm.form.metadata, function(obj) {
         if (obj.isRequired && !obj.model.length) {
-          console.log(obj);
           vm.showErrors = true;
         }
       });
       angular.forEach(vm.form.releaseDates, function(obj) {
         if (obj.isRequired && obj.model === '') {
-          console.log(obj);
           vm.showErrors = true;
         }
       });
       if (!vm.showErrors) {
-        submit();
+        if (confirm('Are you sure you would like to submit these changes?')) {
+          submit();
+        }
       }
     }
 

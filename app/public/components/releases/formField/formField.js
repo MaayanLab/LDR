@@ -17,6 +17,7 @@
         placeholder: '@',
         useAutocomplete: '@',
         autocompleteOnly: '@',
+        allowSelectMultiple: '@',
         autocompleteEndpoint: '@',
         autocompleteSource: '=',
         ngModel: '=',
@@ -30,17 +31,25 @@
     };
 
     /* @ngInject */
-    function LDRFormFieldController(metadata) {
+    function LDRFormFieldController(lodash, metadata) {
 
       var vm = this;
       vm.addNew = addNew;
       vm.selectMultiple = selectMultiple;
 
       function selectMultiple() {
-        console.log(vm.name);
         metadata
           .selectMultiple(vm.name)
-          .then(function() {});
+          .then(function(selectedSamples) {
+            if (lodash.isArray(vm.ngModel)) {
+              // Combine all results and then remove objects with duplicate ids
+              var allOpts = vm.ngModel.concat(selectedSamples);
+              vm.ngModel = lodash.uniq(allOpts, 'name');
+            } else {
+              console.error('Tried to select multiple samples but ngModel'
+                + 'is not an array!');
+            }
+          });
 
       }
 

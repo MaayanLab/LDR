@@ -13,7 +13,7 @@
     var vm = this;
     vm.selected = [];
     vm.options = [];
-    vm.ok = ok;
+    vm.add = add;
 
     function getSamples() {
       metadata
@@ -25,16 +25,19 @@
 
     vm.cancel = cancel;
 
-    function ok() {
+    function add() {
       var results = [];
       angular.forEach(vm.selected, function(objString) {
-        results.push(angular.fromJson(objString));
+        var obj = angular.fromJson(objString);
+        var sample = {
+          _id: obj._id,
+          name: obj.name,
+          text: obj.name,
+        };
+        results.push(sample);
       });
-      $$modalInstance.close(results);
-
+      $modalInstance.close(results);
     }
-
-    function save() {}
 
     function cancel() {
       $modalInstance.dismiss('cancel');

@@ -8,7 +8,9 @@
         <h4 class="col-sm-12 text-center">Dataset Release Instance</h4>
         <div class="col-sm-6 form-div">
           <div class="row">
-            <h5 class="dataset-title col-xs-12 col-lg-5">{{vm.form.datasetName.title}}*</h5>
+            <h5 class="dataset-title col-xs-12 col-lg-5">
+              {{vm.form.datasetName.title}}*
+            </h5>
             <span class="dataset-error-msg col-xs-12 col-lg-7 text-left" ng-if="datasetRegForm.datasetName.$error.maxlength">
               Dataset name must be less than 75 characters.
             </span>
@@ -22,8 +24,9 @@
         <ldr-form-field ng-repeat="field in vm.form.metadata" title="{{field.title}}" name="{{field.name}}"
         autocomplete-endpoint="{{field.autocompleteEndpoint}}" max-tags="{{field.maxTags}}"
         placeholder="{{field.placeholder}}" ng-model="field.model" use-autocomplete="{{field.useAutocomplete}}"
+        allow-select-multiple="{{field.allowSelectMultiple}}"
         autocomplete-source="vm.autocompleteSource" is-required="{{field.isRequired}}"
-        show-errors="showErrors">
+        show-errors="vm.showErrors">
         </ldr-form-field>
         <div class="col-sm-12">
           <h5>{{vm.form.description.title}}</h5>

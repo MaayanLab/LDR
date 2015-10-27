@@ -32,13 +32,13 @@
         post = api('perturbagens').post(vm.newTag);
       } else if (vm.name === 'readouts') {
         post = api('readouts').post(vm.newTag);
-      } else if (vm.name === 'manipulatedGene') {
+      } else if (vm.name === 'genes') {
         post = api('genes').post(vm.newTag);
-      } else if (vm.name === 'relevantDisease') {
+      } else if (vm.name === 'diseases') {
         post = api('diseases').post(vm.newTag);
       } else if (vm.name === 'organism') {
         post = api('organisms').post(vm.newTag);
-      } else if (vm.name === 'analysisTools') {
+      } else if (vm.name === 'tools') {
         post = api('tools').post(vm.newTag);
       }
 
