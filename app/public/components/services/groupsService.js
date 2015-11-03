@@ -96,6 +96,8 @@
     }
 
     function changeGroupIcon(groupId, file) {
+      console.log(groupId);
+      console.log(file);
       if (Array.isArray(file)) {
         return Upload.upload({
           url: '/LDR/api/secure/group/' + groupId + '/upload/',

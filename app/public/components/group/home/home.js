@@ -15,7 +15,7 @@
     ])
 
   .config(groupHomeConfig)
-    .controller('GroupHomeCtrl', GroupHomeCtrl);
+  .controller('GroupHomeCtrl', GroupHomeCtrl);
 
   // UI Router state formCreate
   /* @ngInject */
@@ -31,7 +31,7 @@
   }
   /* @ngInject */
   function GroupHomeCtrl($scope, $stateParams, $timeout,
-                         $window, lodash, store, groups) {
+    $window, lodash, store, groups) {
 
     var vm = this;
 
@@ -85,13 +85,12 @@
     });
 
     function upload(files) {
-      if (files.length) {
+      if (files && files.length) {
         groups
           .changeGroupIcon(vm.groupId, files)
-          .progress(function() {
-            //var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-          }).success(function(data, status, headers, config) {
-            $window.location.reload();
+          .progress(function() {})
+          .success(function(data, status, headers, config) {
+            // $window.location.reload();
             console.log('file: ' + config.file.name +
               ', Response: ' + JSON.stringify(data) +
               '\n');
