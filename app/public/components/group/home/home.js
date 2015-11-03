@@ -90,10 +90,10 @@
           .changeGroupIcon(vm.groupId, files)
           .progress(function() {})
           .success(function(data, status, headers, config) {
-            // $window.location.reload();
             console.log('file: ' + config.file.name +
               ', Response: ' + JSON.stringify(data) +
               '\n');
+            $window.location.reload();
           });
       }
     }
