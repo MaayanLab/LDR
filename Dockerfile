@@ -2,7 +2,7 @@ FROM node:latest
 
 # Set SOURCE_DIR variable, make the directory, and set it as work directory
 ENV SOURCE_DIR /usr/src
-RUN mkdir -p $SOURCE_DIR
+RUN mkdir -p $SOURCE_DIR && cd $SOURCE_DIR
 WORKDIR $SOURCE_DIR
 
 # Copy files needed for npm and bower
@@ -23,7 +23,7 @@ COPY .bowerrc $SOURCE_DIR/
 #    (--allow-root needed because user in container is root)
 RUN npm install --loglevel warn && \
     npm config set production && \
-    npm install -g gulp bower && \
+    npm install -g --loglevel warn gulp bower && \
     bower install --allow-root
 
 # These are copied after the run commands so that the container is

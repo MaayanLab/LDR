@@ -13,9 +13,11 @@
 
 
   /* @ngInject */
-  function userManagement(api, store) {
+  function userManagement($http, api, store) {
     return {
       changePassword: changePassword,
+      resetPassword: resetPassword,
+      sendForgotEmail: sendForgotEmail,
       updateUser: updateUser
     };
 
@@ -37,6 +39,14 @@
       };
 
       return api('user/' + id + '/changePassword/').put(passwords);
+    }
+
+    function resetPassword(token, newPassword) {
+      return $http.post('/LDR/api/reset/' + token, { password: newPassword });
+    }
+
+    function sendForgotEmail(email) {
+      return $http.post('/LDR/api/forgot', { email: email });
     }
 
     /**

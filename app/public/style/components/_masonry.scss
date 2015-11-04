@@ -1,13 +1,15 @@
 .masonry-container:before,
 .masonry-container:after {
-  content:"";
-  display:table;
+  content: "";
+  display: table;
 }
+
 .masonry-container:after {
-  clear:both;
+  clear: both;
 }
+
 .masonry-container {
-  zoom:1; /* For IE 6/7 (trigger hasLayout) */
+  zoom: 1; /* For IE 6/7 (trigger hasLayout) */
 }
 
 .card {
@@ -15,24 +17,25 @@
 }
 
 .card-release {
-  padding: 0 7px 14px;
   height: 350px;
+  padding: 0 7px 14px;
+
   @media (max-width: 500px) {
-    width: 50%;
     float: left;
+    width: 50%;
   }
 
   @media (min-width: 500px) and (max-width: 768px) {
-    width: 33.3333333333333%;
     float: left;
+    width: 33.3333333333333%;
   }
 
 }
 
 .well-release {
-  padding: 0;
-  margin-bottom: 0;
   border-radius: 10px;
+  margin-bottom: 0;
+  padding: 0;
 }
 
 .well-release-released {

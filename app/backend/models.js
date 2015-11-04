@@ -68,10 +68,9 @@ var userSchema = new Schema({
   homepage: {
     type: String,
     default: ''
-  }
-  // For checking login attempts and locking account
-  //loginAttempts: { type: Number, required: true, default: 0 },
-  //lockUntil: { type: Number }
+  },
+  resetPasswordToken: String,
+  resetPasswordExpires: Date
 });
 
 userSchema.pre('save', function(next) {

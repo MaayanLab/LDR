@@ -1,0 +1,31 @@
+<h3 class="text-center">Forgot Password</h3>
+<em class="col-sm-12 highlight text-center">* Required</em>
+<form name="forgotForm" autocomplete="off"
+      class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2"
+      ng-submit="forgotForm.$valid && vm.sendForgotEmail()" novalidate>
+    <div class="form-group">
+        <label for="email">Email*</label>
+        <input id="email" name="email" type="email" ng-model="vm.email"
+               class="form-control" ng-model-options="{ updateOn: 'blur' }"
+               required/>
+        <span class="help-inline error-msg"
+              data-ng-show='forgotForm.email.$pending.email'
+              data-ng-class="strong">
+            Validating...
+        </span>
+        <span class="help-inline error-msg"
+              data-ng-show='forgotForm.email.$error.email'
+              data-ng-class="medium">
+            Email is invalid.
+        </span>
+    <div class="form-group">
+        <br>
+        <input class="btn btn-success" type="submit" value="Reset Password"/>
+        <span ng-show="vm.showSuccessMessage" class="highlight-green">
+          An email has been sent with instructions to reset your password.
+        </span>
+        <span ng-show="vm.showFailMessage" class="highlight">
+          An error occurred sending email with instructions. Please try again later.
+        </span>
+    </div>
+</form>

@@ -1,15 +1,17 @@
 {
   "name": "LINCSDatasetRegistry",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "description": "The homepage for LINCS meta-data forms and display.",
   "main": "server.js",
   "private": "true",
   "dependencies": {
+    "async": "^1.5.0",
     "bcrypt": "^0.8.3",
     "body-parser": "^1.0.2",
     "compression": "^1.4.1",
     "connect-timeout": "^1.6.2",
     "cors": "^2.5.3",
+    "crypto": "0.0.3",
     "ejs": "^0.8.8",
     "express": "^4.0.0",
     "express-jwt": "^3.0.0",
@@ -21,8 +23,8 @@
     "morgan": "^1.0.1",
     "multer": "^0.1.8",
     "ng-tags-input": "^2.3.0",
-    "q": "^1.4.0",
-    "underscore": "^1.8.3"
+    "nodemailer": "^1.8.0",
+    "q": "^1.4.0"
   },
   "devDependencies": {
     "browser-sync": "^2.7.6",

@@ -23,6 +23,7 @@
     });
   }
 
+  /* @ngInject */
   function RegisterCtrl($scope, $http, store, $state, api, lodash) {
 
     var vm = this;

@@ -6,6 +6,9 @@
       <a ng-show="isLoggedIn && isAdmitted" ui-sref="groupHome({id: user.group._id})"
       id="group-nav-icon" class="glyphicon"></a>
       <a ng-show="isLoggedIn" ng-click="logout()" class="glyphicon glyphicon-log-out"></a>
+      <a ng-show="!isLoggedIn" ui-sref="userForgot()">
+        Forgot Password?
+      </a>
     </nav>
   </div>
 </div>
