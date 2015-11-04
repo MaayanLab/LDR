@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:4.2.1
 
 # Set SOURCE_DIR variable, make the directory, and set it as work directory
 ENV SOURCE_DIR /usr/src
@@ -21,9 +21,9 @@ COPY .bowerrc $SOURCE_DIR/
 # 3. Globally install gulp and bower
 # 4. Install bower dependencies
 #    (--allow-root needed because user in container is root)
-RUN npm install --loglevel warn && \
+RUN npm install && \
     npm config set production && \
-    npm install -g --loglevel warn gulp bower && \
+    npm install -g gulp bower && \
     bower install --allow-root
 
 # These are copied after the run commands so that the container is
