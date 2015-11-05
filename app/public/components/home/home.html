@@ -32,86 +32,88 @@
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <table class="table home-table">
-      <thead>
-        <tr>
-          <th class="text-center">
-            Dataset ID
-          </th>
-          <th class="text-center">
-            <a href="" ng-click="vm.sortType = 'datasetName'; vm.sortReverse = !vm.sortReverse">
-              Dataset
-              <span ng-show="vm.sortType === 'datasetName' && vm.sortReverse" class="fa fa-caret-down">
-              </span>
-              <span ng-show="vm.sortType === 'datasetName' && !vm.sortReverse" class="fa fa-caret-up">
-              </span>
-            </a>
-          </th>
-          <th class="text-center">
-            <a href="" ng-click="vm.sortType = 'releaseDates.upcoming'; vm.sortReverse = !vm.sortReverse">
-              Release Date
-              <span ng-show="vm.sortType === 'releaseDates.upcoming' && vm.sortReverse" class="fa fa-caret-down"></span>
-              <span ng-show="vm.sortType === 'releaseDates.upcoming' && !vm.sortReverse" class="fa fa-caret-up"></span>
-            </a>
-          </th>
-          <th class="text-center">
-            <a href="" ng-click="vm.sortType = ['released', 'approved']; vm.sortReverse = !vm.sortReverse">
-              Status
-              <span ng-show="vm.sortType[0] === 'released' && vm.sortReverse" class="fa fa-caret-down"></span>
-              <span ng-show="vm.sortType[0] === 'released' && !vm.sortReverse" class="fa fa-caret-up"></span>
-            </a>
-          </th>
-          <th class="text-center" ng-if="!vm.allSelected">
-            <a class="btn btn-primary" href="" ng-click="vm.selectAll()">
-              Select All
-            </a>
-          </th>
-          <th class="text-center" ng-if="vm.allSelected">
-            <a class="btn btn-primary" href="" ng-click="vm.unselectAll()">
-              Unselect All
-            </a>
-          </th>
-          <th class="text-center">
-            <a class="btn btn-primary" href="" ng-click="vm.export()">
-              Export
-            </a>
-          </th>
-        </tr>
-      </thead>
-      <tbody ng-show="vm.releasesLoaded">
-        <tr ng-repeat-start="rel in vm.releases | orderBy: vm.sortType : vm.sortReverse"
-        ng-click="vm.selectRel(rel)" ng-class="rel.selected || rel.collapsed ? 'rel-home-selected' : ''"
-        class="rel-table-data rel-home text-center">
-          <td id="text-left">{{rel.did}}</td>
-          <td class="text-left col-sm-5" id="dcic-assay-name">
-            {{rel.datasetName}}
-          </td>
-          <td class="col-sm-3" id="rel-date">
-            {{rel.releaseDates.upcoming | date: 'MM-dd-yyyy'}}
-          </td>
-          <td class="col-sm-1" id="status">Released</td>
-          <td></td>
-          <td class="home-expand-btn">
-            <a ng-click="rel.collapsed = !rel.collapsed; rel.selected = !rel.collapsed">
-              <span ng-if="!rel.collapsed" class="glyphicon glyphicon-plus">
-              </span>
-              <span ng-if="rel.collapsed" class="glyphicon glyphicon-minus">
-              </span>
-            </a>
-          </td>
-        </tr>
-        <tr class="home-expand rel-details animate" ng-show="rel.collapsed">
-          <td colspan="10">
-            <div ng-include="'partials/expand.html'"></div>
-          </td>
-        </tr>
-        <tr ng-repeat-end="" ng-if="vm.releases.length === 0">
-          <td colspan="5" class="col-md-12">
-            There are no releases to display. Please
-            <a ui-sref="releasesCreate">add data here</a>.
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="">
+      <table class="table home-table">
+        <thead>
+          <tr>
+            <th class="text-center">
+              Dataset ID
+            </th>
+            <th class="text-center">
+              <a href="" ng-click="vm.sortType = 'datasetName'; vm.sortReverse = !vm.sortReverse">
+                Dataset
+                <span ng-show="vm.sortType === 'datasetName' && vm.sortReverse" class="fa fa-caret-down">
+                </span>
+                <span ng-show="vm.sortType === 'datasetName' && !vm.sortReverse" class="fa fa-caret-up">
+                </span>
+              </a>
+            </th>
+            <th class="text-center">
+              <a href="" ng-click="vm.sortType = 'releaseDates.upcoming'; vm.sortReverse = !vm.sortReverse">
+                Release Date
+                <span ng-show="vm.sortType === 'releaseDates.upcoming' && vm.sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="vm.sortType === 'releaseDates.upcoming' && !vm.sortReverse" class="fa fa-caret-up"></span>
+              </a>
+            </th>
+            <th class="text-center">
+              <a href="" ng-click="vm.sortType = ['released', 'approved']; vm.sortReverse = !vm.sortReverse">
+                Status
+                <span ng-show="vm.sortType[0] === 'released' && vm.sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="vm.sortType[0] === 'released' && !vm.sortReverse" class="fa fa-caret-up"></span>
+              </a>
+            </th>
+            <th class="text-center" ng-if="!vm.allSelected">
+              <a class="btn btn-primary" href="" ng-click="vm.selectAll()">
+                Select All
+              </a>
+            </th>
+            <th class="text-center" ng-if="vm.allSelected">
+              <a class="btn btn-primary" href="" ng-click="vm.unselectAll()">
+                Unselect All
+              </a>
+            </th>
+            <th class="text-center">
+              <a class="btn btn-primary" href="" ng-click="vm.export()">
+                Export
+              </a>
+            </th>
+          </tr>
+        </thead>
+        <tbody ng-show="vm.releasesLoaded">
+          <tr ng-repeat-start="rel in vm.releases | orderBy: vm.sortType : vm.sortReverse"
+          ng-click="vm.selectRel(rel)" ng-class="rel.selected || rel.collapsed ? 'rel-home-selected' : ''"
+          class="rel-table-data rel-home text-center">
+            <td id="text-left">{{rel.did}}</td>
+            <td class="text-left col-sm-5" id="dcic-assay-name">
+              {{rel.datasetName}}
+            </td>
+            <td class="col-sm-3" id="rel-date">
+              {{rel.releaseDates.upcoming | date: 'MM-dd-yyyy'}}
+            </td>
+            <td class="col-sm-1" id="status">Released</td>
+            <td></td>
+            <td class="home-expand-btn">
+              <a ng-click="rel.collapsed = !rel.collapsed; rel.selected = !rel.collapsed">
+                <span ng-if="!rel.collapsed" class="glyphicon glyphicon-plus">
+                </span>
+                <span ng-if="rel.collapsed" class="glyphicon glyphicon-minus">
+                </span>
+              </a>
+            </td>
+          </tr>
+          <tr class="home-expand rel-details animate" ng-show="rel.collapsed">
+            <td colspan="10">
+              <div ng-include="'partials/expand.html'"></div>
+            </td>
+          </tr>
+          <tr ng-repeat-end="" ng-if="vm.releases.length === 0">
+            <td colspan="5" class="col-md-12">
+              There are no releases to display. Please
+              <a ui-sref="releasesCreate">add data here</a>.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

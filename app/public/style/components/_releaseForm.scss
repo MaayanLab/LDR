@@ -13,11 +13,10 @@ span.url-error-msg {
   margin-top: 5px;
   padding-bottom: 0;
   padding-top: 0;
-  width: 5%;
+  width: 8%;
 
   i {
     position: relative;
-    right: 5px;
     text-align: center;
   }
 }
@@ -149,7 +148,7 @@ p.input-group {
 
 tags-input {
   float: left;
-  width: 95% !important;
+  width: 92% !important;
 
   .autocomplete {
     .suggestion-item.selected,
@@ -201,7 +200,7 @@ tags-input {
   box-shadow: rgb(211, 211, 211) 1px 1px 1px 0 inset;
   margin: 5px 0 0 0;
   background-color: rgb(255, 255, 255);
-  width: 95% !important;
+  width: 92% !important;
   outline: 0;
   padding: 7px;
   float: left;

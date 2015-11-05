@@ -5,7 +5,6 @@
     'ldr.nav',
     'ldr.home',
     'ldr.bar',
-    'ldr.carousel',
     'ldr.group.home',
     'ldr.group.create',
     'ldr.group.settings',
