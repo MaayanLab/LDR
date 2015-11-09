@@ -32,7 +32,7 @@
                     <h5 class="text-muted">{{user.name}}</h5>
                     <h5 ng-if="!user.name"></h5>
                     <h5 class="card-pending" ng-if="!user.admitted">
-                        <a ng-click="acceptUser(user)">Accept</a>
+                        <a ng-click="vm.admitUser(user)">Accept</a>
                     </h5>
                     <h5 class="card-accepted" ng-if="showAdmitted">
                         User accepted!

@@ -40,8 +40,8 @@ module.exports = function(app) {
         if (user.admin) {
           DataRelease
             .update({
-                _id: req.params.releaseId
-              }, updateObj,
+              _id: req.params.releaseId
+            }, updateObj,
               function(err, release) {
                 if (err) {
                   res.status(404).send('There was an error ' +
