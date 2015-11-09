@@ -17,7 +17,6 @@
   .config(groupHomeConfig)
   .controller('GroupHomeCtrl', GroupHomeCtrl);
 
-  // UI Router state formCreate
   /* @ngInject */
   function groupHomeConfig($stateProvider) {
     $stateProvider
