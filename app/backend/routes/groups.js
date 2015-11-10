@@ -4,6 +4,7 @@
  */
 
 var http = require('http'),
+  async = require('async'),
   Q = require('q'),
   _ = require('lodash'),
   jwt = require('jsonwebtoken'),
@@ -19,7 +20,6 @@ var http = require('http'),
   Group = Models.Group;
 
 module.exports = function(app) {
-
   app.get(baseUrl + '/api/groups/', function(req, res) {
     Group
       .find({})
@@ -55,80 +55,86 @@ module.exports = function(app) {
 
   app.get(baseUrl + '/api/group/:id/statistics/', function(req, res) {
     var groupId = req.params.id;
-    var statResponse = {
-      user: 0,
-      release: 0,
-      assay: 0,
-      cell: 0,
-      perturbagen: 0,
-      readout: 0
-    };
-    User
-      .where({
-        group: groupId
-      })
-      .count(function(err, userCount) {
-        if (err) {
-          console.log(err);
-        }
-        statResponse.user = userCount;
-
+    async.series([
+      function(callback) {
+        User
+          .where({ group: groupId })
+          .count(function(err, userCount) {
+            if (err) {
+              console.log(err);
+            }
+            callback(null, userCount);
+          });
+      },
+      function(callback) {
         DataRelease
-          .where({
-            group: groupId
-          })
+          .where({ group: groupId })
           .count(function(err, releaseCount) {
             if (err) {
               console.log(err);
             }
-            statResponse.release = releaseCount;
-
-            Assay
-              .where({
-                group: groupId
-              })
-              .count(function(err, asCount) {
-                if (err) {
-                  console.log(err);
-                }
-                statResponse.assay = asCount;
-
-                CellLine
-                  .where({
-                    group: groupId
-                  })
-                  .count(function(err, clCount) {
-                    if (err) {
-                      console.log(err);
-                    }
-                    statResponse.cell = clCount;
-
-                    Perturbagen
-                      .where({
-                        group: groupId
-                      })
-                      .count(function(err, pertCount) {
-                        if (err) {
-                          console.log(err);
-                        }
-                        statResponse.perturbagen = pertCount;
-
-                        Readout
-                          .where({
-                            group: groupId
-                          })
-                          .count(function(err, roCount) {
-                            if (err) {
-                              console.log(err);
-                            }
-                            statResponse.readout = roCount;
-                            res.status(200).send(statResponse);
-                          });
-                      });
-                  });
-              });
+            callback(null, releaseCount);
           });
-      });
+      },
+      function(callback) {
+        Assay
+          .where({ group: groupId })
+          .count(function(err, asCount) {
+            if (err) {
+              console.log(err);
+            }
+            callback(null, asCount);
+          });
+      },
+      function(callback) {
+        CellLine
+          .where({ group: groupId })
+          .count(function(err, clCount) {
+            if (err) {
+              console.log(err);
+            }
+            callback(null, clCount);
+          });
+      },
+      function(callback) {
+        Perturbagen
+          .where({ group: groupId })
+          .count(function(err, pertCount) {
+            if (err) {
+              console.log(err);
+            }
+            callback(null, pertCount);
+          });
+      },
+      function(callback) {
+        Readout
+          .where({ group: groupId })
+          .count(function(err, roCount) {
+            if (err) {
+              console.log(err);
+            }
+            callback(null, roCount);
+          });
+      }
+    ], function(err, results) {
+      if (err) {
+        console.log(err);
+        res.status(500).send('An error occurred generating statistics. ' +
+          'Please try again later.');
+      } else {
+        // Results is counts array in order
+        // [users, releases, assays, cellLines, perturbagens, readouts]
+        var statResponse = {
+          user: results[0],
+          release: results[1],
+          assay: results[2],
+          cell: results[3],
+          perturbagen: results[4],
+          readout: results[5]
+        };
+        res.status(200).send(statResponse);
+      }
+    });
   });
 
   app.get(baseUrl + '/api/group/:id/users/', function(req, res) {
@@ -170,9 +176,7 @@ module.exports = function(app) {
           res.status(404).end();
         } else if (group.icon.path) {
           res.status(200).sendFile(group.icon.path, {
-            headers: {
-              'Content-Type': group.icon.type
-            }
+            headers: { 'Content-Type': group.icon.type }
           }, function(err) {
             if (err) {
               console.log(err);
@@ -229,21 +233,18 @@ module.exports = function(app) {
       };
 
       var approveUser = function() {
-        User.update({
-            _id: userId
-          }, {
-            admitted: true
-          },
-          function(err, user) {
-            if (err) {
-              res.status(404).send('There was an error ' +
-                'admitting this user. Please try again.');
-            } else {
-              res.status(204).send('User successfully ' +
-                'updated');
-            }
+        User.update({ _id: userId }, {
+          admitted: true
+        },
+        function(err, user) {
+          if (err) {
+            res.status(404).send('There was an error ' +
+              'admitting this user. Please try again.');
+          } else {
+            res.status(204).send('User successfully ' +
+              'updated');
           }
-        );
+        });
       };
     }
   );
@@ -281,9 +282,7 @@ module.exports = function(app) {
   app.post(baseUrl + '/api/secure/group/:id/upload/', function(req, res) {
     var groupId = req.params.id;
     Group
-      .findOne({
-        _id: groupId
-      })
+      .findOne({ _id: groupId })
       .exec(function(err, group) {
         if (err) {
           console.log(err);
