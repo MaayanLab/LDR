@@ -4,7 +4,6 @@
  */
 
 var http = require('http'),
-  async = require('async'),
   Q = require('q'),
   _ = require('lodash'),
   jwt = require('jsonwebtoken'),
@@ -55,85 +54,32 @@ module.exports = function(app) {
 
   app.get(baseUrl + '/api/group/:id/statistics/', function(req, res) {
     var groupId = req.params.id;
-    async.series([
-      function(callback) {
-        User
-          .where({ group: groupId })
-          .count(function(err, userCount) {
-            if (err) {
-              console.log(err);
-            }
-            callback(null, userCount);
-          });
-      },
-      function(callback) {
-        DataRelease
-          .where({ group: groupId })
-          .count(function(err, releaseCount) {
-            if (err) {
-              console.log(err);
-            }
-            callback(null, releaseCount);
-          });
-      },
-      function(callback) {
-        Assay
-          .where({ group: groupId })
-          .count(function(err, asCount) {
-            if (err) {
-              console.log(err);
-            }
-            callback(null, asCount);
-          });
-      },
-      function(callback) {
-        CellLine
-          .where({ group: groupId })
-          .count(function(err, clCount) {
-            if (err) {
-              console.log(err);
-            }
-            callback(null, clCount);
-          });
-      },
-      function(callback) {
-        Perturbagen
-          .where({ group: groupId })
-          .count(function(err, pertCount) {
-            if (err) {
-              console.log(err);
-            }
-            callback(null, pertCount);
-          });
-      },
-      function(callback) {
-        Readout
-          .where({ group: groupId })
-          .count(function(err, roCount) {
-            if (err) {
-              console.log(err);
-            }
-            callback(null, roCount);
-          });
-      }
-    ], function(err, results) {
-      if (err) {
-        console.log(err);
-        res.status(500).send('An error occurred generating statistics. ' +
-          'Please try again later.');
-      } else {
-        // Results is counts array in order
-        // [users, releases, assays, cellLines, perturbagens, readouts]
-        var statResponse = {
-          user: results[0],
-          release: results[1],
-          assay: results[2],
-          cell: results[3],
-          perturbagen: results[4],
-          readout: results[5]
-        };
-        res.status(200).send(statResponse);
-      }
+    var statResponse = {};
+    var statModels = [
+      { model: User, key: 'user' },
+      { model: DataRelease, key: 'release' },
+      { model: Assay, key: 'assay' },
+      { model: CellLine, key: 'cell' },
+      { model: Perturbagen, key: 'perturbagen' },
+      { model: Readout, key: 'readout' }
+    ];
+    var promises = [];
+    _.each(statModels, function(modelObj) {
+      var def = Q.defer();
+      modelObj.model
+        .where({ group: groupId })
+        .count(function(err, count) {
+          if (err) {
+            def.reject(err);
+          } else {
+            statResponse[modelObj.key] = count;
+            def.resolve(count);
+          }
+        });
+      promises.push(def.promise);
+    });
+    Q.all(promises).then(function(results) {
+      res.status(200).send(statResponse);
     });
   });
 
