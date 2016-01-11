@@ -67,7 +67,9 @@
       return api('autocomplete/' + endpoint).get({ q: query });
     }
 
-    function getSamples(pluralSampleName, limitNum) {
+    function getSamples(sampleName, limitNum) {
+      // Hacky. Add 's' to assay because endpoint is /assays
+      var pluralSampleName = sampleName === 'assay' ? 'assays' : sampleName;
       return api(pluralSampleName + '/').get({ limit: limitNum });
     }
   }

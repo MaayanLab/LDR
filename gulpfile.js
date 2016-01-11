@@ -190,7 +190,7 @@ gulp.task('vendorCss', function(callback) {
   return cssChain;
 });
 
-gulp.task('scss', ['vendorCss'], function() {
+gulp.task('scss', function() {
   var scssChain = gulp.src(SRC_DIRECTORY + 'style/main.scss')
     .pipe($.plumber())
   if (!argv.production) {
@@ -213,7 +213,7 @@ gulp.task('scss', ['vendorCss'], function() {
 });
 
 gulp.task('build', ['clean'], function(callback) {
-  runSequence(['vendorJs', 'vendorCss', 'fonts', 'images', 'favIcons', 'html',
+  runSequence(['vendorJs', 'vendorCss'], ['fonts', 'images', 'favIcons', 'html',
     'scss', 'js', 'serverJs'
   ], callback);
 });

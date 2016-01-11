@@ -429,7 +429,6 @@ var dataReleaseSchema = new Schema({
     level3: Date,
     level4: Date
   },
-  // These are arrays of IDs pointing to the name-metadata server
   metadata: {
     assay: {
       type: [{
@@ -494,6 +493,10 @@ var dataReleaseSchema = new Schema({
   },
   urls: {
     dataUrl: {
+      type: String,
+      default: ''
+    },
+    analysisUrl: {
       type: String,
       default: ''
     },

@@ -1,15 +1,22 @@
 <div class="thin-navbar">
   <div class="container">
-    <nav>
-      <p ng-show="isLoggedIn">{{ user.username }}</p>
-      <a ng-show="isLoggedIn" ui-sref="userSettings({id: user._id})" class="glyphicon glyphicon-cog"></a>
-      <a ng-show="isLoggedIn && isAdmitted" ui-sref="groupHome({id: user.group._id})"
-      id="group-nav-icon" class="glyphicon"></a>
-      <a ng-show="isLoggedIn" ng-click="logout()" class="glyphicon glyphicon-log-out"></a>
-      <a ng-show="!isLoggedIn" ui-sref="userForgot()">
-        Forgot Password?
-      </a>
-    </nav>
+    <div class="nav-left">
+      <a ui-sref="about">About</a>
+      <p>|</p>
+      <a ui-sref="docs">Documentation</a>
+    </div>
+    <div class="nav-right">
+      <nav>
+        <p ng-show="isLoggedIn">{{ user.username }}</p>
+        <a ng-show="isLoggedIn" ui-sref="userSettings({id: user._id})" class="glyphicon glyphicon-cog"></a>
+        <a ng-show="isLoggedIn && isAdmitted" ui-sref="groupHome({id: user.group._id})"
+        id="group-nav-icon" class="glyphicon"></a>
+        <a ng-show="isLoggedIn" ng-click="logout()" class="glyphicon glyphicon-log-out"></a>
+        <a ng-show="!isLoggedIn" ui-sref="userForgot">
+          Forgot Password?
+        </a>
+      </nav>
+    </div>
   </div>
 </div>
 <div class="navbar-wrapper">

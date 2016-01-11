@@ -2,6 +2,8 @@
   'use strict';
 
   angular.module('ldr', [
+    'ldr.about',
+    'ldr.docs',
     'ldr.nav',
     'ldr.home',
     'ldr.bar',

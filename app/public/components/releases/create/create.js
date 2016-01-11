@@ -35,7 +35,6 @@
 
     var vm = this;
     vm.user = store.get('currentUser');
-    console.log(vm.user);
     vm.group = vm.user.group;
     vm.showErrors = false;
 
@@ -54,7 +53,7 @@
       metadata: [
         // DO NOT REARRANGE ORDER
         {
-          name: 'assays',
+          name: 'assay',
           title: 'Assay',
           modalTitle: 'Assay',
           placeholder: 'Select an assay...',
@@ -181,6 +180,10 @@
         title: 'Data URL',
         model: ''
       }, {
+        name: 'analysisUrl',
+        title: 'Data Analysis URL',
+        model: ''
+      }, {
         name: 'metadataUrl',
         title: 'Metadata Documentation URL',
         model: ''
@@ -213,6 +216,7 @@
     releases
       .getOneRel($stateParams.id)
       .success(function(form) {
+        console.log(form);
         formInit = angular.copy(form);
         angular.forEach(formInit.metadata, function(arr, key) {
           formInit.metadata[key] = lodash.map(arr, function(obj) {
@@ -287,11 +291,13 @@
       angular.forEach(vm.form.metadata, function(obj) {
         if (obj.isRequired && !obj.model.length) {
           vm.showErrors = true;
+          console.log(obj);
         }
       });
       angular.forEach(vm.form.releaseDates, function(obj) {
         if (obj.isRequired && obj.model === '') {
           vm.showErrors = true;
+          console.log(obj);
         }
       });
       if (!vm.showErrors) {
@@ -338,6 +344,7 @@
         form.urls[obj.name] = lodash.isUndefined(obj.model) ?
           '' : obj.model;
       });
+      console.log(form);
 
       releases
         .postRel(form)

@@ -19,12 +19,11 @@
         "no-use-before-define": [1, "nofunc"],
         "camelcase": 1,
         "no-alert": 1,
-        "no-underscore-dangle": 1,
+        "no-underscore-dangle": 0,
         "no-mixed-requires": 1
     },
     "env": {
         "browser": true,
-        "jQuery": true,
         "node": true
     },
     "globals": {
