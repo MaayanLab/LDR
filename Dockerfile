@@ -21,14 +21,15 @@ COPY .bowerrc $SOURCE_DIR/
 #############################################################
 
 # 1. Install all npm dependencies (including dev dependencies)
-# 2. Set NODE_ENV=production
-# 3. Globally install gulp and bower
-# 4. Install bower dependencies
+# 2. Globally install gulp and bower
+# 3. Install bower dependencies
 #    (--allow-root needed because user in container is root)
 RUN npm install && \
-    npm config set production && \
     npm install -g gulp bower && \
     bower install --allow-root
+
+# Set NODE_ENV=production
+ENV NODE_ENV production
 
 # These are copied after the run commands so that the container is
 # more likely to be the same up until this point. Because docker
