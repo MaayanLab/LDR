@@ -214,7 +214,6 @@ module.exports = function(app) {
   // Do not make this API secure so that unregistered users can create a
   // group
   app.post(baseUrl + '/api/group/create/', function(req, res) {
-
     Group.create(req.body, function(err, group) {
       if (err) {
         console.log(err);

@@ -11,7 +11,7 @@
   ])
 
   .config(groupCreateConfig)
-    .controller('GroupCreateCtrl', GroupCreateCtrl);
+  .controller('GroupCreateCtrl', GroupCreateCtrl);
 
   /* @ngInject */
   function groupCreateConfig($stateProvider) {
@@ -47,8 +47,9 @@
     }
 
     function createGroup(groupToCreate) {
+      var newGroup = groupToCreate || vm.group;
       groups
-        .createGroup(groupToCreate)
+        .createGroup(newGroup)
         .success(function(group) {
           // Check if there is a logged in user.
           // If there is add them to the group and admit them.
@@ -60,6 +61,10 @@
             groups.admitUserToGroup(group._id, currentUser._id)
               .success(function() {
                 $state.go('groupHome');
+              })
+              .error(function(resp) {
+                console.log(resp);
+                alert('Group was created but you could not be added.');
               });
           } else if (store.get('userReg')) {
             // If locally stored userReg, then the
