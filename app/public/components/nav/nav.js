@@ -60,6 +60,8 @@
         scope.isLoggedInAdmin = false;
         scope.isAdmitted = false;
         scope.showFailMessage = false;
+        store.remove('currentUser');
+        store.remove('jwt');
         $state.go('userRegistration');
       }
 
@@ -78,8 +80,8 @@
             scope.showFailMessage = true;
           }
         }, function() {
-            scope.showFailMessage = true;
-          });
+          scope.showFailMessage = true;
+        });
       }
 
       function logout() {

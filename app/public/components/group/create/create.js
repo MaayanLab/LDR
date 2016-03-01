@@ -63,7 +63,6 @@
                 $state.go('groupHome');
               })
               .error(function(resp) {
-                console.log(resp);
                 alert('Group was created but you could not be added.');
               });
           } else if (store.get('userReg')) {
@@ -85,7 +84,6 @@
           }
         })
         .error(function(resp) {
-          console.log(resp);
           alert('Group could not be created. Please try again.');
         });
     }

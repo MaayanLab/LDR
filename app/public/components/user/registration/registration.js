@@ -75,7 +75,7 @@
     }
 
     function createGroup() {
-      // Store user locally so he may return and fill out form
+      // Store user locally so he/she may return and fill out form
       store.set('userReg', vm.user);
       $state.go('groupCreate');
     }
