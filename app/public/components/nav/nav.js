@@ -35,6 +35,7 @@
           scope.isLoggedInAdmin = user.admin;
           scope.isAdmitted = user.admitted;
         } else {
+          localStorage.removeItem('token');
           user = {};
           scope.isLoggedIn = false;
           scope.isLoggedInAdmin = false;
