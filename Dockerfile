@@ -1,4 +1,4 @@
-FROM node:4.2.1
+FROM node:4.2.6
 
 # Set SOURCE_DIR variable, make the directory, and set it as work directory
 ENV SOURCE_DIR /usr/src
