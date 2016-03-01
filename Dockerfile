@@ -5,10 +5,6 @@ ENV SOURCE_DIR /usr/src
 RUN mkdir -p $SOURCE_DIR && cd $SOURCE_DIR
 WORKDIR $SOURCE_DIR
 
-# Copy dependencies to save time installing.
-COPY node_modules $SOURCE_DIR/node_modules
-COPY vendor $SOURCE_DIR/vendor
-
 # Copy files needed for npm and bower
 COPY package.json $SOURCE_DIR/
 COPY bower.json $SOURCE_DIR/
