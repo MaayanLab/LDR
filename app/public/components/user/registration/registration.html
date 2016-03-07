@@ -60,23 +60,15 @@
         </span>
     </div>
     <div class="form-group">
-        <label>Group*</label>
+        <label>Group</label>
         <input type="text" ng-model="vm.user.group" name="group"
                placeholder="Please select a group"
                typeahead="group as group.name for group in vm.groups | filter:$viewValue | limitTo:8"
                typeahead-editable="false" class="form-control">
         <i ng-show="loadingGroups" class="glyphicon glyphicon-refresh"></i>
-
         <p id="create-group-tag">
             or <a ng-click="vm.createGroup()">Create a new one</a>
         </p>
-
-        <div ng-show="registerForm.$submitted || registerForm.group.$touched">
-            <span class="help-inline error-msg"
-                  ng-show="!vm.user.group._id">
-                No group selected.
-            </span>
-        </div>
     </div>
     <div class="form-group col-sm-6">
         <label for="firstName">First Name*</label>

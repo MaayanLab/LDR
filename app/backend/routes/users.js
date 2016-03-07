@@ -141,26 +141,29 @@ module.exports = function(app) {
     // a populated group
     var inputUser = req.body;
     var groupObj = inputUser.group;
-    inputUser.group = groupObj._id;
+    inputUser.group = groupObj && groupObj._id;
     inputUser.admin = false;
     if (!inputUser.admitted) {
       inputUser.admitted = false;
     }
     User.create(inputUser, function(err, user) {
       if (err) {
+        res.status(500).send('User could not be created');
         console.log('Error creating User: ' + err);
-      } else {
-        var userWOPass = _.omit(user.toObject(), [
-          'password', 'passwordConfirm', '__v'
-        ]);
-        var token = createToken(userWOPass);
-        userWOPass.group = groupObj;
-        var newUserBlob = {
-          user: userWOPass,
-          id_token: token
-        };
-        res.status(201).send(newUserBlob);
+        return;
       }
+      var userWOPass = _.omit(user.toObject(), [
+        'password', 'passwordConfirm', '__v'
+      ]);
+      var token = createToken(userWOPass);
+      if (groupObj) {
+        userWOPass.group = groupObj;
+      }
+      var newUserBlob = {
+        user: userWOPass,
+        id_token: token
+      };
+      res.status(201).send(newUserBlob);
     });
   });
 

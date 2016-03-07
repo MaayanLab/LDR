@@ -44,7 +44,6 @@ var userSchema = new Schema({
   },
   group: {
     type: Schema.ObjectId,
-    required: true,
     ref: 'Group'
   },
   admin: {
